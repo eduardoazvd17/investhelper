@@ -6,5 +6,5 @@
   
 */
 
-"CFBundleDisplayName" = "Gerenciamento de Investimentos";
+"CFBundleDisplayName" = "Gerenciador de Investimentos";
 "NSFaceIDUsageDescription" = "Autentique-se e proteja seus dados usando TouchID ou FaceID.";
