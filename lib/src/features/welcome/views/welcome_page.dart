@@ -44,9 +44,24 @@ class _WelcomePageState extends State<WelcomePage> {
   }
 
   List<Widget> get _pages => [
-        _firstPageContent,
-        _secondPageContent,
-        _thirdPageContent,
+        _buildPageContent(
+          lottieAsset: 'assets/animations/investments.json',
+          contentText: AppLocalizations.of(context)!.welcomeText1,
+        ),
+        _buildPageContent(
+          lottieAsset: 'assets/animations/monitoring.json',
+          contentText: AppLocalizations.of(context)!.welcomeText2,
+        ),
+        _buildPageContent(
+          lottieAsset: 'assets/animations/saving_time.json',
+          contentText: AppLocalizations.of(context)!.welcomeText3,
+          bottomWidget: ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
+            },
+            child: Text(AppLocalizations.of(context)!.letsStart),
+          ),
+        ),
       ];
 
   Widget get _navigationBar => SafeArea(
@@ -100,80 +115,32 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
       );
 
-  Widget get _firstPageContent => Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _resizeAnimation(
-                Lottie.asset("assets/animations/investments.json"),
+  Widget _buildPageContent({
+    required String lottieAsset,
+    required String contentText,
+    Widget? bottomWidget,
+  }) {
+    return Center(
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * .4,
+              child: Center(child: Lottie.asset(lottieAsset)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(25),
+              child: Text(
+                contentText,
+                style: Theme.of(context).textTheme.titleMedium,
+                textAlign: TextAlign.center,
               ),
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: Text(
-                  AppLocalizations.of(context)!.welcomeText1,
-                  style: Theme.of(context).textTheme.titleMedium,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
+            ),
+            if (bottomWidget != null) bottomWidget,
+          ],
         ),
-      );
-
-  Widget get _secondPageContent => Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _resizeAnimation(
-                Lottie.asset("assets/animations/monitoring.json"),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: Text(
-                  AppLocalizations.of(context)!.welcomeText2,
-                  style: Theme.of(context).textTheme.titleMedium,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-  Widget get _thirdPageContent => Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _resizeAnimation(
-                Lottie.asset("assets/animations/saving_time.json"),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(25),
-                child: Text(
-                  AppLocalizations.of(context)!.welcomeText3,
-                  style: Theme.of(context).textTheme.titleMedium,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context)
-                      .pushReplacementNamed(AuthPage.routeName);
-                },
-                child: Text(AppLocalizations.of(context)!.letsStart),
-              ),
-            ],
-          ),
-        ),
-      );
-
-  Widget _resizeAnimation(LottieBuilder animation) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * .4,
-      child: Center(child: animation),
+      ),
     );
   }
 }
