@@ -87,7 +87,8 @@ class _WelcomePageState extends State<WelcomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _resizeAnimation(
-                  Lottie.asset("assets/animations/investments.json")),
+                Lottie.asset("assets/animations/investments.json"),
+              ),
               Padding(
                 padding: const EdgeInsets.all(25),
                 child: Text(
@@ -107,7 +108,8 @@ class _WelcomePageState extends State<WelcomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _resizeAnimation(
-                  Lottie.asset("assets/animations/monitoring.json")),
+                Lottie.asset("assets/animations/monitoring.json"),
+              ),
               Padding(
                 padding: const EdgeInsets.all(25),
                 child: Text(
@@ -127,7 +129,8 @@ class _WelcomePageState extends State<WelcomePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               _resizeAnimation(
-                  Lottie.asset("assets/animations/saving_time.json")),
+                Lottie.asset("assets/animations/saving_time.json"),
+              ),
               Padding(
                 padding: const EdgeInsets.all(25),
                 child: Text(
