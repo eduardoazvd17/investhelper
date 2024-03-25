@@ -13,13 +13,11 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  late List<Widget> _pageViewPages;
   late PageController _pageViewController;
   int _currentPage = 0;
 
   @override
   void initState() {
-    _pageViewPages = _buildPageViewPages();
     _pageViewController = PageController();
     _pageViewController.addListener(() {
       final int page = _pageViewController.page?.round() ?? 0;
@@ -96,7 +94,7 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
       );
 
-  List<Widget> _buildPageViewPages() {
+  List<Widget> get _pageViewPages {
     Widget pageWidget({
       required String lottieAsset,
       required String contentText,
