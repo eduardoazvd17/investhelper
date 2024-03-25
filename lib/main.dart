@@ -30,6 +30,13 @@ class InvestmentManagerApp extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      localeResolutionCallback: (locale, supportedLocales) {
+        final languageCode = locale?.languageCode ?? 'en';
+        return supportedLocales.firstWhere(
+          (e) => e.languageCode == languageCode,
+          orElse: () => const Locale('en'),
+        );
+      },
       initialRoute: WelcomePage.routeName,
       routes: {
         WelcomePage.routeName: (_) => const WelcomePage(),
