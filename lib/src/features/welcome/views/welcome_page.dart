@@ -13,14 +13,16 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  late PageController _pageController;
+  late List<Widget> _pageViewPages;
+  late PageController _pageViewController;
   int _currentPage = 0;
 
   @override
   void initState() {
-    _pageController = PageController();
-    _pageController.addListener(() {
-      final int page = _pageController.page?.round() ?? 0;
+    _pageViewPages = _buildPageViewPages();
+    _pageViewController = PageController();
+    _pageViewController.addListener(() {
+      final int page = _pageViewController.page?.round() ?? 0;
       if (page != _currentPage) {
         setState(() => _currentPage = page);
       }
@@ -30,7 +32,7 @@ class _WelcomePageState extends State<WelcomePage> {
 
   @override
   void dispose() {
-    _pageController.dispose();
+    _pageViewController.dispose();
     super.dispose();
   }
 
@@ -38,31 +40,10 @@ class _WelcomePageState extends State<WelcomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.appName)),
-      body: PageView(controller: _pageController, children: _pages),
+      body: PageView(controller: _pageViewController, children: _pageViewPages),
       bottomNavigationBar: _navigationBar,
     );
   }
-
-  List<Widget> get _pages => [
-        _buildPageContent(
-          lottieAsset: 'assets/animations/investments.json',
-          contentText: AppLocalizations.of(context)!.welcomeText1,
-        ),
-        _buildPageContent(
-          lottieAsset: 'assets/animations/monitoring.json',
-          contentText: AppLocalizations.of(context)!.welcomeText2,
-        ),
-        _buildPageContent(
-          lottieAsset: 'assets/animations/saving_time.json',
-          contentText: AppLocalizations.of(context)!.welcomeText3,
-          bottomWidget: ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
-            },
-            child: Text(AppLocalizations.of(context)!.letsStart),
-          ),
-        ),
-      ];
 
   Widget get _navigationBar => SafeArea(
         child: Padding(
@@ -72,7 +53,7 @@ class _WelcomePageState extends State<WelcomePage> {
             children: [
               TextButton(
                 onPressed: _currentPage > 0
-                    ? () => _pageController.animateToPage(
+                    ? () => _pageViewController.animateToPage(
                           _currentPage - 1,
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.ease,
@@ -82,7 +63,7 @@ class _WelcomePageState extends State<WelcomePage> {
               ),
               Row(
                 mainAxisSize: MainAxisSize.min,
-                children: List.generate(_pages.length, (index) {
+                children: List.generate(_pageViewPages.length, (index) {
                   return Padding(
                     padding: const EdgeInsets.all(5.0),
                     child: GestureDetector(
@@ -101,8 +82,8 @@ class _WelcomePageState extends State<WelcomePage> {
                 }),
               ),
               TextButton(
-                onPressed: _currentPage < _pages.length - 1
-                    ? () => _pageController.animateToPage(
+                onPressed: _currentPage < _pageViewPages.length - 1
+                    ? () => _pageViewController.animateToPage(
                           _currentPage + 1,
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.ease,
@@ -115,32 +96,55 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
       );
 
-  Widget _buildPageContent({
-    required String lottieAsset,
-    required String contentText,
-    Widget? bottomWidget,
-  }) {
-    return Center(
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * .4,
-              child: Center(child: Lottie.asset(lottieAsset)),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(25),
-              child: Text(
-                contentText,
-                style: Theme.of(context).textTheme.titleMedium,
-                textAlign: TextAlign.center,
+  List<Widget> _buildPageViewPages() {
+    Widget pageWidget({
+      required String lottieAsset,
+      required String contentText,
+      Widget? bottomWidget,
+    }) {
+      return Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * .4,
+                child: Center(child: Lottie.asset(lottieAsset)),
               ),
-            ),
-            if (bottomWidget != null) bottomWidget,
-          ],
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: Text(
+                  contentText,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              if (bottomWidget != null) bottomWidget,
+            ],
+          ),
+        ),
+      );
+    }
+
+    return [
+      pageWidget(
+        lottieAsset: 'assets/animations/investments.json',
+        contentText: AppLocalizations.of(context)!.welcomeText1,
+      ),
+      pageWidget(
+        lottieAsset: 'assets/animations/monitoring.json',
+        contentText: AppLocalizations.of(context)!.welcomeText2,
+      ),
+      pageWidget(
+        lottieAsset: 'assets/animations/saving_time.json',
+        contentText: AppLocalizations.of(context)!.welcomeText3,
+        bottomWidget: ElevatedButton(
+          onPressed: () {
+            Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
+          },
+          child: Text(AppLocalizations.of(context)!.letsStart),
         ),
       ),
-    );
+    ];
   }
 }
