@@ -65,7 +65,26 @@ class _WelcomePageState extends State<WelcomePage> {
                     : null,
                 child: Text(AppLocalizations.of(context)!.back),
               ),
-              Text('${_currentPage + 1} / ${_pages.length}'),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: List.generate(_pages.length, (index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: GestureDetector(
+                      child: Container(
+                        height: 8,
+                        width: 8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: index == _currentPage
+                              ? Theme.of(context).primaryColor
+                              : Colors.grey[300],
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+              ),
               TextButton(
                 onPressed: _currentPage < _pages.length - 1
                     ? () => _pageController.animateToPage(
