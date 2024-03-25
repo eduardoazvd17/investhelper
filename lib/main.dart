@@ -21,7 +21,7 @@ class InvestmentManagerApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       home: Scaffold(
-        body: Text(AppLocalizations.of(context)!.test),
+        body: Text(AppLocalizations.of(context)!.appName),
       ),
     );
   }
