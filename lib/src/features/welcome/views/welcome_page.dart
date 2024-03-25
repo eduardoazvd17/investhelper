@@ -81,55 +81,71 @@ class _WelcomePageState extends State<WelcomePage> {
         ),
       );
 
-  Widget get _firstPageContent => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _resizeAnimation(Lottie.asset("assets/animations/investments.json")),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              AppLocalizations.of(context)!.welcomeText1,
-              style: Theme.of(context).textTheme.titleMedium,
-              textAlign: TextAlign.center,
-            ),
+  Widget get _firstPageContent => Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _resizeAnimation(
+                  Lottie.asset("assets/animations/investments.json")),
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: Text(
+                  AppLocalizations.of(context)!.welcomeText1,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       );
 
-  Widget get _secondPageContent => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _resizeAnimation(Lottie.asset("assets/animations/monitoring.json")),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              AppLocalizations.of(context)!.welcomeText2,
-              style: Theme.of(context).textTheme.titleMedium,
-              textAlign: TextAlign.center,
-            ),
+  Widget get _secondPageContent => Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _resizeAnimation(
+                  Lottie.asset("assets/animations/monitoring.json")),
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: Text(
+                  AppLocalizations.of(context)!.welcomeText2,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       );
 
-  Widget get _thirdPageContent => Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _resizeAnimation(Lottie.asset("assets/animations/saving_time.json")),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: Text(
-              AppLocalizations.of(context)!.welcomeText3,
-              style: Theme.of(context).textTheme.titleMedium,
-              textAlign: TextAlign.center,
-            ),
+  Widget get _thirdPageContent => Center(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _resizeAnimation(
+                  Lottie.asset("assets/animations/saving_time.json")),
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: Text(
+                  AppLocalizations.of(context)!.welcomeText3,
+                  style: Theme.of(context).textTheme.titleMedium,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context)
+                      .pushReplacementNamed(AuthPage.routeName);
+                },
+                child: Text(AppLocalizations.of(context)!.letsStart),
+              ),
+            ],
           ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
-            },
-            child: Text(AppLocalizations.of(context)!.letsStart),
-          ),
-        ],
+        ),
       );
 
   Widget _resizeAnimation(LottieBuilder animation) {
