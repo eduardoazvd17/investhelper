@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:investmentmanager/src/features/investments/views/investments_page.dart';
 import 'package:investmentmanager/src/l10n/l10n.dart';
 
 class AuthPage extends StatefulWidget {
@@ -100,7 +101,10 @@ class _AuthPageState extends State<AuthPage> {
   Widget get _formWidget {
     final TextButton actionButton = switch (_currentPageState) {
       AuthPageState.login => TextButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.of(context)
+                .pushReplacementNamed(InvestmentsPage.routeName);
+          },
           child: Text(
             AppLocalizations.of(context)!.makeLogin,
           ),
