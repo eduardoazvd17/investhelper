@@ -42,15 +42,24 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _titleWidget,
-            _formWidget,
-            _bottomWidget,
-          ],
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _titleWidget,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 50),
+                    child: _formWidget,
+                  ),
+                  _bottomWidget,
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
