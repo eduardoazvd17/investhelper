@@ -1,0 +1,10 @@
+/* 
+  infoPlist.strings
+  Runner
+
+  Created by Eduardo Azevedo on 25/03/24.
+  
+*/
+
+"CFBundleDisplayName" = "Gerenciamento de Investimentos";
+"NSFaceIDUsageDescription" = "Autentique-se e proteja seus dados usando TouchID ou FaceID.";
