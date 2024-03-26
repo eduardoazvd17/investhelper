@@ -11,11 +11,7 @@ void main() {
 class InvestmentManagerApp extends StatelessWidget {
   const InvestmentManagerApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Investments Manager',
-      theme: ThemeData(
+  ThemeData get lightTheme => ThemeData(
         appBarTheme: const AppBarTheme(
           centerTitle: true,
           backgroundColor: Colors.white,
@@ -27,8 +23,9 @@ class InvestmentManagerApp extends StatelessWidget {
         ),
         scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
+      );
+
+  ThemeData get darkTheme => ThemeData(
         appBarTheme: const AppBarTheme(
           centerTitle: true,
           backgroundColor: Colors.black,
@@ -41,7 +38,14 @@ class InvestmentManagerApp extends StatelessWidget {
         primaryColor: Colors.blueGrey,
         scaffoldBackgroundColor: Colors.black,
         useMaterial3: true,
-      ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Investments Manager',
+      theme: lightTheme,
+      darkTheme: darkTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       localeResolutionCallback: (locale, supportedLocales) {

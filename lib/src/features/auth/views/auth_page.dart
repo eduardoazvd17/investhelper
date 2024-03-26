@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:investmentmanager/src/features/investments/views/investments_page.dart';
 import 'package:investmentmanager/src/l10n/l10n.dart';
+import 'package:lottie/lottie.dart';
 
 class AuthPage extends StatefulWidget {
   static const String routeName = "/auth";
@@ -51,6 +53,13 @@ class _AuthPageState extends State<AuthPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: SizedBox(
+                      height: 250,
+                      child: Lottie.asset('assets/animations/auth.json'),
+                    ),
+                  ),
                   _titleWidget,
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 50),
