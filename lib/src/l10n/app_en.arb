@@ -1,5 +1,5 @@
 {
-    "appName": "Investment Manager",
+    "appName": "Investments Manager",
     "welcomeText1": "Welcome to your new ally in achieving your financial goals! Start on the path to a successful investment journey with our app.",
     "welcomeText2": "Our app is here to simplify your financial life, allowing you to track your transactions with ease and generate accurate, detailed reports when you need them.",
     "welcomeText3": "Save time and eliminate stress when managing your investments. With our intuitive app, you can accomplish tasks in minutes that used to take hours, freeing up valuable time to enjoy other life activities.",
@@ -27,5 +27,20 @@
     "makeRecovery": "Reset Password",
     "forgotMyPassword": "I forgot my password",
     "dontHaveAnAccountYet": "Don't have an account yet?",
-    "alreadyHaveAnAccount": "Already have an account?"
+    "alreadyHaveAnAccount": "Already have an account?",
+    "myInvestments": "My investments",
+    "totalInvestment": "Total investments",
+    "monthsOperations": "Operations performed this month",
+    "buyOperations": "Purchase operations",
+    "sellOperations": "Sales operations",
+    "seeMyOperations": "See my operations",
+    "myGoals": "My goals",
+    "diversity": "Diversity",
+    "tips": "Tips",
+    "quickActions": "Quick Actions",
+    "insertBuyOperation": "Insert purchase operation",
+    "insertSellOperation": "Insert sales operation",
+    "editMyGoals": "Edit my goals",
+    "investmentOverview": "Investment overview",
+    "generatedReports": "Generated reports"
 }
