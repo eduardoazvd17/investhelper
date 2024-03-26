@@ -177,7 +177,7 @@ class _AuthPageState extends State<AuthPage> {
             ),
           ),
         ],
-        const SizedBox(height: 10),
+        const SizedBox(height: 20),
         actionButton,
         if (_currentPageState == AuthPageState.login) ...[
           const SizedBox(height: 10),
