@@ -59,13 +59,6 @@ class InvestmentsResumeCard extends StatelessWidget {
               value: 'R\$ 0,00',
               color: Colors.red,
             ),
-            const SizedBox(height: 20),
-            Center(
-              child: TextButton(
-                onPressed: () {},
-                child: Text(AppLocalizations.of(context)!.seeMyOperations),
-              ),
-            ),
           ],
         ),
       ),

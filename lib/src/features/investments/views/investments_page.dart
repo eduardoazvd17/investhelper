@@ -29,19 +29,12 @@ class InvestmentsPage extends StatelessWidget {
                 const InvestmentsResumeCard(),
                 _titleWidget(
                   context,
-                  AppLocalizations.of(context)!.tips,
+                  AppLocalizations.of(context)!.diversity,
                 ),
-                const DailyTipsWidget(),
+                const DiversityChartWidget(),
                 _titleWidget(
                   context,
                   AppLocalizations.of(context)!.myGoals,
-                  actions: [
-                    IconButton(
-                      onPressed: () {},
-                      visualDensity: VisualDensity.compact,
-                      icon: const Icon(CupertinoIcons.pen),
-                    ),
-                  ],
                 ),
                 SizedBox(
                   height: 120,
@@ -55,14 +48,14 @@ class InvestmentsPage extends StatelessWidget {
                 ),
                 _titleWidget(
                   context,
-                  AppLocalizations.of(context)!.diversity,
-                ),
-                const DiversityChartWidget(),
-                _titleWidget(
-                  context,
                   AppLocalizations.of(context)!.quickActions,
                 ),
                 const QuickActionsWidget(),
+                _titleWidget(
+                  context,
+                  AppLocalizations.of(context)!.tips,
+                ),
+                const DailyTipsWidget(),
               ],
             ),
           ),

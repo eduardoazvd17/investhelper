@@ -28,18 +28,8 @@ class QuickActionsWidget extends StatelessWidget {
         ),
         TextButton.icon(
           onPressed: () {},
-          icon: const Icon(CupertinoIcons.arrow_up_arrow_down),
-          label: Text(AppLocalizations.of(context)!.seeMyOperations),
-        ),
-        TextButton.icon(
-          onPressed: () {},
           icon: const Icon(Icons.dashboard_outlined),
-          label: Text(AppLocalizations.of(context)!.investmentOverview),
-        ),
-        TextButton.icon(
-          onPressed: () {},
-          icon: const Icon(CupertinoIcons.doc),
-          label: Text(AppLocalizations.of(context)!.generatedReports),
+          label: Text(AppLocalizations.of(context)!.detailedInvestments),
         ),
       ],
     );

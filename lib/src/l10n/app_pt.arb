@@ -41,6 +41,5 @@
   "insertPurchaseOperation": "Inserir operação de compra",
   "insertSellOperation": "Inserir operação de venda",
   "editMyGoals": "Editar minhas metas",
-  "investmentOverview": "Visão geral dos investimentos",
-  "generatedReports": "Relatórios gerados"
+  "detailedInvestments": "Investimentos detalhados"
 }

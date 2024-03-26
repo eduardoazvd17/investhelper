@@ -41,6 +41,5 @@
     "insertPurchaseOperation": "Insert purchase operation",
     "insertSellOperation": "Insert sales operation",
     "editMyGoals": "Edit my goals",
-    "investmentOverview": "Investment overview",
-    "generatedReports": "Generated reports"
+    "detailedInvestments": "Detailed investments"
 }
