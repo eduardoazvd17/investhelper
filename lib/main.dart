@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:investmentmanager/src/features/welcome/views/welcome_page.dart';
+import 'src/core/utils/app_theme.dart';
 import 'src/features/auth/views/auth_page.dart';
 import 'src/features/investments/views/investments_page.dart';
 import 'src/l10n/l10n.dart';
@@ -12,41 +13,12 @@ Future<void> main() async {
 class InvestmentManagerApp extends StatelessWidget {
   const InvestmentManagerApp({super.key});
 
-  ThemeData get lightTheme => ThemeData(
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          backgroundColor: Colors.white,
-        ),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-          brightness: Brightness.light,
-          surfaceTint: Colors.white,
-        ),
-        scaffoldBackgroundColor: Colors.white,
-        useMaterial3: true,
-      );
-
-  ThemeData get darkTheme => ThemeData(
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          backgroundColor: Colors.black,
-        ),
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-          brightness: Brightness.dark,
-          surfaceTint: Colors.black,
-        ),
-        primaryColor: Colors.deepPurple[200],
-        scaffoldBackgroundColor: Colors.black,
-        useMaterial3: true,
-      );
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Investments Manager',
-      theme: lightTheme,
-      darkTheme: darkTheme,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       localeResolutionCallback: (locale, supportedLocales) {
