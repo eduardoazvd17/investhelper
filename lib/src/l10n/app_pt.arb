@@ -33,6 +33,14 @@
   "monthsOperations": "Operações realizadas neste mês",
   "buyOperations": "Operações de compra",
   "sellOperations": "Operações de venda",
+  "seeMyOperations": "Ver minhas operações",
   "myGoals": "Minhas metas",
-  "diversity": "Diversidade"
+  "diversity": "Diversidade",
+  "tips": "Dicas",
+  "quickActions": "Ações rápidas",
+  "insertBuyOperation": "Inserir operação de compra",
+  "insertSellOperation": "Inserir operação de venda",
+  "editMyGoals": "Editar minhas metas",
+  "investmentOverview": "Visão geral dos investimentos",
+  "generatedReports": "Relatórios gerados"
 }

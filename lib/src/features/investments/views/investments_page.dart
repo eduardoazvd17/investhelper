@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:investmentmanager/src/features/investments/widgets/daily_tips_widget.dart';
 import 'package:investmentmanager/src/features/investments/widgets/diversity_chart_widget.dart';
 import 'package:investmentmanager/src/features/investments/widgets/goal_card_tile.dart';
+import 'package:investmentmanager/src/features/investments/widgets/quick_actions_widget.dart';
 import 'package:investmentmanager/src/l10n/l10n.dart';
 
 import '../widgets/investments_resume_card.dart';
@@ -25,6 +27,11 @@ class InvestmentsPage extends StatelessWidget {
                   AppLocalizations.of(context)!.myInvestments,
                 ),
                 const InvestmentsResumeCard(),
+                _titleWidget(
+                  context,
+                  AppLocalizations.of(context)!.tips,
+                ),
+                const DailyTipsWidget(),
                 _titleWidget(
                   context,
                   AppLocalizations.of(context)!.myGoals,
@@ -51,6 +58,11 @@ class InvestmentsPage extends StatelessWidget {
                   AppLocalizations.of(context)!.diversity,
                 ),
                 const DiversityChartWidget(),
+                _titleWidget(
+                  context,
+                  AppLocalizations.of(context)!.quickActions,
+                ),
+                const QuickActionsWidget(),
               ],
             ),
           ),
