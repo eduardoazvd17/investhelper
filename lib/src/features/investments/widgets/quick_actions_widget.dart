@@ -14,7 +14,7 @@ class QuickActionsWidget extends StatelessWidget {
         TextButton.icon(
           onPressed: () {},
           icon: const Icon(CupertinoIcons.arrow_up_right),
-          label: Text(AppLocalizations.of(context)!.insertBuyOperation),
+          label: Text(AppLocalizations.of(context)!.insertPurchaseOperation),
         ),
         TextButton.icon(
           onPressed: () {},

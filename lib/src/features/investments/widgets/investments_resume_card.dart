@@ -46,7 +46,7 @@ class InvestmentsResumeCard extends StatelessWidget {
             ),
             _movimentationTile(
               context: context,
-              tooltip: AppLocalizations.of(context)!.buyOperations,
+              tooltip: AppLocalizations.of(context)!.purchaseOperations,
               icon: CupertinoIcons.arrow_up_right,
               value: 'R\$ 0,00',
               color: Colors.green,
