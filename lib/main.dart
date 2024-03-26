@@ -36,7 +36,7 @@ class InvestmentManagerApp extends StatelessWidget {
           brightness: Brightness.dark,
           surfaceTint: Colors.black,
         ),
-        primaryColor: Colors.deepPurple,
+        primaryColor: Colors.deepPurple[200],
         scaffoldBackgroundColor: Colors.black,
         useMaterial3: true,
       );
