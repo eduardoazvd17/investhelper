@@ -43,6 +43,14 @@ class AppTheme {
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
         ),
+        bottomSheetTheme: const BottomSheetThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(_kBorderRadius),
+              topRight: Radius.circular(_kBorderRadius),
+            ),
+          ),
+        ),
       );
 
   static ThemeData get darkTheme => ThemeData(
@@ -79,6 +87,14 @@ class AppTheme {
         dialogTheme: DialogTheme(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
+          ),
+        ),
+        bottomSheetTheme: const BottomSheetThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(_kBorderRadius),
+              topRight: Radius.circular(_kBorderRadius),
+            ),
           ),
         ),
       );
