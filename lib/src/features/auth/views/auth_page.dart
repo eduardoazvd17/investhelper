@@ -107,8 +107,8 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Widget get _formWidget {
-    final TextButton actionButton = switch (_currentPageState) {
-      AuthPageState.login => TextButton(
+    final Widget actionButton = switch (_currentPageState) {
+      AuthPageState.login => ElevatedButton(
           onPressed: () {
             Navigator.of(context)
                 .pushReplacementNamed(InvestmentsPage.routeName);
@@ -117,13 +117,13 @@ class _AuthPageState extends State<AuthPage> {
             AppLocalizations.of(context)!.makeLogin,
           ),
         ),
-      AuthPageState.register => TextButton(
+      AuthPageState.register => ElevatedButton(
           onPressed: () {},
           child: Text(
             AppLocalizations.of(context)!.makeRegister,
           ),
         ),
-      AuthPageState.recovery => TextButton(
+      AuthPageState.recovery => ElevatedButton(
           onPressed: () {},
           child: Text(
             AppLocalizations.of(context)!.makeRecovery,
@@ -176,7 +176,7 @@ class _AuthPageState extends State<AuthPage> {
             ),
           ),
         ],
-        const SizedBox(height: 20),
+        const SizedBox(height: 10),
         actionButton,
         if (_currentPageState == AuthPageState.login) ...[
           const SizedBox(height: 10),
