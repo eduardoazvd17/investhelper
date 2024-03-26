@@ -17,7 +17,7 @@
     "email": "Email",
     "emailHint": "login@example.com",
     "password": "Password",
-    "passwordHint": "Enter a password for your account...",
+    "passwordHint": "Enter your password...",
     "passwordConfirmation": "Password confirmation",
     "passwordConfirmationHint": "Repeat the previously entered password...",
     "makeLogin": "Login",

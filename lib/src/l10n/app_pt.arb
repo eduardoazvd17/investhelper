@@ -17,7 +17,7 @@
   "email": "E-mail",
   "emailHint": "login@exemplo.com",
   "password": "Senha",
-  "passwordHint": "Insira uma senha para sua conta...",
+  "passwordHint": "Insira sua senha...",
   "passwordConfirmation": "Confirmação de senha",
   "passwordConfirmationHint": "Repita a senha digitada anteriormente...",
   "makeLogin": "Iniciar Sessão",
