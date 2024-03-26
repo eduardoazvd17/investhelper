@@ -41,5 +41,15 @@
     "insertPurchaseOperation": "Insert purchase operation",
     "insertSellOperation": "Insert sales operation",
     "editMyGoals": "Edit my goals",
-    "detailedInvestments": "Detailed investments"
+    "overview": "Overview",
+    "investments": "Investments",
+    "hiUser": "Hi, {name}.",
+    "@hiUser": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
+    "exit": "Exit"
 }

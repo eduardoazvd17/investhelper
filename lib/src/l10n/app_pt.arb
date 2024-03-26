@@ -41,5 +41,15 @@
   "insertPurchaseOperation": "Inserir operação de compra",
   "insertSellOperation": "Inserir operação de venda",
   "editMyGoals": "Editar minhas metas",
-  "detailedInvestments": "Investimentos detalhados"
+  "overview": "Visão geral",
+  "investments": "Investimentos",
+  "hiUser": "Olá, {name}.",
+  "@hiUser": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "exit": "Sair"
 }

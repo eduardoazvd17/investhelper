@@ -26,11 +26,6 @@ class QuickActionsWidget extends StatelessWidget {
           icon: const Icon(CupertinoIcons.pen),
           label: Text(AppLocalizations.of(context)!.editMyGoals),
         ),
-        TextButton.icon(
-          onPressed: () {},
-          icon: const Icon(Icons.dashboard_outlined),
-          label: Text(AppLocalizations.of(context)!.detailedInvestments),
-        ),
       ],
     );
   }
