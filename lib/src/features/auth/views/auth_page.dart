@@ -163,7 +163,7 @@ class _AuthPageState extends State<AuthPage> {
             obscureText: true,
             decoration: InputDecoration(
               label: Text(AppLocalizations.of(context)!.passwordConfirmation),
-              hintText: AppLocalizations.of(context)!.passwordHint,
+              hintText: AppLocalizations.of(context)!.passwordConfirmationHint,
               border: const OutlineInputBorder(),
             ),
           ),

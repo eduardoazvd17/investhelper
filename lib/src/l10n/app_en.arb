@@ -1,5 +1,5 @@
 {
-    "appName": "Investments Manager",
+    "appName": "Investment Manager",
     "welcomeText1": "Welcome to your new ally in achieving your financial goals! Start on the path to a successful investment journey with our app.",
     "welcomeText2": "Our app is here to simplify your financial life, allowing you to track your transactions with ease and generate accurate, detailed reports when you need them.",
     "welcomeText3": "Save time and eliminate stress when managing your investments. With our intuitive app, you can accomplish tasks in minutes that used to take hours, freeing up valuable time to enjoy other life activities.",
@@ -17,14 +17,15 @@
     "email": "Email",
     "emailHint": "login@example.com",
     "password": "Password",
+    "passwordHint": "Enter a password for your account...",
     "passwordConfirmation": "Password confirmation",
-    "passwordHint": "••••••••",
+    "passwordConfirmationHint": "Repeat the previously entered password...",
     "makeLogin": "Login",
+    "login": "Login",
     "makeRegister": "Complete Registration",
+    "register": "Register",
     "makeRecovery": "Reset Password",
     "forgotMyPassword": "I forgot my password",
     "dontHaveAnAccountYet": "Don't have an account yet?",
-    "register": "Register",
-    "alreadyHaveAnAccount": "Already have an account?",
-    "login": "Sign in"
+    "alreadyHaveAnAccount": "Already have an account?"
 }

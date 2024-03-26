@@ -17,14 +17,15 @@
   "email": "E-mail",
   "emailHint": "login@exemplo.com",
   "password": "Senha",
+  "passwordHint": "Insira uma senha para sua conta...",
   "passwordConfirmation": "Confirmação de senha",
-  "passwordHint": "••••••••",
+  "passwordConfirmationHint": "Repita a senha digitada anteriormente...",
   "makeLogin": "Iniciar Sessão",
+  "login": "Entrar",
   "makeRegister": "Concluir Cadastro",
+  "register": "Cadastre-se",
   "makeRecovery": "Redefinir Senha",
   "forgotMyPassword": "Esqueci minha senha",
   "dontHaveAnAccountYet": "Ainda não possui uma conta?",
-  "register": "Cadastre-se",
-  "alreadyHaveAnAccount": "Já possui uma conta?",
-  "login": "Entrar"
+  "alreadyHaveAnAccount": "Já possui uma conta?"
 }
