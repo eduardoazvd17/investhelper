@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AppTheme {
   static const _kCenterTitle = true;
@@ -21,6 +22,7 @@ class AppTheme {
         appBarTheme: const AppBarTheme(
           centerTitle: _kCenterTitle,
           backgroundColor: _kLightBackgroundColor,
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
@@ -36,6 +38,12 @@ class AppTheme {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(_kBorderRadius),
             ),
+          ),
+        ),
+        cardTheme: CardTheme(
+          color: Colors.grey[100],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
         ),
         dialogTheme: DialogTheme(
@@ -67,6 +75,7 @@ class AppTheme {
         appBarTheme: const AppBarTheme(
           centerTitle: _kCenterTitle,
           backgroundColor: _kDarkBackgroundColor,
+          systemOverlayStyle: SystemUiOverlayStyle.light,
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
@@ -82,6 +91,12 @@ class AppTheme {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(_kBorderRadius),
             ),
+          ),
+        ),
+        cardTheme: CardTheme(
+          color: Colors.grey[900],
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
         ),
         dialogTheme: DialogTheme(

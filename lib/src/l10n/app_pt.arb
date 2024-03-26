@@ -28,5 +28,10 @@
   "forgotMyPassword": "Esqueci minha senha",
   "dontHaveAnAccountYet": "Ainda não possui uma conta?",
   "alreadyHaveAnAccount": "Já possui uma conta?",
-  "myInvestments": "Meus investimentos"
+  "myInvestments": "Meus investimentos",
+  "totalInvestment": "Total em investimentos",
+  "monthsMovements": "Movimentações deste mês",
+  "buyOperations": "Operações de compra",
+  "sellOperations": "Operações de venda",
+  "myGoals": "Minhas metas"
 }
