@@ -28,6 +28,20 @@ class InvestmentManagerApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
       ),
+      darkTheme: ThemeData(
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          backgroundColor: Colors.black,
+        ),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Colors.blueGrey,
+          brightness: Brightness.dark,
+          surfaceTint: Colors.black,
+        ),
+        primaryColor: Colors.blueGrey,
+        scaffoldBackgroundColor: Colors.black,
+        useMaterial3: true,
+      ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       localeResolutionCallback: (locale, supportedLocales) {
