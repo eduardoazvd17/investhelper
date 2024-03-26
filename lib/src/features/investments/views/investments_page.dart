@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:investmentmanager/src/features/investments/widgets/diversity_chart_widget.dart';
 import 'package:investmentmanager/src/features/investments/widgets/goal_card_tile.dart';
 import 'package:investmentmanager/src/l10n/l10n.dart';
 
@@ -36,7 +37,7 @@ class InvestmentsPage extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: 125,
+                  height: 120,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: List.generate(
@@ -45,6 +46,11 @@ class InvestmentsPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                _titleWidget(
+                  context,
+                  AppLocalizations.of(context)!.diversity,
+                ),
+                const DiversityChartWidget(),
               ],
             ),
           ),
