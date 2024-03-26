@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:investmentmanager/src/l10n/l10n.dart';
 
 class InvestmentsPage extends StatelessWidget {
   static const String routeName = "/investments";
@@ -8,9 +9,20 @@ class InvestmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Investments'),
+        title: Text(AppLocalizations.of(context)!.myInvestments),
       ),
-      body: Container(),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 25),
+            child: Column(
+              children: [
+                Text('Olá Eduardo, aqui estão seus investimentos:'),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
