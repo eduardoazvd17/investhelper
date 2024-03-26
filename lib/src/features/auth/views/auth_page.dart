@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:investmentmanager/src/features/investments/views/investments_page.dart';
 import 'package:investmentmanager/src/l10n/l10n.dart';
 import 'package:lottie/lottie.dart';

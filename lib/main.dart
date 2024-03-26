@@ -4,7 +4,8 @@ import 'src/features/auth/views/auth_page.dart';
 import 'src/features/investments/views/investments_page.dart';
 import 'src/l10n/l10n.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const InvestmentManagerApp());
 }
 
@@ -17,7 +18,7 @@ class InvestmentManagerApp extends StatelessWidget {
           backgroundColor: Colors.white,
         ),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blueGrey,
+          seedColor: Colors.deepPurple,
           brightness: Brightness.light,
           surfaceTint: Colors.white,
         ),
@@ -31,11 +32,11 @@ class InvestmentManagerApp extends StatelessWidget {
           backgroundColor: Colors.black,
         ),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blueGrey,
+          seedColor: Colors.deepPurple,
           brightness: Brightness.dark,
           surfaceTint: Colors.black,
         ),
-        primaryColor: Colors.blueGrey,
+        primaryColor: Colors.deepPurple,
         scaffoldBackgroundColor: Colors.black,
         useMaterial3: true,
       );
