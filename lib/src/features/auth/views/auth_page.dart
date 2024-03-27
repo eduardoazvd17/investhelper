@@ -59,12 +59,11 @@ class _AuthPageState extends State<AuthPage> {
                       child: Lottie.asset('assets/animations/auth.json'),
                     ),
                   ),
-                  _titleWidget,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 50),
-                    child: _formWidget,
-                  ),
-                  _bottomWidget,
+                  switch (_currentPageState) {
+                    AuthPageState.login => _loginStateContent,
+                    AuthPageState.register => _registerStateContent,
+                    AuthPageState.recovery => _recoveryStateContent,
+                  },
                 ],
               ),
             ),
@@ -74,28 +73,81 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
-  Widget get _titleWidget {
-    late final String title;
-    late final String subtitle;
+  Widget get _loginStateContent {
+    return Column(
+      children: [
+        _titleWidget(
+          title: AppLocalizations.of(context)!.authPageLoginTitle,
+          subTitle: AppLocalizations.of(context)!.authPageLoginSubtitle,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 50),
+          child: _formWidget(_currentPageState),
+        ),
+        _changeStateButtonWidget(
+          text: AppLocalizations.of(context)!.dontHaveAnAccountYet,
+          highlightedText: AppLocalizations.of(context)!.register,
+          onTap: () => setState(() {
+            _currentPageState = AuthPageState.register;
+          }),
+        ),
+      ],
+    );
+  }
 
-    switch (_currentPageState) {
-      case AuthPageState.login:
-        title = AppLocalizations.of(context)!.authPageLoginTitle;
-        subtitle = AppLocalizations.of(context)!.authPageLoginSubtitle;
-      case AuthPageState.register:
-        title = AppLocalizations.of(context)!.authPageRegisterTitle;
-        subtitle = AppLocalizations.of(context)!.authPageRegisterSubtitle;
-      case AuthPageState.recovery:
-        title = AppLocalizations.of(context)!.authPageRecoveryTitle;
-        subtitle = AppLocalizations.of(context)!.authPageRecoverySubtitle;
-    }
+  Widget get _registerStateContent {
+    return Column(
+      children: [
+        _titleWidget(
+          title: AppLocalizations.of(context)!.authPageRegisterTitle,
+          subTitle: AppLocalizations.of(context)!.authPageRegisterSubtitle,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 50),
+          child: _formWidget(_currentPageState),
+        ),
+        _changeStateButtonWidget(
+          text: AppLocalizations.of(context)!.alreadyHaveAnAccount,
+          highlightedText: AppLocalizations.of(context)!.login,
+          onTap: () => setState(() {
+            _currentPageState = AuthPageState.login;
+          }),
+        ),
+      ],
+    );
+  }
 
+  Widget get _recoveryStateContent {
+    return Column(
+      children: [
+        _titleWidget(
+          title: AppLocalizations.of(context)!.authPageRecoveryTitle,
+          subTitle: AppLocalizations.of(context)!.authPageRecoverySubtitle,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 50),
+          child: _formWidget(_currentPageState),
+        ),
+        TextButton(
+          onPressed: () {
+            setState(() => _currentPageState = AuthPageState.login);
+          },
+          child: Text(AppLocalizations.of(context)!.authPageLoginTitle),
+        ),
+      ],
+    );
+  }
+
+  Widget _titleWidget({
+    required String title,
+    required String subTitle,
+  }) {
     return Column(
       children: [
         Text(title, style: Theme.of(context).textTheme.titleLarge),
         const SizedBox(height: 5),
         Text(
-          subtitle,
+          subTitle,
           style: Theme.of(context)
               .textTheme
               .titleSmall
@@ -106,31 +158,38 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
-  Widget get _formWidget {
-    final Widget actionButton = switch (_currentPageState) {
-      AuthPageState.login => ElevatedButton(
-          onPressed: () {
-            Navigator.of(context)
-                .pushReplacementNamed(InvestmentsPage.routeName);
-          },
-          child: Text(
-            AppLocalizations.of(context)!.makeLogin,
-          ),
+  Widget _changeStateButtonWidget({
+    required String text,
+    required String highlightedText,
+    required void Function() onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(10),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            const SizedBox(height: 5),
+            Text(
+              highlightedText,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleSmall
+                  ?.copyWith(color: Theme.of(context).primaryColor),
+            ),
+          ],
         ),
-      AuthPageState.register => ElevatedButton(
-          onPressed: () {},
-          child: Text(
-            AppLocalizations.of(context)!.makeRegister,
-          ),
-        ),
-      AuthPageState.recovery => ElevatedButton(
-          onPressed: () {},
-          child: Text(
-            AppLocalizations.of(context)!.makeRecovery,
-          ),
-        ),
-    };
+      ),
+    );
+  }
 
+  Widget _formWidget(AuthPageState state) {
     return Column(
       children: [
         if (_currentPageState == AuthPageState.register) ...[
@@ -177,86 +236,38 @@ class _AuthPageState extends State<AuthPage> {
           ),
         ],
         const SizedBox(height: 10),
-        actionButton,
+        switch (state) {
+          AuthPageState.login => ElevatedButton(
+              onPressed: () => Navigator.of(context)
+                  .pushReplacementNamed(InvestmentsPage.routeName),
+              child: Text(
+                AppLocalizations.of(context)!.makeLogin,
+              ),
+            ),
+          AuthPageState.register => ElevatedButton(
+              onPressed: () {},
+              child: Text(
+                AppLocalizations.of(context)!.makeRegister,
+              ),
+            ),
+          AuthPageState.recovery => ElevatedButton(
+              onPressed: () {},
+              child: Text(
+                AppLocalizations.of(context)!.makeRecovery,
+              ),
+            ),
+        },
         if (_currentPageState == AuthPageState.login) ...[
-          const SizedBox(height: 10),
+          const SizedBox(height: 15),
           TextButton(
-            onPressed: () {
-              setState(() {
-                _currentPageState = AuthPageState.recovery;
-              });
-            },
+            onPressed: () => setState(() {
+              _currentPageState = AuthPageState.recovery;
+            }),
             child: Text(AppLocalizations.of(context)!.forgotMyPassword),
           ),
         ],
       ],
     );
-  }
-
-  Widget get _bottomWidget {
-    switch (_currentPageState) {
-      case AuthPageState.login:
-        return InkWell(
-          onTap: () {
-            setState(() => _currentPageState = AuthPageState.register);
-          },
-          borderRadius: BorderRadius.circular(10),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.dontHaveAnAccountYet,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  AppLocalizations.of(context)!.register,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(color: Theme.of(context).primaryColor),
-                ),
-              ],
-            ),
-          ),
-        );
-      case AuthPageState.register:
-        return InkWell(
-          onTap: () {
-            setState(() => _currentPageState = AuthPageState.login);
-          },
-          borderRadius: BorderRadius.circular(10),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.alreadyHaveAnAccount,
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                const SizedBox(height: 5),
-                Text(
-                  AppLocalizations.of(context)!.login,
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleSmall
-                      ?.copyWith(color: Theme.of(context).primaryColor),
-                ),
-              ],
-            ),
-          ),
-        );
-      case AuthPageState.recovery:
-        return TextButton(
-          onPressed: () {
-            setState(() => _currentPageState = AuthPageState.login);
-          },
-          child: Text(AppLocalizations.of(context)!.authPageLoginTitle),
-        );
-    }
   }
 }
 
