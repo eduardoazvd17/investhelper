@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:investmentmanager/src/features/auth/views/auth_page.dart';
 import 'package:investmentmanager/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investmentmanager/src/features/investments/widgets/daily_tips_widget.dart';
 import 'package:investmentmanager/src/features/investments/widgets/diversity_chart_widget.dart';
@@ -58,11 +57,9 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
           ],
         ),
         actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
-            },
-            child: Text(AppLocalizations.of(context)!.exit),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(CupertinoIcons.settings),
           ),
         ],
       ),
@@ -206,6 +203,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 text: AppLocalizations.of(context)!.operationsHistoryPerformed,
                 onTap: () {},
               ),
+              const SizedBox(height: 25),
             ],
           ),
         ),
