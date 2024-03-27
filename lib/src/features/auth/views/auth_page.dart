@@ -82,7 +82,28 @@ class _AuthPageState extends State<AuthPage> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 50),
-          child: _formWidget(_currentPageState),
+          child: Column(
+            children: [
+              _emailTextField,
+              const SizedBox(height: 10),
+              _passwordTextField,
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () => Navigator.of(context)
+                    .pushReplacementNamed(InvestmentsPage.routeName),
+                child: Text(
+                  AppLocalizations.of(context)!.makeLogin,
+                ),
+              ),
+              const SizedBox(height: 10),
+              TextButton(
+                onPressed: () => setState(() {
+                  _currentPageState = AuthPageState.recovery;
+                }),
+                child: Text(AppLocalizations.of(context)!.forgotMyPassword),
+              ),
+            ],
+          ),
         ),
         _changeStateButtonWidget(
           text: AppLocalizations.of(context)!.dontHaveAnAccountYet,
@@ -104,7 +125,24 @@ class _AuthPageState extends State<AuthPage> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 50),
-          child: _formWidget(_currentPageState),
+          child: Column(
+            children: [
+              _nameTextField,
+              const SizedBox(height: 10),
+              _emailTextField,
+              const SizedBox(height: 10),
+              _passwordTextField,
+              const SizedBox(height: 10),
+              _passwordConfirmationTextField,
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  AppLocalizations.of(context)!.makeRegister,
+                ),
+              ),
+            ],
+          ),
         ),
         _changeStateButtonWidget(
           text: AppLocalizations.of(context)!.alreadyHaveAnAccount,
@@ -126,7 +164,18 @@ class _AuthPageState extends State<AuthPage> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 50),
-          child: _formWidget(_currentPageState),
+          child: Column(
+            children: [
+              _emailTextField,
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text(
+                  AppLocalizations.of(context)!.makeRecovery,
+                ),
+              ),
+            ],
+          ),
         ),
         TextButton(
           onPressed: () {
@@ -158,6 +207,49 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
+  Widget get _nameTextField => TextFormField(
+        controller: _nameController,
+        keyboardType: TextInputType.name,
+        textCapitalization: TextCapitalization.words,
+        decoration: InputDecoration(
+          label: Text(AppLocalizations.of(context)!.name),
+          hintText: AppLocalizations.of(context)!.nameHint,
+          border: const OutlineInputBorder(),
+        ),
+      );
+
+  Widget get _emailTextField => TextFormField(
+        controller: _emailController,
+        keyboardType: TextInputType.emailAddress,
+        decoration: InputDecoration(
+          label: Text(AppLocalizations.of(context)!.email),
+          hintText: AppLocalizations.of(context)!.emailHint,
+          border: const OutlineInputBorder(),
+        ),
+      );
+
+  Widget get _passwordTextField => TextFormField(
+        controller: _passwordController,
+        obscureText: true,
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          label: Text(AppLocalizations.of(context)!.password),
+          hintText: AppLocalizations.of(context)!.passwordHint,
+          border: const OutlineInputBorder(),
+        ),
+      );
+
+  Widget get _passwordConfirmationTextField => TextFormField(
+        controller: _passwordConfirmationController,
+        obscureText: true,
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+          label: Text(AppLocalizations.of(context)!.passwordConfirmation),
+          hintText: AppLocalizations.of(context)!.passwordConfirmationHint,
+          border: const OutlineInputBorder(),
+        ),
+      );
+
   Widget _changeStateButtonWidget({
     required String text,
     required String highlightedText,
@@ -186,87 +278,6 @@ class _AuthPageState extends State<AuthPage> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _formWidget(AuthPageState state) {
-    return Column(
-      children: [
-        if (_currentPageState == AuthPageState.register) ...[
-          TextFormField(
-            controller: _nameController,
-            decoration: InputDecoration(
-              label: Text(AppLocalizations.of(context)!.name),
-              hintText: AppLocalizations.of(context)!.nameHint,
-              border: const OutlineInputBorder(),
-            ),
-          ),
-          const SizedBox(height: 10),
-        ],
-        TextFormField(
-          controller: _emailController,
-          decoration: InputDecoration(
-            label: Text(AppLocalizations.of(context)!.email),
-            hintText: AppLocalizations.of(context)!.emailHint,
-            border: const OutlineInputBorder(),
-          ),
-        ),
-        if (_currentPageState != AuthPageState.recovery) ...[
-          const SizedBox(height: 10),
-          TextFormField(
-            controller: _passwordController,
-            obscureText: true,
-            decoration: InputDecoration(
-              label: Text(AppLocalizations.of(context)!.password),
-              hintText: AppLocalizations.of(context)!.passwordHint,
-              border: const OutlineInputBorder(),
-            ),
-          ),
-        ],
-        if (_currentPageState == AuthPageState.register) ...[
-          const SizedBox(height: 10),
-          TextFormField(
-            controller: _passwordConfirmationController,
-            obscureText: true,
-            decoration: InputDecoration(
-              label: Text(AppLocalizations.of(context)!.passwordConfirmation),
-              hintText: AppLocalizations.of(context)!.passwordConfirmationHint,
-              border: const OutlineInputBorder(),
-            ),
-          ),
-        ],
-        const SizedBox(height: 10),
-        switch (state) {
-          AuthPageState.login => ElevatedButton(
-              onPressed: () => Navigator.of(context)
-                  .pushReplacementNamed(InvestmentsPage.routeName),
-              child: Text(
-                AppLocalizations.of(context)!.makeLogin,
-              ),
-            ),
-          AuthPageState.register => ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                AppLocalizations.of(context)!.makeRegister,
-              ),
-            ),
-          AuthPageState.recovery => ElevatedButton(
-              onPressed: () {},
-              child: Text(
-                AppLocalizations.of(context)!.makeRecovery,
-              ),
-            ),
-        },
-        if (_currentPageState == AuthPageState.login) ...[
-          const SizedBox(height: 15),
-          TextButton(
-            onPressed: () => setState(() {
-              _currentPageState = AuthPageState.recovery;
-            }),
-            child: Text(AppLocalizations.of(context)!.forgotMyPassword),
-          ),
-        ],
-      ],
     );
   }
 }
