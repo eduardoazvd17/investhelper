@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:investmentmanager/src/features/auth/views/auth_page.dart';
 import 'package:investmentmanager/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investmentmanager/src/features/investments/widgets/daily_tips_widget.dart';
@@ -201,6 +200,10 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
               _titleWidget(AppLocalizations.of(context)!.productsAndServices),
               _buttonTile(
                 text: AppLocalizations.of(context)!.myGoals,
+                onTap: () {},
+              ),
+              _buttonTile(
+                text: AppLocalizations.of(context)!.operationsHistoryPerformed,
                 onTap: () {},
               ),
             ],

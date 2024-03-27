@@ -79,5 +79,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "operationsHistoryPerformed": "Histórico de operações realizadas"
 }
