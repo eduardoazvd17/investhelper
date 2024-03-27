@@ -54,7 +54,7 @@ class InvestHelperApp extends StatelessWidget {
       initialRoute: initialRoute,
       routes: {
         WelcomePage.routeName: (_) => const WelcomePage(
-              neverShowWelcomePage: AppService.neverShowWelcomePage,
+              onTapLetsStartCallback: AppService.neverShowWelcomePage,
             ),
         AuthPage.routeName: (_) => const AuthPage(),
         InvestmentsPage.routeName: (_) => const InvestmentsPage(),
