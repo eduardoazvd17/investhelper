@@ -59,6 +59,10 @@ class AppTheme {
             ),
           ),
         ),
+        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+          landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
+          selectedItemColor: _kPrimaryColor,
+        ),
       );
 
   static ThemeData get darkTheme => ThemeData(
@@ -111,6 +115,11 @@ class AppTheme {
               topRight: Radius.circular(_kBorderRadius),
             ),
           ),
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
+          selectedItemColor: _kPrimaryColor[200],
+          backgroundColor: Colors.grey[900],
         ),
       );
 }
