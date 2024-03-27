@@ -21,6 +21,10 @@ class _AuthPageState extends State<AuthPage> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
   late TextEditingController _passwordConfirmationController;
+  late FocusNode _nameFocus;
+  late FocusNode _emailFocus;
+  late FocusNode _passwordFocus;
+  late FocusNode _passwordConfirmationFocus;
 
   @override
   void initState() {
@@ -29,6 +33,10 @@ class _AuthPageState extends State<AuthPage> {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     _passwordConfirmationController = TextEditingController();
+    _nameFocus = FocusNode();
+    _emailFocus = FocusNode();
+    _passwordFocus = FocusNode();
+    _passwordConfirmationFocus = FocusNode();
     super.initState();
   }
 
@@ -38,6 +46,10 @@ class _AuthPageState extends State<AuthPage> {
     _emailController.dispose();
     _passwordController.dispose();
     _passwordConfirmationController.dispose();
+    _nameFocus.dispose();
+    _emailFocus.dispose();
+    _passwordFocus.dispose();
+    _passwordConfirmationFocus.dispose();
     super.dispose();
   }
 
@@ -207,48 +219,70 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
-  Widget get _nameTextField => TextFormField(
-        controller: _nameController,
-        keyboardType: TextInputType.name,
-        textCapitalization: TextCapitalization.words,
-        decoration: InputDecoration(
-          label: Text(AppLocalizations.of(context)!.name),
-          hintText: AppLocalizations.of(context)!.nameHint,
-          border: const OutlineInputBorder(),
-        ),
-      );
+  Widget get _nameTextField {
+    return TextFormField(
+      focusNode: _nameFocus,
+      controller: _nameController,
+      keyboardType: TextInputType.name,
+      textCapitalization: TextCapitalization.words,
+      decoration: InputDecoration(
+        label: Text(AppLocalizations.of(context)!.name),
+        hintText: AppLocalizations.of(context)!.nameHint,
+        border: const OutlineInputBorder(),
+      ),
+      textInputAction: TextInputAction.next,
+      onFieldSubmitted: (_) => _emailFocus.requestFocus(),
+    );
+  }
 
-  Widget get _emailTextField => TextFormField(
-        controller: _emailController,
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          label: Text(AppLocalizations.of(context)!.email),
-          hintText: AppLocalizations.of(context)!.emailHint,
-          border: const OutlineInputBorder(),
-        ),
-      );
+  Widget get _emailTextField {
+    final bool hasNext = _passwordFocus.canRequestFocus;
+    return TextFormField(
+      focusNode: _emailFocus,
+      controller: _emailController,
+      keyboardType: TextInputType.emailAddress,
+      decoration: InputDecoration(
+        label: Text(AppLocalizations.of(context)!.email),
+        hintText: AppLocalizations.of(context)!.emailHint,
+        border: const OutlineInputBorder(),
+      ),
+      textInputAction: hasNext ? TextInputAction.next : TextInputAction.done,
+      onFieldSubmitted: hasNext ? (_) => _passwordFocus.requestFocus() : null,
+    );
+  }
 
-  Widget get _passwordTextField => TextFormField(
-        controller: _passwordController,
-        obscureText: true,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          label: Text(AppLocalizations.of(context)!.password),
-          hintText: AppLocalizations.of(context)!.passwordHint,
-          border: const OutlineInputBorder(),
-        ),
-      );
+  Widget get _passwordTextField {
+    final bool hasNext = _passwordConfirmationFocus.canRequestFocus;
+    return TextFormField(
+      focusNode: _passwordFocus,
+      controller: _passwordController,
+      obscureText: true,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        label: Text(AppLocalizations.of(context)!.password),
+        hintText: AppLocalizations.of(context)!.passwordHint,
+        border: const OutlineInputBorder(),
+      ),
+      textInputAction: hasNext ? TextInputAction.next : TextInputAction.done,
+      onFieldSubmitted:
+          hasNext ? (_) => _passwordConfirmationFocus.requestFocus() : null,
+    );
+  }
 
-  Widget get _passwordConfirmationTextField => TextFormField(
-        controller: _passwordConfirmationController,
-        obscureText: true,
-        keyboardType: TextInputType.text,
-        decoration: InputDecoration(
-          label: Text(AppLocalizations.of(context)!.passwordConfirmation),
-          hintText: AppLocalizations.of(context)!.passwordConfirmationHint,
-          border: const OutlineInputBorder(),
-        ),
-      );
+  Widget get _passwordConfirmationTextField {
+    return TextFormField(
+      focusNode: _passwordConfirmationFocus,
+      controller: _passwordConfirmationController,
+      obscureText: true,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        label: Text(AppLocalizations.of(context)!.passwordConfirmation),
+        hintText: AppLocalizations.of(context)!.passwordConfirmationHint,
+        border: const OutlineInputBorder(),
+      ),
+      textInputAction: TextInputAction.done,
+    );
+  }
 
   Widget _changeStateButtonWidget({
     required String text,
