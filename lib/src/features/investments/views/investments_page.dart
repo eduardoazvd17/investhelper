@@ -81,14 +81,14 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         items: [
           BottomNavigationBarItem(
             icon: const Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 5),
+              padding: EdgeInsets.only(bottom: 2.5),
               child: Icon(Icons.dashboard_outlined),
             ),
             label: AppLocalizations.of(context)!.overview,
           ),
           BottomNavigationBarItem(
             icon: const Padding(
-              padding: EdgeInsets.only(top: 10, bottom: 5),
+              padding: EdgeInsets.only(bottom: 2.5),
               child: Icon(CupertinoIcons.arrow_up_arrow_down),
             ),
             label: AppLocalizations.of(context)!.investments,
