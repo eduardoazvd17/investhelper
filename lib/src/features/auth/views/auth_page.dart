@@ -72,6 +72,7 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ),
                   switch (_currentPageState) {
+                    AuthPageState.loading => _loadingStateContent,
                     AuthPageState.login => _loginStateContent,
                     AuthPageState.register => _registerStateContent,
                     AuthPageState.recovery => _recoveryStateContent,
@@ -82,6 +83,19 @@ class _AuthPageState extends State<AuthPage> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget get _loadingStateContent {
+    return const Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 50),
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        ),
+      ],
     );
   }
 
@@ -317,6 +331,7 @@ class _AuthPageState extends State<AuthPage> {
 }
 
 enum AuthPageState {
+  loading,
   login,
   register,
   recovery,
