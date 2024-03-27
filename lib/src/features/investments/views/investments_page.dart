@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/daily_tips_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/diversity_chart_widget.dart';
@@ -218,11 +219,11 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
               SectionWidget(
                 title: AppLocalizations.of(context)!.productsAndServices,
                 content: [
-                  _buttonTile(
+                  ButtonTileWidget(
                     text: AppLocalizations.of(context)!.myGoals,
                     onTap: () {},
                   ),
-                  _buttonTile(
+                  ButtonTileWidget(
                     text: AppLocalizations.of(context)!
                         .operationsHistoryPerformed,
                     onTap: () {},
@@ -231,46 +232,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
               ),
               const SizedBox(height: 25),
             ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buttonTile({
-    required String text,
-    required void Function() onTap,
-  }) {
-    final color = Theme.of(context).primaryColor;
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(10),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: color),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    text,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(color: color),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20),
-                  child: Icon(Icons.arrow_forward_ios, color: color),
-                ),
-              ],
-            ),
           ),
         ),
       ),

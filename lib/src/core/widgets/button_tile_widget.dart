@@ -1,0 +1,52 @@
+import 'package:flutter/material.dart';
+
+class ButtonTileWidget extends StatelessWidget {
+  final String text;
+  final void Function() onTap;
+  final Color? color;
+  const ButtonTileWidget({
+    super.key,
+    required this.text,
+    required this.onTap,
+    this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final Color color = this.color ?? Theme.of(context).primaryColor;
+
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: color),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    text,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(color: color),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Icon(Icons.arrow_forward_ios, color: color),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
