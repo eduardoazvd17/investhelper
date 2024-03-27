@@ -7,11 +7,11 @@ import 'src/l10n/l10n.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const InvestmentManagerApp());
+  runApp(const InvestHelperApp());
 }
 
-class InvestmentManagerApp extends StatelessWidget {
-  const InvestmentManagerApp({super.key});
+class InvestHelperApp extends StatelessWidget {
+  const InvestHelperApp({super.key});
 
   @override
   Widget build(BuildContext context) {
