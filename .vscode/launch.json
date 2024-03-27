@@ -5,18 +5,18 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "investmentmanager",
+            "name": "investhelper",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "investmentmanager (profile mode)",
+            "name": "investhelper (profile mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "investmentmanager (release mode)",
+            "name": "investhelper (release mode)",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:investmentmanager/src/features/investments/widgets/category_indicator_widget.dart';
-import 'package:investmentmanager/src/l10n/l10n.dart';
+import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
+import 'package:investhelper/src/l10n/l10n.dart';
 
 class InvestmentTileWidget extends StatelessWidget {
   const InvestmentTileWidget({super.key});

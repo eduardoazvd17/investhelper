@@ -1,4 +1,4 @@
-# investmentmanager
+# investhelper
 
 A new Flutter project.
 

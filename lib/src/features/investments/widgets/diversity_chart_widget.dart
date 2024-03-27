@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:investmentmanager/src/features/investments/widgets/category_indicator_widget.dart';
+import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 
 class DiversityChartWidget extends StatelessWidget {
   const DiversityChartWidget({super.key});

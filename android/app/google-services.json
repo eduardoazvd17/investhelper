@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "784219103655",
+    "project_id": "investhelper-2024",
+    "storage_bucket": "investhelper-2024.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784219103655:android:935ddb173e7416f1961682",
+        "android_client_info": {
+          "package_name": "com.eduardoazevedo.investhelper"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZeddvTavt-peVT9VLfGm_HLamZJniVIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:investmentmanager/src/features/investments/views/investments_page.dart';
-import 'package:investmentmanager/src/l10n/l10n.dart';
+import 'package:investhelper/src/features/investments/views/investments_page.dart';
+import 'package:investhelper/src/l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
 
 class AuthPage extends StatefulWidget {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:investmentmanager/src/l10n/l10n.dart';
+import 'package:investhelper/src/l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../auth/views/auth_page.dart';

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:investmentmanager/src/features/investments/widgets/category_indicator_widget.dart';
-import 'package:investmentmanager/src/features/investments/widgets/daily_tips_widget.dart';
-import 'package:investmentmanager/src/features/investments/widgets/diversity_chart_widget.dart';
-import 'package:investmentmanager/src/features/investments/widgets/goal_card_tile.dart';
-import 'package:investmentmanager/src/features/investments/widgets/investment_tile_widget.dart';
-import 'package:investmentmanager/src/features/investments/widgets/quick_actions_widget.dart';
-import 'package:investmentmanager/src/l10n/l10n.dart';
+import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
+import 'package:investhelper/src/features/investments/widgets/daily_tips_widget.dart';
+import 'package:investhelper/src/features/investments/widgets/diversity_chart_widget.dart';
+import 'package:investhelper/src/features/investments/widgets/goal_card_tile.dart';
+import 'package:investhelper/src/features/investments/widgets/investment_tile_widget.dart';
+import 'package:investhelper/src/features/investments/widgets/quick_actions_widget.dart';
+import 'package:investhelper/src/l10n/l10n.dart';
 
 import '../widgets/investments_resume_card.dart';
 

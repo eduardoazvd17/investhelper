@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:investmentmanager/src/features/welcome/views/welcome_page.dart';
+import 'package:investhelper/firebase_options.dart';
+import 'package:investhelper/src/features/welcome/views/welcome_page.dart';
 import 'src/core/utils/app_theme.dart';
 import 'src/features/auth/views/auth_page.dart';
 import 'src/features/investments/views/investments_page.dart';
@@ -7,6 +9,7 @@ import 'src/l10n/l10n.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const InvestHelperApp());
 }
 
