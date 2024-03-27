@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
@@ -6,7 +8,11 @@ import '../../auth/views/auth_page.dart';
 
 class WelcomePage extends StatefulWidget {
   static const String routeName = "/welcome";
-  const WelcomePage({super.key});
+  final void Function() neverShowWelcomePage;
+  const WelcomePage({
+    super.key,
+    required this.neverShowWelcomePage,
+  });
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();
@@ -138,6 +144,7 @@ class _WelcomePageState extends State<WelcomePage> {
         contentText: AppLocalizations.of(context)!.welcomeText3,
         bottomWidget: ElevatedButton(
           onPressed: () {
+            widget.neverShowWelcomePage.call();
             Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
           },
           child: Text(AppLocalizations.of(context)!.letsStart),

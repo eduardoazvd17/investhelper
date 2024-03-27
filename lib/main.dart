@@ -16,21 +16,19 @@ Future<void> main() async {
   runApp(const SplashScreen());
   WidgetsFlutterBinding.ensureInitialized();
   await _loadDependencies();
-  final String initialRoute = await _getInitialRoute();
-  runApp(InvestHelperApp(initialRoute: initialRoute));
+  runApp(InvestHelperApp(initialRoute: await _getInitialRoute()));
 }
 
 Future<void> _loadDependencies() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final appID = await AppService.getAppID();
   GetIt.I.registerSingleton(CredentialsManager(
-    storageKey: appID,
+    storageKey: await AppService.getAppID(),
     useAndroidEncryptedSharedPreferences: true,
   ));
 }
 
 Future<String> _getInitialRoute() async {
-  final bool isFirstRun = await AppService.isFirstRun();
+  final bool isFirstRun = await AppService.didShowWelcomePage();
   return isFirstRun ? WelcomePage.routeName : AuthPage.routeName;
 }
 
@@ -55,7 +53,9 @@ class InvestHelperApp extends StatelessWidget {
       },
       initialRoute: initialRoute,
       routes: {
-        WelcomePage.routeName: (_) => const WelcomePage(),
+        WelcomePage.routeName: (_) => const WelcomePage(
+              neverShowWelcomePage: AppService.neverShowWelcomePage,
+            ),
         AuthPage.routeName: (_) => const AuthPage(),
         InvestmentsPage.routeName: (_) => const InvestmentsPage(),
         SettingsPage.routeName: (_) => const SettingsPage(),
