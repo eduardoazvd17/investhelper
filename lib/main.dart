@@ -5,6 +5,7 @@ import 'package:investhelper/src/features/welcome/views/welcome_page.dart';
 import 'src/core/utils/app_theme.dart';
 import 'src/features/auth/views/auth_page.dart';
 import 'src/features/investments/views/investments_page.dart';
+import 'src/features/settings/views/settings_page.dart';
 import 'src/l10n/l10n.dart';
 
 Future<void> main() async {
@@ -36,6 +37,7 @@ class InvestHelperApp extends StatelessWidget {
         WelcomePage.routeName: (_) => const WelcomePage(),
         AuthPage.routeName: (_) => const AuthPage(),
         InvestmentsPage.routeName: (_) => const InvestmentsPage(),
+        SettingsPage.routeName: (_) => const SettingsPage(),
       },
     );
   }

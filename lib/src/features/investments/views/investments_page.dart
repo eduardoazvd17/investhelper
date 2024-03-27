@@ -6,8 +6,10 @@ import 'package:investhelper/src/features/investments/widgets/diversity_chart_wi
 import 'package:investhelper/src/features/investments/widgets/goal_card_tile.dart';
 import 'package:investhelper/src/features/investments/widgets/investment_tile_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/quick_actions_widget.dart';
+import 'package:investhelper/src/features/settings/views/settings_page.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 
+import '../../../core/widgets/section_widget.dart';
 import '../widgets/investments_resume_card.dart';
 
 class InvestmentsPage extends StatefulWidget {
@@ -58,7 +60,9 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(SettingsPage.routeName);
+            },
             icon: const Icon(CupertinoIcons.settings),
           ),
         ],
@@ -98,25 +102,37 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _titleWidget(AppLocalizations.of(context)!.overview),
-              const InvestmentsResumeCard(),
-              _titleWidget(AppLocalizations.of(context)!.diversity),
-              const DiversityChartWidget(),
-              _titleWidget(AppLocalizations.of(context)!.myGoals),
-              SizedBox(
-                height: 120,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(
-                    10,
-                    (index) => const GoalCardTile(),
-                  ),
-                ),
+              SectionWidget(
+                title: AppLocalizations.of(context)!.overview,
+                content: const [InvestmentsResumeCard()],
               ),
-              _titleWidget(AppLocalizations.of(context)!.quickActions),
-              const QuickActionsWidget(),
-              _titleWidget(AppLocalizations.of(context)!.tips),
-              const DailyTipsWidget(),
+              SectionWidget(
+                title: AppLocalizations.of(context)!.diversity,
+                content: const [DiversityChartWidget()],
+              ),
+              SectionWidget(
+                title: AppLocalizations.of(context)!.myGoals,
+                content: [
+                  SizedBox(
+                    height: 120,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: List.generate(
+                        10,
+                        (index) => const GoalCardTile(),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SectionWidget(
+                title: AppLocalizations.of(context)!.quickActions,
+                content: const [QuickActionsWidget()],
+              ),
+              SectionWidget(
+                title: AppLocalizations.of(context)!.tips,
+                content: const [DailyTipsWidget()],
+              ),
               const SizedBox(height: 25),
             ],
           ),
@@ -136,8 +152,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _titleWidget(
-                AppLocalizations.of(context)!.investments,
+              SectionWidget(
+                title: AppLocalizations.of(context)!.investments,
                 actions: [
                   IconButton(
                     onPressed: () {},
@@ -145,23 +161,26 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     icon: const Icon(Icons.add),
                   ),
                 ],
-              ),
-              SizedBox(
-                height: 150,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(
-                    10,
-                    (index) => const InvestmentTileWidget(),
+                content: [
+                  SizedBox(
+                    height: 150,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: List.generate(
+                        10,
+                        (index) => const InvestmentTileWidget(),
+                      ),
+                    ),
                   ),
-                ),
+                  TextButton(
+                    onPressed: () {},
+                    child:
+                        Text(AppLocalizations.of(context)!.accessMyInvestments),
+                  ),
+                ],
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(AppLocalizations.of(context)!.accessMyInvestments),
-              ),
-              _titleWidget(
-                AppLocalizations.of(context)!.categories,
+              SectionWidget(
+                title: AppLocalizations.of(context)!.categories,
                 actions: [
                   IconButton(
                     onPressed: () {},
@@ -169,66 +188,52 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     icon: const Icon(Icons.add),
                   ),
                 ],
-              ),
-              SizedBox(
-                height: 50,
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: List.generate(
-                    10,
-                    (index) => const Card(
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: CategoryIndicatorWidget(
-                          color: Colors.purple,
-                          text: 'Ações',
+                content: [
+                  SizedBox(
+                    height: 50,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: List.generate(
+                        10,
+                        (index) => const Card(
+                          child: Padding(
+                            padding: EdgeInsets.all(10),
+                            child: CategoryIndicatorWidget(
+                              color: Colors.purple,
+                              text: 'Ações',
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      AppLocalizations.of(context)!.personalizeCategories,
+                    ),
+                  ),
+                ],
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  AppLocalizations.of(context)!.personalizeCategories,
-                ),
-              ),
-              _titleWidget(AppLocalizations.of(context)!.productsAndServices),
-              _buttonTile(
-                text: AppLocalizations.of(context)!.myGoals,
-                onTap: () {},
-              ),
-              _buttonTile(
-                text: AppLocalizations.of(context)!.operationsHistoryPerformed,
-                onTap: () {},
+              SectionWidget(
+                title: AppLocalizations.of(context)!.productsAndServices,
+                content: [
+                  _buttonTile(
+                    text: AppLocalizations.of(context)!.myGoals,
+                    onTap: () {},
+                  ),
+                  _buttonTile(
+                    text: AppLocalizations.of(context)!
+                        .operationsHistoryPerformed,
+                    onTap: () {},
+                  ),
+                ],
               ),
               const SizedBox(height: 25),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _titleWidget(
-    String text, {
-    List<Widget> actions = const [],
-  }) {
-    return Row(
-      children: [
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25),
-            child: Text(
-              text,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-          ),
-        ),
-        const SizedBox(width: 10),
-        ...actions,
-      ],
     );
   }
 
