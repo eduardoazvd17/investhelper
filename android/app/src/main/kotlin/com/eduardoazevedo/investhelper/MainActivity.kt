@@ -1,4 +1,4 @@
-package com.eduardoazevedo.investmentmanager
+package com.eduardoazevedo.investhelper
 
 import io.flutter.embedding.android.FlutterActivity
 
