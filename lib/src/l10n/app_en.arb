@@ -56,7 +56,7 @@
     "categories": "Categories",
     "personalizeCategories": "Personalize categories",
     "productsAndServices": "Products and services",
-    "custodialPosition": "Custodial Position: {value}",
+    "custodialPosition": "Custodial position: {value}",
     "@custodialPosition": {
         "placeholders": {
             "value": {
