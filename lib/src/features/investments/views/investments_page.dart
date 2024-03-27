@@ -80,11 +80,17 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         onTap: (int? index) => setState(() => _currentPage = index ?? 0),
         items: [
           BottomNavigationBarItem(
-            icon: const Icon(Icons.dashboard_outlined),
+            icon: const Padding(
+              padding: EdgeInsets.only(top: 10, bottom: 5),
+              child: Icon(Icons.dashboard_outlined),
+            ),
             label: AppLocalizations.of(context)!.overview,
           ),
           BottomNavigationBarItem(
-            icon: const Icon(CupertinoIcons.arrow_up_arrow_down),
+            icon: const Padding(
+              padding: EdgeInsets.only(top: 10, bottom: 5),
+              child: Icon(CupertinoIcons.arrow_up_arrow_down),
+            ),
             label: AppLocalizations.of(context)!.investments,
           ),
         ],
