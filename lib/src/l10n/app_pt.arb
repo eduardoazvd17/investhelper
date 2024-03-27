@@ -80,5 +80,6 @@
       }
     }
   },
-  "operationsHistoryPerformed": "Histórico de operações realizadas"
+  "operationsHistoryPerformed": "Histórico de operações realizadas",
+  "settings": "Configurações"
 }
