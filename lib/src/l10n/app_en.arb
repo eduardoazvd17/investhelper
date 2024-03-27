@@ -51,5 +51,33 @@
             }
         }
     },
-    "exit": "Exit"
+    "exit": "Exit",
+    "accessMyInvestments": "Access my investments",
+    "categories": "Categories",
+    "personalizeCategories": "Personalize categories",
+    "productsAndServices": "Products and services",
+    "custodialPosition": "Custodial Position: {value}",
+    "@custodialPosition": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "amountInvested": "Amount invested: {value}",
+    "@amountInvested": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "averagePrice": "Average price: {value}",
+    "@averagePrice": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    }
 }

@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:investmentmanager/src/features/investments/widgets/category_indicator_widget.dart';
 
 class DiversityChartWidget extends StatelessWidget {
   const DiversityChartWidget({super.key});
@@ -48,27 +49,17 @@ class DiversityChartWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ...sections.map((section) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2.5),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: 12,
-                            height: 12,
-                            color: section.color,
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              '${section.title} - ${section.value.toInt()}%',
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }),
+                  ...sections.map(
+                    (section) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 2.5),
+                        child: CategoryIndicatorWidget(
+                          color: section.color,
+                          text: '${section.title} - ${section.value.toInt()}%',
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

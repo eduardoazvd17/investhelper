@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:investmentmanager/src/features/auth/views/auth_page.dart';
+import 'package:investmentmanager/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investmentmanager/src/features/investments/widgets/daily_tips_widget.dart';
 import 'package:investmentmanager/src/features/investments/widgets/diversity_chart_widget.dart';
 import 'package:investmentmanager/src/features/investments/widgets/goal_card_tile.dart';
+import 'package:investmentmanager/src/features/investments/widgets/investment_tile_widget.dart';
 import 'package:investmentmanager/src/features/investments/widgets/quick_actions_widget.dart';
 import 'package:investmentmanager/src/l10n/l10n.dart';
 
@@ -137,7 +140,69 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _titleWidget(AppLocalizations.of(context)!.investments),
+              _titleWidget(
+                AppLocalizations.of(context)!.investments,
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(Icons.add),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 150,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: List.generate(
+                    10,
+                    (index) => const InvestmentTileWidget(),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(AppLocalizations.of(context)!.accessMyInvestments),
+              ),
+              _titleWidget(
+                AppLocalizations.of(context)!.categories,
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(Icons.add),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 50,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: List.generate(
+                    10,
+                    (index) => const Card(
+                      child: Padding(
+                        padding: EdgeInsets.all(10),
+                        child: CategoryIndicatorWidget(
+                          color: Colors.purple,
+                          text: 'Ações',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  AppLocalizations.of(context)!.personalizeCategories,
+                ),
+              ),
+              _titleWidget(AppLocalizations.of(context)!.productsAndServices),
+              _buttonTile(
+                text: AppLocalizations.of(context)!.myGoals,
+                onTap: () {},
+              ),
             ],
           ),
         ),
@@ -163,6 +228,46 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         const SizedBox(width: 10),
         ...actions,
       ],
+    );
+  }
+
+  Widget _buttonTile({
+    required String text,
+    required void Function() onTap,
+  }) {
+    final color = Theme.of(context).primaryColor;
+    return Padding(
+      padding: const EdgeInsets.all(8),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(10),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: color),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    text,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(color: color),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20),
+                  child: Icon(Icons.arrow_forward_ios, color: color),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

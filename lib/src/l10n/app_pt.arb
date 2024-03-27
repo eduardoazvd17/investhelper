@@ -51,5 +51,33 @@
       }
     }
   },
-  "exit": "Sair"
+  "exit": "Sair",
+  "accessMyInvestments": "Acessar meus investimentos",
+  "categories": "Categorias",
+  "personalizeCategories": "Personalizar categorias",
+  "productsAndServices": "Produtos e serviços",
+  "custodialPosition": "Posição em custódia: {value}",
+  "@custodialPosition": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "amountInvested": "Valor investido: {value}",
+  "@amountInvested": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "averagePrice": "Preço médio: {value}",
+  "@averagePrice": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }
