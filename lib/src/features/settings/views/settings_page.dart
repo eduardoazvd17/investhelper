@@ -26,7 +26,7 @@ class SettingsPage extends StatelessWidget {
                 SectionWidget(
                   title: AppLocalizations.of(context)!.myProfile,
                   content: [
-                    _myProfileCardWidget(context),
+                    _myProfileSectionContent(context),
                   ],
                 ),
                 SectionWidget(
@@ -49,7 +49,7 @@ class SettingsPage extends StatelessWidget {
                   title: AppLocalizations.of(context)!.personalization,
                   content: [
                     DropDownButtonWidget<ThemeEnum>(
-                      label: 'Tema do app:',
+                      label: AppLocalizations.of(context)!.appTheme,
                       value: ThemeEnum.system,
                       items: ThemeEnum.values.map((e) {
                         return DropdownMenuItem(
@@ -70,7 +70,7 @@ class SettingsPage extends StatelessWidget {
                     ),
                     const Divider(),
                     DropDownButtonWidget<LanguageEnum>(
-                      label: 'Idioma do app:',
+                      label: AppLocalizations.of(context)!.appLanguage,
                       value: LanguageEnum.system,
                       items: LanguageEnum.values.map((e) {
                         return DropdownMenuItem(
@@ -101,6 +101,7 @@ class SettingsPage extends StatelessWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: 25),
               ],
             ),
           ),
@@ -109,7 +110,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _myProfileCardWidget(BuildContext context) {
+  Widget _myProfileSectionContent(BuildContext context) {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),

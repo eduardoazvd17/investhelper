@@ -80,5 +80,21 @@
         }
     },
     "operationsHistoryPerformed": "History of operations performed",
-    "settings": "Settings"
+    "settings": "Settings",
+    "myProfile": "My Profile",
+    "changePersonalData": "Change personal data",
+    "endSession": "End session",
+    "protection": "Protection",
+    "enableBiometrics": "Enable Biometrics",
+    "enableBiometricsHint": "Protect your data using your biometrics to access the app.",
+    "personalization": "Personalization",
+    "appTheme": "App theme",
+    "appLanguage": "App language",
+    "system": "System",
+    "lightMode": "Light Mode",
+    "darkMode": "Dark Mode",
+    "english": "English",
+    "portuguese": "Portuguese",
+    "others": "Others",
+    "aboutThisApp": "About this app"
 }
