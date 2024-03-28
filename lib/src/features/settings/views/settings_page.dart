@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
 import 'package:investhelper/src/core/widgets/drop_down_button_widget.dart';
 import 'package:investhelper/src/core/widgets/section_widget.dart';
+import 'package:investhelper/src/features/settings/enums/language_enum.dart';
 
 import '../../../l10n/l10n.dart';
+import '../enums/theme_enum.dart';
 
 class SettingsPage extends StatelessWidget {
   static const String routeName = "/settings";
@@ -16,45 +17,93 @@ class SettingsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.settings),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            SectionWidget(
-              title: AppLocalizations.of(context)!.myProfile,
-              content: [
-                _myProfileCardWidget(context),
-              ],
-            ),
-            SectionWidget(
-              title: AppLocalizations.of(context)!.options,
-              content: [
-                SwitchListTile.adaptive(
-                  value: false,
-                  title: const Text('Option title'),
-                  subtitle: const Text('Description'),
-                  activeColor: Colors.green,
-                  onChanged: (_) {},
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              children: [
+                SectionWidget(
+                  title: AppLocalizations.of(context)!.myProfile,
+                  content: [
+                    _myProfileCardWidget(context),
+                  ],
                 ),
-                const Divider(),
-                DropDownButtonWidget<int>(
-                  value: 0,
-                  items: const [
-                    DropdownMenuItem(
-                      value: 0,
-                      child: Text('Opção 1'),
-                    ),
-                    DropdownMenuItem(
-                      value: 1,
-                      child: Text('Opção 2'),
+                SectionWidget(
+                  title: AppLocalizations.of(context)!.protection,
+                  content: [
+                    SwitchListTile.adaptive(
+                      value: false,
+                      activeColor: Colors.green,
+                      title: Text(
+                        AppLocalizations.of(context)!.enableBiometrics,
+                      ),
+                      subtitle: Text(
+                        AppLocalizations.of(context)!.enableBiometricsHint,
+                      ),
+                      onChanged: (_) {},
                     ),
                   ],
-                  onChanged: (_) {},
                 ),
-                const Divider(),
+                SectionWidget(
+                  title: AppLocalizations.of(context)!.personalization,
+                  content: [
+                    DropDownButtonWidget<ThemeEnum>(
+                      label: 'Tema do app:',
+                      value: ThemeEnum.system,
+                      items: ThemeEnum.values.map((e) {
+                        return DropdownMenuItem(
+                          value: e,
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: e.icon,
+                              ),
+                              Text(e.getTitle(context)),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (theme) {},
+                    ),
+                    const Divider(),
+                    DropDownButtonWidget<LanguageEnum>(
+                      label: 'Idioma do app:',
+                      value: LanguageEnum.system,
+                      items: LanguageEnum.values.map((e) {
+                        return DropdownMenuItem(
+                          value: e,
+                          child: Row(
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: e.icon,
+                              ),
+                              Text(e.getTitle(context)),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (theme) {},
+                    ),
+                  ],
+                ),
+                SectionWidget(
+                  title: AppLocalizations.of(context)!.others,
+                  content: [
+                    ButtonTileWidget(
+                      text: AppLocalizations.of(context)!.aboutThisApp,
+                      icon: Icons.info_outline,
+                      onTap: () {},
+                    ),
+                  ],
+                ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );

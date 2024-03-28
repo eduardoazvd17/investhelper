@@ -84,5 +84,17 @@
   "settings": "Configurações",
   "changePersonalData": "Alterar dados pessoais",
   "endSession": "Finalizar sessão",
-  "options": "Opções"
+  "protection": "Proteção",
+  "enableBiometrics": "Habilitar Biometria",
+  "enableBiometricsHint": "Proteja seus dados utilizando sua biometria para acessar o app.",
+  "personalization": "Personalização",
+  "appTheme": "Tema do app",
+  "appLanguage": "Idioma do app",
+  "system": "Sistema",
+  "lightMode": "Modo claro",
+  "darkMode": "Modo escuro",
+  "english": "Inglês",
+  "portuguese": "Português",
+  "others": "Outros",
+  "aboutThisApp": "Sobre este app"
 }
