@@ -35,4 +35,14 @@ extension ThemeEnumExtension on LanguageEnum {
         ),
     };
   }
+
+  Locale? get locale {
+    final String? countryCode =
+        WidgetsBinding.instance.platformDispatcher.locale.countryCode;
+    return switch (this) {
+      LanguageEnum.system => null,
+      LanguageEnum.english => Locale('en', countryCode),
+      LanguageEnum.portuguese => Locale('pt', countryCode),
+    };
+  }
 }

@@ -25,4 +25,12 @@ extension ThemeEnumExtension on ThemeEnum {
       ThemeEnum.dark => Icon(CupertinoIcons.moon, color: Colors.purple[300]),
     };
   }
+
+  ThemeMode get themeMode {
+    return switch (this) {
+      ThemeEnum.system => ThemeMode.system,
+      ThemeEnum.light => ThemeMode.light,
+      ThemeEnum.dark => ThemeMode.dark,
+    };
+  }
 }

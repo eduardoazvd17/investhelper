@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
 import 'package:investhelper/src/core/widgets/drop_down_button_widget.dart';
 import 'package:investhelper/src/core/widgets/section_widget.dart';
+import 'package:investhelper/src/features/settings/controllers/settings_controller.dart';
 import 'package:investhelper/src/features/settings/enums/language_enum.dart';
 
 import '../../../l10n/l10n.dart';
@@ -9,7 +11,8 @@ import '../enums/theme_enum.dart';
 
 class SettingsPage extends StatelessWidget {
   static const String routeName = "/settings";
-  const SettingsPage({super.key});
+  final SettingsController controller;
+  const SettingsPage({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -48,47 +51,53 @@ class SettingsPage extends StatelessWidget {
                 SectionWidget(
                   title: AppLocalizations.of(context)!.personalization,
                   content: [
-                    DropDownButtonWidget<ThemeEnum>(
-                      label: AppLocalizations.of(context)!.appTheme,
-                      value: ThemeEnum.system,
-                      items: ThemeEnum.values.map((e) {
-                        return DropdownMenuItem(
-                          value: e,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: e.icon,
+                    Observer(
+                      builder: (_) {
+                        return DropDownButtonWidget<ThemeEnum>(
+                          label: AppLocalizations.of(context)!.appTheme,
+                          value: controller.theme,
+                          items: ThemeEnum.values.map((e) {
+                            return DropdownMenuItem(
+                              value: e,
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: e.icon,
+                                  ),
+                                  Text(e.getTitle(context)),
+                                ],
                               ),
-                              Text(e.getTitle(context)),
-                            ],
-                          ),
+                            );
+                          }).toList(),
+                          onChanged: controller.changeTheme,
                         );
-                      }).toList(),
-                      onChanged: (theme) {},
+                      },
                     ),
                     const Divider(),
-                    DropDownButtonWidget<LanguageEnum>(
-                      label: AppLocalizations.of(context)!.appLanguage,
-                      value: LanguageEnum.system,
-                      items: LanguageEnum.values.map((e) {
-                        return DropdownMenuItem(
-                          value: e,
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: e.icon,
-                              ),
-                              Text(e.getTitle(context)),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                      onChanged: (theme) {},
-                    ),
+                    Observer(builder: (_) {
+                      return DropDownButtonWidget<LanguageEnum>(
+                        label: AppLocalizations.of(context)!.appLanguage,
+                        value: controller.language,
+                        items: LanguageEnum.values.map((e) {
+                          return DropdownMenuItem(
+                            value: e,
+                            child: Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: e.icon,
+                                ),
+                                Text(e.getTitle(context)),
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: controller.changeLanguage,
+                      );
+                    }),
                   ],
                 ),
                 SectionWidget(
