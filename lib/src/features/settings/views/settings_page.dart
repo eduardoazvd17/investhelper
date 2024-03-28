@@ -35,16 +35,20 @@ class SettingsPage extends StatelessWidget {
                 SectionWidget(
                   title: AppLocalizations.of(context)!.protection,
                   content: [
-                    SwitchListTile.adaptive(
-                      value: false,
-                      activeColor: Colors.green,
-                      title: Text(
-                        AppLocalizations.of(context)!.enableBiometrics,
-                      ),
-                      subtitle: Text(
-                        AppLocalizations.of(context)!.enableBiometricsHint,
-                      ),
-                      onChanged: (_) {},
+                    Observer(
+                      builder: (_) {
+                        return SwitchListTile.adaptive(
+                          value: controller.isBiometricsEnabled,
+                          activeColor: Colors.green,
+                          title: Text(
+                            AppLocalizations.of(context)!.enableBiometrics,
+                          ),
+                          subtitle: Text(
+                            AppLocalizations.of(context)!.enableBiometricsHint,
+                          ),
+                          onChanged: controller.changeIsBiometricsEnabled,
+                        );
+                      },
                     ),
                   ],
                 ),

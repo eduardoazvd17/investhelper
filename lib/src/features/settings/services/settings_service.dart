@@ -4,6 +4,16 @@ import '../enums/language_enum.dart';
 import '../enums/theme_enum.dart';
 
 class SettingsService {
+  Future<void> saveIsBiometricsEnabled(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('AppBiometrics', value);
+  }
+
+  Future<bool> loadIsBiometricsEnabled() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('AppBiometrics') ?? false;
+  }
+
   Future<void> saveLanguage(LanguageEnum language) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt('AppLanguage', language.index);

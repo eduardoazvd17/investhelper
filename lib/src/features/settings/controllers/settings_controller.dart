@@ -12,14 +12,24 @@ abstract class SettingsControllerBase with Store {
   SettingsControllerBase({
     required SettingsService service,
   }) : _service = service {
+    isBiometricsEnabled = false;
     theme = ThemeEnum.system;
     language = LanguageEnum.system;
   }
 
   @action
   Future<void> loadSettings() async {
+    isBiometricsEnabled = await _service.loadIsBiometricsEnabled();
     theme = await _service.loadTheme();
     language = await _service.loadLanguage();
+  }
+
+  @observable
+  late bool isBiometricsEnabled;
+
+  void changeIsBiometricsEnabled(bool value) async {
+    isBiometricsEnabled = value;
+    _service.saveIsBiometricsEnabled(value);
   }
 
   @observable
