@@ -9,6 +9,8 @@ import 'package:investhelper/src/features/settings/enums/theme_enum.dart';
 import 'package:investhelper/src/features/welcome/views/welcome_page.dart';
 import 'src/core/services/app_service.dart';
 import 'src/core/utils/app_theme.dart';
+import 'src/features/auth/controllers/auth_controller.dart';
+import 'src/features/auth/services/auth_service.dart';
 import 'src/features/auth/views/auth_page.dart';
 import 'src/features/investments/views/investments_page.dart';
 import 'src/features/settings/controllers/settings_controller.dart';
@@ -31,14 +33,22 @@ Future<void> main() async {
 
 Future<void> _loadDependencies() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  GetIt.I.registerSingleton(CredentialsManager(
-    storageKey: await AppService.getAppID(),
-    useAndroidEncryptedSharedPreferences: true,
-  ));
-  final settings = GetIt.I.registerSingleton(
+  final credentialsManager = GetIt.I.registerSingleton(
+    CredentialsManager(
+      storageKey: await AppService.getAppID(),
+      useAndroidEncryptedSharedPreferences: true,
+    ),
+  );
+  final authController = GetIt.I.registerSingleton(
+    AuthController(
+      service: AuthService(credentialsManager: credentialsManager),
+    ),
+  );
+  final settingsController = GetIt.I.registerSingleton(
     SettingsController(service: SettingsService()),
   );
-  await settings.loadSettings();
+  await authController.loadSavedCredentials();
+  await settingsController.loadSettings();
 }
 
 Future<String> _getInitialRoute() async {
