@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:investhelper/src/core/controllers/app_controller.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
 
@@ -6,11 +7,8 @@ import '../../auth/views/auth_page.dart';
 
 class WelcomePage extends StatefulWidget {
   static const String routeName = "/welcome";
-  final void Function() onTapLetsStartCallback;
-  const WelcomePage({
-    super.key,
-    required this.onTapLetsStartCallback,
-  });
+  final AppController appController;
+  const WelcomePage({super.key, required this.appController});
 
   @override
   State<WelcomePage> createState() => _WelcomePageState();
@@ -142,7 +140,7 @@ class _WelcomePageState extends State<WelcomePage> {
         contentText: AppLocalizations.of(context)!.welcomeText3,
         bottomWidget: ElevatedButton(
           onPressed: () {
-            widget.onTapLetsStartCallback.call();
+            widget.appController.disableWelcomePage();
             Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
           },
           child: Text(AppLocalizations.of(context)!.letsStart),

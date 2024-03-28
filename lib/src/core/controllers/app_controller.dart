@@ -19,6 +19,7 @@ abstract class AppControllerBase with Store {
   AppControllerBase({
     required AppService service,
   }) : _service = service {
+    showWelcomePage = true;
     isBiometricsEnabled = false;
     theme = ThemeEnum.system;
     language = LanguageEnum.system;
@@ -26,10 +27,20 @@ abstract class AppControllerBase with Store {
 
   @action
   Future<void> initialize() async {
+    showWelcomePage = await _service.loadShowWelcomePage();
     isBiometricsEnabled = await _service.loadIsBiometricsEnabled();
     theme = await _service.loadTheme();
     language = await _service.loadLanguage();
     user = await _service.getCurrentUser();
+  }
+
+  @observable
+  late bool showWelcomePage;
+
+  @action
+  void disableWelcomePage() {
+    showWelcomePage = false;
+    _service.disableWelcomePage();
   }
 
   @observable

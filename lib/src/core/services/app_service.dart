@@ -9,14 +9,14 @@ import '../models/user_model.dart';
 class AppService {
   FirebaseAuth get _auth => FirebaseAuth.instance;
 
-  static Future<bool> didShowWelcomePage() async {
+  Future<bool> loadShowWelcomePage() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getBool('DidShowWelcomePage') ?? true;
+    return prefs.getBool('AppShowWelcomePage') ?? true;
   }
 
-  static Future<void> neverShowWelcomePage() async {
+  Future<void> disableWelcomePage() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setBool('DidShowWelcomePage', false);
+    prefs.setBool('AppShowWelcomePage', false);
   }
 
   Future<void> saveIsBiometricsEnabled(bool value) async {

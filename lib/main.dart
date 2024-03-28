@@ -20,39 +20,30 @@ import 'src/l10n/l10n.dart';
 Future<void> main() async {
   runApp(const SplashScreen());
   WidgetsFlutterBinding.ensureInitialized();
-  await _loadDependencies();
-  runApp(
-    InvestHelperApp(
-      initialRoute: await _getInitialRoute(),
-      appController: GetIt.I.get<AppController>(),
-    ),
-  );
+  final AppController appController = await _loadDependencies();
+  runApp(InvestHelperApp(appController: appController));
 }
 
-Future<void> _loadDependencies() async {
+Future<AppController> _loadDependencies() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   final appController = GetIt.I.registerSingleton(
     AppController(service: AppService()),
   );
   await appController.initialize();
   GetIt.I.registerSingleton(AuthController(service: AuthService()));
-}
-
-Future<String> _getInitialRoute() async {
-  final bool userIsLoggedIn = GetIt.I.get<AppController>().user != null;
-  if (userIsLoggedIn) return InvestmentsPage.routeName;
-  final bool isFirstRun = await AppService.didShowWelcomePage();
-  return isFirstRun ? WelcomePage.routeName : AuthPage.routeName;
+  return appController;
 }
 
 class InvestHelperApp extends StatelessWidget {
-  final String initialRoute;
   final AppController appController;
-  const InvestHelperApp({
-    super.key,
-    required this.initialRoute,
-    required this.appController,
-  });
+  const InvestHelperApp({super.key, required this.appController});
+
+  String get _initialRoute {
+    final bool userIsLoggedIn = appController.user != null;
+    if (userIsLoggedIn) return InvestmentsPage.routeName;
+    final bool showWelcomePage = appController.showWelcomePage;
+    return showWelcomePage ? WelcomePage.routeName : AuthPage.routeName;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,12 +64,10 @@ class InvestHelperApp extends StatelessWidget {
               orElse: () => Locale('en', locale?.countryCode),
             );
           },
-          initialRoute: initialRoute,
+          initialRoute: _initialRoute,
           routes: {
             WelcomePage.routeName: (_) {
-              return const WelcomePage(
-                onTapLetsStartCallback: AppService.neverShowWelcomePage,
-              );
+              return WelcomePage(appController: appController);
             },
             AuthPage.routeName: (_) {
               return AuthPage(controller: GetIt.I.get<AuthController>());

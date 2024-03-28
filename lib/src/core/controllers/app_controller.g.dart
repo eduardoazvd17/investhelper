@@ -9,6 +9,43 @@ part of 'app_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AppController on AppControllerBase, Store {
+  late final _$showWelcomePageAtom =
+      Atom(name: 'AppControllerBase.showWelcomePage', context: context);
+
+  @override
+  bool get showWelcomePage {
+    _$showWelcomePageAtom.reportRead();
+    return super.showWelcomePage;
+  }
+
+  bool _showWelcomePageIsInitialized = false;
+
+  @override
+  set showWelcomePage(bool value) {
+    _$showWelcomePageAtom.reportWrite(
+        value, _showWelcomePageIsInitialized ? super.showWelcomePage : null,
+        () {
+      super.showWelcomePage = value;
+      _showWelcomePageIsInitialized = true;
+    });
+  }
+
+  late final _$userAtom =
+      Atom(name: 'AppControllerBase.user', context: context);
+
+  @override
+  UserModel? get user {
+    _$userAtom.reportRead();
+    return super.user;
+  }
+
+  @override
+  set user(UserModel? value) {
+    _$userAtom.reportWrite(value, super.user, () {
+      super.user = value;
+    });
+  }
+
   late final _$isBiometricsEnabledAtom =
       Atom(name: 'AppControllerBase.isBiometricsEnabled', context: context);
 
@@ -70,16 +107,27 @@ mixin _$AppController on AppControllerBase, Store {
     });
   }
 
-  late final _$loadSettingsAsyncAction =
-      AsyncAction('AppControllerBase.loadSettings', context: context);
+  late final _$initializeAsyncAction =
+      AsyncAction('AppControllerBase.initialize', context: context);
 
   @override
   Future<void> initialize() {
-    return _$loadSettingsAsyncAction.run(() => super.initialize());
+    return _$initializeAsyncAction.run(() => super.initialize());
   }
 
   late final _$AppControllerBaseActionController =
       ActionController(name: 'AppControllerBase', context: context);
+
+  @override
+  void disableWelcomePage() {
+    final _$actionInfo = _$AppControllerBaseActionController.startAction(
+        name: 'AppControllerBase.disableWelcomePage');
+    try {
+      return super.disableWelcomePage();
+    } finally {
+      _$AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void changeTheme(ThemeEnum? theme) {
@@ -106,6 +154,8 @@ mixin _$AppController on AppControllerBase, Store {
   @override
   String toString() {
     return '''
+showWelcomePage: ${showWelcomePage},
+user: ${user},
 isBiometricsEnabled: ${isBiometricsEnabled},
 theme: ${theme},
 language: ${language}
