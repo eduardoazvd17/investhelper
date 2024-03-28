@@ -66,6 +66,8 @@ class AppService {
     return null;
   }
 
+  Future<void> logout() async => await _auth.signOut();
+
   static Future<String> getAppID() async {
     final prefs = await SharedPreferences.getInstance();
     final String? appID = prefs.getString('AppID');

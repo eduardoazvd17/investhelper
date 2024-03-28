@@ -46,6 +46,15 @@ abstract class AppControllerBase with Store {
   @observable
   UserModel? user;
 
+  @action
+  void login(UserModel user) => this.user = user;
+
+  @action
+  Future<void> logout() async {
+    await _service.logout();
+    user = null;
+  }
+
   @observable
   late bool isBiometricsEnabled;
 

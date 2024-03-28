@@ -30,7 +30,9 @@ Future<AppController> _loadDependencies() async {
     AppController(service: AppService()),
   );
   await appController.initialize();
-  GetIt.I.registerSingleton(AuthController(service: AuthService()));
+  GetIt.I.registerSingleton(
+    AuthController(appController: appController, service: AuthService()),
+  );
   return appController;
 }
 

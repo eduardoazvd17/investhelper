@@ -115,6 +115,14 @@ mixin _$AppController on AppControllerBase, Store {
     return _$initializeAsyncAction.run(() => super.initialize());
   }
 
+  late final _$logoutAsyncAction =
+      AsyncAction('AppControllerBase.logout', context: context);
+
+  @override
+  Future<void> logout() {
+    return _$logoutAsyncAction.run(() => super.logout());
+  }
+
   late final _$AppControllerBaseActionController =
       ActionController(name: 'AppControllerBase', context: context);
 
@@ -124,6 +132,17 @@ mixin _$AppController on AppControllerBase, Store {
         name: 'AppControllerBase.disableWelcomePage');
     try {
       return super.disableWelcomePage();
+    } finally {
+      _$AppControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void login(UserModel user) {
+    final _$actionInfo = _$AppControllerBaseActionController.startAction(
+        name: 'AppControllerBase.login');
+    try {
+      return super.login(user);
     } finally {
       _$AppControllerBaseActionController.endAction(_$actionInfo);
     }
