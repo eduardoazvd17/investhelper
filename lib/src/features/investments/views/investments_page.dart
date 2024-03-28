@@ -40,6 +40,24 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     super.dispose();
   }
 
+  void _onChangeCurrentPage(int? index) {
+    setState(() => _currentPage = index ?? 0);
+    if (_overviewScrollController.hasClients) {
+      _overviewScrollController.animateTo(
+        0.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    }
+    if (_detailsScrollController.hasClients) {
+      _detailsScrollController.animateTo(
+        0.0,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.ease,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +91,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentPage,
-        onTap: (int? index) => setState(() => _currentPage = index ?? 0),
+        onTap: _onChangeCurrentPage,
         items: [
           BottomNavigationBarItem(
             icon: const Padding(
