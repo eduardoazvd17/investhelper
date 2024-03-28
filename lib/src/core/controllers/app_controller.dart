@@ -1,16 +1,23 @@
-import 'package:investhelper/src/features/settings/enums/language_enum.dart';
-import 'package:investhelper/src/features/settings/services/settings_service.dart';
+import 'package:get_it/get_it.dart';
+import 'package:investhelper/src/core/enums/language_enum.dart';
 import 'package:mobx/mobx.dart';
 
 import '../enums/theme_enum.dart';
-part 'settings_controller.g.dart';
+import '../models/user_model.dart';
+import '../services/app_service.dart';
+part 'app_controller.g.dart';
 
-class SettingsController = SettingsControllerBase with _$SettingsController;
+class AppController = AppControllerBase with _$AppController;
 
-abstract class SettingsControllerBase with Store {
-  final SettingsService _service;
-  SettingsControllerBase({
-    required SettingsService service,
+extension AppControllerExtension on AppController {
+  static get instance => GetIt.I.get<AppController>();
+  static get I => instance;
+}
+
+abstract class AppControllerBase with Store {
+  final AppService _service;
+  AppControllerBase({
+    required AppService service,
   }) : _service = service {
     isBiometricsEnabled = false;
     theme = ThemeEnum.system;
@@ -18,11 +25,15 @@ abstract class SettingsControllerBase with Store {
   }
 
   @action
-  Future<void> loadSettings() async {
+  Future<void> initialize() async {
     isBiometricsEnabled = await _service.loadIsBiometricsEnabled();
     theme = await _service.loadTheme();
     language = await _service.loadLanguage();
+    user = await _service.getCurrentUser();
   }
+
+  @observable
+  UserModel? user;
 
   @observable
   late bool isBiometricsEnabled;

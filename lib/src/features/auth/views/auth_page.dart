@@ -3,12 +3,14 @@ import 'package:investhelper/src/features/investments/views/investments_page.dar
 import 'package:investhelper/src/l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
 
+import '../controllers/auth_controller.dart';
+
 class AuthPage extends StatefulWidget {
   static const String routeName = "/auth";
-  final AuthPageState authPageState;
+  final AuthController controller;
   const AuthPage({
     super.key,
-    this.authPageState = AuthPageState.login,
+    required this.controller,
   });
 
   @override
@@ -28,7 +30,7 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   void initState() {
-    _currentPageState = widget.authPageState;
+    _currentPageState = AuthPageState.login;
     _nameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
@@ -37,6 +39,7 @@ class _AuthPageState extends State<AuthPage> {
     _emailFocus = FocusNode();
     _passwordFocus = FocusNode();
     _passwordConfirmationFocus = FocusNode();
+
     super.initState();
   }
 
@@ -72,7 +75,6 @@ class _AuthPageState extends State<AuthPage> {
                     ),
                   ),
                   switch (_currentPageState) {
-                    AuthPageState.loading => _loadingStateContent,
                     AuthPageState.login => _loginStateContent,
                     AuthPageState.register => _registerStateContent,
                     AuthPageState.recovery => _recoveryStateContent,
@@ -83,19 +85,6 @@ class _AuthPageState extends State<AuthPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget get _loadingStateContent {
-    return const Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 50),
-          child: Center(
-            child: CircularProgressIndicator(),
-          ),
-        ),
-      ],
     );
   }
 
@@ -331,7 +320,6 @@ class _AuthPageState extends State<AuthPage> {
 }
 
 enum AuthPageState {
-  loading,
   login,
   register,
   recovery,

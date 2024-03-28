@@ -1,7 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
+import '../enums/language_enum.dart';
+import '../enums/theme_enum.dart';
+import '../models/user_model.dart';
+
 class AppService {
+  FirebaseAuth get _auth => FirebaseAuth.instance;
+
   static Future<bool> didShowWelcomePage() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getBool('DidShowWelcomePage') ?? true;
@@ -10,6 +17,53 @@ class AppService {
   static Future<void> neverShowWelcomePage() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('DidShowWelcomePage', false);
+  }
+
+  Future<void> saveIsBiometricsEnabled(bool value) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('AppBiometrics', value);
+  }
+
+  Future<bool> loadIsBiometricsEnabled() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('AppBiometrics') ?? false;
+  }
+
+  Future<void> saveLanguage(LanguageEnum language) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('AppLanguage', language.index);
+  }
+
+  Future<LanguageEnum> loadLanguage() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? index = prefs.getInt('AppLanguage');
+    if (index == null) return LanguageEnum.system;
+    return LanguageEnum.values[index];
+  }
+
+  Future<void> saveTheme(ThemeEnum theme) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt('AppTheme', theme.index);
+  }
+
+  Future<ThemeEnum> loadTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    final int? index = prefs.getInt('AppTheme');
+    if (index == null) return ThemeEnum.system;
+    return ThemeEnum.values[index];
+  }
+
+  Future<UserModel?> getCurrentUser() async {
+    try {
+      if (_auth.currentUser != null) {
+        return UserModel(
+          id: _auth.currentUser!.uid,
+          name: _auth.currentUser!.displayName!,
+          email: _auth.currentUser!.email!,
+        );
+      }
+    } catch (_) {}
+    return null;
   }
 
   static Future<String> getAppID() async {

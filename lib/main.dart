@@ -1,11 +1,10 @@
-import 'package:credentials_manager/credentials_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:investhelper/firebase_options.dart';
-import 'package:investhelper/src/features/settings/enums/language_enum.dart';
-import 'package:investhelper/src/features/settings/enums/theme_enum.dart';
+import 'package:investhelper/src/core/enums/language_enum.dart';
+import 'package:investhelper/src/core/enums/theme_enum.dart';
 import 'package:investhelper/src/features/welcome/views/welcome_page.dart';
 import 'src/core/services/app_service.dart';
 import 'src/core/utils/app_theme.dart';
@@ -13,8 +12,7 @@ import 'src/features/auth/controllers/auth_controller.dart';
 import 'src/features/auth/services/auth_service.dart';
 import 'src/features/auth/views/auth_page.dart';
 import 'src/features/investments/views/investments_page.dart';
-import 'src/features/settings/controllers/settings_controller.dart';
-import 'src/features/settings/services/settings_service.dart';
+import 'src/core/controllers/app_controller.dart';
 import 'src/features/settings/views/settings_page.dart';
 import 'src/features/splash_screen/views/splash_screen.dart';
 import 'src/l10n/l10n.dart';
@@ -26,43 +24,34 @@ Future<void> main() async {
   runApp(
     InvestHelperApp(
       initialRoute: await _getInitialRoute(),
-      settingsController: GetIt.I.get<SettingsController>(),
+      appController: GetIt.I.get<AppController>(),
     ),
   );
 }
 
 Future<void> _loadDependencies() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final credentialsManager = GetIt.I.registerSingleton(
-    CredentialsManager(
-      storageKey: await AppService.getAppID(),
-      useAndroidEncryptedSharedPreferences: true,
-    ),
+  final appController = GetIt.I.registerSingleton(
+    AppController(service: AppService()),
   );
-  final authController = GetIt.I.registerSingleton(
-    AuthController(
-      service: AuthService(credentialsManager: credentialsManager),
-    ),
-  );
-  final settingsController = GetIt.I.registerSingleton(
-    SettingsController(service: SettingsService()),
-  );
-  await authController.loadSavedCredentials();
-  await settingsController.loadSettings();
+  await appController.initialize();
+  GetIt.I.registerSingleton(AuthController(service: AuthService()));
 }
 
 Future<String> _getInitialRoute() async {
+  final bool userIsLoggedIn = GetIt.I.get<AppController>().user != null;
+  if (userIsLoggedIn) return InvestmentsPage.routeName;
   final bool isFirstRun = await AppService.didShowWelcomePage();
   return isFirstRun ? WelcomePage.routeName : AuthPage.routeName;
 }
 
 class InvestHelperApp extends StatelessWidget {
   final String initialRoute;
-  final SettingsController settingsController;
+  final AppController appController;
   const InvestHelperApp({
     super.key,
     required this.initialRoute,
-    required this.settingsController,
+    required this.appController,
   });
 
   @override
@@ -73,8 +62,8 @@ class InvestHelperApp extends StatelessWidget {
           title: 'InvestHelper',
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
-          themeMode: settingsController.theme.themeMode,
-          locale: settingsController.language.locale,
+          themeMode: appController.theme.themeMode,
+          locale: appController.language.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           localeResolutionCallback: (locale, supportedLocales) {
@@ -91,10 +80,12 @@ class InvestHelperApp extends StatelessWidget {
                 onTapLetsStartCallback: AppService.neverShowWelcomePage,
               );
             },
-            AuthPage.routeName: (_) => const AuthPage(),
+            AuthPage.routeName: (_) {
+              return AuthPage(controller: GetIt.I.get<AuthController>());
+            },
             InvestmentsPage.routeName: (_) => const InvestmentsPage(),
             SettingsPage.routeName: (_) {
-              return SettingsPage(controller: settingsController);
+              return SettingsPage(appController: appController);
             },
           },
         );
