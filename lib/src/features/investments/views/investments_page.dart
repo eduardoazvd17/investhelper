@@ -46,11 +46,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
       appBar: AppBar(
         title: Row(
           children: [
-            const Icon(
-              CupertinoIcons.person_alt_circle,
-              size: 45,
-              color: Colors.grey,
-            ),
+            Image.asset("assets/images/logo.png", height: 40),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
