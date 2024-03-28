@@ -4,16 +4,24 @@ class ButtonTileWidget extends StatelessWidget {
   final String text;
   final void Function() onTap;
   final Color? color;
+  final IconData? icon;
   const ButtonTileWidget({
     super.key,
     required this.text,
     required this.onTap,
     this.color,
+    this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
-    final Color color = this.color ?? Theme.of(context).primaryColor;
+    final Color color = this.color ??
+        Theme.of(context)
+            .elevatedButtonTheme
+            .style
+            ?.backgroundColor
+            ?.resolve(MaterialState.values.toSet()) ??
+        Theme.of(context).primaryColor;
 
     return Padding(
       padding: const EdgeInsets.all(8),
@@ -40,7 +48,7 @@ class ButtonTileWidget extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 20),
-                  child: Icon(Icons.arrow_forward_ios, color: color),
+                  child: Icon(icon ?? Icons.arrow_forward_ios, color: color),
                 ),
               ],
             ),

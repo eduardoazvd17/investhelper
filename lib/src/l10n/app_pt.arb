@@ -51,7 +51,6 @@
       }
     }
   },
-  "exit": "Sair",
   "accessMyInvestments": "Acessar meus investimentos",
   "categories": "Categorias",
   "personalizeCategories": "Personalizar categorias",
@@ -81,5 +80,9 @@
     }
   },
   "operationsHistoryPerformed": "Histórico de operações realizadas",
-  "settings": "Configurações"
+  "myProfile": "Meu perfil",
+  "settings": "Configurações",
+  "changePersonalData": "Alterar dados pessoais",
+  "endSession": "Finalizar sessão",
+  "options": "Opções"
 }
