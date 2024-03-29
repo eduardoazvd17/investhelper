@@ -24,7 +24,7 @@
     "login": "Login",
     "makeRegister": "Complete Registration",
     "register": "Register",
-    "makeRecovery": "Reset password",
+    "sendRecoveryEmail": "Send recovery email",
     "forgotMyPassword": "I forgot my password",
     "dontHaveAnAccountYet": "Don't have an account yet?",
     "alreadyHaveAnAccount": "Already have an account?",

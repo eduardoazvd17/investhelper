@@ -24,7 +24,7 @@
   "login": "Entrar",
   "makeRegister": "Concluir Cadastro",
   "register": "Cadastre-se",
-  "makeRecovery": "Redefinir senha",
+  "sendRecoveryEmail": "Enviar e-mail de recuperação",
   "forgotMyPassword": "Esqueci minha senha",
   "dontHaveAnAccountYet": "Ainda não possui uma conta?",
   "alreadyHaveAnAccount": "Já possui uma conta?",

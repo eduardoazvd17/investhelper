@@ -93,7 +93,7 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
-  Future<void> _makeRecovery() async {
+  Future<void> _sendRecoveryEmail() async {
     try {
       await widget.controller.sendRecoveryEmail(
         _emailController.text.trim(),
@@ -247,9 +247,9 @@ class _AuthPageState extends State<AuthPage> {
               _emailTextField,
               const SizedBox(height: 10),
               ElevatedButton(
-                onPressed: _makeRecovery,
+                onPressed: _sendRecoveryEmail,
                 child: Text(
-                  AppLocalizations.of(context)!.makeRecovery,
+                  AppLocalizations.of(context)!.sendRecoveryEmail,
                 ),
               ),
             ],
