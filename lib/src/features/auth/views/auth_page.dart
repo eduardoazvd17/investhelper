@@ -104,6 +104,7 @@ class _AuthPageState extends State<AuthPage> {
 
   Future<void> _sendRecoveryEmail() async {
     try {
+      LoadingWidget.dialog(context);
       await widget.controller.sendRecoveryEmail(
         _emailController.text.trim(),
       );
