@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 
-/// GENERIC
 class AppException implements Exception {
   final AppExceptionType type;
   AppException([this.type = AppExceptionType.generic]);
