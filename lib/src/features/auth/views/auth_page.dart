@@ -67,6 +67,7 @@ class _AuthPageState extends State<AuthPage> {
           password: _passwordController.text.trim(),
         ),
       );
+
       if (!mounted) return;
       Navigator.of(context).pushReplacementNamed(InvestmentsPage.routeName);
     } on AppException catch (e) {
@@ -84,6 +85,7 @@ class _AuthPageState extends State<AuthPage> {
           passwordConfirmation: _passwordConfirmationController.text.trim(),
         ),
       );
+
       if (!mounted) return;
       Navigator.of(context).pushReplacementNamed(InvestmentsPage.routeName);
     } on AppException catch (e) {
@@ -93,7 +95,10 @@ class _AuthPageState extends State<AuthPage> {
 
   Future<void> _makeRecovery() async {
     try {
-      await widget.controller.sendRecoveryEmail(_emailController.text.trim());
+      await widget.controller.sendRecoveryEmail(
+        _emailController.text.trim(),
+      );
+
       if (!mounted) return;
       showDialog(
         context: context,
