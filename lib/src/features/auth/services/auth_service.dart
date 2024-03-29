@@ -13,6 +13,10 @@ class AuthService {
         throw AppException(AppExceptionType.emptyFields);
       }
 
+      if (!loginModel.email.contains('@')) {
+        throw AppException(AppExceptionType.invalidEmail);
+      }
+
       await _auth.signInWithEmailAndPassword(
         email: loginModel.email,
         password: loginModel.password,
@@ -36,6 +40,14 @@ class AuthService {
     try {
       if (registerModel.isEmpty) {
         throw AppException(AppExceptionType.emptyFields);
+      }
+
+      if (!registerModel.email.contains('@')) {
+        throw AppException(AppExceptionType.invalidEmail);
+      }
+
+      if (registerModel.password.length < 8) {
+        throw AppException(AppExceptionType.invalidPassword);
       }
 
       if (registerModel.password != registerModel.passwordConfirmation) {
