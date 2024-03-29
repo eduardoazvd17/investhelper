@@ -17,10 +17,12 @@ class DialogWidget extends StatelessWidget {
     BuildContext context, {
     required String title,
     required String message,
+    bool barrierDismissible = true,
     List<TextButton>? actions,
   }) async {
     return await showDialog<bool?>(
       context: context,
+      barrierDismissible: barrierDismissible,
       builder: (_) {
         return DialogWidget(
           title: title,
