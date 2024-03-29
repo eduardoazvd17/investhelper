@@ -40,6 +40,8 @@ abstract class AuthControllerBase with Store {
   Future<void> sendRecoveryEmail(String email) async {
     try {
       await _service.sendRecoveryEmail(email);
-    } catch (_) {}
+    } on AppException catch (_) {
+      rethrow;
+    }
   }
 }

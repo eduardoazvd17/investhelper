@@ -4,6 +4,7 @@ import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
 import 'package:investhelper/src/core/widgets/drop_down_button_widget.dart';
 import 'package:investhelper/src/core/widgets/section_widget.dart';
 import 'package:investhelper/src/core/enums/language_enum.dart';
+import 'package:investhelper/src/features/auth/views/auth_page.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/models/user_model.dart';
@@ -172,7 +173,10 @@ class SettingsPage extends StatelessWidget {
               text: AppLocalizations.of(context)!.endSession,
               icon: Icons.exit_to_app,
               color: Theme.of(context).colorScheme.error,
-              onTap: () {},
+              onTap: () {
+                appController.logout();
+                Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
+              },
             ),
           ],
         ),

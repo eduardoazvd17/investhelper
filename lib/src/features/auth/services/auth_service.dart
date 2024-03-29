@@ -13,15 +13,15 @@ class AuthService {
         throw AppException(AppExceptionType.emptyFields);
       }
 
-      final userCredential = await _auth.signInWithEmailAndPassword(
+      await _auth.signInWithEmailAndPassword(
         email: loginModel.email,
         password: loginModel.password,
       );
 
       return UserModel(
-        id: userCredential.user!.uid,
-        name: userCredential.user!.displayName!,
-        email: userCredential.user!.email!,
+        id: _auth.currentUser!.uid,
+        name: _auth.currentUser!.displayName!,
+        email: _auth.currentUser!.email!,
       );
     } on AppException catch (_) {
       rethrow;
@@ -49,9 +49,9 @@ class AuthService {
       await userCredential.user!.updateDisplayName(registerModel.name);
 
       return UserModel(
-        id: userCredential.user!.uid,
-        name: userCredential.user!.displayName!,
-        email: userCredential.user!.email!,
+        id: _auth.currentUser!.uid,
+        name: _auth.currentUser!.displayName!,
+        email: _auth.currentUser!.email!,
       );
     } on AppException catch (_) {
       rethrow;
@@ -73,6 +73,14 @@ class AuthService {
 
   Future<void> sendRecoveryEmail(String email) async {
     try {
+      if (email.isEmpty) {
+        throw AppException(AppExceptionType.emptyFields);
+      }
+
+      if (!email.contains('@')) {
+        throw AppException(AppExceptionType.invalidEmail);
+      }
+
       await _auth.sendPasswordResetEmail(email: email);
     } on AppException catch (_) {
       rethrow;
