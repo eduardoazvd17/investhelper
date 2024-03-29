@@ -6,6 +6,7 @@ import 'package:investhelper/src/features/investments/views/investments_page.dar
 import 'package:investhelper/src/l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../core/widgets/loading_widget.dart';
 import '../controllers/auth_controller.dart';
 
 class AuthPage extends StatefulWidget {
@@ -42,7 +43,6 @@ class _AuthPageState extends State<AuthPage> {
     _emailFocus = FocusNode();
     _passwordFocus = FocusNode();
     _passwordConfirmationFocus = FocusNode();
-
     super.initState();
   }
 
@@ -61,6 +61,7 @@ class _AuthPageState extends State<AuthPage> {
 
   Future<void> _makeLogin() async {
     try {
+      LoadingWidget.dialog(context);
       await widget.controller.makeLogin(
         LoginUserModel(
           email: _emailController.text.trim(),
@@ -69,14 +70,18 @@ class _AuthPageState extends State<AuthPage> {
       );
 
       if (!mounted) return;
+      LoadingWidget.hide(context);
       Navigator.of(context).pushReplacementNamed(InvestmentsPage.routeName);
     } on AppException catch (e) {
+      if (!mounted) return;
+      LoadingWidget.hide(context);
       await e.show(context);
     }
   }
 
   Future<void> _makeRegister() async {
     try {
+      LoadingWidget.dialog(context);
       await widget.controller.makeRegister(
         RegisterUserModel(
           name: _nameController.text.trim(),
@@ -87,8 +92,11 @@ class _AuthPageState extends State<AuthPage> {
       );
 
       if (!mounted) return;
+      LoadingWidget.hide(context);
       Navigator.of(context).pushReplacementNamed(InvestmentsPage.routeName);
     } on AppException catch (e) {
+      if (!mounted) return;
+      LoadingWidget.hide(context);
       await e.show(context);
     }
   }
@@ -100,6 +108,7 @@ class _AuthPageState extends State<AuthPage> {
       );
 
       if (!mounted) return;
+      LoadingWidget.hide(context);
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -118,6 +127,8 @@ class _AuthPageState extends State<AuthPage> {
         });
       });
     } on AppException catch (e) {
+      if (!mounted) return;
+      LoadingWidget.hide(context);
       await e.show(context);
     }
   }
