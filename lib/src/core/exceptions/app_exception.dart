@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 
+import '../widgets/dialog_widget.dart';
+
 class AppException implements Exception {
   final AppExceptionType type;
   AppException([this.type = AppExceptionType.generic]);
 
   Future<void> show(BuildContext context) async {
-    await showDialog(
-      context: context,
-      builder: (_) {
-        return AlertDialog(
-          title: Text(type.title(context)),
-          content: Text(type.message(context)),
-          actions: [
-            TextButton(
-              onPressed: Navigator.of(context).pop,
-              child: Text(AppLocalizations.of(context)!.close),
-            ),
-          ],
-        );
-      },
+    await DialogWidget.show(
+      context,
+      title: type.title(context),
+      message: type.message(context),
     );
   }
 }

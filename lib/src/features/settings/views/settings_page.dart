@@ -8,6 +8,7 @@ import 'package:investhelper/src/features/auth/views/auth_page.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/models/user_model.dart';
+import '../../../core/widgets/dialog_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../../../core/enums/theme_enum.dart';
 
@@ -15,6 +16,31 @@ class SettingsPage extends StatelessWidget {
   static const String routeName = "/settings";
   final AppController appController;
   const SettingsPage({super.key, required this.appController});
+
+  Future<void> _endSession(BuildContext context) async {
+    final result = await DialogWidget.show(
+      context,
+      title: AppLocalizations.of(context)!.endSession,
+      message: AppLocalizations.of(context)!.endSessionMessage,
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(true),
+          child: Text(AppLocalizations.of(context)!.yes),
+        ),
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text(AppLocalizations.of(context)!.no),
+        ),
+      ],
+    );
+
+    if (result != null && result) {
+      appController.logout();
+      if (!context.mounted) return;
+      Navigator.of(context).pop();
+      Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -173,11 +199,7 @@ class SettingsPage extends StatelessWidget {
               text: AppLocalizations.of(context)!.endSession,
               icon: Icons.exit_to_app,
               color: Theme.of(context).colorScheme.error,
-              onTap: () {
-                appController.logout();
-                Navigator.of(context).pop();
-                Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
-              },
+              onTap: () => _endSession(context),
             ),
           ],
         ),

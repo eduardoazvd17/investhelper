@@ -115,5 +115,8 @@
     "invalidRecoveryEmailErrorTitle": "Invalid Email",
     "invalidRecoveryEmailErrorMessage": "There is no account associated with this email address.",
     "recoveryEmailSentTitle": "Recovery email sent",
-    "recoveryEmailSentMessage": "If there is an account registered with this email address, you will receive a link to reset your password.\n\nAfter resetting, log in normally using your new password."
+    "recoveryEmailSentMessage": "If there is an account registered with this email address, you will receive a link to reset your password.\n\nAfter resetting, log in normally using your new password.",
+    "endSessionMessage": "Do you really want to log out of your account?",
+    "yes": "Yes",
+    "no": "No"
 }

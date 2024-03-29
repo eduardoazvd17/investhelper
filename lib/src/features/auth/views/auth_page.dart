@@ -6,6 +6,7 @@ import 'package:investhelper/src/features/investments/views/investments_page.dar
 import 'package:investhelper/src/l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../controllers/auth_controller.dart';
 
@@ -109,18 +110,10 @@ class _AuthPageState extends State<AuthPage> {
 
       if (!mounted) return;
       LoadingWidget.hide(context);
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: Text(AppLocalizations.of(context)!.recoveryEmailSentTitle),
-          content: Text(AppLocalizations.of(context)!.recoveryEmailSentMessage),
-          actions: [
-            TextButton(
-              onPressed: Navigator.of(context).pop,
-              child: Text(AppLocalizations.of(context)!.close),
-            ),
-          ],
-        ),
+      await DialogWidget.show(
+        context,
+        title: AppLocalizations.of(context)!.recoveryEmailSentTitle,
+        message: AppLocalizations.of(context)!.recoveryEmailSentMessage,
       ).then((_) {
         setState(() {
           _currentPageState = AuthPageState.login;
