@@ -6,8 +6,8 @@ class AppException implements Exception {
   final AppExceptionType type;
   AppException([this.type = AppExceptionType.generic]);
 
-  void show(BuildContext context) {
-    showDialog(
+  Future<void> show(BuildContext context) async {
+    await showDialog(
       context: context,
       builder: (_) {
         return AlertDialog(
@@ -37,13 +37,45 @@ enum AppExceptionType {
 }
 
 extension AppExceptionTypeExtension on AppExceptionType {
-  // TODO: Add all titles/messages.
-
   String title(BuildContext context) {
-    return "Error";
+    return switch (this) {
+      AppExceptionType.generic =>
+        AppLocalizations.of(context)!.genericErrorTitle,
+      AppExceptionType.emptyFields =>
+        AppLocalizations.of(context)!.emptyFieldsErrorTitle,
+      AppExceptionType.incorrectUserOrPassword =>
+        AppLocalizations.of(context)!.incorrectUserOrPasswordErrorTitle,
+      AppExceptionType.userAlreadyExists =>
+        AppLocalizations.of(context)!.userAlreadyExistsErrorTitle,
+      AppExceptionType.invalidEmail =>
+        AppLocalizations.of(context)!.invalidEmailErrorTitle,
+      AppExceptionType.invalidPassword =>
+        AppLocalizations.of(context)!.invalidPasswordErrorTitle,
+      AppExceptionType.passwordsDontMatch =>
+        AppLocalizations.of(context)!.passwordsDontMatchErrorTitle,
+      AppExceptionType.invalidRecoveryEmail =>
+        AppLocalizations.of(context)!.invalidRecoveryEmailErrorTitle,
+    };
   }
 
   String message(BuildContext context) {
-    return toString();
+    return switch (this) {
+      AppExceptionType.generic =>
+        AppLocalizations.of(context)!.genericErrorMessage,
+      AppExceptionType.emptyFields =>
+        AppLocalizations.of(context)!.emptyFieldsErrorMessage,
+      AppExceptionType.incorrectUserOrPassword =>
+        AppLocalizations.of(context)!.incorrectUserOrPasswordErrorMessage,
+      AppExceptionType.userAlreadyExists =>
+        AppLocalizations.of(context)!.userAlreadyExistsErrorMessage,
+      AppExceptionType.invalidEmail =>
+        AppLocalizations.of(context)!.invalidEmailErrorMessage,
+      AppExceptionType.invalidPassword =>
+        AppLocalizations.of(context)!.invalidPasswordErrorMessage,
+      AppExceptionType.passwordsDontMatch =>
+        AppLocalizations.of(context)!.passwordsDontMatchErrorMessage,
+      AppExceptionType.invalidRecoveryEmail =>
+        AppLocalizations.of(context)!.invalidRecoveryEmailErrorMessage,
+    };
   }
 }

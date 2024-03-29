@@ -97,5 +97,21 @@
     "portuguese": "Portuguese",
     "others": "Others",
     "aboutThisApp": "About this app",
-    "close": "Close"
+    "close": "Close",
+    "genericErrorTitle": "Unexpected error",
+    "genericErrorMessage": "A communication error occurred, please try again in a few seconds.",
+    "emptyFieldsErrorTitle": "One or more empty fields",
+    "emptyFieldsErrorMessage": "All text fields must be filled in.",
+    "incorrectUserOrPasswordErrorTitle": "User not found",
+    "incorrectUserOrPasswordErrorMessage": "The email and/or password entered may be incorrect.",
+    "userAlreadyExistsErrorTitle": "User already registered",
+    "userAlreadyExistsErrorMessage": "An account associated with this email address already exists.",
+    "invalidEmailErrorTitle": "Invalid Email",
+    "invalidEmailErrorMessage": "Please enter a valid email address.",
+    "invalidPasswordErrorTitle": "Invalid password",
+    "invalidPasswordErrorMessage": "Your password cannot contain less than 8 characters.",
+    "passwordsDontMatchErrorTitle": "Invalid password confirmation",
+    "passwordsDontMatchErrorMessage": "Password confirmation must be exactly the same as your password.",
+    "invalidRecoveryEmailErrorTitle": "Invalid Email",
+    "invalidRecoveryEmailErrorMessage": "There is no account associated with this email address."
 }
