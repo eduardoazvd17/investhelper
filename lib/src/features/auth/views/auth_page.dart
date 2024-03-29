@@ -107,7 +107,11 @@ class _AuthPageState extends State<AuthPage> {
             ),
           ],
         ),
-      );
+      ).then((_) {
+        setState(() {
+          _currentPageState = AuthPageState.login;
+        });
+      });
     } on AppException catch (e) {
       await e.show(context);
     }
