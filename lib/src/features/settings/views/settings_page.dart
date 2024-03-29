@@ -175,6 +175,7 @@ class SettingsPage extends StatelessWidget {
               color: Theme.of(context).colorScheme.error,
               onTap: () {
                 appController.logout();
+                Navigator.of(context).pop();
                 Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
               },
             ),
