@@ -19,21 +19,19 @@ abstract class AuthControllerBase with Store {
   })  : _appController = appController,
         _service = service;
 
-  Future<bool> makeLogin(LoginUserModel loginModel) async {
+  Future<void> makeLogin(LoginUserModel loginModel) async {
     try {
       final UserModel user = await _service.makeLogin(loginModel);
       _appController.login(user);
-      return true;
     } on AppException catch (_) {
       rethrow;
     }
   }
 
-  Future<bool> makeRegister(RegisterUserModel registerModel) async {
+  Future<void> makeRegister(RegisterUserModel registerModel) async {
     try {
       final UserModel user = await _service.makeRegister(registerModel);
       _appController.login(user);
-      return true;
     } on AppException catch (_) {
       rethrow;
     }

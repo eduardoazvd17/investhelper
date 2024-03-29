@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:investhelper/src/core/exceptions/app_exception.dart';
+import 'package:investhelper/src/features/auth/models/login_user_model.dart';
+import 'package:investhelper/src/features/auth/models/register_user_model.dart';
 import 'package:investhelper/src/features/investments/views/investments_page.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
@@ -56,6 +59,60 @@ class _AuthPageState extends State<AuthPage> {
     super.dispose();
   }
 
+  Future<void> _makeLogin() async {
+    try {
+      await widget.controller.makeLogin(
+        LoginUserModel(
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+        ),
+      );
+      if (!mounted) return;
+      Navigator.of(context).pushReplacementNamed(InvestmentsPage.routeName);
+    } on AppException catch (e) {
+      await e.show(context);
+    }
+  }
+
+  Future<void> _makeRegister() async {
+    try {
+      await widget.controller.makeRegister(
+        RegisterUserModel(
+          name: _nameController.text.trim(),
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+          passwordConfirmation: _passwordConfirmationController.text.trim(),
+        ),
+      );
+      if (!mounted) return;
+      Navigator.of(context).pushReplacementNamed(InvestmentsPage.routeName);
+    } on AppException catch (e) {
+      await e.show(context);
+    }
+  }
+
+  Future<void> _makeRecovery() async {
+    try {
+      await widget.controller.sendRecoveryEmail(_emailController.text.trim());
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: Text(AppLocalizations.of(context)!.recoveryEmailSentTitle),
+          content: Text(AppLocalizations.of(context)!.recoveryEmailSentMessage),
+          actions: [
+            TextButton(
+              onPressed: Navigator.of(context).pop,
+              child: Text(AppLocalizations.of(context)!.close),
+            ),
+          ],
+        ),
+      );
+    } on AppException catch (e) {
+      await e.show(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,8 +161,7 @@ class _AuthPageState extends State<AuthPage> {
               _passwordTextField,
               const SizedBox(height: 10),
               ElevatedButton(
-                onPressed: () => Navigator.of(context)
-                    .pushReplacementNamed(InvestmentsPage.routeName),
+                onPressed: _makeLogin,
                 child: Text(
                   AppLocalizations.of(context)!.makeLogin,
                 ),
@@ -151,10 +207,8 @@ class _AuthPageState extends State<AuthPage> {
               _passwordConfirmationTextField,
               const SizedBox(height: 10),
               ElevatedButton(
-                onPressed: () {},
-                child: Text(
-                  AppLocalizations.of(context)!.makeRegister,
-                ),
+                onPressed: _makeRegister,
+                child: Text(AppLocalizations.of(context)!.makeRegister),
               ),
             ],
           ),
@@ -184,7 +238,7 @@ class _AuthPageState extends State<AuthPage> {
               _emailTextField,
               const SizedBox(height: 10),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: _makeRecovery,
                 child: Text(
                   AppLocalizations.of(context)!.makeRecovery,
                 ),

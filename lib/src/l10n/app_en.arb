@@ -24,7 +24,7 @@
     "login": "Login",
     "makeRegister": "Complete Registration",
     "register": "Register",
-    "makeRecovery": "Reset Password",
+    "makeRecovery": "Reset password",
     "forgotMyPassword": "I forgot my password",
     "dontHaveAnAccountYet": "Don't have an account yet?",
     "alreadyHaveAnAccount": "Already have an account?",
@@ -113,5 +113,7 @@
     "passwordsDontMatchErrorTitle": "Invalid password confirmation",
     "passwordsDontMatchErrorMessage": "Password confirmation must be exactly the same as your password.",
     "invalidRecoveryEmailErrorTitle": "Invalid Email",
-    "invalidRecoveryEmailErrorMessage": "There is no account associated with this email address."
+    "invalidRecoveryEmailErrorMessage": "There is no account associated with this email address.",
+    "recoveryEmailSentTitle": "Recovery email sent",
+    "recoveryEmailSentMessage": "If there is an account registered with this email address, you will receive a link to reset your password.\n\nAfter resetting, log in normally using your new password."
 }

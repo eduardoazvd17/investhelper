@@ -24,7 +24,7 @@
   "login": "Entrar",
   "makeRegister": "Concluir Cadastro",
   "register": "Cadastre-se",
-  "makeRecovery": "Redefinir Senha",
+  "makeRecovery": "Redefinir senha",
   "forgotMyPassword": "Esqueci minha senha",
   "dontHaveAnAccountYet": "Ainda não possui uma conta?",
   "alreadyHaveAnAccount": "Já possui uma conta?",
@@ -113,5 +113,7 @@
   "passwordsDontMatchErrorTitle": "Confirmação de senha inválida",
   "passwordsDontMatchErrorMessage": "A confirmação de senha deve ser extamente igual a sua senha.",
   "invalidRecoveryEmailErrorTitle": "E-mail inválido",
-  "invalidRecoveryEmailErrorMessage": "Não existe uma conta associada a este endereço de e-mail."
+  "invalidRecoveryEmailErrorMessage": "Não existe uma conta associada a este endereço de e-mail.",
+  "recoveryEmailSentTitle": "E-mail de recuperação enviado",
+  "recoveryEmailSentMessage": "Se existir uma conta cadastrada com esse endereço e-mail, você receberá um link para redefinir sua senha.\n\nApós redefinir, faça login normalmente utilizando a sua nova senha."
 }
