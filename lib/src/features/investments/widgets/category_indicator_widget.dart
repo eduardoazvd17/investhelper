@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../models/category_model.dart';
+
 class CategoryIndicatorWidget extends StatelessWidget {
-  final Color color;
-  final String text;
+  final CategoryModel category;
   final Color? textColor;
   const CategoryIndicatorWidget({
     super.key,
-    required this.color,
-    required this.text,
+    required this.category,
     this.textColor,
   });
 
@@ -23,13 +23,13 @@ class CategoryIndicatorWidget extends StatelessWidget {
           height: 12,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: color,
+            color: category.color,
           ),
         ),
         const SizedBox(width: 10),
         Flexible(
           child: Text(
-            text,
+            category.title,
             style: TextStyle(color: textColor),
           ),
         ),

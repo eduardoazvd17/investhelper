@@ -220,16 +220,17 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   ),
                 ],
                 content: [
-                  SizedBox(
-                    height: 150,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(
-                        10,
-                        (index) => const InvestmentTileWidget(),
+                  Observer(builder: (_) {
+                    return SizedBox(
+                      height: 150,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: controller.investments
+                            .map((e) => InvestmentTileWidget(investment: e))
+                            .toList(),
                       ),
-                    ),
-                  ),
+                    );
+                  }),
                   TextButton(
                     onPressed: () {},
                     child:
@@ -247,23 +248,23 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   ),
                 ],
                 content: [
-                  SizedBox(
-                    height: 50,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(
-                        10,
-                        (index) => const Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(10),
-                            child: CategoryIndicatorWidget(
-                              color: Colors.purple,
-                              text: 'Ações',
-                            ),
-                          ),
+                  Observer(
+                    builder: (_) {
+                      return SizedBox(
+                        height: 60,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: controller.categories.map((e) {
+                            return Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(15),
+                                child: CategoryIndicatorWidget(category: e),
+                              ),
+                            );
+                          }).toList(),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   ),
                   TextButton(
                     onPressed: () {},

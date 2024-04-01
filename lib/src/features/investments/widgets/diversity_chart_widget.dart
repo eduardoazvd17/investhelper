@@ -64,8 +64,12 @@ class DiversityChartWidget extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 2.5),
                         child: CategoryIndicatorWidget(
-                          color: section.color,
-                          text: '${section.title} - ${section.value.round()}%',
+                          category: CategoryModel(
+                            id: '${sections.indexOf(section)}',
+                            title:
+                                '${section.title} - ${section.value.round()}%',
+                            color: section.color,
+                          ),
                         ),
                       );
                     },
