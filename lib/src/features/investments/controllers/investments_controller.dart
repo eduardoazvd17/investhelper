@@ -68,11 +68,15 @@ abstract class InvestmentsControllerBase with Store {
   @computed
   double get thisMonthPurchasesTotal {
     if (thisMonthOperations.isNotEmpty) {
-      return thisMonthOperations.where((e) {
+      final operations = thisMonthOperations.where((e) {
         return e.type == OperationTypeEnum.purchase;
-      }).map((e) {
-        return (e.quantity * e.unitPrice);
-      }).reduce((a, b) => a + b);
+      });
+
+      return operations.isEmpty
+          ? 0.0
+          : operations.map((e) {
+              return (e.quantity * e.unitPrice);
+            }).reduce((a, b) => a + b);
     }
     return 0.0;
   }
@@ -80,15 +84,16 @@ abstract class InvestmentsControllerBase with Store {
   @computed
   double get thisMonthSalesTotal {
     if (thisMonthOperations.isNotEmpty) {
-      return thisMonthOperations.where((e) {
+      final operations = thisMonthOperations.where((e) {
         return e.type == OperationTypeEnum.sale;
-      }).map((e) {
-        return (e.quantity * e.unitPrice);
-      }).reduce((a, b) => a + b);
+      });
+
+      return operations.isEmpty
+          ? 0.0
+          : operations.map((e) {
+              return (e.quantity * e.unitPrice);
+            }).reduce((a, b) => a + b);
     }
     return 0.0;
   }
-
-  @observable
-  List<OperationModel> operations = [];
 }

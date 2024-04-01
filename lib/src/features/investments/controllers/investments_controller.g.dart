@@ -118,22 +118,6 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
     });
   }
 
-  late final _$operationsAtom =
-      Atom(name: 'InvestmentsControllerBase.operations', context: context);
-
-  @override
-  List<OperationModel> get operations {
-    _$operationsAtom.reportRead();
-    return super.operations;
-  }
-
-  @override
-  set operations(List<OperationModel> value) {
-    _$operationsAtom.reportWrite(value, super.operations, () {
-      super.operations = value;
-    });
-  }
-
   late final _$InvestmentsControllerBaseActionController =
       ActionController(name: 'InvestmentsControllerBase', context: context);
 
@@ -156,7 +140,6 @@ investments: ${investments},
 categories: ${categories},
 goals: ${goals},
 thisMonthOperations: ${thisMonthOperations},
-operations: ${operations},
 user: ${user},
 totalInvestments: ${totalInvestments},
 thisMonthPurchasesTotal: ${thisMonthPurchasesTotal},
