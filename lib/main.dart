@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
@@ -72,9 +74,10 @@ class InvestHelperApp extends StatelessWidget {
           supportedLocales: AppLocalizations.supportedLocales,
           localeResolutionCallback: (locale, supportedLocales) {
             final languageCode = locale?.languageCode ?? 'en';
+            final countryCode = Platform.localeName.split('_')[1];
             return supportedLocales.firstWhere(
               (e) => e.languageCode == languageCode,
-              orElse: () => Locale('en', locale?.countryCode),
+              orElse: () => Locale('en', countryCode),
             );
           },
           initialRoute: _initialRoute,

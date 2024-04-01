@@ -1,5 +1,6 @@
 import 'package:investhelper/src/core/models/user_model.dart';
 import 'package:investhelper/src/features/investments/enums/operation_type.dart';
+import 'package:investhelper/src/features/investments/models/daily_tip_model.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
@@ -26,6 +27,7 @@ abstract class InvestmentsControllerBase with Store {
 
   Future<void> loadUserData() async {
     hideValues = await _service.loadHideValues();
+    dailyTip = await _service.loadDailyTip();
     if (user != null) {
       //
     }
@@ -96,4 +98,7 @@ abstract class InvestmentsControllerBase with Store {
     }
     return 0.0;
   }
+
+  @observable
+  DailyTipModel? dailyTip;
 }

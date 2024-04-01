@@ -196,9 +196,19 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 title: AppLocalizations.of(context)!.quickActions,
                 content: const [QuickActionsWidget()],
               ),
-              SectionWidget(
-                title: AppLocalizations.of(context)!.tips,
-                content: const [DailyTipsWidget()],
+              Observer(
+                warnWhenNoObservables: false,
+                builder: (_) {
+                  if (controller.dailyTip == null) return const SizedBox();
+                  return SectionWidget(
+                    title: AppLocalizations.of(context)!.tips,
+                    content: [
+                      DailyTipsWidget(
+                        dailyTip: controller.dailyTip!,
+                      )
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: 25),
             ],

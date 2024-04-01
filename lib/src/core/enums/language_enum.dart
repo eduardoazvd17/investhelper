@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 
@@ -37,8 +39,7 @@ extension ThemeEnumExtension on LanguageEnum {
   }
 
   Locale? get locale {
-    final String? countryCode =
-        WidgetsBinding.instance.platformDispatcher.locale.countryCode;
+    final String countryCode = Platform.localeName.split('_')[1];
     return switch (this) {
       LanguageEnum.system => null,
       LanguageEnum.english => Locale('en', countryCode),
