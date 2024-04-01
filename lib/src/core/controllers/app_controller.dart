@@ -32,9 +32,10 @@ abstract class AppControllerBase with Store {
     theme = await _service.loadTheme();
     language = await _service.loadLanguage();
     user = await _service.getCurrentUser();
+    appVersion = await _service.getAppVersion();
   }
 
-  @observable
+  @readonly
   late bool showWelcomePage;
 
   @action
@@ -43,7 +44,7 @@ abstract class AppControllerBase with Store {
     _service.disableWelcomePage();
   }
 
-  @observable
+  @readonly
   UserModel? user;
 
   @action
@@ -55,7 +56,7 @@ abstract class AppControllerBase with Store {
     user = null;
   }
 
-  @observable
+  @readonly
   late bool isBiometricsEnabled;
 
   void changeIsBiometricsEnabled(bool value) async {
@@ -63,7 +64,7 @@ abstract class AppControllerBase with Store {
     _service.saveIsBiometricsEnabled(value);
   }
 
-  @observable
+  @readonly
   late ThemeEnum theme;
 
   @action
@@ -74,7 +75,7 @@ abstract class AppControllerBase with Store {
     }
   }
 
-  @observable
+  @readonly
   late LanguageEnum language;
 
   @action
@@ -84,4 +85,7 @@ abstract class AppControllerBase with Store {
       _service.saveLanguage(language);
     }
   }
+
+  @readonly
+  late String appVersion;
 }

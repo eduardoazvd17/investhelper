@@ -56,18 +56,27 @@ class SettingsPage extends StatelessWidget {
               children: [
                 Observer(
                   builder: (_) {
-                    if (appController.user == null) return const SizedBox();
+                    if (appController.user == null) {
+                      return const SizedBox();
+                    }
+
                     return SectionWidget(
                       title: AppLocalizations.of(context)!.myProfile,
                       content: [
-                        _myProfileSectionContent(context, appController.user!),
+                        _myProfileSectionContent(
+                          context,
+                          appController.user!,
+                        ),
                       ],
                     );
                   },
                 ),
                 Observer(
                   builder: (_) {
-                    if (appController.user == null) return const SizedBox();
+                    if (appController.user == null) {
+                      return const SizedBox();
+                    }
+
                     return SectionWidget(
                       title: AppLocalizations.of(context)!.protection,
                       content: [
@@ -147,11 +156,25 @@ class SettingsPage extends StatelessWidget {
                 SectionWidget(
                   title: AppLocalizations.of(context)!.others,
                   content: [
-                    ButtonTileWidget(
-                      text: AppLocalizations.of(context)!.aboutThisApp,
-                      icon: Icons.info_outline,
-                      onTap: () {},
-                    ),
+                    Observer(builder: (_) {
+                      return ButtonTileWidget(
+                        text: AppLocalizations.of(context)!.aboutThisApp,
+                        icon: Icons.info_outline,
+                        onTap: () {
+                          showAboutDialog(
+                            context: context,
+                            applicationVersion: appController.appVersion,
+                            children: [
+                              Text(AppLocalizations.of(context)!.welcomeText2),
+                            ],
+                            applicationIcon: Image.asset(
+                              'assets/images/logo.png',
+                              height: 30,
+                            ),
+                          );
+                        },
+                      );
+                    }),
                   ],
                 ),
                 const SizedBox(height: 25),
