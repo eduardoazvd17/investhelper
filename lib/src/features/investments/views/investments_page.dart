@@ -168,15 +168,18 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
               SectionWidget(
                 title: AppLocalizations.of(context)!.myGoals,
                 content: [
-                  SizedBox(
-                    height: 120,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: List.generate(
-                        10,
-                        (index) => const GoalCardTile(),
-                      ),
-                    ),
+                  Observer(
+                    builder: (_) {
+                      return SizedBox(
+                        height: 120,
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: controller.goals.map((goal) {
+                            return GoalCardTile(goal: goal);
+                          }).toList(),
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

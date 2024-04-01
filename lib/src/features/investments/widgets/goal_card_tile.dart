@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../models/goal_model.dart';
+
 class GoalCardTile extends StatefulWidget {
-  const GoalCardTile({super.key});
+  final GoalModel goal;
+  const GoalCardTile({super.key, required this.goal});
 
   @override
   State<GoalCardTile> createState() => _GoalCardTileState();
@@ -41,16 +44,14 @@ class _GoalCardTileState extends State<GoalCardTile> {
                     thumbVisibility: true,
                     child: SingleChildScrollView(
                       controller: _textScrollController,
-                      child: const Text(
-                        'Aqui ficará a descrição da sua meta.',
-                      ),
+                      child: Text(widget.goal.description),
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: LinearProgressIndicator(value: 0.75),
-                ),
+                // const Padding(
+                //   padding: EdgeInsets.only(top: 10),
+                //   child: LinearProgressIndicator(value: 0.75),
+                // ),
               ],
             ),
           ),
