@@ -165,11 +165,11 @@ class SettingsPage extends StatelessWidget {
                             context: context,
                             applicationVersion: appController.appVersion,
                             children: [
-                              Text(AppLocalizations.of(context)!.welcomeText2),
+                              Text(AppLocalizations.of(context)!.aboutAppText),
                             ],
                             applicationIcon: Image.asset(
                               'assets/images/logo.png',
-                              height: 30,
+                              height: 50,
                             ),
                           );
                         },
