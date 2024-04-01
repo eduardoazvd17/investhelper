@@ -25,12 +25,19 @@ abstract class InvestmentsControllerBase with Store {
     loadUserData();
   }
 
+  @observable
+  bool isLoading = true;
+
+  @action
   Future<void> loadUserData() async {
     hideValues = await _service.loadHideValues();
     dailyTip = await _service.loadDailyTip();
+
     if (user != null) {
-      //
+      //LOAD USER DATA.
     }
+
+    isLoading = false;
   }
 
   @computed

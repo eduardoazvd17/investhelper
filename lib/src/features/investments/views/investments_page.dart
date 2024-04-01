@@ -13,6 +13,7 @@ import 'package:investhelper/src/features/settings/views/settings_page.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 
 import '../../../core/widgets/advise_message_widget.dart';
+import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../widgets/investments_resume_card.dart';
 
@@ -95,11 +96,19 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         ],
       ),
       body: SafeArea(
-        child: switch (_currentPage) {
-          0 => _overviewTabContent,
-          1 => _detailsTabContent,
-          int() => const SizedBox(),
-        },
+        child: Observer(
+          builder: (_) {
+            return Visibility(
+              visible: !controller.isLoading,
+              replacement: const Center(child: LoadingWidget()),
+              child: switch (_currentPage) {
+                0 => _overviewTabContent,
+                1 => _detailsTabContent,
+                int() => const SizedBox(),
+              },
+            );
+          },
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentPage,
