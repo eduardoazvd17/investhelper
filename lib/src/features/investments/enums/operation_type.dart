@@ -1,4 +1,4 @@
-enum OperationType {
+enum OperationTypeEnum {
   purchase,
   sale,
 }

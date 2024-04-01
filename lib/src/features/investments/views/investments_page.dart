@@ -136,7 +136,18 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             children: [
               SectionWidget(
                 title: AppLocalizations.of(context)!.overview,
-                content: const [InvestmentsResumeCard()],
+                content: [
+                  Observer(
+                    builder: (_) {
+                      return InvestmentsResumeCard(
+                        totalInvestments: controller.totalInvestments,
+                        thisMonthPurchasesTotal:
+                            controller.thisMonthPurchasesTotal,
+                        thisMonthSalesTotal: controller.thisMonthSalesTotal,
+                      );
+                    },
+                  ),
+                ],
               ),
               SectionWidget(
                 title: AppLocalizations.of(context)!.diversity,

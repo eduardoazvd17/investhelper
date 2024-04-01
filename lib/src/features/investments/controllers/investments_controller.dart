@@ -1,4 +1,5 @@
 import 'package:investhelper/src/core/models/user_model.dart';
+import 'package:investhelper/src/features/investments/enums/operation_type.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
@@ -35,6 +36,16 @@ abstract class InvestmentsControllerBase with Store {
   @observable
   List<InvestmentModel> investments = [];
 
+  @computed
+  double get totalInvestments {
+    if (investments.isNotEmpty) {
+      return investments.map((e) {
+        return e.amountInvested;
+      }).reduce((a, b) => a + b);
+    }
+    return 0.0;
+  }
+
   @observable
   List<CategoryModel> categories = [];
 
@@ -43,6 +54,30 @@ abstract class InvestmentsControllerBase with Store {
 
   @observable
   List<OperationModel> thisMonthOperations = [];
+
+  @computed
+  double get thisMonthPurchasesTotal {
+    if (thisMonthOperations.isNotEmpty) {
+      return thisMonthOperations.where((e) {
+        return e.type == OperationTypeEnum.purchase;
+      }).map((e) {
+        return (e.quantity * e.unitPrice);
+      }).reduce((a, b) => a + b);
+    }
+    return 0.0;
+  }
+
+  @computed
+  double get thisMonthSalesTotal {
+    if (thisMonthOperations.isNotEmpty) {
+      return thisMonthOperations.where((e) {
+        return e.type == OperationTypeEnum.sale;
+      }).map((e) {
+        return (e.quantity * e.unitPrice);
+      }).reduce((a, b) => a + b);
+    }
+    return 0.0;
+  }
 
   @observable
   List<OperationModel> operations = [];

@@ -16,11 +16,120 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
       (_$userComputed ??= Computed<UserModel?>(() => super.user,
               name: 'InvestmentsControllerBase.user'))
           .value;
+  Computed<double>? _$totalInvestmentsComputed;
+
+  @override
+  double get totalInvestments => (_$totalInvestmentsComputed ??=
+          Computed<double>(() => super.totalInvestments,
+              name: 'InvestmentsControllerBase.totalInvestments'))
+      .value;
+  Computed<double>? _$thisMonthPurchasesTotalComputed;
+
+  @override
+  double get thisMonthPurchasesTotal => (_$thisMonthPurchasesTotalComputed ??=
+          Computed<double>(() => super.thisMonthPurchasesTotal,
+              name: 'InvestmentsControllerBase.thisMonthPurchasesTotal'))
+      .value;
+  Computed<double>? _$thisMonthSalesTotalComputed;
+
+  @override
+  double get thisMonthSalesTotal => (_$thisMonthSalesTotalComputed ??=
+          Computed<double>(() => super.thisMonthSalesTotal,
+              name: 'InvestmentsControllerBase.thisMonthSalesTotal'))
+      .value;
+
+  late final _$investmentsAtom =
+      Atom(name: 'InvestmentsControllerBase.investments', context: context);
+
+  @override
+  List<InvestmentModel> get investments {
+    _$investmentsAtom.reportRead();
+    return super.investments;
+  }
+
+  @override
+  set investments(List<InvestmentModel> value) {
+    _$investmentsAtom.reportWrite(value, super.investments, () {
+      super.investments = value;
+    });
+  }
+
+  late final _$categoriesAtom =
+      Atom(name: 'InvestmentsControllerBase.categories', context: context);
+
+  @override
+  List<CategoryModel> get categories {
+    _$categoriesAtom.reportRead();
+    return super.categories;
+  }
+
+  @override
+  set categories(List<CategoryModel> value) {
+    _$categoriesAtom.reportWrite(value, super.categories, () {
+      super.categories = value;
+    });
+  }
+
+  late final _$goalsAtom =
+      Atom(name: 'InvestmentsControllerBase.goals', context: context);
+
+  @override
+  List<GoalModel> get goals {
+    _$goalsAtom.reportRead();
+    return super.goals;
+  }
+
+  @override
+  set goals(List<GoalModel> value) {
+    _$goalsAtom.reportWrite(value, super.goals, () {
+      super.goals = value;
+    });
+  }
+
+  late final _$thisMonthOperationsAtom = Atom(
+      name: 'InvestmentsControllerBase.thisMonthOperations', context: context);
+
+  @override
+  List<OperationModel> get thisMonthOperations {
+    _$thisMonthOperationsAtom.reportRead();
+    return super.thisMonthOperations;
+  }
+
+  @override
+  set thisMonthOperations(List<OperationModel> value) {
+    _$thisMonthOperationsAtom.reportWrite(value, super.thisMonthOperations, () {
+      super.thisMonthOperations = value;
+    });
+  }
+
+  late final _$operationsAtom =
+      Atom(name: 'InvestmentsControllerBase.operations', context: context);
+
+  @override
+  List<OperationModel> get operations {
+    _$operationsAtom.reportRead();
+    return super.operations;
+  }
+
+  @override
+  set operations(List<OperationModel> value) {
+    _$operationsAtom.reportWrite(value, super.operations, () {
+      super.operations = value;
+    });
+  }
 
   @override
   String toString() {
     return '''
-user: ${user}
+investments: ${investments},
+categories: ${categories},
+goals: ${goals},
+thisMonthOperations: ${thisMonthOperations},
+operations: ${operations},
+user: ${user},
+totalInvestments: ${totalInvestments},
+thisMonthPurchasesTotal: ${thisMonthPurchasesTotal},
+thisMonthSalesTotal: ${thisMonthSalesTotal}
     ''';
   }
 }

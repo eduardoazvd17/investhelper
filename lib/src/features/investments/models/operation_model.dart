@@ -1,11 +1,11 @@
-import 'package:mobx/mobx.dart';
+import 'package:investhelper/src/features/investments/enums/operation_type.dart';
 
 class OperationModel {
   final String id;
-  final OperationType type;
+  final OperationTypeEnum type;
   final DateTime date;
   final int quantity;
-  final int unitPrice;
+  final double unitPrice;
   final String? annotation;
 
   OperationModel({

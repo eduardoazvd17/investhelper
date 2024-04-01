@@ -4,7 +4,7 @@ class CreateOperationModel {
   final OperationType type;
   final DateTime date;
   final int quantity;
-  final int unitPrice;
+  final double unitPrice;
   final String? annotation;
 
   CreateOperationModel({
