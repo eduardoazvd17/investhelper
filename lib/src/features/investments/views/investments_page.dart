@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
+import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/daily_tips_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/diversity_chart_widget.dart';
@@ -15,7 +17,8 @@ import '../widgets/investments_resume_card.dart';
 
 class InvestmentsPage extends StatefulWidget {
   static const String routeName = "/investments";
-  const InvestmentsPage({super.key});
+  final InvestmentsController controller;
+  const InvestmentsPage({super.key, required this.controller});
 
   @override
   State<InvestmentsPage> createState() => _InvestmentsPageState();
@@ -25,6 +28,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   int _currentPage = 0;
   late final ScrollController _overviewScrollController;
   late final ScrollController _detailsScrollController;
+
+  InvestmentsController get controller => widget.controller;
 
   @override
   void initState() {
@@ -67,8 +72,14 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             Image.asset("assets/images/logo.png", height: 40),
             const SizedBox(width: 10),
             Expanded(
-              child: Text(
-                AppLocalizations.of(context)!.hiUser('Teste'),
+              child: Observer(
+                builder: (_) {
+                  return Text(
+                    AppLocalizations.of(context)!.hiUser(
+                      controller.user?.name ?? '',
+                    ),
+                  );
+                },
               ),
             ),
           ],
