@@ -1,15 +1,13 @@
 import 'package:mobx/mobx.dart';
 
-class OperationModel {
-  final String id;
+class CreateOperationModel {
   final OperationType type;
   final DateTime date;
   final int quantity;
   final int unitPrice;
   final String? annotation;
 
-  OperationModel({
-    required this.id,
+  CreateOperationModel({
     required this.type,
     required this.date,
     required this.quantity,
