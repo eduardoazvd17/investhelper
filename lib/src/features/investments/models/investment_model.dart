@@ -8,6 +8,8 @@ class InvestmentModel {
   final double amountInvested;
   final double averagePrice;
 
+  bool get hasData => custodialPosition > 0;
+
   InvestmentModel({
     required this.id,
     required this.name,

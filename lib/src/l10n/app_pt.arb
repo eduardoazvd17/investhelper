@@ -118,5 +118,9 @@
   "recoveryEmailSentMessage": "Se existir uma conta cadastrada com esse endereço e-mail, você receberá um link para redefinir sua senha.\n\nApós redefinir, faça login normalmente utilizando a sua nova senha.",
   "endSessionMessage": "Deseja realmente sair da sua conta?",
   "yes": "Sim",
-  "no": "Não"
+  "no": "Não",
+  "emptyDiversityGraphText": "Adicione seus investimentos para exibir o gráfico de diversidade.",
+  "emptyMyGoalsText": "Não há metas definidas. Adicione metas ou lembretes e eles aparecerão aqui.",
+  "emptyInvestmentsText": "Nenhum investimento adicionado. Adicione seus investimentos para começar a usar o app.",
+  "emptyCategoriesText": "Nenhuma categoria criada. Crie suas categorias para classificar e organizar seus investimentos."
 }

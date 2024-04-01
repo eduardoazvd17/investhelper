@@ -12,6 +12,7 @@ import 'package:investhelper/src/features/investments/widgets/quick_actions_widg
 import 'package:investhelper/src/features/settings/views/settings_page.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 
+import '../../../core/widgets/advise_message_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../widgets/investments_resume_card.dart';
 
@@ -170,13 +171,21 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 content: [
                   Observer(
                     builder: (_) {
+                      final bool hasData = controller.goals.isNotEmpty;
                       return SizedBox(
-                        height: 120,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: controller.goals.map((goal) {
-                            return GoalCardTile(goal: goal);
-                          }).toList(),
+                        height: hasData ? 120 : null,
+                        child: Visibility(
+                          visible: hasData,
+                          replacement: AdviseMessageWidget(
+                            message:
+                                AppLocalizations.of(context)!.emptyMyGoalsText,
+                          ),
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: controller.goals.map((goal) {
+                              return GoalCardTile(goal: goal);
+                            }).toList(),
+                          ),
                         ),
                       );
                     },
@@ -211,34 +220,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SectionWidget(
-                title: AppLocalizations.of(context)!.investments,
-                actions: [
-                  IconButton(
-                    onPressed: () {},
-                    visualDensity: VisualDensity.compact,
-                    icon: const Icon(Icons.add),
-                  ),
-                ],
-                content: [
-                  Observer(builder: (_) {
-                    return SizedBox(
-                      height: 150,
-                      child: ListView(
-                        scrollDirection: Axis.horizontal,
-                        children: controller.investments
-                            .map((e) => InvestmentTileWidget(investment: e))
-                            .toList(),
-                      ),
-                    );
-                  }),
-                  TextButton(
-                    onPressed: () {},
-                    child:
-                        Text(AppLocalizations.of(context)!.accessMyInvestments),
-                  ),
-                ],
-              ),
-              SectionWidget(
                 title: AppLocalizations.of(context)!.categories,
                 actions: [
                   IconButton(
@@ -250,18 +231,26 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 content: [
                   Observer(
                     builder: (_) {
+                      final bool hasData = controller.categories.isNotEmpty;
                       return SizedBox(
-                        height: 60,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: controller.categories.map((e) {
-                            return Card(
-                              child: Padding(
-                                padding: const EdgeInsets.all(15),
-                                child: CategoryIndicatorWidget(category: e),
-                              ),
-                            );
-                          }).toList(),
+                        height: hasData ? 60 : null,
+                        child: Visibility(
+                          visible: hasData,
+                          replacement: AdviseMessageWidget(
+                            message: AppLocalizations.of(context)!
+                                .emptyCategoriesText,
+                          ),
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: controller.categories.map((e) {
+                              return Card(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15),
+                                  child: CategoryIndicatorWidget(category: e),
+                                ),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       );
                     },
@@ -271,6 +260,42 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     child: Text(
                       AppLocalizations.of(context)!.personalizeCategories,
                     ),
+                  ),
+                ],
+              ),
+              SectionWidget(
+                title: AppLocalizations.of(context)!.investments,
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(Icons.add),
+                  ),
+                ],
+                content: [
+                  Observer(builder: (_) {
+                    final bool hasData = controller.investments.isNotEmpty;
+                    return SizedBox(
+                      height: hasData ? 150 : null,
+                      child: Visibility(
+                        visible: hasData,
+                        replacement: AdviseMessageWidget(
+                          message: AppLocalizations.of(context)!
+                              .emptyInvestmentsText,
+                        ),
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: controller.investments
+                              .map((e) => InvestmentTileWidget(investment: e))
+                              .toList(),
+                        ),
+                      ),
+                    );
+                  }),
+                  TextButton(
+                    onPressed: () {},
+                    child:
+                        Text(AppLocalizations.of(context)!.accessMyInvestments),
                   ),
                 ],
               ),

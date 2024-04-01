@@ -118,5 +118,9 @@
     "recoveryEmailSentMessage": "If there is an account registered with this email address, you will receive a link to reset your password.\n\nAfter resetting, log in normally using your new password.",
     "endSessionMessage": "Do you really want to log out of your account?",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "emptyDiversityGraphText": "Add your investments to display the diversity graph.",
+    "emptyMyGoalsText": "There are no goals set. Add goals or reminders and they will appear here.",
+    "emptyInvestmentsText": "No investments added. Add your investments to start using the app.",
+    "emptyCategoriesText": "No categories created. Create your categories to classify and organize your investments."
 }
