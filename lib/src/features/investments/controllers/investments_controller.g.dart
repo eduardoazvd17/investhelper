@@ -38,6 +38,22 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
               name: 'InvestmentsControllerBase.thisMonthSalesTotal'))
       .value;
 
+  late final _$isLoadingAtom =
+      Atom(name: 'InvestmentsControllerBase.isLoading', context: context);
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
   late final _$hideValuesAtom =
       Atom(name: 'InvestmentsControllerBase.hideValues', context: context);
 
@@ -118,6 +134,30 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
     });
   }
 
+  late final _$dailyTipAtom =
+      Atom(name: 'InvestmentsControllerBase.dailyTip', context: context);
+
+  @override
+  DailyTipModel? get dailyTip {
+    _$dailyTipAtom.reportRead();
+    return super.dailyTip;
+  }
+
+  @override
+  set dailyTip(DailyTipModel? value) {
+    _$dailyTipAtom.reportWrite(value, super.dailyTip, () {
+      super.dailyTip = value;
+    });
+  }
+
+  late final _$loadUserDataAsyncAction =
+      AsyncAction('InvestmentsControllerBase.loadUserData', context: context);
+
+  @override
+  Future<void> loadUserData() {
+    return _$loadUserDataAsyncAction.run(() => super.loadUserData());
+  }
+
   late final _$InvestmentsControllerBaseActionController =
       ActionController(name: 'InvestmentsControllerBase', context: context);
 
@@ -135,11 +175,13 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
   @override
   String toString() {
     return '''
+isLoading: ${isLoading},
 hideValues: ${hideValues},
 investments: ${investments},
 categories: ${categories},
 goals: ${goals},
 thisMonthOperations: ${thisMonthOperations},
+dailyTip: ${dailyTip},
 user: ${user},
 totalInvestments: ${totalInvestments},
 thisMonthPurchasesTotal: ${thisMonthPurchasesTotal},
