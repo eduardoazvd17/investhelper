@@ -25,6 +25,7 @@ abstract class InvestmentsControllerBase with Store {
   }
 
   Future<void> loadUserData() async {
+    hideValues = await _service.loadHideValues();
     if (user != null) {
       //
     }
@@ -32,6 +33,15 @@ abstract class InvestmentsControllerBase with Store {
 
   @computed
   UserModel? get user => _appController.user;
+
+  @observable
+  bool hideValues = true;
+
+  @action
+  void toggleHideValues() {
+    hideValues = !hideValues;
+    _service.saveHideValues(hideValues);
+  }
 
   @observable
   List<InvestmentModel> investments = [];

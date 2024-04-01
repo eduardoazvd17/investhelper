@@ -38,6 +38,22 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
               name: 'InvestmentsControllerBase.thisMonthSalesTotal'))
       .value;
 
+  late final _$hideValuesAtom =
+      Atom(name: 'InvestmentsControllerBase.hideValues', context: context);
+
+  @override
+  bool get hideValues {
+    _$hideValuesAtom.reportRead();
+    return super.hideValues;
+  }
+
+  @override
+  set hideValues(bool value) {
+    _$hideValuesAtom.reportWrite(value, super.hideValues, () {
+      super.hideValues = value;
+    });
+  }
+
   late final _$investmentsAtom =
       Atom(name: 'InvestmentsControllerBase.investments', context: context);
 
@@ -118,9 +134,24 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
     });
   }
 
+  late final _$InvestmentsControllerBaseActionController =
+      ActionController(name: 'InvestmentsControllerBase', context: context);
+
+  @override
+  void toggleHideValues() {
+    final _$actionInfo = _$InvestmentsControllerBaseActionController
+        .startAction(name: 'InvestmentsControllerBase.toggleHideValues');
+    try {
+      return super.toggleHideValues();
+    } finally {
+      _$InvestmentsControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
+hideValues: ${hideValues},
 investments: ${investments},
 categories: ${categories},
 goals: ${goals},

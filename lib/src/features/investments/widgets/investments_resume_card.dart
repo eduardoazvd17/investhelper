@@ -8,12 +8,16 @@ class InvestmentsResumeCard extends StatelessWidget {
   final double totalInvestments;
   final double thisMonthPurchasesTotal;
   final double thisMonthSalesTotal;
+  final bool hideValues;
+  final void Function() toggleHideValues;
 
   const InvestmentsResumeCard({
     super.key,
     required this.totalInvestments,
     required this.thisMonthPurchasesTotal,
     required this.thisMonthSalesTotal,
+    required this.hideValues,
+    required this.toggleHideValues,
   });
 
   @override
@@ -34,14 +38,18 @@ class InvestmentsResumeCard extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: toggleHideValues,
                   visualDensity: VisualDensity.compact,
-                  icon: const Icon(CupertinoIcons.eye_slash),
+                  icon: hideValues
+                      ? const Icon(CupertinoIcons.eye)
+                      : const Icon(CupertinoIcons.eye_slash),
                 ),
               ],
             ),
             Text(
-              AppFormatter.currency(context, totalInvestments),
+              hideValues
+                  ? '${AppFormatter.currencyPrefix} ••••••'
+                  : AppFormatter.currency(totalInvestments),
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
@@ -58,7 +66,9 @@ class InvestmentsResumeCard extends StatelessWidget {
               context: context,
               tooltip: AppLocalizations.of(context)!.purchaseOperations,
               icon: CupertinoIcons.arrow_up_right,
-              value: AppFormatter.currency(context, thisMonthPurchasesTotal),
+              value: hideValues
+                  ? '${AppFormatter.currencyPrefix} ••••••'
+                  : AppFormatter.currency(thisMonthPurchasesTotal),
               color: Colors.green,
             ),
             const SizedBox(height: 5),
@@ -66,7 +76,9 @@ class InvestmentsResumeCard extends StatelessWidget {
               context: context,
               tooltip: AppLocalizations.of(context)!.salesOperations,
               icon: CupertinoIcons.arrow_down_left,
-              value: AppFormatter.currency(context, thisMonthSalesTotal),
+              value: hideValues
+                  ? '${AppFormatter.currencyPrefix} ••••••'
+                  : AppFormatter.currency(thisMonthSalesTotal),
               color: Colors.red,
             ),
           ],

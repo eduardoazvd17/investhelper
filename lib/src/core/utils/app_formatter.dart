@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AppFormatter {
-  static String currency(BuildContext context, double value) {
+  static String get currencyPrefix {
+    final countryCode =
+        WidgetsBinding.instance.platformDispatcher.locale.countryCode;
+    return countryCode == 'BR' ? 'R\$' : "\$";
+  }
+
+  static String currency(double value) {
     final countryCode =
         WidgetsBinding.instance.platformDispatcher.locale.countryCode;
     if (countryCode == 'BR') {
