@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart' show CupertinoIcons;
 import 'package:flutter/material.dart';
 
-import '../../../core/utils/app_format.dart';
+import '../../../core/utils/app_formatter.dart';
 import '../../../l10n/l10n.dart';
 
 class InvestmentsResumeCard extends StatelessWidget {
@@ -41,7 +41,7 @@ class InvestmentsResumeCard extends StatelessWidget {
               ],
             ),
             Text(
-              AppFormat.currency(context, totalInvestments),
+              AppFormatter.currency(context, totalInvestments),
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
@@ -58,7 +58,7 @@ class InvestmentsResumeCard extends StatelessWidget {
               context: context,
               tooltip: AppLocalizations.of(context)!.purchaseOperations,
               icon: CupertinoIcons.arrow_up_right,
-              value: AppFormat.currency(context, thisMonthPurchasesTotal),
+              value: AppFormatter.currency(context, thisMonthPurchasesTotal),
               color: Colors.green,
             ),
             const SizedBox(height: 5),
@@ -66,7 +66,7 @@ class InvestmentsResumeCard extends StatelessWidget {
               context: context,
               tooltip: AppLocalizations.of(context)!.salesOperations,
               icon: CupertinoIcons.arrow_down_left,
-              value: AppFormat.currency(context, thisMonthSalesTotal),
+              value: AppFormatter.currency(context, thisMonthSalesTotal),
               color: Colors.red,
             ),
           ],
