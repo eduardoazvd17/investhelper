@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 
 class CreateOperationModel {
+  final String investmentId;
   final OperationType type;
   final DateTime date;
   final int quantity;
@@ -8,6 +9,7 @@ class CreateOperationModel {
   final String? annotation;
 
   CreateOperationModel({
+    required this.investmentId,
     required this.type,
     required this.date,
     required this.quantity,

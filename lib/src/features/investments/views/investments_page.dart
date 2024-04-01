@@ -153,7 +153,17 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
               ),
               SectionWidget(
                 title: AppLocalizations.of(context)!.diversity,
-                content: const [DiversityChartWidget()],
+                content: [
+                  Observer(
+                    builder: (_) {
+                      return DiversityChartWidget(
+                        totalInvestments: controller.totalInvestments,
+                        categories: controller.categories,
+                        investments: controller.investments,
+                      );
+                    },
+                  ),
+                ],
               ),
               SectionWidget(
                 title: AppLocalizations.of(context)!.myGoals,

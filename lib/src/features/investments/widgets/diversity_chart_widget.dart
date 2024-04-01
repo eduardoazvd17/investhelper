@@ -2,29 +2,39 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 
-class DiversityChartWidget extends StatelessWidget {
-  const DiversityChartWidget({super.key});
+import '../models/category_model.dart';
+import '../models/investment_model.dart';
 
-  List<PieChartSectionData> get sections => [
-        PieChartSectionData(
-          color: Colors.purple,
-          value: 10,
-          title: 'Ações',
-          showTitle: false,
-        ),
-        PieChartSectionData(
-          color: Colors.blue,
-          value: 30,
-          title: 'Fii\'s',
-          showTitle: false,
-        ),
-        PieChartSectionData(
-          color: Colors.blueGrey[800],
-          value: 50,
-          title: 'Crypto',
-          showTitle: false,
-        ),
-      ];
+class DiversityChartWidget extends StatelessWidget {
+  final double totalInvestments;
+  final List<CategoryModel> categories;
+  final List<InvestmentModel> investments;
+  const DiversityChartWidget({
+    super.key,
+    required this.totalInvestments,
+    required this.categories,
+    required this.investments,
+  });
+
+  List<PieChartSectionData> get sections {
+    return categories.map((c) {
+      final investmentsByCategory =
+          investments.where((e) => e.category.id == c.id);
+
+      final double valueByCategory = investmentsByCategory.isEmpty
+          ? 0.0
+          : investmentsByCategory
+              .map((e) => e.amountInvested)
+              .reduce((a, b) => a + b);
+
+      return PieChartSectionData(
+        color: c.color,
+        value: ((valueByCategory / totalInvestments) * 100),
+        title: c.title,
+        showTitle: false,
+      );
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +65,7 @@ class DiversityChartWidget extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(vertical: 2.5),
                         child: CategoryIndicatorWidget(
                           color: section.color,
-                          text: '${section.title} - ${section.value.toInt()}%',
+                          text: '${section.title} - ${section.value.round()}%',
                         ),
                       );
                     },
