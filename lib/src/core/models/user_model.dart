@@ -3,6 +3,8 @@ class UserModel {
   final String name;
   final String email;
 
+  String get shortName => name.split(' ').first;
+
   UserModel({
     required this.id,
     required this.name,

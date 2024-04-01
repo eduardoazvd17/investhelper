@@ -76,7 +76,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 builder: (_) {
                   return Text(
                     AppLocalizations.of(context)!.hiUser(
-                      controller.user?.name ?? '',
+                      controller.user?.shortName ?? '',
                     ),
                   );
                 },
