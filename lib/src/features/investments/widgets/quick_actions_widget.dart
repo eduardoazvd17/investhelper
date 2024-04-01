@@ -19,7 +19,7 @@ class QuickActionsWidget extends StatelessWidget {
         TextButton.icon(
           onPressed: () {},
           icon: const Icon(CupertinoIcons.arrow_down_left),
-          label: Text(AppLocalizations.of(context)!.insertSellOperation),
+          label: Text(AppLocalizations.of(context)!.insertSaleOperation),
         ),
         TextButton.icon(
           onPressed: () {},

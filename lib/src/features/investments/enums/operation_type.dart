@@ -1,0 +1,4 @@
+enum OperationType {
+  purchase,
+  sale,
+}
