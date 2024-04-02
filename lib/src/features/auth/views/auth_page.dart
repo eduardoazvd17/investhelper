@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:investhelper/src/core/exceptions/app_exception.dart';
 import 'package:investhelper/src/features/auth/models/login_user_model.dart';
@@ -8,6 +9,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
+import '../../settings/views/settings_page.dart';
 import '../controllers/auth_controller.dart';
 
 class AuthPage extends StatefulWidget {
@@ -130,6 +132,16 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(SettingsPage.routeName);
+            },
+            icon: const Icon(CupertinoIcons.settings),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -138,12 +150,9 @@ class _AuthPageState extends State<AuthPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: SizedBox(
-                      height: 250,
-                      child: Lottie.asset('assets/animations/auth.json'),
-                    ),
+                  SizedBox(
+                    height: 250,
+                    child: Lottie.asset('assets/animations/auth.json'),
                   ),
                   switch (_currentPageState) {
                     AuthPageState.login => _loginStateContent,
@@ -167,7 +176,7 @@ class _AuthPageState extends State<AuthPage> {
           subTitle: AppLocalizations.of(context)!.authPageLoginSubtitle,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 50),
+          padding: const EdgeInsets.symmetric(vertical: 25),
           child: Column(
             children: [
               _emailTextField,
@@ -209,7 +218,7 @@ class _AuthPageState extends State<AuthPage> {
           subTitle: AppLocalizations.of(context)!.authPageRegisterSubtitle,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 50),
+          padding: const EdgeInsets.symmetric(vertical: 25),
           child: Column(
             children: [
               _nameTextField,
@@ -246,7 +255,7 @@ class _AuthPageState extends State<AuthPage> {
           subTitle: AppLocalizations.of(context)!.authPageRecoverySubtitle,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 50),
+          padding: const EdgeInsets.symmetric(vertical: 25),
           child: Column(
             children: [
               _emailTextField,

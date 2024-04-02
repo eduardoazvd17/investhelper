@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:investhelper/src/core/controllers/app_controller.dart';
+import 'package:investhelper/src/features/settings/views/settings_page.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
 
@@ -39,7 +41,17 @@ class _WelcomePageState extends State<WelcomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.appName)),
+      appBar: AppBar(
+        title: Text(AppLocalizations.of(context)!.appName),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(SettingsPage.routeName);
+            },
+            icon: const Icon(CupertinoIcons.settings),
+          ),
+        ],
+      ),
       body: PageView(controller: _pageViewController, children: _pageViewPages),
       bottomNavigationBar: _navigationBar,
     );
