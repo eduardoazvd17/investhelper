@@ -185,8 +185,11 @@ class _AuthPageState extends State<AuthPage> {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: _makeLogin,
-                child: Text(
-                  AppLocalizations.of(context)!.makeLogin,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.5),
+                  child: Text(
+                    AppLocalizations.of(context)!.makeLogin,
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
@@ -231,7 +234,10 @@ class _AuthPageState extends State<AuthPage> {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: _makeRegister,
-                child: Text(AppLocalizations.of(context)!.makeRegister),
+                child: Padding(
+                  padding: const EdgeInsets.all(12.5),
+                  child: Text(AppLocalizations.of(context)!.makeRegister),
+                ),
               ),
             ],
           ),
@@ -262,8 +268,11 @@ class _AuthPageState extends State<AuthPage> {
               const SizedBox(height: 10),
               ElevatedButton(
                 onPressed: _sendRecoveryEmail,
-                child: Text(
-                  AppLocalizations.of(context)!.sendRecoveryEmail,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.5),
+                  child: Text(
+                    AppLocalizations.of(context)!.sendRecoveryEmail,
+                  ),
                 ),
               ),
             ],
