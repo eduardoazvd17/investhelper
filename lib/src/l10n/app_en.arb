@@ -126,5 +126,13 @@
     "emptyCategoriesText": "No categories created. Create your categories to classify and organize your investments.",
     "cantEnableBiometrics": "To enable the app's biometric protection, please activate biometrics on your device.",
     "authRequired": "Authentication Required",
+    "continueAs": "Continue as: {name}",
+    "@continueAs": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    },
     "unlock": "Unlock"
 }

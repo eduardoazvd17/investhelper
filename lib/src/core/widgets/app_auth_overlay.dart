@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
 import 'package:investhelper/src/features/investments/views/investments_page.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../features/auth/views/auth_page.dart';
 import '../../l10n/l10n.dart';
@@ -25,7 +26,7 @@ class AppAuthOverlay extends StatefulWidget {
     await showDialog(
       context: context,
       useSafeArea: false,
-      barrierColor: Colors.black38,
+      barrierColor: Colors.black45,
       barrierDismissible: false,
       builder: (_) => AppAuthOverlay(appController: appController),
     );
@@ -110,15 +111,32 @@ class _AppAuthOverlayState extends State<AppAuthOverlay> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 100),
+                    padding: const EdgeInsets.only(bottom: 50),
                     child: Column(
                       children: [
-                        const Icon(CupertinoIcons.lock, size: 100),
-                        const SizedBox(height: 20),
+                        SizedBox(
+                          height: 250,
+                          child: Lottie.asset('assets/animations/auth.json'),
+                        ),
+                        const SizedBox(height: 25),
                         Text(
                           AppLocalizations.of(context)!.authRequired,
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          AppLocalizations.of(context)!.continueAs(
+                            widget.appController.user?.shortName ?? '',
+                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleSmall
+                              ?.copyWith(color: Colors.white),
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleLarge,
                         ),
                       ],
                     ),
@@ -128,6 +146,7 @@ class _AppAuthOverlayState extends State<AppAuthOverlay> {
                       ButtonTileWidget(
                         icon: CupertinoIcons.lock_open,
                         text: AppLocalizations.of(context)!.unlock,
+                        showBorder: false,
                         backgroundColor: Theme.of(context)
                             .elevatedButtonTheme
                             .style
@@ -139,6 +158,7 @@ class _AppAuthOverlayState extends State<AppAuthOverlay> {
                       ButtonTileWidget(
                         icon: Icons.exit_to_app,
                         text: AppLocalizations.of(context)!.endSession,
+                        showBorder: false,
                         backgroundColor: Theme.of(context).colorScheme.error,
                         color: Theme.of(context).scaffoldBackgroundColor,
                         onTap: () => _endSession(context),

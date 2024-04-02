@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 class ButtonTileWidget extends StatelessWidget {
   final String text;
   final void Function() onTap;
-  final Color? backgroundColor;
   final Color? color;
+  final bool showBorder;
+  final Color? backgroundColor;
   final IconData? icon;
   const ButtonTileWidget({
     super.key,
     required this.text,
     required this.onTap,
-    this.backgroundColor,
     this.color,
+    this.showBorder = true,
+    this.backgroundColor,
     this.icon,
   });
 
@@ -33,7 +35,7 @@ class ButtonTileWidget extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: backgroundColor,
-            border: Border.all(color: color),
+            border: showBorder ? Border.all(color: color) : null,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Padding(
