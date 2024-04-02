@@ -12,14 +12,7 @@ class AppController = AppControllerBase with _$AppController;
 abstract class AppControllerBase with Store {
   late final CredentialsManager _credentialsManager;
   final AppService _service;
-  AppControllerBase({required AppService service}) : _service = service {
-    showWelcomePage = true;
-    canEnableBiometrics = false;
-    isBiometricsEnabled = false;
-    shouldRequestAuth = false;
-    theme = ThemeEnum.system;
-    language = LanguageEnum.system;
-  }
+  AppControllerBase({required AppService service}) : _service = service;
 
   @action
   Future<void> initialize() async {
@@ -38,7 +31,7 @@ abstract class AppControllerBase with Store {
   }
 
   @observable
-  late bool showWelcomePage;
+  bool showWelcomePage = true;
 
   @action
   void disableWelcomePage() {
@@ -60,16 +53,16 @@ abstract class AppControllerBase with Store {
   }
 
   @observable
-  late bool canEnableBiometrics;
+  bool canEnableBiometrics = false;
 
   @observable
-  late bool isBiometricsEnabled;
+  bool isBiometricsEnabled = false;
+
+  @observable
+  bool shouldRequestAuth = false;
 
   @observable
   bool isRequestAuthOverlayShowing = false;
-
-  @observable
-  late bool shouldRequestAuth;
 
   Future<bool> requestAuth() async {
     return await _credentialsManager.requestAuth();
@@ -92,7 +85,7 @@ abstract class AppControllerBase with Store {
   }
 
   @observable
-  late ThemeEnum theme;
+  ThemeEnum theme = ThemeEnum.system;
 
   @action
   void changeTheme(ThemeEnum? theme) {
@@ -103,7 +96,7 @@ abstract class AppControllerBase with Store {
   }
 
   @observable
-  late LanguageEnum language;
+  LanguageEnum language = LanguageEnum.system;
 
   @action
   void changeLanguage(LanguageEnum? language) {
