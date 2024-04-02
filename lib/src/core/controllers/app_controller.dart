@@ -24,6 +24,7 @@ abstract class AppControllerBase with Store {
     isBiometricsEnabled =
         canEnableBiometrics && await _service.loadIsBiometricsEnabled();
     shouldRequestAuth = isBiometricsEnabled;
+    isRequestAuthOverlayShowing = false;
     theme = await _service.loadTheme();
     language = await _service.loadLanguage();
     user = await _service.getCurrentUser();

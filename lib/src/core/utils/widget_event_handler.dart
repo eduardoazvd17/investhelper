@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class WidgetEventHandler extends WidgetsBindingObserver {
-  final void Function() onResume;
-  final void Function() onPause;
+  final void Function()? onResume;
+  final void Function()? onPause;
 
   WidgetEventHandler({
-    required this.onResume,
-    required this.onPause,
+    this.onResume,
+    this.onPause,
   });
 
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
     if (state == AppLifecycleState.resumed) {
-      onResume.call();
+      onResume?.call();
     }
     if (state == AppLifecycleState.paused) {
-      onPause.call();
+      onPause?.call();
     }
   }
 }

@@ -38,7 +38,7 @@ class AppAuthOverlay extends StatefulWidget {
 
 class _AppAuthOverlayState extends State<AppAuthOverlay> {
   late final WidgetEventHandler _widgetEventHandler;
-  bool _autoCallAuthenticate = false;
+  bool _autoCallAuthenticate = true;
 
   @override
   void initState() {
@@ -53,6 +53,10 @@ class _AppAuthOverlayState extends State<AppAuthOverlay> {
     );
     WidgetsBinding.instance.addObserver(_widgetEventHandler);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _autoCallAuthenticate = true;
+      _widgetEventHandler.onResume?.call();
+    });
   }
 
   @override

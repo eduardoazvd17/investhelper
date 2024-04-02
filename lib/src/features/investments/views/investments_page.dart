@@ -39,8 +39,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   @override
   void initState() {
     _widgetEventHandler = WidgetEventHandler(
-      onResume: () {},
-      onPause: () {
+      onResume: () {
         if (controller.shouldRequestAuth) {
           AppAuthOverlay.show(context);
         }
@@ -50,6 +49,9 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     _overviewScrollController = ScrollController();
     _detailsScrollController = ScrollController();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _widgetEventHandler.onResume?.call();
+    });
   }
 
   @override
