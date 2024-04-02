@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:investhelper/src/core/widgets/app_auth_overlay.dart';
 import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
@@ -12,6 +13,7 @@ import 'package:investhelper/src/features/investments/widgets/quick_actions_widg
 import 'package:investhelper/src/features/settings/views/settings_page.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 
+import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
@@ -28,6 +30,7 @@ class InvestmentsPage extends StatefulWidget {
 
 class _InvestmentsPageState extends State<InvestmentsPage> {
   int _currentPage = 0;
+  late final WidgetEventHandler _widgetEventHandler;
   late final ScrollController _overviewScrollController;
   late final ScrollController _detailsScrollController;
 
@@ -35,6 +38,15 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
 
   @override
   void initState() {
+    _widgetEventHandler = WidgetEventHandler(
+      onResume: () {},
+      onPause: () {
+        if (controller.shouldRequestAuth) {
+          AppAuthOverlay.show(context);
+        }
+      },
+    );
+    WidgetsBinding.instance.addObserver(_widgetEventHandler);
     _overviewScrollController = ScrollController();
     _detailsScrollController = ScrollController();
     super.initState();
@@ -42,6 +54,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(_widgetEventHandler);
     _overviewScrollController.dispose();
     _detailsScrollController.dispose();
     super.dispose();

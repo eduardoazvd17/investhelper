@@ -41,8 +41,8 @@ class InvestmentsResumeCard extends StatelessWidget {
                   onPressed: toggleHideValues,
                   visualDensity: VisualDensity.compact,
                   icon: hideValues
-                      ? const Icon(CupertinoIcons.eye)
-                      : const Icon(CupertinoIcons.eye_slash),
+                      ? const Icon(CupertinoIcons.eye_slash)
+                      : const Icon(CupertinoIcons.eye),
                 ),
               ],
             ),

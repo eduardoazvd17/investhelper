@@ -25,7 +25,7 @@ abstract class InvestmentsControllerBase with Store {
     loadUserData();
   }
 
-  @readonly
+  @observable
   bool isLoading = true;
 
   @action
@@ -43,7 +43,10 @@ abstract class InvestmentsControllerBase with Store {
   @computed
   UserModel? get user => _appController.user;
 
-  @readonly
+  @computed
+  bool get shouldRequestAuth => _appController.shouldRequestAuth;
+
+  @observable
   bool hideValues = true;
 
   @action
@@ -52,7 +55,7 @@ abstract class InvestmentsControllerBase with Store {
     _service.saveHideValues(hideValues);
   }
 
-  @readonly
+  @observable
   List<InvestmentModel> investments = [];
 
   @computed
@@ -65,13 +68,13 @@ abstract class InvestmentsControllerBase with Store {
     return 0.0;
   }
 
-  @readonly
+  @observable
   List<CategoryModel> categories = [];
 
-  @readonly
+  @observable
   List<GoalModel> goals = [];
 
-  @readonly
+  @observable
   List<OperationModel> thisMonthOperations = [];
 
   @computed
@@ -106,6 +109,6 @@ abstract class InvestmentsControllerBase with Store {
     return 0.0;
   }
 
-  @readonly
+  @observable
   DailyTipModel? dailyTip;
 }

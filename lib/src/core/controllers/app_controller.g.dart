@@ -46,6 +46,27 @@ mixin _$AppController on AppControllerBase, Store {
     });
   }
 
+  late final _$canEnableBiometricsAtom =
+      Atom(name: 'AppControllerBase.canEnableBiometrics', context: context);
+
+  @override
+  bool get canEnableBiometrics {
+    _$canEnableBiometricsAtom.reportRead();
+    return super.canEnableBiometrics;
+  }
+
+  bool _canEnableBiometricsIsInitialized = false;
+
+  @override
+  set canEnableBiometrics(bool value) {
+    _$canEnableBiometricsAtom.reportWrite(value,
+        _canEnableBiometricsIsInitialized ? super.canEnableBiometrics : null,
+        () {
+      super.canEnableBiometrics = value;
+      _canEnableBiometricsIsInitialized = true;
+    });
+  }
+
   late final _$isBiometricsEnabledAtom =
       Atom(name: 'AppControllerBase.isBiometricsEnabled', context: context);
 
@@ -64,6 +85,44 @@ mixin _$AppController on AppControllerBase, Store {
         () {
       super.isBiometricsEnabled = value;
       _isBiometricsEnabledIsInitialized = true;
+    });
+  }
+
+  late final _$isRequestAuthOverlayShowingAtom = Atom(
+      name: 'AppControllerBase.isRequestAuthOverlayShowing', context: context);
+
+  @override
+  bool get isRequestAuthOverlayShowing {
+    _$isRequestAuthOverlayShowingAtom.reportRead();
+    return super.isRequestAuthOverlayShowing;
+  }
+
+  @override
+  set isRequestAuthOverlayShowing(bool value) {
+    _$isRequestAuthOverlayShowingAtom
+        .reportWrite(value, super.isRequestAuthOverlayShowing, () {
+      super.isRequestAuthOverlayShowing = value;
+    });
+  }
+
+  late final _$shouldRequestAuthAtom =
+      Atom(name: 'AppControllerBase.shouldRequestAuth', context: context);
+
+  @override
+  bool get shouldRequestAuth {
+    _$shouldRequestAuthAtom.reportRead();
+    return super.shouldRequestAuth;
+  }
+
+  bool _shouldRequestAuthIsInitialized = false;
+
+  @override
+  set shouldRequestAuth(bool value) {
+    _$shouldRequestAuthAtom.reportWrite(
+        value, _shouldRequestAuthIsInitialized ? super.shouldRequestAuth : null,
+        () {
+      super.shouldRequestAuth = value;
+      _shouldRequestAuthIsInitialized = true;
     });
   }
 
@@ -107,6 +166,26 @@ mixin _$AppController on AppControllerBase, Store {
     });
   }
 
+  late final _$appVersionAtom =
+      Atom(name: 'AppControllerBase.appVersion', context: context);
+
+  @override
+  String get appVersion {
+    _$appVersionAtom.reportRead();
+    return super.appVersion;
+  }
+
+  bool _appVersionIsInitialized = false;
+
+  @override
+  set appVersion(String value) {
+    _$appVersionAtom.reportWrite(
+        value, _appVersionIsInitialized ? super.appVersion : null, () {
+      super.appVersion = value;
+      _appVersionIsInitialized = true;
+    });
+  }
+
   late final _$initializeAsyncAction =
       AsyncAction('AppControllerBase.initialize', context: context);
 
@@ -121,6 +200,16 @@ mixin _$AppController on AppControllerBase, Store {
   @override
   Future<void> logout() {
     return _$logoutAsyncAction.run(() => super.logout());
+  }
+
+  late final _$changeIsBiometricsEnabledAsyncAction = AsyncAction(
+      'AppControllerBase.changeIsBiometricsEnabled',
+      context: context);
+
+  @override
+  Future<void> changeIsBiometricsEnabled(bool value, {bool force = false}) {
+    return _$changeIsBiometricsEnabledAsyncAction
+        .run(() => super.changeIsBiometricsEnabled(value, force: force));
   }
 
   late final _$AppControllerBaseActionController =
@@ -175,9 +264,13 @@ mixin _$AppController on AppControllerBase, Store {
     return '''
 showWelcomePage: ${showWelcomePage},
 user: ${user},
+canEnableBiometrics: ${canEnableBiometrics},
 isBiometricsEnabled: ${isBiometricsEnabled},
+isRequestAuthOverlayShowing: ${isRequestAuthOverlayShowing},
+shouldRequestAuth: ${shouldRequestAuth},
 theme: ${theme},
-language: ${language}
+language: ${language},
+appVersion: ${appVersion}
     ''';
   }
 }

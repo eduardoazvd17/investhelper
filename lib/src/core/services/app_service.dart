@@ -69,7 +69,7 @@ class AppService {
 
   Future<void> logout() async => await _auth.signOut();
 
-  static Future<String> getAppID() async {
+  Future<String> getAppID() async {
     final prefs = await SharedPreferences.getInstance();
     final String? appID = prefs.getString('AppID');
     if (appID == null) {
@@ -81,7 +81,7 @@ class AppService {
     }
   }
 
-   Future<String> getAppVersion() async {
+  Future<String> getAppVersion() async {
     return (await PackageInfo.fromPlatform()).version;
   }
 }

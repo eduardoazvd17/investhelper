@@ -11,6 +11,7 @@ import '../../../core/models/user_model.dart';
 import '../../../core/widgets/dialog_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../../../core/enums/theme_enum.dart';
+import '../../investments/views/investments_page.dart';
 
 class SettingsPage extends StatelessWidget {
   static const String routeName = "/settings";
@@ -37,7 +38,8 @@ class SettingsPage extends StatelessWidget {
     if (result != null && result) {
       appController.logout();
       if (!context.mounted) return;
-      Navigator.of(context).pop();
+      Navigator.of(context)
+          .popUntil(ModalRoute.withName(InvestmentsPage.routeName));
       Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
     }
   }
@@ -89,11 +91,15 @@ class SettingsPage extends StatelessWidget {
                                 AppLocalizations.of(context)!.enableBiometrics,
                               ),
                               subtitle: Text(
-                                AppLocalizations.of(context)!
-                                    .enableBiometricsHint,
+                                appController.canEnableBiometrics
+                                    ? AppLocalizations.of(context)!
+                                        .enableBiometricsHint
+                                    : AppLocalizations.of(context)!
+                                        .cantEnableBiometrics,
                               ),
-                              onChanged:
-                                  appController.changeIsBiometricsEnabled,
+                              onChanged: appController.canEnableBiometrics
+                                  ? appController.changeIsBiometricsEnabled
+                                  : null,
                             );
                           },
                         ),
@@ -156,25 +162,23 @@ class SettingsPage extends StatelessWidget {
                 SectionWidget(
                   title: AppLocalizations.of(context)!.others,
                   content: [
-                    Observer(builder: (_) {
-                      return ButtonTileWidget(
-                        text: AppLocalizations.of(context)!.aboutThisApp,
-                        icon: Icons.info_outline,
-                        onTap: () {
-                          showAboutDialog(
-                            context: context,
-                            applicationVersion: appController.appVersion,
-                            children: [
-                              Text(AppLocalizations.of(context)!.aboutAppText),
-                            ],
-                            applicationIcon: Image.asset(
-                              'assets/images/logo.png',
-                              height: 50,
-                            ),
-                          );
-                        },
-                      );
-                    }),
+                    ButtonTileWidget(
+                      text: AppLocalizations.of(context)!.aboutThisApp,
+                      icon: Icons.info_outline,
+                      onTap: () {
+                        showAboutDialog(
+                          context: context,
+                          applicationVersion: appController.appVersion,
+                          children: [
+                            Text(AppLocalizations.of(context)!.aboutAppText),
+                          ],
+                          applicationIcon: Image.asset(
+                            'assets/images/logo.png',
+                            height: 50,
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
                 const SizedBox(height: 25),

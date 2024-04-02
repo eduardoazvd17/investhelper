@@ -123,5 +123,8 @@
     "emptyDiversityGraphText": "Add your investments to display the diversity graph.",
     "emptyMyGoalsText": "There are no goals set. Add goals or reminders and they will appear here.",
     "emptyInvestmentsText": "No investments added. Add your investments to start using the app.",
-    "emptyCategoriesText": "No categories created. Create your categories to classify and organize your investments."
+    "emptyCategoriesText": "No categories created. Create your categories to classify and organize your investments.",
+    "cantEnableBiometrics": "To enable the app's biometric protection, please activate biometrics on your device.",
+    "authRequired": "Authentication Required",
+    "unlock": "Unlock"
 }

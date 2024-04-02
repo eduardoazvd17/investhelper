@@ -11,6 +11,7 @@ import 'package:investhelper/src/features/investments/controllers/investments_co
 import 'package:investhelper/src/features/welcome/views/welcome_page.dart';
 import 'src/core/services/app_service.dart';
 import 'src/core/utils/app_theme.dart';
+import 'src/core/widgets/lifecycle_handler.dart';
 import 'src/features/auth/controllers/auth_controller.dart';
 import 'src/features/auth/services/auth_service.dart';
 import 'src/features/auth/views/auth_page.dart';
@@ -66,6 +67,10 @@ class InvestHelperApp extends StatelessWidget {
       builder: (context) {
         return MaterialApp(
           title: 'InvestHelper',
+          builder: (context, child) => LifecycleHandler(
+            appController: appController,
+            child: child,
+          ),
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,
           themeMode: appController.theme.themeMode,

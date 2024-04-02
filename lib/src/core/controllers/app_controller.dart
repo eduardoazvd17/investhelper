@@ -1,4 +1,4 @@
-import 'package:get_it/get_it.dart';
+import 'package:credentials_manager/credentials_manager.dart';
 import 'package:investhelper/src/core/enums/language_enum.dart';
 import 'package:mobx/mobx.dart';
 
@@ -9,33 +9,35 @@ part 'app_controller.g.dart';
 
 class AppController = AppControllerBase with _$AppController;
 
-extension AppControllerExtension on AppController {
-  static get instance => GetIt.I.get<AppController>();
-  static get I => instance;
-}
-
 abstract class AppControllerBase with Store {
+  late final CredentialsManager _credentialsManager;
   final AppService _service;
-  AppControllerBase({
-    required AppService service,
-  }) : _service = service {
+  AppControllerBase({required AppService service}) : _service = service {
     showWelcomePage = true;
+    canEnableBiometrics = false;
     isBiometricsEnabled = false;
+    shouldRequestAuth = false;
     theme = ThemeEnum.system;
     language = LanguageEnum.system;
   }
 
   @action
   Future<void> initialize() async {
+    _credentialsManager = CredentialsManager(
+      storageKey: await _service.getAppID(),
+    );
     showWelcomePage = await _service.loadShowWelcomePage();
-    isBiometricsEnabled = await _service.loadIsBiometricsEnabled();
+    canEnableBiometrics = await _credentialsManager.canCheckBiometrics();
+    isBiometricsEnabled =
+        canEnableBiometrics && await _service.loadIsBiometricsEnabled();
+    shouldRequestAuth = isBiometricsEnabled;
     theme = await _service.loadTheme();
     language = await _service.loadLanguage();
     user = await _service.getCurrentUser();
     appVersion = await _service.getAppVersion();
   }
 
-  @readonly
+  @observable
   late bool showWelcomePage;
 
   @action
@@ -44,7 +46,7 @@ abstract class AppControllerBase with Store {
     _service.disableWelcomePage();
   }
 
-  @readonly
+  @observable
   UserModel? user;
 
   @action
@@ -53,18 +55,43 @@ abstract class AppControllerBase with Store {
   @action
   Future<void> logout() async {
     await _service.logout();
+    await changeIsBiometricsEnabled(false, force: true);
     user = null;
   }
 
-  @readonly
+  @observable
+  late bool canEnableBiometrics;
+
+  @observable
   late bool isBiometricsEnabled;
 
-  void changeIsBiometricsEnabled(bool value) async {
-    isBiometricsEnabled = value;
-    _service.saveIsBiometricsEnabled(value);
+  @observable
+  bool isRequestAuthOverlayShowing = false;
+
+  @observable
+  late bool shouldRequestAuth;
+
+  Future<bool> requestAuth() async {
+    return await _credentialsManager.requestAuth();
   }
 
-  @readonly
+  @action
+  Future<void> changeIsBiometricsEnabled(
+    bool value, {
+    bool force = false,
+  }) async {
+    if (canEnableBiometrics) {
+      if (!force) {
+        final result = await requestAuth();
+        if (!result) return;
+      }
+
+      isBiometricsEnabled = value;
+      _service.saveIsBiometricsEnabled(value);
+    }
+  }
+
+  @observable
   late ThemeEnum theme;
 
   @action
@@ -75,7 +102,7 @@ abstract class AppControllerBase with Store {
     }
   }
 
-  @readonly
+  @observable
   late LanguageEnum language;
 
   @action
@@ -86,6 +113,6 @@ abstract class AppControllerBase with Store {
     }
   }
 
-  @readonly
+  @observable
   late String appVersion;
 }

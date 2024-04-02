@@ -16,6 +16,13 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
       (_$userComputed ??= Computed<UserModel?>(() => super.user,
               name: 'InvestmentsControllerBase.user'))
           .value;
+  Computed<bool>? _$shouldRequestAuthComputed;
+
+  @override
+  bool get shouldRequestAuth => (_$shouldRequestAuthComputed ??= Computed<bool>(
+          () => super.shouldRequestAuth,
+          name: 'InvestmentsControllerBase.shouldRequestAuth'))
+      .value;
   Computed<double>? _$totalInvestmentsComputed;
 
   @override
@@ -183,6 +190,7 @@ goals: ${goals},
 thisMonthOperations: ${thisMonthOperations},
 dailyTip: ${dailyTip},
 user: ${user},
+shouldRequestAuth: ${shouldRequestAuth},
 totalInvestments: ${totalInvestments},
 thisMonthPurchasesTotal: ${thisMonthPurchasesTotal},
 thisMonthSalesTotal: ${thisMonthSalesTotal}
