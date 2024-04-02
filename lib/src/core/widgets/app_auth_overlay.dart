@@ -37,29 +37,33 @@ class AppAuthOverlay extends StatefulWidget {
 }
 
 class _AppAuthOverlayState extends State<AppAuthOverlay> {
-  bool _autoClose = true;
-
-  Future<void> _closeAuthOverlay() async {
-    final bool result = await widget.appController.requestAuth();
-    if (result && mounted) Navigator.of(context).pop();
-  }
+  late final WidgetEventHandler _widgetEventHandler;
+  bool _autoCallAuthenticate = false;
 
   @override
   void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(
-      WidgetEventHandler(
-        onResume: () {
-          if (_autoClose) {
-            _closeAuthOverlay();
-            setState(() => _autoClose = false);
-          }
-        },
-        onPause: () {
-          setState(() => _autoClose = true);
-        },
-      ),
+    _widgetEventHandler = WidgetEventHandler(
+      onResume: () {
+        if (_autoCallAuthenticate) {
+          _authenticate();
+          setState(() => _autoCallAuthenticate = false);
+        }
+      },
+      onPause: () => setState(() => _autoCallAuthenticate = true),
     );
+    WidgetsBinding.instance.addObserver(_widgetEventHandler);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(_widgetEventHandler);
+    super.dispose();
+  }
+
+  Future<void> _authenticate() async {
+    final bool result = await widget.appController.requestAuth();
+    if (result && mounted) Navigator.of(context).pop();
   }
 
   Future<void> _endSession(BuildContext context) async {
@@ -82,7 +86,8 @@ class _AppAuthOverlayState extends State<AppAuthOverlay> {
     if (result != null && result) {
       widget.appController.logout();
       if (!context.mounted) return;
-      Navigator.of(context).popUntil(ModalRoute.withName(InvestmentsPage.routeName));
+      Navigator.of(context)
+          .popUntil(ModalRoute.withName(InvestmentsPage.routeName));
       Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
     }
   }
@@ -125,7 +130,7 @@ class _AppAuthOverlayState extends State<AppAuthOverlay> {
                             ?.backgroundColor
                             ?.resolve(MaterialState.values.toSet()),
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        onTap: _closeAuthOverlay,
+                        onTap: _authenticate,
                       ),
                       ButtonTileWidget(
                         icon: Icons.exit_to_app,
