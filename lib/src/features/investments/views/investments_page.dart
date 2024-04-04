@@ -55,9 +55,9 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(_widgetEventHandler);
     _overviewScrollController.dispose();
     _detailsScrollController.dispose();
+    WidgetsBinding.instance.removeObserver(_widgetEventHandler);
     super.dispose();
   }
 
