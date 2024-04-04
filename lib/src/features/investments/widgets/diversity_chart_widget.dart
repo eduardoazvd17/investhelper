@@ -19,7 +19,7 @@ class DiversityChartWidget extends StatelessWidget {
   bool get hasData => investments.where((e) => e.hasData).isNotEmpty;
 
   Map<CategoryEnum, PieChartSectionData> getSections(BuildContext context) {
-    Map<CategoryEnum, PieChartSectionData> result = {};
+    final Map<CategoryEnum, PieChartSectionData> result = {};
     if (hasData) {
       for (final category in CategoryEnum.values) {
         final investmentsByCategory =
@@ -30,11 +30,14 @@ class DiversityChartWidget extends StatelessWidget {
               .map((e) => e.amountInvested)
               .reduce((a, b) => a + b);
 
-          result[category] = PieChartSectionData(
-            color: category.color,
-            value: ((valueByCategory / totalInvestments) * 100),
-            title: category.getTitle(context),
-            showTitle: false,
+          result.putIfAbsent(
+            category,
+            () => PieChartSectionData(
+              color: category.color,
+              value: ((valueByCategory / totalInvestments) * 100),
+              title: category.getTitle(context),
+              showTitle: false,
+            ),
           );
         }
       }
