@@ -4,8 +4,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:investhelper/src/core/widgets/app_auth_overlay.dart';
 import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
-import 'package:investhelper/src/features/investments/enums/category_enum.dart';
-import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/daily_tips_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/diversity_chart_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/goal_card_tile.dart';
