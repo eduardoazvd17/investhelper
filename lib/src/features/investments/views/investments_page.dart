@@ -198,9 +198,30 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 content: [
                   Observer(
                     builder: (_) {
-                      return DiversityChartWidget(
-                        totalInvestments: controller.totalInvestments,
-                        investments: controller.investments,
+                      final bool hasData = controller.investments
+                          .where((e) => e.hasData)
+                          .isNotEmpty;
+
+                      return Observer(
+                        builder: (_) {
+                          return SizedBox(
+                            height: hasData ? 160 : null,
+                            child: Visibility(
+                              visible: hasData,
+                              replacement: Padding(
+                                padding: const EdgeInsets.only(bottom: 20),
+                                child: AdviseMessageWidget(
+                                  message: AppLocalizations.of(context)!
+                                      .emptyDiversityGraphText,
+                                ),
+                              ),
+                              child: DiversityChartWidget(
+                                totalInvestments: controller.totalInvestments,
+                                investments: controller.investments,
+                              ),
+                            ),
+                          );
+                        },
                       );
                     },
                   ),
@@ -217,6 +238,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   Observer(
                     builder: (_) {
                       final bool hasData = controller.goals.isNotEmpty;
+
                       return SizedBox(
                         height: hasData ? 120 : null,
                         child: Visibility(
@@ -285,6 +307,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 content: [
                   Observer(builder: (_) {
                     final bool hasData = controller.investments.isNotEmpty;
+
                     return SizedBox(
                       height: hasData ? 150 : null,
                       child: Visibility(
