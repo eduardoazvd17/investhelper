@@ -54,8 +54,11 @@ class DiversityChartWidget extends StatelessWidget {
         height: hasData ? 160 : null,
         child: Visibility(
           visible: hasData,
-          replacement: AdviseMessageWidget(
-            message: AppLocalizations.of(context)!.emptyDiversityGraphText,
+          replacement: Padding(
+            padding: const EdgeInsets.only(bottom: 20),
+            child: AdviseMessageWidget(
+              message: AppLocalizations.of(context)!.emptyDiversityGraphText,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

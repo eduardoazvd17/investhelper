@@ -10,7 +10,6 @@ import 'package:investhelper/src/features/investments/widgets/daily_tips_widget.
 import 'package:investhelper/src/features/investments/widgets/diversity_chart_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/goal_card_tile.dart';
 import 'package:investhelper/src/features/investments/widgets/investment_tile_widget.dart';
-import 'package:investhelper/src/features/investments/widgets/quick_actions_widget.dart';
 import 'package:investhelper/src/features/settings/views/settings_page.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 
@@ -133,14 +132,14 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
           BottomNavigationBarItem(
             icon: const Padding(
               padding: EdgeInsets.only(bottom: 2.5),
-              child: Icon(Icons.dashboard_outlined),
+              child: Icon(CupertinoIcons.chart_pie),
             ),
             label: AppLocalizations.of(context)!.overview,
           ),
           BottomNavigationBarItem(
             icon: const Padding(
               padding: EdgeInsets.only(bottom: 2.5),
-              child: Icon(CupertinoIcons.arrow_up_arrow_down),
+              child: Icon(CupertinoIcons.chart_bar),
             ),
             label: AppLocalizations.of(context)!.investments,
           ),
@@ -178,6 +177,23 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 ],
               ),
               SectionWidget(
+                title: AppLocalizations.of(context)!.quickActions,
+                content: [
+                  TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(CupertinoIcons.arrow_up_right),
+                    label: Text(
+                        AppLocalizations.of(context)!.insertPurchaseOperation),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(CupertinoIcons.arrow_down_left),
+                    label:
+                        Text(AppLocalizations.of(context)!.insertSaleOperation),
+                  ),
+                ],
+              ),
+              SectionWidget(
                 title: AppLocalizations.of(context)!.diversity,
                 content: [
                   Observer(
@@ -187,6 +203,11 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                         investments: controller.investments,
                       );
                     },
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child:
+                        Text(AppLocalizations.of(context)!.accessMyInvestments),
                   ),
                 ],
               ),
@@ -200,9 +221,12 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                         height: hasData ? 120 : null,
                         child: Visibility(
                           visible: hasData,
-                          replacement: AdviseMessageWidget(
-                            message:
-                                AppLocalizations.of(context)!.emptyMyGoalsText,
+                          replacement: Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: AdviseMessageWidget(
+                              message: AppLocalizations.of(context)!
+                                  .emptyMyGoalsText,
+                            ),
                           ),
                           child: ListView(
                             scrollDirection: Axis.horizontal,
@@ -214,11 +238,11 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                       );
                     },
                   ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(AppLocalizations.of(context)!.editMyGoals),
+                  ),
                 ],
-              ),
-              SectionWidget(
-                title: AppLocalizations.of(context)!.quickActions,
-                content: const [QuickActionsWidget()],
               ),
               Observer(
                 warnWhenNoObservables: false,
@@ -254,6 +278,45 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SectionWidget(
+                title: AppLocalizations.of(context)!.investments,
+                actions: [
+                  IconButton(
+                    onPressed: () {},
+                    visualDensity: VisualDensity.compact,
+                    icon: const Icon(Icons.add),
+                  ),
+                ],
+                content: [
+                  Observer(builder: (_) {
+                    final bool hasData = controller.investments.isNotEmpty;
+                    return SizedBox(
+                      height: hasData ? 150 : null,
+                      child: Visibility(
+                        visible: hasData,
+                        replacement: Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: AdviseMessageWidget(
+                            message: AppLocalizations.of(context)!
+                                .emptyInvestmentsText,
+                          ),
+                        ),
+                        child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          children: controller.investments
+                              .map((e) => InvestmentTileWidget(investment: e))
+                              .toList(),
+                        ),
+                      ),
+                    );
+                  }),
+                  TextButton(
+                    onPressed: () {},
+                    child:
+                        Text(AppLocalizations.of(context)!.accessMyInvestments),
+                  ),
+                ],
+              ),
+              SectionWidget(
                 title: AppLocalizations.of(context)!.categories,
                 content: [
                   SizedBox(
@@ -279,49 +342,10 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 ],
               ),
               SectionWidget(
-                title: AppLocalizations.of(context)!.investments,
-                actions: [
-                  IconButton(
-                    onPressed: () {},
-                    visualDensity: VisualDensity.compact,
-                    icon: const Icon(Icons.add),
-                  ),
-                ],
-                content: [
-                  Observer(builder: (_) {
-                    final bool hasData = controller.investments.isNotEmpty;
-                    return SizedBox(
-                      height: hasData ? 150 : null,
-                      child: Visibility(
-                        visible: hasData,
-                        replacement: AdviseMessageWidget(
-                          message: AppLocalizations.of(context)!
-                              .emptyInvestmentsText,
-                        ),
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: controller.investments
-                              .map((e) => InvestmentTileWidget(investment: e))
-                              .toList(),
-                        ),
-                      ),
-                    );
-                  }),
-                  TextButton(
-                    onPressed: () {},
-                    child:
-                        Text(AppLocalizations.of(context)!.accessMyInvestments),
-                  ),
-                ],
-              ),
-              SectionWidget(
                 title: AppLocalizations.of(context)!.productsAndServices,
                 content: [
                   ButtonTileWidget(
-                    text: AppLocalizations.of(context)!.myGoals,
-                    onTap: () {},
-                  ),
-                  ButtonTileWidget(
+                    icon: CupertinoIcons.arrow_up_arrow_down,
                     text: AppLocalizations.of(context)!
                         .operationsHistoryPerformed,
                     onTap: () {},
