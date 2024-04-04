@@ -12,7 +12,7 @@ class ManageMyInvestmentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.manageMyInvestments),
+        title: Text(AppLocalizations.of(context)!.myInvestments),
       ),
       body: Container(),
     );

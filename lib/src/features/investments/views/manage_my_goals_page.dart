@@ -12,7 +12,7 @@ class ManageMyGoalsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.manageMyGoals),
+        title: Text(AppLocalizations.of(context)!.myGoals),
       ),
       body: Container(),
     );
