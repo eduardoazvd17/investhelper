@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../core/exceptions/app_exception.dart';
 import '../models/daily_tip_model.dart';
 
 class InvestmentsService {
@@ -18,7 +19,7 @@ class InvestmentsService {
     return prefs.getBool('AppHideValues') ?? true;
   }
 
-  Future<DailyTipModel?> loadDailyTip() async {
+  Future<DailyTipModel> loadDailyTip() async {
     try {
       final DocumentSnapshot<Map<String, dynamic>> document =
           await _firestore.collection('dailyTips').doc('value').get();
@@ -41,7 +42,7 @@ class InvestmentsService {
         portugueseMessage: portugueseTips[index]['message']!,
       );
     } catch (_) {
-      return null;
+      throw AppException(AppExceptionType.connectionError);
     }
   }
 }

@@ -25,6 +25,7 @@ enum AppExceptionType {
   invalidPassword,
   passwordsDontMatch,
   invalidRecoveryEmail,
+  connectionError,
 }
 
 extension AppExceptionTypeExtension on AppExceptionType {
@@ -46,6 +47,8 @@ extension AppExceptionTypeExtension on AppExceptionType {
         AppLocalizations.of(context)!.passwordsDontMatchErrorTitle,
       AppExceptionType.invalidRecoveryEmail =>
         AppLocalizations.of(context)!.invalidRecoveryEmailErrorTitle,
+      AppExceptionType.connectionError =>
+        AppLocalizations.of(context)!.connectionErrorTitle,
     };
   }
 
@@ -67,6 +70,8 @@ extension AppExceptionTypeExtension on AppExceptionType {
         AppLocalizations.of(context)!.passwordsDontMatchErrorMessage,
       AppExceptionType.invalidRecoveryEmail =>
         AppLocalizations.of(context)!.invalidRecoveryEmailErrorMessage,
+      AppExceptionType.connectionError =>
+        AppLocalizations.of(context)!.connectionErrorMessage,
     };
   }
 }
