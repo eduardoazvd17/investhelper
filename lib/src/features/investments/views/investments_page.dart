@@ -255,28 +255,27 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             children: [
               SectionWidget(
                 title: AppLocalizations.of(context)!.categories,
-                actions: [
-                  IconButton(
-                    onPressed: () {},
-                    visualDensity: VisualDensity.compact,
-                    icon: const Icon(Icons.add),
-                  ),
-                ],
                 content: [
                   SizedBox(
-                    height: 60,
-                    child: ListView(
+                    height: 100,
+                    child: SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
-                      children: CategoryEnum.values.map((e) {
-                        return Card(
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: CategoryIndicatorWidget(category: e),
-                          ),
-                        );
-                      }).toList(),
+                      child: Wrap(
+                        direction: Axis.vertical,
+                        alignment: WrapAlignment.center,
+                        runAlignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: CategoryEnum.values.map((e) {
+                          return Card(
+                            child: Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: CategoryIndicatorWidget(category: e),
+                            ),
+                          );
+                        }).toList(),
+                      ),
                     ),
-                  ),
+                  )
                 ],
               ),
               SectionWidget(

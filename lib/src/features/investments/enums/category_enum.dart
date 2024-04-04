@@ -5,8 +5,8 @@ import '../../../l10n/l10n.dart';
 enum CategoryEnum {
   stocks,
   mutualFunds,
-  fixedIncome,
   reits,
+  fixedIncome,
   treasuryBonds,
   savingsAccount,
   privatePensionPlans,
