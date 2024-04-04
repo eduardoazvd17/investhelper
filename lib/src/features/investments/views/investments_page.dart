@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:investhelper/src/core/widgets/app_auth_overlay.dart';
 import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
+import 'package:investhelper/src/features/investments/enums/category_enum.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/daily_tips_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/diversity_chart_widget.dart';
@@ -183,7 +184,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     builder: (_) {
                       return DiversityChartWidget(
                         totalInvestments: controller.totalInvestments,
-                        categories: controller.categories,
                         investments: controller.investments,
                       );
                     },
@@ -263,36 +263,18 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   ),
                 ],
                 content: [
-                  Observer(
-                    builder: (_) {
-                      final bool hasData = controller.categories.isNotEmpty;
-                      return SizedBox(
-                        height: hasData ? 60 : null,
-                        child: Visibility(
-                          visible: hasData,
-                          replacement: AdviseMessageWidget(
-                            message: AppLocalizations.of(context)!
-                                .emptyCategoriesText,
+                  SizedBox(
+                    height: 60,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: CategoryEnum.values.map((e) {
+                        return Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: CategoryIndicatorWidget(category: e),
                           ),
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: controller.categories.map((e) {
-                              return Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(15),
-                                  child: CategoryIndicatorWidget(category: e),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text(
-                      AppLocalizations.of(context)!.personalizeCategories,
+                        );
+                      }).toList(),
                     ),
                   ),
                 ],

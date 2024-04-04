@@ -18,15 +18,10 @@ mixin _$AppController on AppControllerBase, Store {
     return super.showWelcomePage;
   }
 
-  bool _showWelcomePageIsInitialized = false;
-
   @override
   set showWelcomePage(bool value) {
-    _$showWelcomePageAtom.reportWrite(
-        value, _showWelcomePageIsInitialized ? super.showWelcomePage : null,
-        () {
+    _$showWelcomePageAtom.reportWrite(value, super.showWelcomePage, () {
       super.showWelcomePage = value;
-      _showWelcomePageIsInitialized = true;
     });
   }
 
@@ -55,15 +50,10 @@ mixin _$AppController on AppControllerBase, Store {
     return super.canEnableBiometrics;
   }
 
-  bool _canEnableBiometricsIsInitialized = false;
-
   @override
   set canEnableBiometrics(bool value) {
-    _$canEnableBiometricsAtom.reportWrite(value,
-        _canEnableBiometricsIsInitialized ? super.canEnableBiometrics : null,
-        () {
+    _$canEnableBiometricsAtom.reportWrite(value, super.canEnableBiometrics, () {
       super.canEnableBiometrics = value;
-      _canEnableBiometricsIsInitialized = true;
     });
   }
 
@@ -76,15 +66,26 @@ mixin _$AppController on AppControllerBase, Store {
     return super.isBiometricsEnabled;
   }
 
-  bool _isBiometricsEnabledIsInitialized = false;
-
   @override
   set isBiometricsEnabled(bool value) {
-    _$isBiometricsEnabledAtom.reportWrite(value,
-        _isBiometricsEnabledIsInitialized ? super.isBiometricsEnabled : null,
-        () {
+    _$isBiometricsEnabledAtom.reportWrite(value, super.isBiometricsEnabled, () {
       super.isBiometricsEnabled = value;
-      _isBiometricsEnabledIsInitialized = true;
+    });
+  }
+
+  late final _$shouldRequestAuthAtom =
+      Atom(name: 'AppControllerBase.shouldRequestAuth', context: context);
+
+  @override
+  bool get shouldRequestAuth {
+    _$shouldRequestAuthAtom.reportRead();
+    return super.shouldRequestAuth;
+  }
+
+  @override
+  set shouldRequestAuth(bool value) {
+    _$shouldRequestAuthAtom.reportWrite(value, super.shouldRequestAuth, () {
+      super.shouldRequestAuth = value;
     });
   }
 
@@ -105,27 +106,6 @@ mixin _$AppController on AppControllerBase, Store {
     });
   }
 
-  late final _$shouldRequestAuthAtom =
-      Atom(name: 'AppControllerBase.shouldRequestAuth', context: context);
-
-  @override
-  bool get shouldRequestAuth {
-    _$shouldRequestAuthAtom.reportRead();
-    return super.shouldRequestAuth;
-  }
-
-  bool _shouldRequestAuthIsInitialized = false;
-
-  @override
-  set shouldRequestAuth(bool value) {
-    _$shouldRequestAuthAtom.reportWrite(
-        value, _shouldRequestAuthIsInitialized ? super.shouldRequestAuth : null,
-        () {
-      super.shouldRequestAuth = value;
-      _shouldRequestAuthIsInitialized = true;
-    });
-  }
-
   late final _$themeAtom =
       Atom(name: 'AppControllerBase.theme', context: context);
 
@@ -135,14 +115,10 @@ mixin _$AppController on AppControllerBase, Store {
     return super.theme;
   }
 
-  bool _themeIsInitialized = false;
-
   @override
   set theme(ThemeEnum value) {
-    _$themeAtom.reportWrite(value, _themeIsInitialized ? super.theme : null,
-        () {
+    _$themeAtom.reportWrite(value, super.theme, () {
       super.theme = value;
-      _themeIsInitialized = true;
     });
   }
 
@@ -155,14 +131,10 @@ mixin _$AppController on AppControllerBase, Store {
     return super.language;
   }
 
-  bool _languageIsInitialized = false;
-
   @override
   set language(LanguageEnum value) {
-    _$languageAtom
-        .reportWrite(value, _languageIsInitialized ? super.language : null, () {
+    _$languageAtom.reportWrite(value, super.language, () {
       super.language = value;
-      _languageIsInitialized = true;
     });
   }
 
@@ -266,8 +238,8 @@ showWelcomePage: ${showWelcomePage},
 user: ${user},
 canEnableBiometrics: ${canEnableBiometrics},
 isBiometricsEnabled: ${isBiometricsEnabled},
-isRequestAuthOverlayShowing: ${isRequestAuthOverlayShowing},
 shouldRequestAuth: ${shouldRequestAuth},
+isRequestAuthOverlayShowing: ${isRequestAuthOverlayShowing},
 theme: ${theme},
 language: ${language},
 appVersion: ${appVersion}

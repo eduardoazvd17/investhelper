@@ -54,7 +54,6 @@
   },
   "accessMyInvestments": "Acessar meus investimentos",
   "categories": "Categorias",
-  "personalizeCategories": "Personalizar categorias",
   "productsAndServices": "Produtos e serviços",
   "custodialPosition": "Posição em custódia: {value}",
   "@custodialPosition": {
@@ -125,7 +124,6 @@
   "emptyDiversityGraphText": "Adicione seus investimentos para exibir o gráfico de diversidade.",
   "emptyMyGoalsText": "Não há metas definidas. Adicione metas ou lembretes e eles aparecerão aqui.",
   "emptyInvestmentsText": "Nenhum investimento adicionado. Adicione seus investimentos para começar a usar o app.",
-  "emptyCategoriesText": "Nenhuma categoria criada. Crie suas categorias para classificar e organizar seus investimentos.",
   "cantEnableBiometrics": "Para habilitar a proteção biométrica do aplicativo, por favor, ative a biometria em seu dispositivo.",
   "authRequired": "Autenticação Necessária",
   "continueAs": "Continuar como: {name}",
@@ -136,5 +134,15 @@
       }
     }
   },
-  "unlock": "Desbloquear"
+  "unlock": "Desbloquear",
+  "stocks": "Ações",
+  "mutualFunds": "Fundos de Investimento",
+  "fixedIncome": "Renda Fixa",
+  "reits": "Fundos Imobiliários (FIIs)",
+  "treasuryBonds": "Tesouro Direto",
+  "savingsAccount": "Poupança",
+  "privatePensionPlans": "Previdência Privada",
+  "commodities": "Commodities",
+  "etfs": "ETFs (Exchange Traded Funds)",
+  "cryptocurrencies": "Criptomoedas"
 }

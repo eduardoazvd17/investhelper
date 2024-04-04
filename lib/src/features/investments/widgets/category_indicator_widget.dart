@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../models/category_model.dart';
+import '../enums/category_enum.dart';
 
 class CategoryIndicatorWidget extends StatelessWidget {
-  final CategoryModel category;
+  final CategoryEnum category;
   final Color? textColor;
   const CategoryIndicatorWidget({
     super.key,
@@ -29,7 +29,7 @@ class CategoryIndicatorWidget extends StatelessWidget {
         const SizedBox(width: 10),
         Flexible(
           child: Text(
-            category.title,
+            category.getTitle(context),
             style: TextStyle(color: textColor),
           ),
         ),

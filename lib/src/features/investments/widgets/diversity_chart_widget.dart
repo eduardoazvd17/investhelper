@@ -4,42 +4,42 @@ import 'package:investhelper/src/features/investments/widgets/category_indicator
 
 import '../../../core/widgets/advise_message_widget.dart';
 import '../../../l10n/l10n.dart';
-import '../models/category_model.dart';
+import '../enums/category_enum.dart';
 import '../models/investment_model.dart';
 
 class DiversityChartWidget extends StatelessWidget {
   final double totalInvestments;
-  final List<CategoryModel> categories;
   final List<InvestmentModel> investments;
   const DiversityChartWidget({
     super.key,
     required this.totalInvestments,
-    required this.categories,
     required this.investments,
   });
 
   bool get hasData => investments.where((e) => e.hasData).isNotEmpty;
 
-  List<PieChartSectionData> get sections {
-    if (!hasData) return [];
+  Map<CategoryEnum, PieChartSectionData> getSections(BuildContext context) {
+    Map<CategoryEnum, PieChartSectionData> result = {};
+    if (hasData) {
+      for (final category in CategoryEnum.values) {
+        final investmentsByCategory =
+            investments.where((e) => e.category == category);
 
-    return categories.map((c) {
-      final investmentsByCategory =
-          investments.where((e) => e.category.id == c.id);
-
-      final double valueByCategory = investmentsByCategory.isEmpty
-          ? 0.0
-          : investmentsByCategory
+        if (investmentsByCategory.isNotEmpty) {
+          final double valueByCategory = investmentsByCategory
               .map((e) => e.amountInvested)
               .reduce((a, b) => a + b);
 
-      return PieChartSectionData(
-        color: c.color,
-        value: ((valueByCategory / totalInvestments) * 100),
-        title: c.title,
-        showTitle: false,
-      );
-    }).toList();
+          result[category] = PieChartSectionData(
+            color: category.color,
+            value: ((valueByCategory / totalInvestments) * 100),
+            title: category.getTitle(context),
+            showTitle: false,
+          );
+        }
+      }
+    }
+    return result;
   }
 
   @override
@@ -62,7 +62,7 @@ class DiversityChartWidget extends StatelessWidget {
                   PieChartData(
                     centerSpaceRadius: 35,
                     sectionsSpace: 5,
-                    sections: sections,
+                    sections: getSections(context).values.toList(),
                   ),
                 ),
               ),
@@ -73,17 +73,12 @@ class DiversityChartWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ...sections.map(
-                        (section) {
+                      ...getSections(context).keys.map(
+                        (category) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(vertical: 2.5),
                             child: CategoryIndicatorWidget(
-                              category: CategoryModel(
-                                id: '${sections.indexOf(section)}',
-                                title:
-                                    '${section.title} - ${section.value.round()}%',
-                                color: section.color,
-                              ),
+                              category: category,
                             ),
                           );
                         },

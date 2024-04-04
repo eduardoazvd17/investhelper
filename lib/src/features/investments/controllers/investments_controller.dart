@@ -4,7 +4,6 @@ import 'package:investhelper/src/features/investments/models/daily_tip_model.dar
 import 'package:mobx/mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
-import '../models/category_model.dart';
 import '../models/goal_model.dart';
 import '../models/investment_model.dart';
 import '../models/operation_model.dart';
@@ -67,9 +66,6 @@ abstract class InvestmentsControllerBase with Store {
     }
     return 0.0;
   }
-
-  @observable
-  List<CategoryModel> categories = [];
 
   @observable
   List<GoalModel> goals = [];

@@ -93,22 +93,6 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
     });
   }
 
-  late final _$categoriesAtom =
-      Atom(name: 'InvestmentsControllerBase.categories', context: context);
-
-  @override
-  List<CategoryModel> get categories {
-    _$categoriesAtom.reportRead();
-    return super.categories;
-  }
-
-  @override
-  set categories(List<CategoryModel> value) {
-    _$categoriesAtom.reportWrite(value, super.categories, () {
-      super.categories = value;
-    });
-  }
-
   late final _$goalsAtom =
       Atom(name: 'InvestmentsControllerBase.goals', context: context);
 
@@ -185,7 +169,6 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
 isLoading: ${isLoading},
 hideValues: ${hideValues},
 investments: ${investments},
-categories: ${categories},
 goals: ${goals},
 thisMonthOperations: ${thisMonthOperations},
 dailyTip: ${dailyTip},
