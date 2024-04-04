@@ -144,5 +144,6 @@
     "privatePensionPlans": "Private Pension Plans",
     "commodities": "Commodities",
     "etfs": "Exchange Traded Funds (ETFs)",
-    "cryptocurrencies": "Cryptocurrencies"
+    "cryptocurrencies": "Cryptocurrencies",
+    "exportInvestmentReport": "Export investment report"
 }

@@ -250,11 +250,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   if (controller.dailyTip == null) return const SizedBox();
                   return SectionWidget(
                     title: AppLocalizations.of(context)!.tips,
-                    content: [
-                      DailyTipsWidget(
-                        dailyTip: controller.dailyTip!,
-                      )
-                    ],
+                    content: [DailyTipsWidget(dailyTip: controller.dailyTip!)],
                   );
                 },
               ),
@@ -348,6 +344,11 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     icon: CupertinoIcons.arrow_up_arrow_down,
                     text: AppLocalizations.of(context)!
                         .operationsHistoryPerformed,
+                    onTap: () {},
+                  ),
+                  ButtonTileWidget(
+                    icon: CupertinoIcons.doc_chart,
+                    text: AppLocalizations.of(context)!.exportInvestmentReport,
                     onTap: () {},
                   ),
                 ],
