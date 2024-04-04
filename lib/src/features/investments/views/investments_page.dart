@@ -4,6 +4,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:investhelper/src/core/widgets/app_auth_overlay.dart';
 import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
+import 'package:investhelper/src/features/investments/views/manage_my_goals_page.dart';
 import 'package:investhelper/src/features/investments/widgets/daily_tips_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/diversity_chart_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/goal_card_tile.dart';
@@ -17,6 +18,7 @@ import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../widgets/category_listing_widget.dart';
 import '../widgets/investments_resume_card.dart';
+import 'manage_my_investments_page.dart';
 
 class InvestmentsPage extends StatefulWidget {
   static const String routeName = "/investments";
@@ -225,7 +227,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     },
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context)
+                        .pushNamed(ManageMyInvestmentsPage.routeName),
                     child:
                         Text(AppLocalizations.of(context)!.accessMyInvestments),
                   ),
@@ -260,7 +263,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     },
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context)
+                        .pushNamed(ManageMyGoalsPage.routeName),
                     child: Text(AppLocalizations.of(context)!.editMyGoals),
                   ),
                 ],
@@ -328,7 +332,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     );
                   }),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context)
+                        .pushNamed(ManageMyInvestmentsPage.routeName),
                     child:
                         Text(AppLocalizations.of(context)!.accessMyInvestments),
                   ),

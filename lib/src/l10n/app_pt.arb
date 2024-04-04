@@ -145,5 +145,7 @@
   "commodities": "Commodities",
   "etfs": "ETFs (Exchange Traded Funds)",
   "cryptocurrencies": "Criptomoedas",
-  "exportInvestmentReport": "Exportar relatório de investimentos"
+  "exportInvestmentReport": "Exportar relatório de investimentos",
+  "manageMyGoals": "Gerenciar minhas metas",
+  "manageMyInvestments": "Gerenciar meus investimentos"
 }

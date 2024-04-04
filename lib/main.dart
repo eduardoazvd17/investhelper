@@ -8,6 +8,7 @@ import 'package:investhelper/firebase_options.dart';
 import 'package:investhelper/src/core/enums/language_enum.dart';
 import 'package:investhelper/src/core/enums/theme_enum.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
+import 'package:investhelper/src/features/investments/views/manage_my_goals_page.dart';
 import 'package:investhelper/src/features/welcome/views/welcome_page.dart';
 import 'src/core/services/app_service.dart';
 import 'src/core/utils/app_theme.dart';
@@ -18,6 +19,7 @@ import 'src/features/auth/views/auth_page.dart';
 import 'src/features/investments/services/investments_service.dart';
 import 'src/features/investments/views/investments_page.dart';
 import 'src/core/controllers/app_controller.dart';
+import 'src/features/investments/views/manage_my_investments_page.dart';
 import 'src/features/settings/views/settings_page.dart';
 import 'src/features/splash_screen/views/splash_screen.dart';
 import 'src/l10n/l10n.dart';
@@ -93,13 +95,23 @@ class InvestHelperApp extends StatelessWidget {
             AuthPage.routeName: (_) {
               return AuthPage(controller: GetIt.I.get<AuthController>());
             },
+            SettingsPage.routeName: (_) {
+              return SettingsPage(appController: appController);
+            },
             InvestmentsPage.routeName: (_) {
               return InvestmentsPage(
                 controller: GetIt.I.get<InvestmentsController>(),
               );
             },
-            SettingsPage.routeName: (_) {
-              return SettingsPage(appController: appController);
+            ManageMyGoalsPage.routeName: (_) {
+              return ManageMyGoalsPage(
+                controller: GetIt.I.get<InvestmentsController>(),
+              );
+            },
+            ManageMyInvestmentsPage.routeName: (_) {
+              return ManageMyInvestmentsPage(
+                controller: GetIt.I.get<InvestmentsController>(),
+              );
             },
           },
         );
