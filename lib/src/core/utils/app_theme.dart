@@ -4,9 +4,12 @@ import 'package:flutter/services.dart';
 class AppTheme {
   static const _kCenterTitle = true;
   static const _kPrimaryColor = Colors.deepPurple;
+  static const _kSecondaryColor = Colors.blueGrey;
   static const _kBorderRadius = 10.0;
   static const _kLightBackgroundColor = Colors.white;
+  static final _kSecondaryLightBackgroundColor = Colors.grey[100];
   static const _kDarkBackgroundColor = Colors.black;
+  static final _kSecondaryDarkBackgroundColor = Colors.grey[900];
 
   static ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
@@ -17,7 +20,7 @@ class AppTheme {
           brightness: Brightness.light,
           surface: _kLightBackgroundColor,
           surfaceTint: _kLightBackgroundColor,
-          secondary: Colors.blueGrey,
+          secondary: _kSecondaryColor,
         ),
         appBarTheme: const AppBarTheme(
           centerTitle: _kCenterTitle,
@@ -41,7 +44,7 @@ class AppTheme {
           ),
         ),
         cardTheme: CardTheme(
-          color: Colors.grey[100],
+          color: _kSecondaryLightBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
@@ -59,9 +62,10 @@ class AppTheme {
             ),
           ),
         ),
-        bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
           landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
           selectedItemColor: _kPrimaryColor,
+          backgroundColor: _kSecondaryLightBackgroundColor,
         ),
       );
 
@@ -74,7 +78,7 @@ class AppTheme {
           brightness: Brightness.dark,
           surface: Colors.transparent,
           surfaceTint: Colors.transparent,
-          secondary: Colors.blueGrey,
+          secondary: _kSecondaryColor,
         ),
         appBarTheme: const AppBarTheme(
           centerTitle: _kCenterTitle,
@@ -98,7 +102,7 @@ class AppTheme {
           ),
         ),
         cardTheme: CardTheme(
-          color: Colors.grey[900],
+          color: _kSecondaryDarkBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
@@ -119,7 +123,7 @@ class AppTheme {
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
           selectedItemColor: _kPrimaryColor[200],
-          backgroundColor: Colors.grey[900],
+          backgroundColor: _kSecondaryDarkBackgroundColor,
         ),
       );
 }
