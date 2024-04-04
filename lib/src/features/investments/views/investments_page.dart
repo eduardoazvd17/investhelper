@@ -17,6 +17,7 @@ import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
+import '../widgets/category_listing_widget.dart';
 import '../widgets/investments_resume_card.dart';
 
 class InvestmentsPage extends StatefulWidget {
@@ -337,28 +338,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
               ),
               SectionWidget(
                 title: AppLocalizations.of(context)!.categories,
-                content: [
-                  SizedBox(
-                    height: 100,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Wrap(
-                        direction: Axis.vertical,
-                        alignment: WrapAlignment.center,
-                        runAlignment: WrapAlignment.center,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: CategoryEnum.values.map((e) {
-                          return Card(
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: CategoryIndicatorWidget(category: e),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  )
-                ],
+                content: const [CategoryListingWidget()],
               ),
               SectionWidget(
                 title: AppLocalizations.of(context)!.productsAndServices,
