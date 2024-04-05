@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
       darkTheme: AppTheme.darkTheme,
       home: Center(
         child: Image.asset(
-          'assets/images/logo.png',
+          'assets/app_icon/android.png',
           height: 180,
         ),
       ),
