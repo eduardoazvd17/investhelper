@@ -67,6 +67,10 @@ class AppTheme {
           selectedItemColor: _kPrimaryColor,
           backgroundColor: _kSecondaryLightBackgroundColor,
         ),
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          foregroundColor: Colors.white,
+          backgroundColor: _kPrimaryColor,
+        ),
       );
 
   static ThemeData get darkTheme => ThemeData(
@@ -124,6 +128,10 @@ class AppTheme {
           landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
           selectedItemColor: _kPrimaryColor[200],
           backgroundColor: _kSecondaryDarkBackgroundColor,
+        ),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          foregroundColor: Colors.black,
+          backgroundColor: _kPrimaryColor[200],
         ),
       );
 }
