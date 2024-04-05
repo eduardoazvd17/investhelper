@@ -1,6 +1,8 @@
+import 'package:investhelper/src/core/exceptions/app_exception.dart';
 import 'package:investhelper/src/core/models/user_model.dart';
 import 'package:investhelper/src/features/investments/enums/operation_type.dart';
-import 'package:investhelper/src/features/investments/models/daily_tip_model.dart';
+import 'package:investhelper/src/features/investments/models/create_goal_model.dart';
+import 'package:investhelper/src/features/investments/models/daily_tip_dto.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
@@ -33,7 +35,7 @@ abstract class InvestmentsControllerBase with Store {
     dailyTip = await _service.loadDailyTip();
 
     if (user != null) {
-      //LOAD USER DATA.
+      goals = await _service.loadGoals(user!.id);
     }
 
     isLoading = false;
@@ -69,6 +71,18 @@ abstract class InvestmentsControllerBase with Store {
 
   @observable
   List<GoalModel> goals = [];
+
+  @action
+  Future<bool> addNewGoal(CreateGoalModel createGoalModel) async {
+    try {
+      final GoalModel newGoal = await _service.addNewGoal(createGoalModel);
+      goals.add(newGoal);
+      goals.sort((a, b) => b.creationDate.compareTo(a.creationDate));
+      return true;
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
 
   @observable
   List<OperationModel> thisMonthOperations = [];
@@ -106,5 +120,5 @@ abstract class InvestmentsControllerBase with Store {
   }
 
   @observable
-  DailyTipModel? dailyTip;
+  DailyTipDTO? dailyTip;
 }

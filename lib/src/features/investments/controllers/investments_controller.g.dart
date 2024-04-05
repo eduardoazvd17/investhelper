@@ -129,13 +129,13 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
       Atom(name: 'InvestmentsControllerBase.dailyTip', context: context);
 
   @override
-  DailyTipModel? get dailyTip {
+  DailyTipDTO? get dailyTip {
     _$dailyTipAtom.reportRead();
     return super.dailyTip;
   }
 
   @override
-  set dailyTip(DailyTipModel? value) {
+  set dailyTip(DailyTipDTO? value) {
     _$dailyTipAtom.reportWrite(value, super.dailyTip, () {
       super.dailyTip = value;
     });
@@ -147,6 +147,14 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
   @override
   Future<void> loadUserData() {
     return _$loadUserDataAsyncAction.run(() => super.loadUserData());
+  }
+
+  late final _$addNewGoalAsyncAction =
+      AsyncAction('InvestmentsControllerBase.addNewGoal', context: context);
+
+  @override
+  Future<bool> addNewGoal(CreateGoalModel createGoalModel) {
+    return _$addNewGoalAsyncAction.run(() => super.addNewGoal(createGoalModel));
   }
 
   late final _$InvestmentsControllerBaseActionController =

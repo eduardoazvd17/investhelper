@@ -2,6 +2,7 @@ import 'package:investhelper/src/features/investments/enums/category_enum.dart';
 
 class InvestmentModel {
   final String id;
+  final String userId;
   final String name;
   final CategoryEnum category;
   final int custodialPosition;
@@ -12,6 +13,7 @@ class InvestmentModel {
 
   InvestmentModel({
     required this.id,
+    required this.userId,
     required this.name,
     required this.category,
     required this.custodialPosition,

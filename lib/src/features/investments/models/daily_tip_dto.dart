@@ -1,10 +1,10 @@
-class DailyTipModel {
+class DailyTipDTO {
   final String englishTitle;
   final String englishMessage;
   final String portugueseTitle;
   final String portugueseMessage;
 
-  DailyTipModel({
+  DailyTipDTO({
     required this.englishTitle,
     required this.englishMessage,
     required this.portugueseTitle,

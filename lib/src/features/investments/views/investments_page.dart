@@ -300,13 +300,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             children: [
               SectionWidget(
                 title: AppLocalizations.of(context)!.investments,
-                actions: [
-                  IconButton(
-                    onPressed: () {},
-                    visualDensity: VisualDensity.compact,
-                    icon: const Icon(Icons.add),
-                  ),
-                ],
                 content: [
                   Observer(builder: (_) {
                     final bool hasData = controller.investments.isNotEmpty;

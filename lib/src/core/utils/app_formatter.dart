@@ -16,4 +16,12 @@ class AppFormatter {
     }
     return NumberFormat.simpleCurrency().format(value);
   }
+
+  static String date(BuildContext context, DateTime date) {
+    final String languageCode = Localizations.localeOf(context).languageCode;
+    if (languageCode == 'pt') {
+      return DateFormat.yMMMd('pt_BR').format(date);
+    }
+    return DateFormat.yMMMd().format(date);
+  }
 }

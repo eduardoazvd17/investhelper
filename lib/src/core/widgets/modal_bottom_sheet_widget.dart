@@ -11,20 +11,25 @@ class ModalBottomSheetWidget extends StatelessWidget {
     this.actions,
   });
 
-  static show(
+  static Future<T?> show<T>(
     BuildContext context, {
     required String title,
     List<Widget>? actions,
     required List<Widget> children,
-  }) {
-    showModalBottomSheet(
+  }) async {
+    return await showModalBottomSheet<T>(
       context: context,
       isScrollControlled: true,
       builder: (_) {
-        return ModalBottomSheetWidget(
-          title: title,
-          actions: actions,
-          children: children,
+        return Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: ModalBottomSheetWidget(
+            title: title,
+            actions: actions,
+            children: children,
+          ),
         );
       },
     );

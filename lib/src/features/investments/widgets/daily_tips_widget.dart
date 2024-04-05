@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../models/daily_tip_model.dart';
+import '../models/daily_tip_dto.dart';
 
 class DailyTipsWidget extends StatelessWidget {
-  final DailyTipModel dailyTip;
+  final DailyTipDTO dailyTip;
   const DailyTipsWidget({super.key, required this.dailyTip});
 
   @override

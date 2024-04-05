@@ -147,5 +147,10 @@
   "cryptocurrencies": "Criptomoedas",
   "exportInvestmentReport": "Exportar relatório de investimentos",
   "emptyManageMyGoalsListing": "Você ainda não possui metas adicionadas, utilize o botão flutuante para adicionar novas metas.",
-  "emptyManageMyInvestmentsListing": "Você ainda não possui investimentos adicionados, utilize o botão flutuante para adicionar seus investimentos."
+  "emptyManageMyInvestmentsListing": "Você ainda não possui investimentos adicionados, utilize o botão flutuante para adicionar seus investimentos.",
+  "addNewGoal": "Adicionar nova meta",
+  "description": "Descrição",
+  "goalDescriptionHint": "Utilize esse campo para descrever sua meta ou deixar uma anotação...",
+  "send": "Enviar",
+  "cancel": "Cancelar"
 }

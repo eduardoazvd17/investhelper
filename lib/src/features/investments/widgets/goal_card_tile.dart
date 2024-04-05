@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../core/utils/app_formatter.dart';
 import '../models/goal_model.dart';
 
 class GoalCardTile extends StatefulWidget {
@@ -28,6 +29,7 @@ class _GoalCardTileState extends State<GoalCardTile> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: 120,
       width: 225,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 2.5),
@@ -48,10 +50,16 @@ class _GoalCardTileState extends State<GoalCardTile> {
                     ),
                   ),
                 ),
-                // const Padding(
-                //   padding: EdgeInsets.only(top: 10),
-                //   child: LinearProgressIndicator(value: 0.75),
-                // ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    AppFormatter.date(context, widget.goal.creationDate),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(color: Colors.grey),
+                  ),
+                ),
               ],
             ),
           ),
