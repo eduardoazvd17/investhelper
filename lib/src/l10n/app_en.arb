@@ -147,5 +147,19 @@
     "cryptocurrencies": "Cryptocurrencies",
     "exportInvestmentReport": "Export investment report",
     "emptyManageMyGoalsListing": "You have no goals added yet, use the floating button to add new goals.",
-    "emptyManageMyInvestmentsListing": "You don't have investments added yet, use the floating button to add your investments."
+    "emptyManageMyInvestmentsListing": "You don't have investments added yet, use the floating button to add your investments.",
+    "addNewGoal": "Add new goal",
+    "description": "Description",
+    "goalDescriptionHint": "Use this field to describe your goal or leave a note...",
+    "send": "Send",
+    "cancel": "Cancel",
+    "remove": "Remove",
+    "removeMessage": "Do you really want to remove: {name}?",
+    "@removeMessage": {
+        "placeholders": {
+            "name": {
+                "type": "String"
+            }
+        }
+    }
 }

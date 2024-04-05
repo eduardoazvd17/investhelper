@@ -152,5 +152,14 @@
   "description": "Descrição",
   "goalDescriptionHint": "Utilize esse campo para descrever sua meta ou deixar uma anotação...",
   "send": "Enviar",
-  "cancel": "Cancelar"
+  "cancel": "Cancelar",
+  "remove": "Remover",
+  "removeMessage": "Deseja realmente remover: {name}?",
+  "@removeMessage": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  }
 }

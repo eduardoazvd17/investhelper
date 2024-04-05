@@ -64,6 +64,17 @@ class InvestmentsService {
     }
   }
 
+  Future<bool> deleteGoal(GoalModel goalModel) async {
+    try {
+      await _firestore.collection('goals').doc(goalModel.id).delete();
+      return true;
+    } on AppException catch (_) {
+      rethrow;
+    } catch (_) {
+      throw AppException(AppExceptionType.connectionError);
+    }
+  }
+
   Future<DailyTipDTO> loadDailyTip() async {
     try {
       final DocumentSnapshot<Map<String, dynamic>> document =

@@ -76,6 +76,15 @@ abstract class InvestmentsControllerBase with Store {
     }
   }
 
+  Future<bool> deleteGoal(GoalModel goalModel) async {
+    try {
+      goals.remove(goalModel);
+      return await _service.deleteGoal(goalModel);
+    } catch (_) {
+      return false;
+    }
+  }
+
   @observable
   ObservableList<InvestmentModel> investments =
       ObservableList<InvestmentModel>();

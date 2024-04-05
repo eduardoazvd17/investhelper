@@ -5,8 +5,10 @@ import 'package:investhelper/src/core/widgets/modal_bottom_sheet_widget.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
 import 'package:investhelper/src/features/investments/models/create_goal_model.dart';
 import '../../../core/exceptions/app_exception.dart';
+import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/empty_list_widget.dart';
 import '../../../l10n/l10n.dart';
+import '../models/goal_model.dart';
 import '../widgets/goal_card_tile.dart';
 
 class ManageMyGoalsPage extends StatefulWidget {
@@ -33,8 +35,8 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
     super.dispose();
   }
 
-  void _addNewGoal(BuildContext context) {
-    ModalBottomSheetWidget.show(
+  Future<void> _addNewGoal(BuildContext context) async {
+    await ModalBottomSheetWidget.show(
       context,
       title: AppLocalizations.of(context)!.addNewGoal,
       actions: [
@@ -86,6 +88,16 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
     );
   }
 
+  Future<void> _editGoal(GoalModel goalModel) async {}
+
+  Future<void> _deleteGoal(GoalModel goalModel) async {
+    final result = await DialogWidget.showRemoveItemDialog(
+      context,
+      itemName: goalModel.description,
+    );
+    if (result) widget.controller.deleteGoal(goalModel);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,7 +129,14 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
                 ),
                 child: ListView(
                   children: widget.controller.goals.map((goal) {
-                    return GoalCardTile(goal: goal);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      child: GoalCardTile(
+                        goal: goal,
+                        onEdit: _editGoal,
+                        onDelete: _deleteGoal,
+                      ),
+                    );
                   }).toList(),
                 ),
               );
