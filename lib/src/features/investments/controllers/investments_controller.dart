@@ -35,7 +35,9 @@ abstract class InvestmentsControllerBase with Store {
     dailyTip = await _service.loadDailyTip();
 
     if (user != null) {
-      goals = await _service.loadGoals(user!.id);
+      goals.addAll(await _service.loadGoals(user!.id));
+      //investments
+      //thisMonthOperations
     }
 
     isLoading = false;
@@ -57,20 +59,10 @@ abstract class InvestmentsControllerBase with Store {
   }
 
   @observable
-  List<InvestmentModel> investments = [];
-
-  @computed
-  double get totalInvestments {
-    if (investments.isNotEmpty) {
-      return investments.map((e) {
-        return e.amountInvested;
-      }).reduce((a, b) => a + b);
-    }
-    return 0.0;
-  }
+  DailyTipDTO? dailyTip;
 
   @observable
-  List<GoalModel> goals = [];
+  ObservableList<GoalModel> goals = ObservableList<GoalModel>();
 
   @action
   Future<bool> addNewGoal(CreateGoalModel createGoalModel) async {
@@ -85,7 +77,22 @@ abstract class InvestmentsControllerBase with Store {
   }
 
   @observable
-  List<OperationModel> thisMonthOperations = [];
+  ObservableList<InvestmentModel> investments =
+      ObservableList<InvestmentModel>();
+
+  @computed
+  double get totalInvestments {
+    if (investments.isNotEmpty) {
+      return investments.map((e) {
+        return e.amountInvested;
+      }).reduce((a, b) => a + b);
+    }
+    return 0.0;
+  }
+
+  @observable
+  ObservableList<OperationModel> thisMonthOperations =
+      ObservableList<OperationModel>();
 
   @computed
   double get thisMonthPurchasesTotal {
@@ -118,7 +125,4 @@ abstract class InvestmentsControllerBase with Store {
     }
     return 0.0;
   }
-
-  @observable
-  DailyTipDTO? dailyTip;
 }

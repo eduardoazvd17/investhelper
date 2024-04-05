@@ -28,10 +28,12 @@ class InvestmentsService {
           .where('userId', isEqualTo: userId)
           .get();
 
-      return query.docs.map((doc) {
+      final goals = query.docs.map((doc) {
         final Map<String, dynamic> data = doc.data()..['id'] = doc.id;
         return GoalModel.fromMap(data);
       }).toList();
+      goals.sort((a, b) => b.creationDate.compareTo(a.creationDate));
+      return goals;
     } on AppException catch (_) {
       rethrow;
     } catch (_) {

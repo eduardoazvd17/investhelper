@@ -77,54 +77,6 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
     });
   }
 
-  late final _$investmentsAtom =
-      Atom(name: 'InvestmentsControllerBase.investments', context: context);
-
-  @override
-  List<InvestmentModel> get investments {
-    _$investmentsAtom.reportRead();
-    return super.investments;
-  }
-
-  @override
-  set investments(List<InvestmentModel> value) {
-    _$investmentsAtom.reportWrite(value, super.investments, () {
-      super.investments = value;
-    });
-  }
-
-  late final _$goalsAtom =
-      Atom(name: 'InvestmentsControllerBase.goals', context: context);
-
-  @override
-  List<GoalModel> get goals {
-    _$goalsAtom.reportRead();
-    return super.goals;
-  }
-
-  @override
-  set goals(List<GoalModel> value) {
-    _$goalsAtom.reportWrite(value, super.goals, () {
-      super.goals = value;
-    });
-  }
-
-  late final _$thisMonthOperationsAtom = Atom(
-      name: 'InvestmentsControllerBase.thisMonthOperations', context: context);
-
-  @override
-  List<OperationModel> get thisMonthOperations {
-    _$thisMonthOperationsAtom.reportRead();
-    return super.thisMonthOperations;
-  }
-
-  @override
-  set thisMonthOperations(List<OperationModel> value) {
-    _$thisMonthOperationsAtom.reportWrite(value, super.thisMonthOperations, () {
-      super.thisMonthOperations = value;
-    });
-  }
-
   late final _$dailyTipAtom =
       Atom(name: 'InvestmentsControllerBase.dailyTip', context: context);
 
@@ -138,6 +90,54 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
   set dailyTip(DailyTipDTO? value) {
     _$dailyTipAtom.reportWrite(value, super.dailyTip, () {
       super.dailyTip = value;
+    });
+  }
+
+  late final _$goalsAtom =
+      Atom(name: 'InvestmentsControllerBase.goals', context: context);
+
+  @override
+  ObservableList<GoalModel> get goals {
+    _$goalsAtom.reportRead();
+    return super.goals;
+  }
+
+  @override
+  set goals(ObservableList<GoalModel> value) {
+    _$goalsAtom.reportWrite(value, super.goals, () {
+      super.goals = value;
+    });
+  }
+
+  late final _$investmentsAtom =
+      Atom(name: 'InvestmentsControllerBase.investments', context: context);
+
+  @override
+  ObservableList<InvestmentModel> get investments {
+    _$investmentsAtom.reportRead();
+    return super.investments;
+  }
+
+  @override
+  set investments(ObservableList<InvestmentModel> value) {
+    _$investmentsAtom.reportWrite(value, super.investments, () {
+      super.investments = value;
+    });
+  }
+
+  late final _$thisMonthOperationsAtom = Atom(
+      name: 'InvestmentsControllerBase.thisMonthOperations', context: context);
+
+  @override
+  ObservableList<OperationModel> get thisMonthOperations {
+    _$thisMonthOperationsAtom.reportRead();
+    return super.thisMonthOperations;
+  }
+
+  @override
+  set thisMonthOperations(ObservableList<OperationModel> value) {
+    _$thisMonthOperationsAtom.reportWrite(value, super.thisMonthOperations, () {
+      super.thisMonthOperations = value;
     });
   }
 
@@ -176,10 +176,10 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
     return '''
 isLoading: ${isLoading},
 hideValues: ${hideValues},
-investments: ${investments},
-goals: ${goals},
-thisMonthOperations: ${thisMonthOperations},
 dailyTip: ${dailyTip},
+goals: ${goals},
+investments: ${investments},
+thisMonthOperations: ${thisMonthOperations},
 user: ${user},
 shouldRequestAuth: ${shouldRequestAuth},
 totalInvestments: ${totalInvestments},
