@@ -54,8 +54,9 @@ class AppTheme {
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
         ),
-        bottomSheetTheme: const BottomSheetThemeData(
-          shape: RoundedRectangleBorder(
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: _kSecondaryLightBackgroundColor,
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(_kBorderRadius),
               topRight: Radius.circular(_kBorderRadius),
@@ -116,8 +117,9 @@ class AppTheme {
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
         ),
-        bottomSheetTheme: const BottomSheetThemeData(
-          shape: RoundedRectangleBorder(
+        bottomSheetTheme: BottomSheetThemeData(
+          backgroundColor: _kSecondaryDarkBackgroundColor,
+          shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(_kBorderRadius),
               topRight: Radius.circular(_kBorderRadius),
