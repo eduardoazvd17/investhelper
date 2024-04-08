@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DropDownButtonWidget<T> extends StatelessWidget {
+class DropDownButtonWidget<T> extends StatefulWidget {
   final String label;
   final T? value;
   final String? hint;
@@ -16,6 +16,20 @@ class DropDownButtonWidget<T> extends StatelessWidget {
   });
 
   @override
+  State<DropDownButtonWidget<T>> createState() =>
+      _DropDownButtonWidgetState<T>();
+}
+
+class _DropDownButtonWidgetState<T> extends State<DropDownButtonWidget<T>> {
+  T? _selectedItem;
+
+  @override
+  void initState() {
+    _selectedItem = widget.value;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -23,12 +37,12 @@ class DropDownButtonWidget<T> extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(5.0),
           child: Text(
-            label,
+            widget.label,
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
         DropdownButton<T>(
-          value: value,
+          value: _selectedItem,
           isExpanded: true,
           elevation: 24,
           iconSize: 35,
@@ -41,8 +55,11 @@ class DropDownButtonWidget<T> extends StatelessWidget {
             top: 10,
             bottom: 10,
           ),
-          items: items,
-          onChanged: onChanged,
+          items: widget.items,
+          onChanged: (value) {
+            setState(() => _selectedItem = value);
+            widget.onChanged.call(value);
+          },
         ),
       ],
     );
