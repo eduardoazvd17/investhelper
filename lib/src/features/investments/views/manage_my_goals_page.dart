@@ -7,6 +7,7 @@ import 'package:investhelper/src/features/investments/models/create_goal_model.d
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/empty_list_widget.dart';
+import '../../../core/widgets/text_field_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../models/goal_model.dart';
 import '../widgets/goal_card_tile.dart';
@@ -176,16 +177,13 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
     );
   }
 
-  Widget get _descriptionTextField => TextFormField(
+  Widget get _descriptionTextField => TextFieldWidget(
+        label: AppLocalizations.of(context)!.description,
+        hint: AppLocalizations.of(context)!.goalDescriptionHint,
         controller: _descriptionController,
         maxLines: 3,
         keyboardType: TextInputType.text,
         textCapitalization: TextCapitalization.sentences,
-        decoration: InputDecoration(
-          label: Text(AppLocalizations.of(context)!.description),
-          hintText: AppLocalizations.of(context)!.goalDescriptionHint,
-          border: const OutlineInputBorder(),
-        ),
         textInputAction: TextInputAction.done,
       );
 }

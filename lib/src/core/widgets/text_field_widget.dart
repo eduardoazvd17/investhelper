@@ -1,0 +1,64 @@
+import 'package:flutter/material.dart';
+
+class TextFieldWidget extends StatelessWidget {
+  final FocusNode? focusNode;
+  final TextEditingController? controller;
+  final bool obscureText;
+  final TextInputType? keyboardType;
+  final String label;
+  final String? hint;
+  final TextInputAction? textInputAction;
+  final TextCapitalization textCapitalization;
+  final void Function(String)? onFieldSubmitted;
+  final int maxLines;
+  const TextFieldWidget({
+    super.key,
+    this.focusNode,
+    this.controller,
+    this.obscureText = false,
+    this.keyboardType,
+    required this.label,
+    this.hint,
+    this.textInputAction,
+    this.textCapitalization = TextCapitalization.none,
+    this.onFieldSubmitted,
+    this.maxLines = 1,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: Text(
+            label,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          child: TextFormField(
+            maxLines: maxLines,
+            focusNode: focusNode,
+            controller: controller,
+            obscureText: obscureText,
+            keyboardType: TextInputType.text,
+            decoration: InputDecoration(
+              hintText: hint,
+              border: const OutlineInputBorder(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(10),
+                ),
+              ),
+            ),
+            textInputAction: textInputAction,
+            textCapitalization: textCapitalization,
+            onFieldSubmitted: onFieldSubmitted,
+          ),
+        ),
+      ],
+    );
+  }
+}

@@ -163,5 +163,9 @@
     }
   },
   "editGoal": "Editar meta",
-  "save": "Salvar"
+  "save": "Salvar",
+  "addNewInvestment": "Adicionar novo investimento",
+  "investmentNameHint": "Insira o nome ou ticker do investimento",
+  "category": "Categoria",
+  "selectCategory": "Selecione a categoria..."
 }

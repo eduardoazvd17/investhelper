@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class DropDownButtonWidget<T> extends StatefulWidget {
+class DropdownButtonWidget<T> extends StatefulWidget {
   final String label;
   final T? value;
   final String? hint;
   final List<DropdownMenuItem<T>> items;
   final void Function(T?) onChanged;
-  const DropDownButtonWidget({
+  const DropdownButtonWidget({
     super.key,
     required this.label,
     this.value,
@@ -16,11 +16,11 @@ class DropDownButtonWidget<T> extends StatefulWidget {
   });
 
   @override
-  State<DropDownButtonWidget<T>> createState() =>
-      _DropDownButtonWidgetState<T>();
+  State<DropdownButtonWidget<T>> createState() =>
+      _DropdownButtonWidgetState<T>();
 }
 
-class _DropDownButtonWidgetState<T> extends State<DropDownButtonWidget<T>> {
+class _DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
   T? _selectedItem;
 
   @override
@@ -49,9 +49,10 @@ class _DropDownButtonWidgetState<T> extends State<DropDownButtonWidget<T>> {
           borderRadius: BorderRadius.circular(10),
           underline: const SizedBox(),
           style: Theme.of(context).textTheme.bodyLarge,
+          hint: widget.hint != null ? Text(widget.hint!) : null,
           padding: const EdgeInsets.only(
-            left: 17,
-            right: 32,
+            left: 15,
+            right: 15,
             top: 10,
             bottom: 10,
           ),

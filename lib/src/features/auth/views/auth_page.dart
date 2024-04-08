@@ -9,6 +9,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
+import '../../../core/widgets/text_field_widget.dart';
 import '../../settings/views/settings_page.dart';
 import '../controllers/auth_controller.dart';
 
@@ -183,11 +184,11 @@ class _AuthPageState extends State<AuthPage> {
               _emailTextField,
               const SizedBox(height: 10),
               _passwordTextField,
-              const SizedBox(height: 10),
+              const SizedBox(height: 25),
               ElevatedButton(
                 onPressed: _makeLogin,
                 child: Padding(
-                  padding: const EdgeInsets.all(12.5),
+                  padding: const EdgeInsets.all(15),
                   child: Text(
                     AppLocalizations.of(context)!.makeLogin,
                   ),
@@ -232,11 +233,11 @@ class _AuthPageState extends State<AuthPage> {
               _passwordTextField,
               const SizedBox(height: 10),
               _passwordConfirmationTextField,
-              const SizedBox(height: 10),
+              const SizedBox(height: 25),
               ElevatedButton(
                 onPressed: _makeRegister,
                 child: Padding(
-                  padding: const EdgeInsets.all(12.5),
+                  padding: const EdgeInsets.all(15),
                   child: Text(AppLocalizations.of(context)!.makeRegister),
                 ),
               ),
@@ -266,11 +267,11 @@ class _AuthPageState extends State<AuthPage> {
           child: Column(
             children: [
               _emailTextField,
-              const SizedBox(height: 10),
+              const SizedBox(height: 25),
               ElevatedButton(
                 onPressed: _sendRecoveryEmail,
                 child: Padding(
-                  padding: const EdgeInsets.all(12.5),
+                  padding: const EdgeInsets.all(15),
                   child: Text(
                     AppLocalizations.of(context)!.sendRecoveryEmail,
                   ),
@@ -310,16 +311,13 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Widget get _nameTextField {
-    return TextFormField(
+    return TextFieldWidget(
+      label: AppLocalizations.of(context)!.name,
+      hint: AppLocalizations.of(context)!.nameHint,
       focusNode: _nameFocus,
       controller: _nameController,
       keyboardType: TextInputType.name,
       textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        label: Text(AppLocalizations.of(context)!.name),
-        hintText: AppLocalizations.of(context)!.nameHint,
-        border: const OutlineInputBorder(),
-      ),
       textInputAction: TextInputAction.next,
       onFieldSubmitted: (_) => _emailFocus.requestFocus(),
     );
@@ -327,15 +325,12 @@ class _AuthPageState extends State<AuthPage> {
 
   Widget get _emailTextField {
     final bool hasNext = _passwordFocus.canRequestFocus;
-    return TextFormField(
+    return TextFieldWidget(
+      label: AppLocalizations.of(context)!.email,
+      hint: AppLocalizations.of(context)!.emailHint,
       focusNode: _emailFocus,
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
-      decoration: InputDecoration(
-        label: Text(AppLocalizations.of(context)!.email),
-        hintText: AppLocalizations.of(context)!.emailHint,
-        border: const OutlineInputBorder(),
-      ),
       textInputAction: hasNext ? TextInputAction.next : TextInputAction.done,
       onFieldSubmitted: hasNext ? (_) => _passwordFocus.requestFocus() : null,
     );
@@ -343,16 +338,13 @@ class _AuthPageState extends State<AuthPage> {
 
   Widget get _passwordTextField {
     final bool hasNext = _passwordConfirmationFocus.canRequestFocus;
-    return TextFormField(
+    return TextFieldWidget(
+      label: AppLocalizations.of(context)!.password,
+      hint: AppLocalizations.of(context)!.passwordHint,
       focusNode: _passwordFocus,
       controller: _passwordController,
       obscureText: true,
       keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        label: Text(AppLocalizations.of(context)!.password),
-        hintText: AppLocalizations.of(context)!.passwordHint,
-        border: const OutlineInputBorder(),
-      ),
       textInputAction: hasNext ? TextInputAction.next : TextInputAction.done,
       onFieldSubmitted:
           hasNext ? (_) => _passwordConfirmationFocus.requestFocus() : null,
@@ -360,16 +352,13 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Widget get _passwordConfirmationTextField {
-    return TextFormField(
+    return TextFieldWidget(
+      label: AppLocalizations.of(context)!.passwordConfirmation,
+      hint: AppLocalizations.of(context)!.passwordConfirmationHint,
       focusNode: _passwordConfirmationFocus,
       controller: _passwordConfirmationController,
       obscureText: true,
       keyboardType: TextInputType.text,
-      decoration: InputDecoration(
-        label: Text(AppLocalizations.of(context)!.passwordConfirmation),
-        hintText: AppLocalizations.of(context)!.passwordConfirmationHint,
-        border: const OutlineInputBorder(),
-      ),
       textInputAction: TextInputAction.done,
     );
   }

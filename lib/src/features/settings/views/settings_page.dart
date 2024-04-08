@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
-import 'package:investhelper/src/core/widgets/drop_down_button_widget.dart';
+import 'package:investhelper/src/core/widgets/dropdown_button_widget.dart';
 import 'package:investhelper/src/core/widgets/section_widget.dart';
 import 'package:investhelper/src/core/enums/language_enum.dart';
 import 'package:investhelper/src/features/auth/views/auth_page.dart';
@@ -103,7 +103,7 @@ class SettingsPage extends StatelessWidget {
                   content: [
                     Observer(
                       builder: (_) {
-                        return DropDownButtonWidget<ThemeEnum>(
+                        return DropdownButtonWidget<ThemeEnum>(
                           label: AppLocalizations.of(context)!.appTheme,
                           value: appController.theme,
                           items: ThemeEnum.values.map((e) {
@@ -127,7 +127,7 @@ class SettingsPage extends StatelessWidget {
                     ),
                     const Divider(),
                     Observer(builder: (_) {
-                      return DropDownButtonWidget<LanguageEnum>(
+                      return DropdownButtonWidget<LanguageEnum>(
                         label: AppLocalizations.of(context)!.appLanguage,
                         value: appController.language,
                         items: LanguageEnum.values.map((e) {
