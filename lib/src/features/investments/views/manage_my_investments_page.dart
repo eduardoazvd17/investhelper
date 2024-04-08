@@ -1,17 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:investhelper/src/core/exceptions/app_exception.dart';
+import 'package:investhelper/src/core/widgets/dropdown_button_widget.dart';
+import 'package:investhelper/src/core/widgets/text_field_widget.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
+import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 
 import '../../../core/widgets/empty_list_widget.dart';
+import '../../../core/widgets/loading_widget.dart';
+import '../../../core/widgets/modal_bottom_sheet_widget.dart';
 import '../../../l10n/l10n.dart';
+import '../enums/category_enum.dart';
 import '../widgets/investment_tile_widget.dart';
 
-class ManageMyInvestmentsPage extends StatelessWidget {
+class ManageMyInvestmentsPage extends StatefulWidget {
   static const routeName = "/manageMyInvestments";
   final InvestmentsController controller;
   const ManageMyInvestmentsPage({super.key, required this.controller});
 
-  void _addNewInvestment() {}
+  @override
+  State<ManageMyInvestmentsPage> createState() =>
+      _ManageMyInvestmentsPageState();
+}
+
+class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
+  late final TextEditingController _nameController;
+  CategoryEnum? _selectedCategory;
+
+  @override
+  void initState() {
+    _nameController = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _addNewInvestment() async {
+    await ModalBottomSheetWidget.show(
+      context,
+      title: AppLocalizations.of(context)!.addNewInvestment,
+      actions: [
+        TextButton(
+          onPressed: () async {
+            try {
+              LoadingWidget.dialog(context);
+
+              if (mounted) {
+                LoadingWidget.hide(context);
+                Navigator.of(context).pop();
+              }
+            } on AppException catch (error) {
+              if (mounted) {
+                LoadingWidget.hide(context);
+                error.show(context);
+              }
+            }
+          },
+          child: Text(AppLocalizations.of(context)!.send),
+        ),
+        TextButton(
+          onPressed: Navigator.of(context).pop,
+          child: Text(AppLocalizations.of(context)!.cancel),
+        ),
+      ],
+      children: [
+        _nameTextField,
+        const SizedBox(height: 10),
+        _categoryDropDownButton,
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +97,7 @@ class ManageMyInvestmentsPage extends StatelessWidget {
           child: Observer(
             builder: (_) {
               return Visibility(
-                visible: controller.goals.isNotEmpty,
+                visible: widget.controller.investments.isNotEmpty,
                 replacement: Center(
                   child: EmptyListWidget(
                     message: AppLocalizations.of(context)!
@@ -44,7 +106,7 @@ class ManageMyInvestmentsPage extends StatelessWidget {
                 ),
                 child: ListView(
                   scrollDirection: Axis.horizontal,
-                  children: controller.investments
+                  children: widget.controller.investments
                       .map((e) => InvestmentTileWidget(investment: e))
                       .toList(),
                 ),
@@ -55,4 +117,28 @@ class ManageMyInvestmentsPage extends StatelessWidget {
       ),
     );
   }
+
+  Widget get _nameTextField => TextFieldWidget(
+        label: AppLocalizations.of(context)!.name,
+        hint: AppLocalizations.of(context)!.investmentNameHint,
+        controller: _nameController,
+        keyboardType: TextInputType.text,
+        textCapitalization: TextCapitalization.words,
+        textInputAction: TextInputAction.done,
+      );
+
+  Widget get _categoryDropDownButton => DropdownButtonWidget<CategoryEnum>(
+        label: AppLocalizations.of(context)!.category,
+        hint: AppLocalizations.of(context)!.selectCategory,
+        value: _selectedCategory,
+        items: CategoryEnum.values.map((e) {
+          return DropdownMenuItem(
+            value: e,
+            child: CategoryIndicatorWidget(category: e),
+          );
+        }).toList(),
+        onChanged: (category) => setState(() {
+          _selectedCategory = category;
+        }),
+      );
 }
