@@ -19,20 +19,11 @@ class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key, required this.appController});
 
   Future<void> _endSession(BuildContext context) async {
-    final result = await DialogWidget.show(
+    final bool? result = await DialogWidget.show(
       context,
       title: AppLocalizations.of(context)!.endSession,
       message: AppLocalizations.of(context)!.endSessionMessage,
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(true),
-          child: Text(AppLocalizations.of(context)!.yes),
-        ),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(AppLocalizations.of(context)!.no),
-        ),
-      ],
+      actionType: DialogWidgetActionType.yesOrNo,
     );
 
     if (result != null && result) {

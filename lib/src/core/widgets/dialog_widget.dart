@@ -13,43 +13,36 @@ class DialogWidget extends StatelessWidget {
     this.actions,
   });
 
-  static Future<bool> showRemoveItemDialog(
-    BuildContext context, {
-    required String itemName,
-  }) async {
-    final bool? result = await DialogWidget.show(
-      context,
-      title: AppLocalizations.of(context)!.remove,
-      message: AppLocalizations.of(context)!.removeMessage(itemName),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(true),
-          child: Text(AppLocalizations.of(context)!.yes),
-        ),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(AppLocalizations.of(context)!.no),
-        ),
-      ],
-    );
-    return result ?? false;
-  }
-
   static Future<bool?> show(
     BuildContext context, {
     required String title,
     required String message,
-    bool barrierDismissible = true,
-    List<TextButton>? actions,
+    required DialogWidgetActionType actionType,
   }) async {
     return await showDialog<bool?>(
       context: context,
-      barrierDismissible: barrierDismissible,
       builder: (_) {
         return DialogWidget(
           title: title,
           message: message,
-          actions: actions,
+          actions: switch (actionType) {
+            DialogWidgetActionType.close => [
+                TextButton(
+                  onPressed: Navigator.of(context).pop,
+                  child: Text(AppLocalizations.of(context)!.close),
+                )
+              ],
+            DialogWidgetActionType.yesOrNo => [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: Text(AppLocalizations.of(context)!.yes),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: Text(AppLocalizations.of(context)!.no),
+                ),
+              ],
+          },
         );
       },
     );
@@ -69,4 +62,9 @@ class DialogWidget extends StatelessWidget {
           ],
     );
   }
+}
+
+enum DialogWidgetActionType {
+  close,
+  yesOrNo,
 }

@@ -12,6 +12,7 @@ class AppException implements Exception {
       context,
       title: type.title(context),
       message: type.message(context),
+      actionType: DialogWidgetActionType.close,
     );
   }
 }

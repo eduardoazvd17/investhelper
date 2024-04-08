@@ -117,6 +117,7 @@ class _AuthPageState extends State<AuthPage> {
         context,
         title: AppLocalizations.of(context)!.recoveryEmailSentTitle,
         message: AppLocalizations.of(context)!.recoveryEmailSentMessage,
+        actionType: DialogWidgetActionType.close,
       ).then((_) {
         setState(() {
           _currentPageState = AuthPageState.login;

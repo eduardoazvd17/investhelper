@@ -76,16 +76,7 @@ class _AppAuthOverlayState extends State<AppAuthOverlay> {
       context,
       title: AppLocalizations.of(context)!.endSession,
       message: AppLocalizations.of(context)!.endSessionMessage,
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(true),
-          child: Text(AppLocalizations.of(context)!.yes),
-        ),
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(AppLocalizations.of(context)!.no),
-        ),
-      ],
+      actionType: DialogWidgetActionType.yesOrNo,
     );
 
     if (result != null && result) {

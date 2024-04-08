@@ -88,14 +88,19 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
     );
   }
 
-  Future<void> _editGoal(GoalModel goalModel) async {}
+  Future<void> _editGoal(GoalModel goalModel) async {
+    //TODO: Pending...
+  }
 
   Future<void> _deleteGoal(GoalModel goalModel) async {
-    final result = await DialogWidget.showRemoveItemDialog(
+    final bool? result = await DialogWidget.show(
       context,
-      itemName: goalModel.description,
+      title: AppLocalizations.of(context)!.remove,
+      message:
+          AppLocalizations.of(context)!.removeMessage(goalModel.description),
+      actionType: DialogWidgetActionType.yesOrNo,
     );
-    if (result) widget.controller.deleteGoal(goalModel);
+    if (result != null && result) widget.controller.deleteGoal(goalModel);
   }
 
   @override
