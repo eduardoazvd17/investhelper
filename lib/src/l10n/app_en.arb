@@ -163,5 +163,9 @@
         }
     },
     "editGoal": "Edit goal",
-    "save": "Save"
+    "save": "Save",
+    "addNewInvestment": "Add new investment",
+    "investmentNameHint": "Enter investment name or ticker",
+    "category": "Category",
+    "selectCategory": "Select category..."
 }
