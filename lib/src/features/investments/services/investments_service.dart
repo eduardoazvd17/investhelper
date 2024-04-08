@@ -64,6 +64,23 @@ class InvestmentsService {
     }
   }
 
+  Future<GoalModel> editGoal(GoalModel goalModel) async {
+    try {
+      if (goalModel.description.isEmpty) {
+        throw AppException(AppExceptionType.emptyFields);
+      }
+
+      final DocumentReference<Map<String, dynamic>> reference =
+          _firestore.collection('goals').doc(goalModel.id);
+      await reference.set(goalModel.toMap());
+      return goalModel;
+    } on AppException catch (_) {
+      rethrow;
+    } catch (_) {
+      throw AppException(AppExceptionType.connectionError);
+    }
+  }
+
   Future<bool> deleteGoal(GoalModel goalModel) async {
     try {
       await _firestore.collection('goals').doc(goalModel.id).delete();

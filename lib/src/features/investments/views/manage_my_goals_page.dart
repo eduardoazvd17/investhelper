@@ -35,7 +35,9 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
     super.dispose();
   }
 
-  Future<void> _addNewGoal(BuildContext context) async {
+  Future<void> _addNewGoal() async {
+    _descriptionController.clear();
+
     await ModalBottomSheetWidget.show(
       context,
       title: AppLocalizations.of(context)!.addNewGoal,
@@ -44,7 +46,7 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
           onPressed: () async {
             try {
               LoadingWidget.dialog(context);
-              final bool result = await widget.controller.addNewGoal(
+              await widget.controller.addNewGoal(
                 CreateGoalModel(
                   userId: widget.controller.user!.id,
                   description: _descriptionController.text.trim(),
@@ -52,13 +54,12 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
                 ),
               );
 
-              if (context.mounted) LoadingWidget.hide(context);
-              if (result && context.mounted) {
+              if (mounted) {
+                LoadingWidget.hide(context);
                 Navigator.of(context).pop();
-                _descriptionController.clear();
               }
             } on AppException catch (error) {
-              if (context.mounted) {
+              if (mounted) {
                 LoadingWidget.hide(context);
                 error.show(context);
               }
@@ -71,25 +72,48 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
           child: Text(AppLocalizations.of(context)!.cancel),
         ),
       ],
-      children: [
-        TextFormField(
-          controller: _descriptionController,
-          maxLines: 3,
-          keyboardType: TextInputType.text,
-          textCapitalization: TextCapitalization.sentences,
-          decoration: InputDecoration(
-            label: Text(AppLocalizations.of(context)!.description),
-            hintText: AppLocalizations.of(context)!.goalDescriptionHint,
-            border: const OutlineInputBorder(),
-          ),
-          textInputAction: TextInputAction.done,
-        ),
-      ],
+      children: [_descriptionTextField],
     );
   }
 
   Future<void> _editGoal(GoalModel goalModel) async {
-    //TODO: Pending...
+    _descriptionController.text = goalModel.description;
+
+    await ModalBottomSheetWidget.show(
+      context,
+      title: AppLocalizations.of(context)!.editGoal,
+      actions: [
+        TextButton(
+          onPressed: () async {
+            try {
+              LoadingWidget.dialog(context);
+
+              await widget.controller.editGoal(
+                goalModel.copyWith(
+                  description: _descriptionController.text.trim(),
+                ),
+              );
+
+              if (mounted) {
+                LoadingWidget.hide(context);
+                Navigator.of(context).pop();
+              }
+            } on AppException catch (error) {
+              if (mounted) {
+                LoadingWidget.hide(context);
+                error.show(context);
+              }
+            }
+          },
+          child: Text(AppLocalizations.of(context)!.save),
+        ),
+        TextButton(
+          onPressed: Navigator.of(context).pop,
+          child: Text(AppLocalizations.of(context)!.cancel),
+        ),
+      ],
+      children: [_descriptionTextField],
+    );
   }
 
   Future<void> _deleteGoal(GoalModel goalModel) async {
@@ -110,13 +134,13 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
         title: Text(AppLocalizations.of(context)!.myGoals),
         actions: [
           IconButton(
-            onPressed: () => _addNewGoal(context),
+            onPressed: _addNewGoal,
             icon: const Icon(Icons.add),
           ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _addNewGoal(context),
+        onPressed: _addNewGoal,
         child: const Icon(Icons.add),
       ),
       body: SafeArea(
@@ -151,4 +175,17 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
       ),
     );
   }
+
+  Widget get _descriptionTextField => TextFormField(
+        controller: _descriptionController,
+        maxLines: 3,
+        keyboardType: TextInputType.text,
+        textCapitalization: TextCapitalization.sentences,
+        decoration: InputDecoration(
+          label: Text(AppLocalizations.of(context)!.description),
+          hintText: AppLocalizations.of(context)!.goalDescriptionHint,
+          border: const OutlineInputBorder(),
+        ),
+        textInputAction: TextInputAction.done,
+      );
 }

@@ -65,23 +65,34 @@ abstract class InvestmentsControllerBase with Store {
   ObservableList<GoalModel> goals = ObservableList<GoalModel>();
 
   @action
-  Future<bool> addNewGoal(CreateGoalModel createGoalModel) async {
+  Future<void> addNewGoal(CreateGoalModel createGoalModel) async {
     try {
       final GoalModel newGoal = await _service.addNewGoal(createGoalModel);
       goals.add(newGoal);
       goals.sort((a, b) => b.creationDate.compareTo(a.creationDate));
-      return true;
     } on AppException catch (_) {
       rethrow;
     }
   }
 
-  Future<bool> deleteGoal(GoalModel goalModel) async {
+  @action
+  Future<void> editGoal(GoalModel goalModel) async {
     try {
+      await _service.editGoal(goalModel);
+      goals.removeWhere((e) => e.id == goalModel.id);
+      goals.add(goalModel);
+      goals.sort((a, b) => b.creationDate.compareTo(a.creationDate));
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteGoal(GoalModel goalModel) async {
+    try {
+      await _service.deleteGoal(goalModel);
       goals.remove(goalModel);
-      return await _service.deleteGoal(goalModel);
-    } catch (_) {
-      return false;
+    } on AppException catch (_) {
+      rethrow;
     }
   }
 

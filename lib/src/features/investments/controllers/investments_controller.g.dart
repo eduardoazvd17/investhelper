@@ -153,8 +153,16 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
       AsyncAction('InvestmentsControllerBase.addNewGoal', context: context);
 
   @override
-  Future<bool> addNewGoal(CreateGoalModel createGoalModel) {
+  Future<void> addNewGoal(CreateGoalModel createGoalModel) {
     return _$addNewGoalAsyncAction.run(() => super.addNewGoal(createGoalModel));
+  }
+
+  late final _$editGoalAsyncAction =
+      AsyncAction('InvestmentsControllerBase.editGoal', context: context);
+
+  @override
+  Future<void> editGoal(GoalModel goalModel) {
+    return _$editGoalAsyncAction.run(() => super.editGoal(goalModel));
   }
 
   late final _$InvestmentsControllerBaseActionController =

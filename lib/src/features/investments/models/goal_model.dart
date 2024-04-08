@@ -16,7 +16,6 @@ class GoalModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'userId': userId,
       'description': description,
       'creationDate': creationDate.millisecondsSinceEpoch,
@@ -37,4 +36,15 @@ class GoalModel {
 
   factory GoalModel.fromJson(String source) =>
       GoalModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  GoalModel copyWith({
+    String? description,
+  }) {
+    return GoalModel(
+      id: id,
+      userId: userId,
+      description: description ?? this.description,
+      creationDate: creationDate,
+    );
+  }
 }
