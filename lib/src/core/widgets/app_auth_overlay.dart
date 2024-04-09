@@ -67,7 +67,11 @@ class _AppAuthOverlayState extends State<AppAuthOverlay> {
   }
 
   Future<void> _authenticate() async {
-    final bool result = await widget.appController.requestAuth();
+    final bool result = await widget.appController.requestAuth(
+      AppLocalizations.of(context)!.continueAs(
+        widget.appController.user?.shortName ?? '',
+      ),
+    );
     if (result && mounted) Navigator.of(context).pop();
   }
 

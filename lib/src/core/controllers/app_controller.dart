@@ -1,5 +1,5 @@
-import 'package:credentials_manager/credentials_manager.dart';
 import 'package:investhelper/src/core/enums/language_enum.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
 
 import '../enums/theme_enum.dart';
@@ -10,25 +10,36 @@ part 'app_controller.g.dart';
 class AppController = AppControllerBase with _$AppController;
 
 abstract class AppControllerBase with Store {
-  late final CredentialsManager _credentialsManager;
+  late final LocalAuthentication _localAuth;
   final AppService _service;
   AppControllerBase({required AppService service}) : _service = service;
 
   @action
   Future<void> initialize() async {
-    _credentialsManager = CredentialsManager(
-      storageKey: await _service.getAppID(),
-    );
+    _localAuth = LocalAuthentication();
     showWelcomePage = await _service.loadShowWelcomePage();
-    canEnableBiometrics = await _credentialsManager.canCheckBiometrics();
+    theme = await _service.loadTheme();
+    language = await _service.loadLanguage();
+    appVersion = await _service.getAppVersion();
+    user = await _service.getCurrentUser();
+    await _biometricsSecurityCheck();
+  }
+
+  @action
+  Future<void> _biometricsSecurityCheck() async {
+    canEnableBiometrics = await _localAuth.isDeviceSupported() &&
+        await _localAuth.canCheckBiometrics;
+
+    if (user != null &&
+        !canEnableBiometrics &&
+        await _service.loadIsBiometricsEnabled()) {
+      await logout();
+    }
+
     isBiometricsEnabled =
         canEnableBiometrics && await _service.loadIsBiometricsEnabled();
     shouldRequestAuth = isBiometricsEnabled;
     isRequestAuthOverlayShowing = false;
-    theme = await _service.loadTheme();
-    language = await _service.loadLanguage();
-    user = await _service.getCurrentUser();
-    appVersion = await _service.getAppVersion();
   }
 
   @observable
@@ -65,8 +76,10 @@ abstract class AppControllerBase with Store {
   @observable
   bool isRequestAuthOverlayShowing = false;
 
-  Future<bool> requestAuth() async {
-    return await _credentialsManager.requestAuth();
+  Future<bool> requestAuth([String? message]) async {
+    return await _localAuth.authenticate(
+      localizedReason: message ?? 'Please authenticate to continue',
+    );
   }
 
   @action
