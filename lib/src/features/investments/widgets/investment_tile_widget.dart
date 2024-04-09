@@ -32,17 +32,17 @@ class InvestmentTileWidget extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            Text(AppLocalizations.of(context)!
-                .custodialPosition(investment.custodialPosition.toString())),
+            Text(AppLocalizations.of(context)!.custodialPositionDisplay(
+                investment.custodialPosition.toString())),
             const SizedBox(height: 2.5),
             Text(
-              AppLocalizations.of(context)!.amountInvested(
+              AppLocalizations.of(context)!.amountInvestedDisplay(
                 AppFormatter.currency(investment.amountInvested),
               ),
             ),
             const SizedBox(height: 2.5),
             Text(
-              AppLocalizations.of(context)!.averagePrice(
+              AppLocalizations.of(context)!.averagePriceDisplay(
                 AppFormatter.currency(investment.averagePrice),
               ),
             ),

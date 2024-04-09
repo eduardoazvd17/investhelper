@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class ModalBottomSheetWidget extends StatelessWidget {
   final String title;
@@ -21,19 +22,24 @@ class ModalBottomSheetWidget extends StatelessWidget {
       context: context,
       isScrollControlled: true,
       builder: (_) {
-        return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          child: ModalBottomSheetWidget(
-            title: title,
-            actions: actions,
-            children: children,
+        return GestureDetector(
+          onTap: _hideKeyboard,
+          child: Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: ModalBottomSheetWidget(
+              title: title,
+              actions: actions,
+              children: children,
+            ),
           ),
         );
       },
     );
   }
+
+  static void _hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +51,7 @@ class ModalBottomSheetWidget extends StatelessWidget {
               padding: const EdgeInsets.only(top: 10, bottom: 5),
               child: Container(
                 width: 80,
-                height: 5,
+                height: 3,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.grey,
@@ -65,17 +71,19 @@ class ModalBottomSheetWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(children: children),
             ),
-            if (actions != null && actions!.isNotEmpty) const Divider(),
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
+            if (actions != null && actions!.isNotEmpty) ...[
+              const Divider(),
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: actions!,
+                ),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: actions!,
-              ),
-            ),
+            ],
           ],
         ),
       ),

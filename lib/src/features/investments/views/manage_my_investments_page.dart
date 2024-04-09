@@ -25,17 +25,23 @@ class ManageMyInvestmentsPage extends StatefulWidget {
 
 class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   late final TextEditingController _nameController;
+  late final TextEditingController _custodialPositionController;
+  late final TextEditingController _averagePriceController;
   CategoryEnum? _selectedCategory;
 
   @override
   void initState() {
     _nameController = TextEditingController();
+    _custodialPositionController = TextEditingController(text: '0');
+    _averagePriceController = TextEditingController(text: '0');
     super.initState();
   }
 
   @override
   void dispose() {
     _nameController.dispose();
+    _custodialPositionController.dispose();
+    _averagePriceController.dispose();
     super.dispose();
   }
 
@@ -71,6 +77,24 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         _nameTextField,
         const SizedBox(height: 10),
         _categoryDropDownButton,
+        const SizedBox(height: 10),
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: Text(
+            AppLocalizations.of(context)!.addInvestmentsValuesAdvise,
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall
+                ?.copyWith(color: Colors.grey),
+          ),
+        ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            Expanded(child: _custodialPositionTextField),
+            Expanded(child: _averagePriceTextField),
+          ],
+        ),
       ],
     );
   }
@@ -140,5 +164,21 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         onChanged: (category) => setState(() {
           _selectedCategory = category;
         }),
+      );
+
+  Widget get _custodialPositionTextField => TextFieldWidget(
+        label: AppLocalizations.of(context)!.startCustodialPosition,
+        controller: _custodialPositionController,
+        keyboardType: const TextInputType.numberWithOptions(decimal: false),
+        textCapitalization: TextCapitalization.words,
+        textInputAction: TextInputAction.done,
+      );
+
+  Widget get _averagePriceTextField => TextFieldWidget(
+        label: AppLocalizations.of(context)!.startAveragePrice,
+        controller: _averagePriceController,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        textCapitalization: TextCapitalization.words,
+        textInputAction: TextInputAction.done,
       );
 }

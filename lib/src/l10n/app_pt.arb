@@ -55,24 +55,24 @@
   "accessMyInvestments": "Acessar meus investimentos",
   "categories": "Categorias",
   "productsAndServices": "Produtos e serviços",
-  "custodialPosition": "Posição em custódia: {value}",
-  "@custodialPosition": {
+  "custodialPositionDisplay": "Posição em custódia: {value}",
+  "@custodialPositionDisplay": {
     "placeholders": {
       "value": {
         "type": "String"
       }
     }
   },
-  "amountInvested": "Valor investido: {value}",
-  "@amountInvested": {
+  "amountInvestedDisplay": "Valor investido: {value}",
+  "@amountInvestedDisplay": {
     "placeholders": {
       "value": {
         "type": "String"
       }
     }
   },
-  "averagePrice": "Preço médio: {value}",
-  "@averagePrice": {
+  "averagePriceDisplay": "Preço médio: {value}",
+  "@averagePriceDisplay": {
     "placeholders": {
       "value": {
         "type": "String"
@@ -167,5 +167,8 @@
   "addNewInvestment": "Adicionar novo investimento",
   "investmentNameHint": "Insira o nome ou ticker do investimento",
   "category": "Categoria",
-  "selectCategory": "Selecione a categoria..."
+  "selectCategory": "Selecione a categoria...",
+  "addInvestmentsValuesAdvise": "Preencha as informações abaixo caso você já possua valores investidos nesse investimento.\nAs informações devem ser preenchidas corretamente utilizando dados da sua corretora para um cálculo correto e preciso.",
+  "startCustodialPosition": "Posição inicial",
+  "startAveragePrice": "Preço médio inicial"
 }

@@ -6,9 +6,9 @@ class InvestmentModel {
   final String name;
   final CategoryEnum category;
   final int custodialPosition;
-  final double amountInvested;
   final double averagePrice;
 
+  double get amountInvested => custodialPosition * averagePrice;
   bool get hasData => custodialPosition > 0;
 
   InvestmentModel({
@@ -17,7 +17,6 @@ class InvestmentModel {
     required this.name,
     required this.category,
     required this.custodialPosition,
-    required this.amountInvested,
     required this.averagePrice,
   });
 }

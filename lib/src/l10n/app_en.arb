@@ -55,24 +55,24 @@
     "accessMyInvestments": "Access my investments",
     "categories": "Categories",
     "productsAndServices": "Products and services",
-    "custodialPosition": "Custodial position: {value}",
-    "@custodialPosition": {
+    "custodialPositionDisplay": "Custodial position: {value}",
+    "@custodialPositionDisplay": {
         "placeholders": {
             "value": {
                 "type": "String"
             }
         }
     },
-    "amountInvested": "Amount invested: {value}",
-    "@amountInvested": {
+    "amountInvestedDisplay": "Amount invested: {value}",
+    "@amountInvestedDisplay": {
         "placeholders": {
             "value": {
                 "type": "String"
             }
         }
     },
-    "averagePrice": "Average price: {value}",
-    "@averagePrice": {
+    "averagePriceDisplay": "Average price: {value}",
+    "@averagePriceDisplay": {
         "placeholders": {
             "value": {
                 "type": "String"

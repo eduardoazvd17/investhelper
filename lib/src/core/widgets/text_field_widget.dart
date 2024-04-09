@@ -11,6 +11,7 @@ class TextFieldWidget extends StatelessWidget {
   final TextCapitalization textCapitalization;
   final void Function(String)? onFieldSubmitted;
   final int maxLines;
+  final bool enabled;
   const TextFieldWidget({
     super.key,
     this.focusNode,
@@ -23,6 +24,7 @@ class TextFieldWidget extends StatelessWidget {
     this.textCapitalization = TextCapitalization.none,
     this.onFieldSubmitted,
     this.maxLines = 1,
+    this.enabled = true,
   });
 
   @override
@@ -40,6 +42,7 @@ class TextFieldWidget extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: TextFormField(
+            enabled: enabled,
             maxLines: maxLines,
             focusNode: focusNode,
             controller: controller,

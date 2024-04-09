@@ -63,6 +63,8 @@ class _AuthPageState extends State<AuthPage> {
     super.dispose();
   }
 
+  static void _hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
+
   Future<void> _makeLogin() async {
     try {
       LoadingWidget.dialog(context);
@@ -133,35 +135,38 @@ class _AuthPageState extends State<AuthPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(SettingsPage.routeName);
-            },
-            icon: const Icon(CupertinoIcons.settings),
-          ),
-        ],
-      ),
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(25),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  SizedBox(
-                    height: 250,
-                    child: Lottie.asset('assets/animations/auth.json'),
-                  ),
-                  switch (_currentPageState) {
-                    AuthPageState.login => _loginStateContent,
-                    AuthPageState.register => _registerStateContent,
-                    AuthPageState.recovery => _recoveryStateContent,
-                  },
-                ],
+    return GestureDetector(
+      onTap: _hideKeyboard,
+      child: Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed(SettingsPage.routeName);
+              },
+              icon: const Icon(CupertinoIcons.settings),
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(25),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    SizedBox(
+                      height: 250,
+                      child: Lottie.asset('assets/animations/auth.json'),
+                    ),
+                    switch (_currentPageState) {
+                      AuthPageState.login => _loginStateContent,
+                      AuthPageState.register => _registerStateContent,
+                      AuthPageState.recovery => _recoveryStateContent,
+                    },
+                  ],
+                ),
               ),
             ),
           ),
