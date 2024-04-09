@@ -49,18 +49,25 @@ class ModalBottomSheetWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Column(
+      child: ListView(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
         children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 10, bottom: 5),
-            child: Container(
-              width: 80,
-              height: 3,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.grey,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10, bottom: 5),
+                child: Container(
+                  width: 80,
+                  height: 3,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -71,9 +78,15 @@ class ModalBottomSheetWidget extends StatelessWidget {
             ),
           ),
           const Divider(),
-          Flexible(
-            fit: FlexFit.tight,
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).viewInsets.bottom -
+                  MediaQuery.of(context).viewPadding.top -
+                  199,
+            ),
             child: SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
