@@ -167,5 +167,8 @@
     "addNewInvestment": "Add new investment",
     "investmentNameHint": "Enter investment name or ticker",
     "category": "Category",
-    "selectCategory": "Select category..."
+    "selectCategory": "Select category...",
+    "addInvestmentsValuesAdvise": "Fill in the information below if you already have amounts invested in this investment.\nThe information must be provided correctly using data from your broker for a correct and accurate calculation.",
+    "startCustodialPosition": "Start position",
+    "startAveragePrice": "Avg start price"
 }
