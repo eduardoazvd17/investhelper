@@ -31,7 +31,7 @@ class TextFieldWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.all(5.0),
+          padding: const EdgeInsets.only(bottom: 5, left: 5),
           child: Text(
             label,
             style: Theme.of(context).textTheme.titleMedium,
@@ -44,7 +44,7 @@ class TextFieldWidget extends StatelessWidget {
             focusNode: focusNode,
             controller: controller,
             obscureText: obscureText,
-            keyboardType: TextInputType.text,
+            keyboardType: keyboardType,
             decoration: InputDecoration(
               hintText: hint,
               border: const OutlineInputBorder(

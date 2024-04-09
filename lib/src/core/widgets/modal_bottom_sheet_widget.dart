@@ -65,17 +65,17 @@ class ModalBottomSheetWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Column(children: children),
             ),
-            if (actions != null && actions!.isNotEmpty)
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                  vertical: 10,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: actions!,
-                ),
+            if (actions != null && actions!.isNotEmpty) const Divider(),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 10,
               ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: actions!,
+              ),
+            ),
           ],
         ),
       ),
