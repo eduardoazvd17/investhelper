@@ -268,10 +268,13 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                 child: ListView(
                   children: widget.controller.investments.map(
                     (e) {
-                      return InvestmentTileWidget(
-                        investment: e,
-                        onEdit: _editInvestment,
-                        onDelete: _deleteInvestment,
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: InvestmentTileWidget(
+                          investment: e,
+                          onEdit: _editInvestment,
+                          onDelete: _deleteInvestment,
+                        ),
                       );
                     },
                   ).toList(),
