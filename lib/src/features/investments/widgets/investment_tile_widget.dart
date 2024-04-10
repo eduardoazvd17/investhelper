@@ -50,7 +50,6 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
             children: [
               Expanded(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -65,33 +64,43 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                       ),
                     ),
                     const SizedBox(height: 12.5),
-                    if (widget.investment.isEmpty ||
-                        (widget.investment.custodialPosition > 0 &&
-                            widget.investment.averagePrice > 0)) ...[
-                      FittedBox(
-                        child: Text(AppLocalizations.of(context)!
-                            .custodialPositionDisplay(widget
-                                .investment.custodialPosition
-                                .toString())),
-                      ),
-                      const SizedBox(height: 2.5),
-                      FittedBox(
-                        child: Text(
-                          AppLocalizations.of(context)!.averagePriceDisplay(
-                            AppFormatter.currency(
-                                widget.investment.averagePrice),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (widget.investment.isEmpty ||
+                              (widget.investment.custodialPosition > 0 &&
+                                  widget.investment.averagePrice > 0)) ...[
+                            FittedBox(
+                              child: Text(AppLocalizations.of(context)!
+                                  .custodialPositionDisplay(widget
+                                      .investment.custodialPosition
+                                      .toString())),
+                            ),
+                            const SizedBox(height: 2.5),
+                            FittedBox(
+                              child: Text(
+                                AppLocalizations.of(context)!
+                                    .averagePriceDisplay(
+                                  AppFormatter.currency(
+                                      widget.investment.averagePrice),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 2.5),
+                          ],
+                          FittedBox(
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .amountInvestedDisplay(
+                                AppFormatter.currency(
+                                  widget.investment.amountInvested,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(height: 2.5),
-                    ],
-                    FittedBox(
-                      child: Text(
-                        AppLocalizations.of(context)!.amountInvestedDisplay(
-                          AppFormatter.currency(
-                            widget.investment.amountInvested,
-                          ),
-                        ),
+                        ],
                       ),
                     ),
                   ],
