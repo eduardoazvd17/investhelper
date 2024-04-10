@@ -5,6 +5,7 @@ import 'package:investhelper/src/core/utils/app_formatter.dart';
 import 'package:investhelper/src/core/widgets/dropdown_button_widget.dart';
 import 'package:investhelper/src/core/widgets/text_field_widget.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
+import 'package:investhelper/src/features/investments/models/create_investment_model.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 
 import '../../../core/widgets/empty_list_widget.dart';
@@ -55,6 +56,23 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           onPressed: () async {
             try {
               LoadingWidget.dialog(context);
+
+              if (_selectedCategory == null) {
+                throw AppException(AppExceptionType.emptyFields);
+              }
+
+              await widget.controller.addNewInvestment(
+                CreateInvestmentModel(
+                  userId: widget.controller.user!.id,
+                  name: _nameController.text.trim(),
+                  category: _selectedCategory!,
+                  custodialPosition:
+                      int.tryParse(_custodialPositionController.text) ?? 0,
+                  averagePrice:
+                      double.tryParse(_averagePriceController.text) ?? 0,
+                  creationDate: DateTime.now(),
+                ),
+              );
 
               if (mounted) {
                 LoadingWidget.hide(context);
@@ -147,6 +165,9 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         label: AppLocalizations.of(context)!.name,
         hint: AppLocalizations.of(context)!.investmentNameHint,
         controller: _nameController,
+        onChanged: (value) {
+          _nameController.text = AppFormatter.ticker(value);
+        },
         keyboardType: TextInputType.text,
         textCapitalization: TextCapitalization.words,
         textInputAction: TextInputAction.done,

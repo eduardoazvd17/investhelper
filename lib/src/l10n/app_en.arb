@@ -101,7 +101,7 @@
     "genericErrorTitle": "Unexpected error",
     "genericErrorMessage": "A communication error occurred, please try again in a few seconds.",
     "emptyFieldsErrorTitle": "One or more empty fields",
-    "emptyFieldsErrorMessage": "All text fields must be filled in.",
+    "emptyFieldsErrorMessage": "Some required information is pending, please check the form and try again.",
     "incorrectUserOrPasswordErrorTitle": "User not found",
     "incorrectUserOrPasswordErrorMessage": "The email and/or password entered may be incorrect.",
     "userAlreadyExistsErrorTitle": "User already registered",

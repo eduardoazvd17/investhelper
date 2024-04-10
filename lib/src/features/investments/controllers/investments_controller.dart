@@ -6,6 +6,7 @@ import 'package:investhelper/src/features/investments/models/daily_tip_dto.dart'
 import 'package:mobx/mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
+import '../models/create_investment_model.dart';
 import '../models/goal_model.dart';
 import '../models/investment_model.dart';
 import '../models/operation_model.dart';
@@ -36,7 +37,7 @@ abstract class InvestmentsControllerBase with Store {
 
     if (user != null) {
       goals.addAll(await _service.loadGoals(user!.id));
-      //investments
+      investments.addAll(await _service.loadInvestments(user!.id));
       //thisMonthOperations
     }
 
@@ -108,6 +109,20 @@ abstract class InvestmentsControllerBase with Store {
       }).reduce((a, b) => a + b);
     }
     return 0.0;
+  }
+
+  @action
+  Future<void> addNewInvestment(
+    CreateInvestmentModel createInvestmentModel,
+  ) async {
+    try {
+      final InvestmentModel newInvestment =
+          await _service.addNewInvestment(createInvestmentModel);
+      investments.add(newInvestment);
+      investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
+    } on AppException catch (_) {
+      rethrow;
+    }
   }
 
   @observable

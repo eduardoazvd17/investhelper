@@ -5,8 +5,10 @@ import 'package:investhelper/src/features/investments/models/create_goal_model.d
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/exceptions/app_exception.dart';
+import '../models/create_investment_model.dart';
 import '../models/daily_tip_dto.dart';
 import '../models/goal_model.dart';
+import '../models/investment_model.dart';
 
 class InvestmentsService {
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;
@@ -85,6 +87,54 @@ class InvestmentsService {
     try {
       await _firestore.collection('goals').doc(goalModel.id).delete();
       return true;
+    } on AppException catch (_) {
+      rethrow;
+    } catch (_) {
+      throw AppException(AppExceptionType.connectionError);
+    }
+  }
+
+  Future<List<InvestmentModel>> loadInvestments(String userId) async {
+    try {
+      final QuerySnapshot<Map<String, dynamic>> query = await _firestore
+          .collection('investments')
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      final investments = query.docs.map((doc) {
+        final Map<String, dynamic> data = doc.data()..['id'] = doc.id;
+        return InvestmentModel.fromMap(data);
+      }).toList();
+      investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
+      return investments;
+    } on AppException catch (_) {
+      rethrow;
+    } catch (_) {
+      throw AppException(AppExceptionType.connectionError);
+    }
+  }
+
+  Future<InvestmentModel> addNewInvestment(
+    CreateInvestmentModel createInvestmentModel,
+  ) async {
+    try {
+      if (createInvestmentModel.name.isEmpty) {
+        throw AppException(AppExceptionType.emptyFields);
+      }
+
+      final DocumentReference<Map<String, dynamic>> reference =
+          _firestore.collection('investments').doc();
+      await reference.set(createInvestmentModel.toMap());
+
+      return InvestmentModel(
+        id: reference.id,
+        userId: createInvestmentModel.userId,
+        name: createInvestmentModel.name,
+        category: createInvestmentModel.category,
+        custodialPosition: createInvestmentModel.custodialPosition,
+        averagePrice: createInvestmentModel.averagePrice,
+        creationDate: createInvestmentModel.creationDate,
+      );
     } on AppException catch (_) {
       rethrow;
     } catch (_) {

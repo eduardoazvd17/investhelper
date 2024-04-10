@@ -101,7 +101,7 @@
   "genericErrorTitle": "Erro inesperado",
   "genericErrorMessage": "Ocorreu um erro de comunicação, tente novamente em alguns segundos.",
   "emptyFieldsErrorTitle": "Um ou mais campos vazios",
-  "emptyFieldsErrorMessage": "Todos os campos de texto devem ser preenchidos.",
+  "emptyFieldsErrorMessage": "Alguma informação necessária está pendente, verifique o formulário e tente novamente.",
   "incorrectUserOrPasswordErrorTitle": "Usuário não encontrado",
   "incorrectUserOrPasswordErrorMessage": "O e-mail e/ou senha inseridos podem estar incorretos.",
   "userAlreadyExistsErrorTitle": "Usuário já cadastrado",

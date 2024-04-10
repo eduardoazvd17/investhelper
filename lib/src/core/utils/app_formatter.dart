@@ -45,4 +45,22 @@ class AppFormatter {
 
     return formattedNumbers;
   }
+
+  static String ticker(String value) {
+    final RegExp tickerRegex = RegExp(
+      r'[a-zA-Z]{4}(([1-9]{1}[0-1]{1})|[1-9]{1})',
+    );
+
+    String newValue = value;
+    if (tickerRegex.hasMatch(newValue)) {
+      for (final match in tickerRegex.allMatches(newValue)) {
+        final String matchString = match.group(0) ?? '';
+        newValue = newValue.replaceAll(
+          matchString,
+          matchString.toUpperCase(),
+        );
+      }
+    }
+    return newValue;
+  }
 }

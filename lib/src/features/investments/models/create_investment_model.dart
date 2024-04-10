@@ -3,8 +3,7 @@ import 'dart:convert';
 
 import 'package:investhelper/src/features/investments/enums/category_enum.dart';
 
-class InvestmentModel {
-  final String id;
+class CreateInvestmentModel {
   final String userId;
   final String name;
   final CategoryEnum category;
@@ -12,11 +11,7 @@ class InvestmentModel {
   final double averagePrice;
   final DateTime creationDate;
 
-  double get amountInvested => custodialPosition * averagePrice;
-  bool get hasData => custodialPosition > 0;
-
-  InvestmentModel({
-    required this.id,
+  CreateInvestmentModel({
     required this.userId,
     required this.name,
     required this.category,
@@ -36,9 +31,8 @@ class InvestmentModel {
     };
   }
 
-  factory InvestmentModel.fromMap(Map<String, dynamic> map) {
-    return InvestmentModel(
-      id: map['id'] as String,
+  factory CreateInvestmentModel.fromMap(Map<String, dynamic> map) {
+    return CreateInvestmentModel(
       userId: map['userId'] as String,
       name: map['name'] as String,
       category: CategoryEnum.values[map['category'] as int],
@@ -51,6 +45,7 @@ class InvestmentModel {
 
   String toJson() => json.encode(toMap());
 
-  factory InvestmentModel.fromJson(String source) =>
-      InvestmentModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory CreateInvestmentModel.fromJson(String source) =>
+      CreateInvestmentModel.fromMap(
+          json.decode(source) as Map<String, dynamic>);
 }
