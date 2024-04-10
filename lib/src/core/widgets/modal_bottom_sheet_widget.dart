@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ModalBottomSheetWidget extends StatelessWidget {
+class ModalBottomSheetWidget extends StatefulWidget {
   final String title;
   final List<Widget>? actions;
   final List<Widget> children;
@@ -53,6 +53,25 @@ class ModalBottomSheetWidget extends StatelessWidget {
   static void _hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 
   @override
+  State<ModalBottomSheetWidget> createState() => _ModalBottomSheetWidgetState();
+}
+
+class _ModalBottomSheetWidgetState extends State<ModalBottomSheetWidget> {
+  late final ScrollController _scrollController;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: ListView(
@@ -78,7 +97,7 @@ class ModalBottomSheetWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
             child: Text(
-              title,
+              widget.title,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium,
             ),
@@ -89,18 +108,24 @@ class ModalBottomSheetWidget extends StatelessWidget {
               maxHeight: MediaQuery.of(context).size.height -
                   MediaQuery.of(context).viewInsets.bottom -
                   MediaQuery.of(context).viewPadding.top -
+                  MediaQuery.of(context).padding.bottom -
                   199,
             ),
-            child: SingleChildScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                child: Column(children: children),
+            child: Scrollbar(
+              thumbVisibility: true,
+              controller: _scrollController,
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Column(children: widget.children),
+                ),
               ),
             ),
           ),
-          if (actions != null && actions!.isNotEmpty) ...[
+          if (widget.actions != null && widget.actions!.isNotEmpty) ...[
             const Divider(),
             Padding(
               padding: const EdgeInsets.symmetric(
@@ -109,7 +134,7 @@ class ModalBottomSheetWidget extends StatelessWidget {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: actions!,
+                children: widget.actions!,
               ),
             ),
           ],
