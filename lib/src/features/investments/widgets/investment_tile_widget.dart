@@ -10,11 +10,13 @@ class InvestmentTileWidget extends StatefulWidget {
   final InvestmentModel investment;
   final void Function(InvestmentModel)? onEdit;
   final void Function(InvestmentModel)? onDelete;
+  final bool hideValues;
   const InvestmentTileWidget({
     super.key,
     required this.investment,
     this.onEdit,
     this.onDelete,
+    this.hideValues = false,
   });
 
   @override
@@ -74,18 +76,26 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                                 (widget.investment.custodialPosition > 0 &&
                                     widget.investment.averagePrice > 0)) ...[
                               FittedBox(
-                                child: Text(AppLocalizations.of(context)!
-                                    .custodialPositionDisplay(widget
-                                        .investment.custodialPosition
-                                        .toString())),
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .custodialPositionDisplay(
+                                    widget.hideValues
+                                        ? '••••••'
+                                        : widget.investment.custodialPosition
+                                            .toString(),
+                                  ),
+                                ),
                               ),
                               const SizedBox(height: 2.5),
                               FittedBox(
                                 child: Text(
                                   AppLocalizations.of(context)!
                                       .averagePriceDisplay(
-                                    AppFormatter.currency(
-                                        widget.investment.averagePrice),
+                                    widget.hideValues
+                                        ? '${AppFormatter.currencyPrefix} ••••••'
+                                        : AppFormatter.currency(
+                                            widget.investment.averagePrice,
+                                          ),
                                   ),
                                 ),
                               ),
@@ -95,9 +105,11 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                               child: Text(
                                 AppLocalizations.of(context)!
                                     .amountInvestedDisplay(
-                                  AppFormatter.currency(
-                                    widget.investment.amountInvested,
-                                  ),
+                                  widget.hideValues
+                                      ? '${AppFormatter.currencyPrefix} ••••••'
+                                      : AppFormatter.currency(
+                                          widget.investment.amountInvested,
+                                        ),
                                 ),
                               ),
                             ),

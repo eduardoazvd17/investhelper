@@ -302,6 +302,15 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             children: [
               SectionWidget(
                 title: AppLocalizations.of(context)!.investments,
+                actions: [
+                  IconButton(
+                    onPressed: controller.toggleHideValues,
+                    visualDensity: VisualDensity.compact,
+                    icon: controller.hideValues
+                        ? const Icon(CupertinoIcons.eye_slash)
+                        : const Icon(CupertinoIcons.eye),
+                  ),
+                ],
                 content: [
                   Observer(builder: (_) {
                     final bool hasData = controller.investments.isNotEmpty;
@@ -321,9 +330,12 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                         ),
                         child: ListView(
                           scrollDirection: Axis.horizontal,
-                          children: controller.investments
-                              .map((e) => InvestmentTileWidget(investment: e))
-                              .toList(),
+                          children: controller.investments.map((e) {
+                            return InvestmentTileWidget(
+                              investment: e,
+                              hideValues: controller.hideValues,
+                            );
+                          }).toList(),
                         ),
                       ),
                     );
