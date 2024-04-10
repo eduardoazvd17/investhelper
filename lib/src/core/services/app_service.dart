@@ -88,6 +88,10 @@ class AppService {
 
   Future<UserModel> changeUserName(String name) async {
     try {
+      if (name.isEmpty) {
+        throw AppException(AppExceptionType.emptyFields);
+      }
+
       await _auth.currentUser!.updateDisplayName(name);
       return UserModel(
         id: _auth.currentUser!.uid,
