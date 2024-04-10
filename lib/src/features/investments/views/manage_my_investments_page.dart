@@ -186,7 +186,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           padding: const EdgeInsets.only(right: 5),
           child: Text(AppFormatter.currencyPrefix),
         ),
-        hint: '0,00',
+        hint: '0.00',
         controller: _averagePriceController,
         onChanged: (value) {
           _averagePriceController.text = AppFormatter.textFieldCurrency(value);
