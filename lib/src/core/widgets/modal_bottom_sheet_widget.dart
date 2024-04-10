@@ -24,18 +24,24 @@ class ModalBottomSheetWidget extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (_) {
         return GestureDetector(
-          onTap: _hideKeyboard,
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).viewPadding.top,
-              bottom: MediaQuery.of(context).viewInsets.bottom,
-            ),
-            child: Container(
-              color: Theme.of(context).bottomSheetTheme.backgroundColor,
-              child: ModalBottomSheetWidget(
-                title: title,
-                actions: actions,
-                children: children,
+          onTap: () => Navigator.of(context).pop(),
+          child: Container(
+            color: Colors.transparent,
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).viewPadding.top,
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: GestureDetector(
+                onTap: _hideKeyboard,
+                child: Container(
+                  color: Theme.of(context).bottomSheetTheme.backgroundColor,
+                  child: ModalBottomSheetWidget(
+                    title: title,
+                    actions: actions,
+                    children: children,
+                  ),
+                ),
               ),
             ),
           ),
