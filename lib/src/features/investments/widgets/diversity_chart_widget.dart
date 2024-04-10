@@ -66,6 +66,7 @@ class DiversityChartWidget extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 2.5),
                       child: CategoryIndicatorWidget(
                         category: category,
+                        value: getSections(context)[category]!.value.round(),
                       ),
                     );
                   },

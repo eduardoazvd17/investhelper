@@ -6,10 +6,12 @@ import '../enums/category_enum.dart';
 class CategoryIndicatorWidget extends StatelessWidget {
   final CategoryEnum category;
   final Color? textColor;
+  final int? value;
   const CategoryIndicatorWidget({
     super.key,
     required this.category,
     this.textColor,
+    this.value,
   });
 
   @override
@@ -29,8 +31,8 @@ class CategoryIndicatorWidget extends StatelessWidget {
         const SizedBox(width: 10),
         Flexible(
           child: Text(
-            category.getTitle(context),
-            style: TextStyle(color: textColor),
+            '${category.getTitle(context)}${value != null ? ' - $value%' : ''}',
+            style: TextStyle(color: textColor, fontSize: 12.5),
           ),
         ),
       ],

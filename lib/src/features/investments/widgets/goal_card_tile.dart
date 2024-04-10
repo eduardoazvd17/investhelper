@@ -39,8 +39,8 @@ class _GoalCardTileState extends State<GoalCardTile> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 120,
-      width: 225,
+      height: 140,
+      width: 240,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 2.5),
         child: Card(
