@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:investhelper/src/core/exceptions/app_exception.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -9,6 +10,22 @@ import '../models/user_model.dart';
 
 class AppService {
   FirebaseAuth get _auth => FirebaseAuth.instance;
+
+  Future<String> getAppID() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? appID = prefs.getString('AppID');
+    if (appID == null) {
+      final String newAppID = const Uuid().v1();
+      prefs.setString('AppID', newAppID);
+      return newAppID;
+    } else {
+      return appID;
+    }
+  }
+
+  Future<String> getAppVersion() async {
+    return (await PackageInfo.fromPlatform()).version;
+  }
 
   Future<bool> loadShowWelcomePage() async {
     final prefs = await SharedPreferences.getInstance();
@@ -69,19 +86,18 @@ class AppService {
 
   Future<void> logout() async => await _auth.signOut();
 
-  Future<String> getAppID() async {
-    final prefs = await SharedPreferences.getInstance();
-    final String? appID = prefs.getString('AppID');
-    if (appID == null) {
-      final String newAppID = const Uuid().v1();
-      prefs.setString('AppID', newAppID);
-      return newAppID;
-    } else {
-      return appID;
+  Future<UserModel> changeUserName(String name) async {
+    try {
+      await _auth.currentUser!.updateDisplayName(name);
+      return UserModel(
+        id: _auth.currentUser!.uid,
+        name: name,
+        email: _auth.currentUser!.email!,
+      );
+    } on AppException catch (_) {
+      rethrow;
+    } catch (_) {
+      throw AppException(AppExceptionType.connectionError);
     }
-  }
-
-  Future<String> getAppVersion() async {
-    return (await PackageInfo.fromPlatform()).version;
   }
 }

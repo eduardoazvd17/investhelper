@@ -12,6 +12,7 @@ import '../../../core/widgets/dialog_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../../../core/enums/theme_enum.dart';
 import '../../investments/views/investments_page.dart';
+import 'change_personal_data_page.dart';
 
 class SettingsPage extends StatelessWidget {
   static const String routeName = "/settings";
@@ -211,7 +212,9 @@ class SettingsPage extends StatelessWidget {
             ),
             ButtonTileWidget(
               text: AppLocalizations.of(context)!.changePersonalData,
-              onTap: () {},
+              onTap: () => Navigator.of(context).pushNamed(
+                ChangePersonalDataPage.routeName,
+              ),
             ),
             ButtonTileWidget(
               text: AppLocalizations.of(context)!.endSession,

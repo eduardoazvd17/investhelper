@@ -1,4 +1,5 @@
 import 'package:investhelper/src/core/enums/language_enum.dart';
+import 'package:investhelper/src/core/exceptions/app_exception.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
 
@@ -53,6 +54,15 @@ abstract class AppControllerBase with Store {
 
   @observable
   UserModel? user;
+
+  @action
+  Future<void> changeUserName(String name) async {
+    try {
+      user = await _service.changeUserName(name);
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
 
   @action
   void login(UserModel user) => this.user = user;

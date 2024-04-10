@@ -173,5 +173,6 @@
     "startAveragePrice": "Avg start price",
     "editInvestment": "Edit investment",
     "or": "Or",
-    "amountInvested": "Amount invested"
+    "amountInvested": "Amount invested",
+    "changeName": "Change name"
 }

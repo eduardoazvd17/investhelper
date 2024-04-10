@@ -173,5 +173,6 @@
   "startAveragePrice": "Preço médio inicial",
   "editInvestment": "Editar investimento",
   "or": "Ou",
-  "amountInvested": "Total investido"
+  "amountInvested": "Total investido",
+  "changeName": "Alterar nome"
 }
