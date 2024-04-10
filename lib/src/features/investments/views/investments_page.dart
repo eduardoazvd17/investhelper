@@ -85,6 +85,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 1,
+        shadowColor: Colors.grey.withOpacity(0.25),
         title: Row(
           children: [
             Image.asset("assets/images/logo.png", height: 40),
