@@ -155,7 +155,10 @@ class _WelcomePageState extends State<WelcomePage> {
             widget.appController.disableWelcomePage();
             Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
           },
-          child: Text(AppLocalizations.of(context)!.letsStart),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Text(AppLocalizations.of(context)!.letsStart),
+          ),
         ),
       ),
     ];
