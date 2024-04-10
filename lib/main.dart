@@ -71,7 +71,15 @@ class InvestHelperApp extends StatelessWidget {
           title: 'InvestHelper',
           builder: (context, child) => LifecycleHandler(
             appController: appController,
-            child: child,
+            child: MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaler: MediaQuery.of(context).textScaler.clamp(
+                      minScaleFactor: 0.8,
+                      maxScaleFactor: 1.2,
+                    ),
+              ),
+              child: child ?? const SizedBox(),
+            ),
           ),
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,

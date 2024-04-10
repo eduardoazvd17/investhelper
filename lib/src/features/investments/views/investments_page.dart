@@ -305,7 +305,9 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     final bool hasData = controller.investments.isNotEmpty;
 
                     return SizedBox(
-                      height: hasData ? 150 : null,
+                      height: hasData
+                          ? MediaQuery.of(context).textScaler.scale(190)
+                          : null,
                       child: Visibility(
                         visible: hasData,
                         replacement: Padding(

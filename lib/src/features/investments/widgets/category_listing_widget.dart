@@ -15,7 +15,7 @@ class CategoryListingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 100,
+      height: MediaQuery.of(context).textScaler.scale(110),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Column(

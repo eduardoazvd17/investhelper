@@ -148,7 +148,6 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                   ),
                 ),
                 child: ListView(
-                  scrollDirection: Axis.horizontal,
                   children: widget.controller.investments
                       .map((e) => InvestmentTileWidget(investment: e))
                       .toList(),

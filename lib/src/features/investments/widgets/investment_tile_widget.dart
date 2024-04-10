@@ -17,21 +17,16 @@ class InvestmentTileWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  investment.name,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(width: 20),
-                CategoryIndicatorWidget(
-                  category: investment.category,
-                  textColor: Colors.grey,
-                ),
-              ],
+            Text(
+              investment.name,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 5),
+            CategoryIndicatorWidget(
+              category: investment.category,
+              textColor: Colors.grey,
+            ),
+            const SizedBox(height: 12.5),
             Text(AppLocalizations.of(context)!.custodialPositionDisplay(
                 investment.custodialPosition.toString())),
             const SizedBox(height: 2.5),
