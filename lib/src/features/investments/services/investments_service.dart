@@ -142,6 +142,37 @@ class InvestmentsService {
     }
   }
 
+  Future<InvestmentModel> editInvestment(InvestmentModel investment) async {
+    try {
+      if (investment.name.isEmpty) {
+        throw AppException(AppExceptionType.emptyFields);
+      }
+
+      final DocumentReference<Map<String, dynamic>> reference =
+          _firestore.collection('investments').doc(investment.id);
+      await reference.set(investment.toMap());
+      return investment;
+    } on AppException catch (_) {
+      rethrow;
+    } catch (_) {
+      throw AppException(AppExceptionType.connectionError);
+    }
+  }
+
+  Future<bool> deleteInvestment(InvestmentModel investmentModel) async {
+    try {
+      await _firestore
+          .collection('investments')
+          .doc(investmentModel.id)
+          .delete();
+      return true;
+    } on AppException catch (_) {
+      rethrow;
+    } catch (_) {
+      throw AppException(AppExceptionType.connectionError);
+    }
+  }
+
   Future<DailyTipDTO> loadDailyTip() async {
     try {
       final DocumentSnapshot<Map<String, dynamic>> document =

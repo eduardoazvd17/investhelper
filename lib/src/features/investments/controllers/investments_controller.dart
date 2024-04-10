@@ -88,6 +88,7 @@ abstract class InvestmentsControllerBase with Store {
     }
   }
 
+  @action
   Future<void> deleteGoal(GoalModel goalModel) async {
     try {
       await _service.deleteGoal(goalModel);
@@ -120,6 +121,28 @@ abstract class InvestmentsControllerBase with Store {
           await _service.addNewInvestment(createInvestmentModel);
       investments.add(newInvestment);
       investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
+
+  @action
+  Future<void> editInvestment(InvestmentModel investmentModel) async {
+    try {
+      await _service.editInvestment(investmentModel);
+      investments.removeWhere((e) => e.id == investmentModel.id);
+      investments.add(investmentModel);
+      investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
+
+  @action
+  Future<void> deleteInvestment(InvestmentModel investmentModel) async {
+    try {
+      await _service.deleteInvestment(investmentModel);
+      investments.remove(investmentModel);
     } on AppException catch (_) {
       rethrow;
     }

@@ -53,4 +53,19 @@ class InvestmentModel {
 
   factory InvestmentModel.fromJson(String source) =>
       InvestmentModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  InvestmentModel copyWith({
+    String? name,
+    CategoryEnum? category,
+  }) {
+    return InvestmentModel(
+      id: id,
+      userId: userId,
+      name: name ?? this.name,
+      category: category ?? this.category,
+      custodialPosition: custodialPosition,
+      averagePrice: averagePrice,
+      creationDate: creationDate,
+    );
+  }
 }

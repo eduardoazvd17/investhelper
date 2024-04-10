@@ -118,14 +118,21 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
   }
 
   Future<void> _deleteGoal(GoalModel goalModel) async {
-    final bool? result = await DialogWidget.show(
-      context,
-      title: AppLocalizations.of(context)!.remove,
-      message:
-          AppLocalizations.of(context)!.removeMessage(goalModel.description),
-      actionType: DialogWidgetActionType.yesOrNo,
-    );
-    if (result != null && result) widget.controller.deleteGoal(goalModel);
+    try {
+      final bool? result = await DialogWidget.show(
+        context,
+        title: AppLocalizations.of(context)!.remove,
+        message:
+            AppLocalizations.of(context)!.removeMessage(goalModel.description),
+        actionType: DialogWidgetActionType.yesOrNo,
+      );
+      if (result != null && result) widget.controller.deleteGoal(goalModel);
+    } on AppException catch (error) {
+      if (mounted) {
+        LoadingWidget.hide(context);
+        error.show(context);
+      }
+    }
   }
 
   @override

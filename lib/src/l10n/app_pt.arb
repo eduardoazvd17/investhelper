@@ -154,7 +154,7 @@
   "send": "Enviar",
   "cancel": "Cancelar",
   "remove": "Remover",
-  "removeMessage": "Deseja realmente remover: {name}?",
+  "removeMessage": "Deseja realmente remover: {name}?\n\nEsta alteração não poderá ser desfeita.",
   "@removeMessage": {
     "placeholders": {
       "name": {
@@ -170,5 +170,6 @@
   "selectCategory": "Selecione a categoria...",
   "addInvestmentsValuesAdvise": "Preencha as informações abaixo caso você já possua valores investidos nesse investimento.\nAs informações devem ser preenchidas corretamente utilizando dados da sua corretora para um cálculo correto e preciso.",
   "startCustodialPosition": "Posição inicial",
-  "startAveragePrice": "Preço médio inicial"
+  "startAveragePrice": "Preço médio inicial",
+  "editInvestment": "Editar investimento"
 }

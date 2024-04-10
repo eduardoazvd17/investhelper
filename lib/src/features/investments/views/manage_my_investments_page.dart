@@ -9,6 +9,7 @@ import 'package:investhelper/src/features/investments/models/create_investment_m
 import 'package:investhelper/src/features/investments/models/investment_model.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 
+import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/empty_list_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/modal_bottom_sheet_widget.dart';
@@ -49,6 +50,11 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   }
 
   Future<void> _addNewInvestment() async {
+    _nameController.clear();
+    _selectedCategory = null;
+    _custodialPositionController.clear();
+    _averagePriceController.clear();
+
     await ModalBottomSheetWidget.show(
       context,
       title: AppLocalizations.of(context)!.addNewInvestment,
@@ -119,8 +125,74 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
     );
   }
 
-  Future<void> _editInvestment(InvestmentModel investmentModel) async {}
-  Future<void> _deleteInvestment(InvestmentModel investmentModel) async {}
+  Future<void> _editInvestment(InvestmentModel investmentModel) async {
+    _nameController.text = investmentModel.name;
+    _selectedCategory = investmentModel.category;
+
+    await ModalBottomSheetWidget.show(
+      context,
+      title: AppLocalizations.of(context)!.editInvestment,
+      actions: [
+        TextButton(
+          onPressed: () async {
+            try {
+              LoadingWidget.dialog(context);
+
+              if (_selectedCategory == null) {
+                throw AppException(AppExceptionType.emptyFields);
+              }
+
+              await widget.controller.editInvestment(investmentModel.copyWith(
+                name: _nameController.text.trim(),
+                category: _selectedCategory,
+              ));
+
+              if (mounted) {
+                LoadingWidget.hide(context);
+                Navigator.of(context).pop();
+              }
+            } on AppException catch (error) {
+              if (mounted) {
+                LoadingWidget.hide(context);
+                error.show(context);
+              }
+            }
+          },
+          child: Text(AppLocalizations.of(context)!.save),
+        ),
+        TextButton(
+          onPressed: Navigator.of(context).pop,
+          child: Text(AppLocalizations.of(context)!.cancel),
+        ),
+      ],
+      children: [
+        _nameTextField,
+        const SizedBox(height: 10),
+        _categoryDropDownButton,
+      ],
+    );
+  }
+
+  Future<void> _deleteInvestment(InvestmentModel investmentModel) async {
+    try {
+      final bool? result = await DialogWidget.show(
+        context,
+        title: AppLocalizations.of(context)!.remove,
+        message: AppLocalizations.of(context)!.removeMessage(
+          investmentModel.name,
+        ),
+        actionType: DialogWidgetActionType.yesOrNo,
+      );
+      if (result != null && result) {
+        widget.controller.deleteInvestment(investmentModel);
+      }
+    } on AppException catch (error) {
+      if (mounted) {
+        LoadingWidget.hide(context);
+        error.show(context);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -154,7 +154,7 @@
     "send": "Send",
     "cancel": "Cancel",
     "remove": "Remove",
-    "removeMessage": "Do you really want to remove: {name}?",
+    "removeMessage": "Do you really want to remove: {name}?\n\nThis change cannot be undone.",
     "@removeMessage": {
         "placeholders": {
             "name": {
@@ -170,5 +170,6 @@
     "selectCategory": "Select category...",
     "addInvestmentsValuesAdvise": "Fill in the information below if you already have amounts invested in this investment.\nThe information must be provided correctly using data from your broker for a correct and accurate calculation.",
     "startCustodialPosition": "Start position",
-    "startAveragePrice": "Avg start price"
+    "startAveragePrice": "Avg start price",
+    "editInvestment": "Edit investment"
 }
