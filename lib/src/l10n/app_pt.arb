@@ -171,5 +171,7 @@
   "addInvestmentsValuesAdvise": "Preencha as informações abaixo caso você já possua valores investidos nesse investimento.\nAs informações devem ser preenchidas corretamente utilizando dados da sua corretora para um cálculo correto e preciso.",
   "startCustodialPosition": "Posição inicial",
   "startAveragePrice": "Preço médio inicial",
-  "editInvestment": "Editar investimento"
+  "editInvestment": "Editar investimento",
+  "or": "Ou",
+  "amountInvested": "Total investido"
 }

@@ -31,6 +31,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   late final TextEditingController _nameController;
   late final TextEditingController _custodialPositionController;
   late final TextEditingController _averagePriceController;
+  late final TextEditingController _amountInvestedController;
   CategoryEnum? _selectedCategory;
 
   @override
@@ -38,6 +39,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
     _nameController = TextEditingController();
     _custodialPositionController = TextEditingController();
     _averagePriceController = TextEditingController();
+    _amountInvestedController = TextEditingController();
     super.initState();
   }
 
@@ -46,6 +48,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
     _nameController.dispose();
     _custodialPositionController.dispose();
     _averagePriceController.dispose();
+    _amountInvestedController.dispose();
     super.dispose();
   }
 
@@ -77,6 +80,8 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                       int.tryParse(_custodialPositionController.text) ?? 0,
                   averagePrice:
                       double.tryParse(_averagePriceController.text) ?? 0,
+                  amountInvested:
+                      double.tryParse(_amountInvestedController.text) ?? 0,
                   creationDate: DateTime.now(),
                 ),
               );
@@ -121,6 +126,17 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
             Expanded(child: _averagePriceTextField),
           ],
         ),
+        Padding(
+          padding: const EdgeInsets.all(10),
+          child: Text(
+            AppLocalizations.of(context)!.or,
+            style: Theme.of(context)
+                .textTheme
+                .titleSmall
+                ?.copyWith(color: Colors.grey),
+          ),
+        ),
+        _amountInvestedTextField
       ],
     );
   }
@@ -190,6 +206,28 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
       if (mounted) {
         LoadingWidget.hide(context);
         error.show(context);
+      }
+    }
+  }
+
+  void _onEditValues(bool isFromAmountInvested) {
+    final int custodialPosition =
+        int.tryParse(_custodialPositionController.text) ?? 0;
+    final double averagePrice =
+        double.tryParse(_averagePriceController.text) ?? 0;
+
+    if (!isFromAmountInvested) {
+      if (custodialPosition > 0 && averagePrice > 0) {
+        _amountInvestedController.text = AppFormatter.textFieldCurrency(
+          (custodialPosition * averagePrice).toString(),
+        );
+      }
+    } else {
+      final double amountInvested =
+          double.tryParse(_amountInvestedController.text) ?? 0;
+      if (amountInvested != (custodialPosition * averagePrice)) {
+        _custodialPositionController.clear();
+        _averagePriceController.clear();
       }
     }
   }
@@ -280,6 +318,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         onChanged: (value) {
           _custodialPositionController.text =
               AppFormatter.textFieldInteger(value);
+          _onEditValues(false);
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
         textCapitalization: TextCapitalization.words,
@@ -296,6 +335,25 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         controller: _averagePriceController,
         onChanged: (value) {
           _averagePriceController.text = AppFormatter.textFieldCurrency(value);
+          _onEditValues(false);
+        },
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        textCapitalization: TextCapitalization.words,
+        textInputAction: TextInputAction.done,
+      );
+
+  Widget get _amountInvestedTextField => TextFieldWidget(
+        label: AppLocalizations.of(context)!.amountInvested,
+        prefix: Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: Text(AppFormatter.currencyPrefix),
+        ),
+        hint: '0.00',
+        controller: _amountInvestedController,
+        onChanged: (value) {
+          _amountInvestedController.text =
+              AppFormatter.textFieldCurrency(value);
+          _onEditValues(true);
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textCapitalization: TextCapitalization.words,

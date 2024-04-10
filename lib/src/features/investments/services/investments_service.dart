@@ -133,6 +133,7 @@ class InvestmentsService {
         category: createInvestmentModel.category,
         custodialPosition: createInvestmentModel.custodialPosition,
         averagePrice: createInvestmentModel.averagePrice,
+        amountInvested: createInvestmentModel.amountInvested,
         creationDate: createInvestmentModel.creationDate,
       );
     } on AppException catch (_) {

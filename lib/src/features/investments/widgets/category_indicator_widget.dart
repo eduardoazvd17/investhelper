@@ -32,7 +32,10 @@ class CategoryIndicatorWidget extends StatelessWidget {
         Flexible(
           child: Text(
             '${category.getTitle(context)}${value != null ? ' - $value%' : ''}',
-            style: TextStyle(color: textColor, fontSize: 12.5),
+            style: TextStyle(
+              color: textColor,
+              fontSize: value != null ? 12.5 : null,
+            ),
           ),
         ),
       ],

@@ -10,10 +10,16 @@ class InvestmentModel {
   final CategoryEnum category;
   final int custodialPosition;
   final double averagePrice;
+  final double amountInvested;
   final DateTime creationDate;
 
-  double get amountInvested => custodialPosition * averagePrice;
-  bool get hasData => custodialPosition > 0;
+  bool get hasData {
+    return (custodialPosition > 0 && averagePrice > 0) || amountInvested > 0;
+  }
+
+  bool get isEmpty {
+    return custodialPosition == 0 && averagePrice == 0 && amountInvested == 0;
+  }
 
   InvestmentModel({
     required this.id,
@@ -22,37 +28,9 @@ class InvestmentModel {
     required this.category,
     required this.custodialPosition,
     required this.averagePrice,
+    required this.amountInvested,
     required this.creationDate,
   });
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'userId': userId,
-      'name': name,
-      'category': category.index,
-      'custodialPosition': custodialPosition,
-      'averagePrice': averagePrice,
-      'creationDate': creationDate.millisecondsSinceEpoch,
-    };
-  }
-
-  factory InvestmentModel.fromMap(Map<String, dynamic> map) {
-    return InvestmentModel(
-      id: map['id'] as String,
-      userId: map['userId'] as String,
-      name: map['name'] as String,
-      category: CategoryEnum.values[map['category'] as int],
-      custodialPosition: map['custodialPosition'] as int,
-      averagePrice: map['averagePrice'] as double,
-      creationDate:
-          DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory InvestmentModel.fromJson(String source) =>
-      InvestmentModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   InvestmentModel copyWith({
     String? name,
@@ -65,7 +43,40 @@ class InvestmentModel {
       category: category ?? this.category,
       custodialPosition: custodialPosition,
       averagePrice: averagePrice,
+      amountInvested: amountInvested,
       creationDate: creationDate,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'userId': userId,
+      'name': name,
+      'category': category.index,
+      'custodialPosition': custodialPosition,
+      'averagePrice': averagePrice,
+      'amountInvested': amountInvested,
+      'creationDate': creationDate.millisecondsSinceEpoch,
+    };
+  }
+
+  factory InvestmentModel.fromMap(Map<String, dynamic> map) {
+    return InvestmentModel(
+      id: map['id'] as String,
+      userId: map['userId'] as String,
+      name: map['name'] as String,
+      category: CategoryEnum.values[map['category'] as int],
+      custodialPosition: map['custodialPosition'] as int,
+      averagePrice: map['averagePrice'] as double,
+      amountInvested: map['amountInvested'] as double,
+      creationDate:
+          DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory InvestmentModel.fromJson(String source) =>
+      InvestmentModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

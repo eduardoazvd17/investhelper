@@ -9,6 +9,7 @@ class CreateInvestmentModel {
   final CategoryEnum category;
   final int custodialPosition;
   final double averagePrice;
+  final double amountInvested;
   final DateTime creationDate;
 
   CreateInvestmentModel({
@@ -17,6 +18,7 @@ class CreateInvestmentModel {
     required this.category,
     required this.custodialPosition,
     required this.averagePrice,
+    required this.amountInvested,
     required this.creationDate,
   });
 
@@ -27,6 +29,7 @@ class CreateInvestmentModel {
       'category': category.index,
       'custodialPosition': custodialPosition,
       'averagePrice': averagePrice,
+      'amountInvested': amountInvested,
       'creationDate': creationDate.millisecondsSinceEpoch,
     };
   }
@@ -38,6 +41,7 @@ class CreateInvestmentModel {
       category: CategoryEnum.values[map['category'] as int],
       custodialPosition: map['custodialPosition'] as int,
       averagePrice: map['averagePrice'] as double,
+      amountInvested: map['amountInvested'] as double,
       creationDate:
           DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
     );
