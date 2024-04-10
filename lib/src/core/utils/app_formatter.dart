@@ -24,4 +24,25 @@ class AppFormatter {
     }
     return DateFormat.yMMMd().format(date);
   }
+
+  static String textFieldInteger(String value) {
+    return value.replaceAll(RegExp(r'[^\d]'), '');
+  }
+
+  static String textFieldCurrency(String value) {
+    final String replaceComma = value.trim().replaceAll(',', '.');
+    String formattedNumbers = replaceComma.replaceAll(RegExp(r'[^\d.]'), '');
+
+    final split = formattedNumbers.split('.');
+    final float =
+        split.last.length > 2 ? split.last.substring(0, 2) : split.last;
+
+    if (split.length > 2) {
+      formattedNumbers = '${split.sublist(0, split.length).join()}.$float';
+    } else if (split.length == 2) {
+      formattedNumbers = '${split.first}.$float';
+    }
+
+    return formattedNumbers;
+  }
 }
