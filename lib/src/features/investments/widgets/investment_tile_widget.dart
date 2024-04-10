@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 
@@ -56,7 +57,7 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 5),
-                    Flexible(
+                    FittedBox(
                       child: CategoryIndicatorWidget(
                         category: widget.investment.category,
                         textColor: Colors.grey,
