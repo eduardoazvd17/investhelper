@@ -57,9 +57,8 @@ class AppTheme {
         bottomSheetTheme: BottomSheetThemeData(
           backgroundColor: _kSecondaryLightBackgroundColor,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(_kBorderRadius),
-              topRight: Radius.circular(_kBorderRadius),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(_kBorderRadius),
             ),
           ),
         ),
@@ -120,9 +119,8 @@ class AppTheme {
         bottomSheetTheme: BottomSheetThemeData(
           backgroundColor: _kSecondaryDarkBackgroundColor,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(_kBorderRadius),
-              topRight: Radius.circular(_kBorderRadius),
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(_kBorderRadius),
             ),
           ),
         ),
