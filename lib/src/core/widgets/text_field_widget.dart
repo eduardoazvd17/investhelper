@@ -12,6 +12,8 @@ class TextFieldWidget extends StatelessWidget {
   final void Function(String)? onFieldSubmitted;
   final int maxLines;
   final bool enabled;
+  final Widget? prefix;
+  final void Function(String)? onChanged;
   const TextFieldWidget({
     super.key,
     this.focusNode,
@@ -25,6 +27,8 @@ class TextFieldWidget extends StatelessWidget {
     this.onFieldSubmitted,
     this.maxLines = 1,
     this.enabled = true,
+    this.prefix,
+    this.onChanged,
   });
 
   @override
@@ -48,8 +52,10 @@ class TextFieldWidget extends StatelessWidget {
             controller: controller,
             obscureText: obscureText,
             keyboardType: keyboardType,
+            onChanged: onChanged,
             decoration: InputDecoration(
               hintText: hint,
+              prefix: prefix,
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),

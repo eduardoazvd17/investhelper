@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:investhelper/src/core/exceptions/app_exception.dart';
+import 'package:investhelper/src/core/utils/app_formatter.dart';
 import 'package:investhelper/src/core/widgets/dropdown_button_widget.dart';
 import 'package:investhelper/src/core/widgets/text_field_widget.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
@@ -32,8 +33,8 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   @override
   void initState() {
     _nameController = TextEditingController();
-    _custodialPositionController = TextEditingController(text: '0');
-    _averagePriceController = TextEditingController(text: '0');
+    _custodialPositionController = TextEditingController();
+    _averagePriceController = TextEditingController();
     super.initState();
   }
 
@@ -168,7 +169,12 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
 
   Widget get _custodialPositionTextField => TextFieldWidget(
         label: AppLocalizations.of(context)!.startCustodialPosition,
+        hint: '0',
         controller: _custodialPositionController,
+        onChanged: (value) {
+          _custodialPositionController.text =
+              AppFormatter.textFieldInteger(value);
+        },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
         textCapitalization: TextCapitalization.words,
         textInputAction: TextInputAction.done,
@@ -176,7 +182,15 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
 
   Widget get _averagePriceTextField => TextFieldWidget(
         label: AppLocalizations.of(context)!.startAveragePrice,
+        prefix: Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: Text(AppFormatter.currencyPrefix),
+        ),
+        hint: '0,00',
         controller: _averagePriceController,
+        onChanged: (value) {
+          _averagePriceController.text = AppFormatter.textFieldCurrency(value);
+        },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textCapitalization: TextCapitalization.words,
         textInputAction: TextInputAction.done,
