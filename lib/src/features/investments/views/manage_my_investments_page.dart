@@ -169,6 +169,10 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
 
   Widget get _custodialPositionTextField => TextFieldWidget(
         label: AppLocalizations.of(context)!.startCustodialPosition,
+        prefix: const Padding(
+          padding: EdgeInsets.only(right: 5),
+          child: Text('x'),
+        ),
         hint: '0',
         controller: _custodialPositionController,
         onChanged: (value) {
