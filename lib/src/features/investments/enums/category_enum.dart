@@ -13,6 +13,7 @@ enum CategoryEnum {
   commodities,
   etfs,
   cryptocurrencies,
+  others,
 }
 
 extension CategoryEnumExtension on CategoryEnum {
@@ -38,6 +39,8 @@ extension CategoryEnumExtension on CategoryEnum {
         return AppLocalizations.of(context)!.etfs;
       case CategoryEnum.cryptocurrencies:
         return AppLocalizations.of(context)!.cryptocurrencies;
+      case CategoryEnum.others:
+        return AppLocalizations.of(context)!.others;
     }
   }
 
@@ -63,6 +66,8 @@ extension CategoryEnumExtension on CategoryEnum {
         return Colors.indigo;
       case CategoryEnum.cryptocurrencies:
         return Colors.orange;
+      case CategoryEnum.others:
+        return Colors.blueGrey;
     }
   }
 }
