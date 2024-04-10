@@ -23,20 +23,26 @@ class CategoryListingWidget extends StatelessWidget {
           children: [
             Row(
               children: firstRowItems.map((e) {
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CategoryIndicatorWidget(category: e),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 2.5),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: CategoryIndicatorWidget(category: e),
+                    ),
                   ),
                 );
               }).toList(),
             ),
             Row(
               children: secondRowItems.map((e) {
-                return Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: CategoryIndicatorWidget(category: e),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 2.5),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: CategoryIndicatorWidget(category: e),
+                    ),
                   ),
                 );
               }).toList(),

@@ -39,97 +39,100 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).textScaler.scale(190),
-      width: 300,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.investment.name,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: 5),
-                    FittedBox(
-                      child: CategoryIndicatorWidget(
-                        category: widget.investment.category,
-                        textColor: Colors.grey,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 2.5),
+      child: SizedBox(
+        height: MediaQuery.of(context).textScaler.scale(190),
+        width: 300,
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.investment.name,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
-                    ),
-                    const SizedBox(height: 12.5),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          if (widget.investment.isEmpty ||
-                              (widget.investment.custodialPosition > 0 &&
-                                  widget.investment.averagePrice > 0)) ...[
-                            FittedBox(
-                              child: Text(AppLocalizations.of(context)!
-                                  .custodialPositionDisplay(widget
-                                      .investment.custodialPosition
-                                      .toString())),
-                            ),
-                            const SizedBox(height: 2.5),
+                      const SizedBox(height: 5),
+                      FittedBox(
+                        child: CategoryIndicatorWidget(
+                          category: widget.investment.category,
+                          textColor: Colors.grey,
+                        ),
+                      ),
+                      const SizedBox(height: 12.5),
+                      Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (widget.investment.isEmpty ||
+                                (widget.investment.custodialPosition > 0 &&
+                                    widget.investment.averagePrice > 0)) ...[
+                              FittedBox(
+                                child: Text(AppLocalizations.of(context)!
+                                    .custodialPositionDisplay(widget
+                                        .investment.custodialPosition
+                                        .toString())),
+                              ),
+                              const SizedBox(height: 2.5),
+                              FittedBox(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .averagePriceDisplay(
+                                    AppFormatter.currency(
+                                        widget.investment.averagePrice),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 2.5),
+                            ],
                             FittedBox(
                               child: Text(
                                 AppLocalizations.of(context)!
-                                    .averagePriceDisplay(
+                                    .amountInvestedDisplay(
                                   AppFormatter.currency(
-                                      widget.investment.averagePrice),
+                                    widget.investment.amountInvested,
+                                  ),
                                 ),
                               ),
                             ),
-                            const SizedBox(height: 2.5),
                           ],
-                          FittedBox(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .amountInvestedDisplay(
-                                AppFormatter.currency(
-                                  widget.investment.amountInvested,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              if (widget.onEdit != null && widget.onDelete != null)
-                Padding(
-                  padding: const EdgeInsets.only(left: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      if (widget.onEdit != null)
-                        IconButton(
-                          onPressed: () =>
-                              widget.onEdit!.call(widget.investment),
-                          visualDensity: VisualDensity.compact,
-                          icon: const Icon(CupertinoIcons.pen),
-                        ),
-                      if (widget.onDelete != null)
-                        IconButton(
-                          onPressed: () =>
-                              widget.onDelete!.call(widget.investment),
-                          visualDensity: VisualDensity.compact,
-                          icon: const Icon(CupertinoIcons.delete),
-                        ),
                     ],
                   ),
                 ),
-            ],
+                if (widget.onEdit != null && widget.onDelete != null)
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        if (widget.onEdit != null)
+                          IconButton(
+                            onPressed: () =>
+                                widget.onEdit!.call(widget.investment),
+                            visualDensity: VisualDensity.compact,
+                            icon: const Icon(CupertinoIcons.pen),
+                          ),
+                        if (widget.onDelete != null)
+                          IconButton(
+                            onPressed: () =>
+                                widget.onDelete!.call(widget.investment),
+                            visualDensity: VisualDensity.compact,
+                            icon: const Icon(CupertinoIcons.delete),
+                          ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
           ),
         ),
       ),
