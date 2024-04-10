@@ -86,18 +86,14 @@ class AppService {
 
   Future<void> logout() async => await _auth.signOut();
 
-  Future<UserModel> changeUserName(String name) async {
+  Future<UserModel> changeUserName(UserModel userModel) async {
     try {
-      if (name.isEmpty) {
+      if (userModel.name.isEmpty) {
         throw AppException(AppExceptionType.emptyFields);
       }
 
-      await _auth.currentUser!.updateDisplayName(name);
-      return UserModel(
-        id: _auth.currentUser!.uid,
-        name: name,
-        email: _auth.currentUser!.email!,
-      );
+      await _auth.currentUser!.updateDisplayName(userModel.name);
+      return userModel;
     } on AppException catch (_) {
       rethrow;
     } catch (_) {

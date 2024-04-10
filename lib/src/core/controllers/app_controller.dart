@@ -58,7 +58,9 @@ abstract class AppControllerBase with Store {
   @action
   Future<void> changeUserName(String name) async {
     try {
-      user = await _service.changeUserName(name);
+      user = await _service.changeUserName(
+        user!.copyWith(name: name),
+      );
     } on AppException catch (_) {
       rethrow;
     }
