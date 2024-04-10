@@ -57,6 +57,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
     _selectedCategory = null;
     _custodialPositionController.clear();
     _averagePriceController.clear();
+    _amountInvestedController.clear();
 
     await ModalBottomSheetWidget.show(
       context,
