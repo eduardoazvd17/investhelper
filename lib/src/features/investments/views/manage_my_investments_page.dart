@@ -217,6 +217,9 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         double.tryParse(_averagePriceController.text) ?? 0;
 
     if (!isFromAmountInvested) {
+      if (_amountInvestedController.text.isNotEmpty) {
+        _amountInvestedController.clear();
+      }
       if (custodialPosition > 0 && averagePrice > 0) {
         _amountInvestedController.text = AppFormatter.textFieldCurrency(
           (custodialPosition * averagePrice).toString(),
