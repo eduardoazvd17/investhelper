@@ -25,8 +25,8 @@ class ModalBottomSheetWidget extends StatefulWidget {
       builder: (_) {
         return GestureDetector(
           onTap: () => Navigator.of(context).pop(),
-          child: Container(
-            color: Colors.transparent,
+          child: DecoratedBox(
+            decoration: const BoxDecoration(color: Colors.transparent),
             child: Padding(
               padding: EdgeInsets.only(
                 top: MediaQuery.of(context).viewPadding.top,
@@ -34,8 +34,13 @@ class ModalBottomSheetWidget extends StatefulWidget {
               ),
               child: GestureDetector(
                 onTap: _hideKeyboard,
-                child: Container(
-                  color: Theme.of(context).bottomSheetTheme.backgroundColor,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(10),
+                    ),
+                    color: Theme.of(context).bottomSheetTheme.backgroundColor,
+                  ),
                   child: ModalBottomSheetWidget(
                     title: title,
                     actions: actions,
