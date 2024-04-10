@@ -66,7 +66,8 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                     ),
                     const SizedBox(height: 12.5),
                     if (widget.investment.isEmpty ||
-                        widget.investment.custodialPosition > 0) ...[
+                        (widget.investment.custodialPosition > 0 &&
+                            widget.investment.averagePrice > 0)) ...[
                       FittedBox(
                         child: Text(AppLocalizations.of(context)!
                             .custodialPositionDisplay(widget
@@ -74,9 +75,6 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                                 .toString())),
                       ),
                       const SizedBox(height: 2.5),
-                    ],
-                    if (widget.investment.isEmpty ||
-                        widget.investment.averagePrice > 0) ...[
                       FittedBox(
                         child: Text(
                           AppLocalizations.of(context)!.averagePriceDisplay(
