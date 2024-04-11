@@ -31,15 +31,20 @@ class InvestmentModel {
     required this.creationDate,
   });
 
-  InvestmentModel copyWith({String? name}) {
+  InvestmentModel copyWith({
+    String? name,
+    int? custodialPosition,
+    double? averagePrice,
+    double? amountInvested,
+  }) {
     return InvestmentModel(
       id: id,
       userId: userId,
       name: name ?? this.name,
       category: category,
-      custodialPosition: custodialPosition,
-      averagePrice: averagePrice,
-      amountInvested: amountInvested,
+      custodialPosition: custodialPosition ?? this.custodialPosition,
+      averagePrice: averagePrice ?? this.averagePrice,
+      amountInvested: amountInvested ?? this.amountInvested,
       creationDate: creationDate,
     );
   }

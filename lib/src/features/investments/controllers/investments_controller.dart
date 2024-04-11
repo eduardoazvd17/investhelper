@@ -182,8 +182,29 @@ abstract class InvestmentsControllerBase with Store {
       investments.removeWhere((e) => e.id == newInvestment.id);
       investments.add(newInvestment);
       investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
+
       thisMonthOperations.add(newOperation);
       thisMonthOperations.sort((a, b) => b.date.compareTo(a.date));
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
+
+  @action
+  Future<void> deleteOperation(
+    OperationModel operationModel,
+  ) async {
+    try {
+      final InvestmentModel newInvestment = await _service.deleteOperation(
+        operationModel,
+        investments.firstWhere((e) => e.id == operationModel.investmentId),
+      );
+
+      investments.removeWhere((e) => e.id == newInvestment.id);
+      investments.add(newInvestment);
+      investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
+
+      thisMonthOperations.remove(operationModel);
     } on AppException catch (_) {
       rethrow;
     }

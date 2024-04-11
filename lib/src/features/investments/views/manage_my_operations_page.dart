@@ -11,6 +11,7 @@ import 'package:investhelper/src/features/investments/widgets/operation_tile_wid
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/utils/app_formatter.dart';
 import '../../../core/widgets/date_picker_widget.dart';
+import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/empty_list_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/modal_bottom_sheet_widget.dart';
@@ -159,15 +160,26 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
     );
   }
 
-  Future<void> _editOperation(OperationModel operationModel) async {
-    _selectedOperationType = operationModel.type;
-    _selectedOperationDate = operationModel.date;
-    _quantityController.text = operationModel.quantity.toString();
-    _unitPriceController.text = operationModel.unitPrice.toString();
-    _totalPriceController.text = operationModel.totalPrice.toString();
-  }
+  Future<void> _deleteOperation(OperationModel operationModel) async {
+    try {
+      final String operationName = '';
 
-  Future<void> _deleteOperation(OperationModel operationModel) async {}
+      final bool? result = await DialogWidget.show(
+        context,
+        title: AppLocalizations.of(context)!.remove,
+        message: AppLocalizations.of(context)!.removeMessage(operationName),
+        actionType: DialogWidgetActionType.yesOrNo,
+      );
+      if (result != null && result) {
+        widget.controller.deleteOperation(operationModel);
+      }
+    } on AppException catch (error) {
+      if (mounted) {
+        LoadingWidget.hide(context);
+        error.show(context);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +220,6 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                         investment: widget.controller.investments.firstWhere(
                           (e) => e.id == operation.investmentId,
                         ),
-                        onEdit: _editOperation,
                         onDelete: _deleteOperation,
                       ),
                     );

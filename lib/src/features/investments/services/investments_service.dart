@@ -207,26 +207,42 @@ class InvestmentsService {
     CreateOperationModel createOperationModel,
     InvestmentModel investmentModel,
   ) async {
-    //TODO: UPDATE INVESTMENT MODEL TOTALS.
-
     try {
       final DocumentReference<Map<String, dynamic>> reference =
           _firestore.collection('operations').doc();
       await reference.set(createOperationModel.toMap());
 
-      return (
-        OperationModel(
-          id: reference.id,
-          userId: createOperationModel.userId,
-          investmentId: createOperationModel.investmentId,
-          type: createOperationModel.type,
-          date: createOperationModel.date,
-          quantity: createOperationModel.quantity,
-          unitPrice: createOperationModel.unitPrice,
-          totalPrice: createOperationModel.totalPrice,
-        ),
-        investmentModel,
+      final OperationModel operationModel = OperationModel(
+        id: reference.id,
+        userId: createOperationModel.userId,
+        investmentId: createOperationModel.investmentId,
+        type: createOperationModel.type,
+        date: createOperationModel.date,
+        quantity: createOperationModel.quantity,
+        unitPrice: createOperationModel.unitPrice,
+        totalPrice: createOperationModel.totalPrice,
       );
+
+      //TODO: UPDATE INVESTMENT MODEL TOTALS.
+
+      return (operationModel, investmentModel);
+    } on AppException catch (_) {
+      rethrow;
+    } catch (error) {
+      throw AppException(AppExceptionType.connectionError, error.toString());
+    }
+  }
+
+  Future<InvestmentModel> deleteOperation(
+    OperationModel operationModel,
+    InvestmentModel investmentModel,
+  ) async {
+    try {
+      await _firestore.collection('operations').doc(operationModel.id).delete();
+
+      //TODO: UPDATE INVESTMENT MODEL TOTALS.
+
+      return investmentModel;
     } on AppException catch (_) {
       rethrow;
     } catch (error) {
