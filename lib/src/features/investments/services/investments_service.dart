@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:investhelper/src/features/investments/enums/category_enum.dart';
 import 'package:investhelper/src/features/investments/models/create_goal_model.dart';
 import 'package:investhelper/src/features/investments/models/create_operation_model.dart';
 import 'package:investhelper/src/features/investments/models/operation_model.dart';
@@ -223,9 +224,28 @@ class InvestmentsService {
         totalPrice: createOperationModel.totalPrice,
       );
 
-      //TODO: UPDATE INVESTMENT MODEL TOTALS.
+      final InvestmentModel newInvestment;
+      if (investmentModel.category.needPositionAndAveragePrice) {
+        final int custodialPosition =
+            investmentModel.custodialPosition + operationModel.quantity;
+        final double averagePrice = ((investmentModel.custodialPosition *
+                    investmentModel.averagePrice) +
+                (operationModel.quantity * operationModel.unitPrice)) /
+            custodialPosition;
 
-      return (operationModel, investmentModel);
+        newInvestment = investmentModel.copyWith(
+          custodialPosition: custodialPosition,
+          averagePrice: averagePrice,
+        );
+      } else {
+        newInvestment = investmentModel.copyWith(
+          amountInvested:
+              investmentModel.amountInvested + operationModel.totalPrice,
+        );
+      }
+      await editInvestment(newInvestment);
+
+      return (operationModel, newInvestment);
     } on AppException catch (_) {
       rethrow;
     } catch (error) {
@@ -240,7 +260,26 @@ class InvestmentsService {
     try {
       await _firestore.collection('operations').doc(operationModel.id).delete();
 
-      //TODO: UPDATE INVESTMENT MODEL TOTALS.
+      final InvestmentModel newInvestment;
+      if (investmentModel.category.needPositionAndAveragePrice) {
+        final int custodialPosition =
+            investmentModel.custodialPosition - operationModel.quantity;
+        final double averagePrice = ((investmentModel.custodialPosition *
+                    investmentModel.averagePrice) -
+                (operationModel.quantity * operationModel.unitPrice)) /
+            custodialPosition;
+
+        newInvestment = investmentModel.copyWith(
+          custodialPosition: custodialPosition,
+          averagePrice: averagePrice,
+        );
+      } else {
+        newInvestment = investmentModel.copyWith(
+          amountInvested:
+              investmentModel.amountInvested - operationModel.totalPrice,
+        );
+      }
+      await editInvestment(newInvestment);
 
       return investmentModel;
     } on AppException catch (_) {

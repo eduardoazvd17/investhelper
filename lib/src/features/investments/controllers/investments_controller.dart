@@ -218,9 +218,7 @@ abstract class InvestmentsControllerBase with Store {
 
       return operations.isEmpty
           ? 0.0
-          : operations.map((e) {
-              return (e.quantity * e.unitPrice);
-            }).reduce((a, b) => a + b);
+          : operations.map((e) => e.value).reduce((a, b) => a + b);
     }
     return 0.0;
   }
@@ -234,9 +232,7 @@ abstract class InvestmentsControllerBase with Store {
 
       return operations.isEmpty
           ? 0.0
-          : operations.map((e) {
-              return (e.quantity * e.unitPrice);
-            }).reduce((a, b) => a + b);
+          : operations.map((e) => e.value).reduce((a, b) => a + b);
     }
     return 0.0;
   }

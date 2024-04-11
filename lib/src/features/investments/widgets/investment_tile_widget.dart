@@ -108,7 +108,7 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                                   widget.hideValues
                                       ? '${AppFormatter.currencyPrefix} ••••••'
                                       : AppFormatter.currency(
-                                          widget.investment.amountInvested,
+                                          widget.investment.value,
                                         ),
                                 ),
                               ),

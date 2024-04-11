@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'dart:math';
+
 import 'package:investhelper/src/features/investments/enums/category_enum.dart';
 
 class InvestmentModel {
@@ -11,6 +13,8 @@ class InvestmentModel {
   final double averagePrice;
   final double amountInvested;
   final DateTime creationDate;
+
+  double get value => max(custodialPosition * averagePrice, amountInvested);
 
   bool get hasData {
     return (custodialPosition > 0 && averagePrice > 0) || amountInvested > 0;
