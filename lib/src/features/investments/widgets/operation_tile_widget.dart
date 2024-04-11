@@ -140,7 +140,7 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         IconButton(
                           onPressed: () =>
