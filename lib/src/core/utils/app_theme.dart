@@ -71,6 +71,11 @@ class AppTheme {
           foregroundColor: Colors.white,
           backgroundColor: _kPrimaryColor,
         ),
+        datePickerTheme: DatePickerThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(_kBorderRadius),
+          ),
+        ),
       );
 
   static ThemeData get darkTheme => ThemeData(
@@ -132,6 +137,11 @@ class AppTheme {
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           foregroundColor: Colors.black,
           backgroundColor: _kPrimaryColor[200],
+        ),
+        datePickerTheme: DatePickerThemeData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(_kBorderRadius),
+          ),
         ),
       );
 }
