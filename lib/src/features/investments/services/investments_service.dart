@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:investhelper/src/features/investments/enums/category_enum.dart';
+import 'package:investhelper/src/features/investments/enums/operation_type.dart';
 import 'package:investhelper/src/features/investments/models/create_goal_model.dart';
 import 'package:investhelper/src/features/investments/models/create_operation_model.dart';
 import 'package:investhelper/src/features/investments/models/operation_model.dart';
@@ -224,25 +225,11 @@ class InvestmentsService {
         totalPrice: createOperationModel.totalPrice,
       );
 
-      final InvestmentModel newInvestment;
-      if (investmentModel.category.needPositionAndAveragePrice) {
-        final int custodialPosition =
-            investmentModel.custodialPosition + operationModel.quantity;
-        final double averagePrice = ((investmentModel.custodialPosition *
-                    investmentModel.averagePrice) +
-                (operationModel.quantity * operationModel.unitPrice)) /
-            custodialPosition;
-
-        newInvestment = investmentModel.copyWith(
-          custodialPosition: custodialPosition,
-          averagePrice: averagePrice,
-        );
-      } else {
-        newInvestment = investmentModel.copyWith(
-          amountInvested:
-              investmentModel.amountInvested + operationModel.totalPrice,
-        );
-      }
+      final InvestmentModel newInvestment = _updateInvestmentValues(
+        operationModel,
+        investmentModel,
+        false,
+      );
       await editInvestment(newInvestment);
 
       return (operationModel, newInvestment);
@@ -260,28 +247,14 @@ class InvestmentsService {
     try {
       await _firestore.collection('operations').doc(operationModel.id).delete();
 
-      final InvestmentModel newInvestment;
-      if (investmentModel.category.needPositionAndAveragePrice) {
-        final int custodialPosition =
-            investmentModel.custodialPosition - operationModel.quantity;
-        final double averagePrice = ((investmentModel.custodialPosition *
-                    investmentModel.averagePrice) -
-                (operationModel.quantity * operationModel.unitPrice)) /
-            custodialPosition;
-
-        newInvestment = investmentModel.copyWith(
-          custodialPosition: custodialPosition,
-          averagePrice: averagePrice,
-        );
-      } else {
-        newInvestment = investmentModel.copyWith(
-          amountInvested:
-              investmentModel.amountInvested - operationModel.totalPrice,
-        );
-      }
+      final InvestmentModel newInvestment = _updateInvestmentValues(
+        operationModel,
+        investmentModel,
+        true,
+      );
       await editInvestment(newInvestment);
 
-      return investmentModel;
+      return newInvestment;
     } on AppException catch (_) {
       rethrow;
     } catch (error) {
@@ -315,6 +288,56 @@ class InvestmentsService {
       rethrow;
     } catch (error) {
       throw AppException(AppExceptionType.connectionError, error.toString());
+    }
+  }
+
+  InvestmentModel _updateInvestmentValues(
+    OperationModel operationModel,
+    InvestmentModel investmentModel,
+    bool isRemoving,
+  ) {
+    if (operationModel.type == OperationTypeEnum.purchase && !isRemoving ||
+        operationModel.type == OperationTypeEnum.sale && isRemoving) {
+      if (investmentModel.category.needPositionAndAveragePrice) {
+        final int custodialPosition =
+            investmentModel.custodialPosition + operationModel.quantity;
+        final double averagePrice = ((investmentModel.custodialPosition *
+                    investmentModel.averagePrice) +
+                (operationModel.quantity * operationModel.unitPrice)) /
+            custodialPosition;
+
+        return investmentModel.copyWith(
+          custodialPosition: custodialPosition,
+          averagePrice: averagePrice,
+        );
+      } else {
+        return investmentModel.copyWith(
+          amountInvested:
+              investmentModel.amountInvested + operationModel.totalPrice,
+        );
+      }
+    } else if (operationModel.type == OperationTypeEnum.sale && !isRemoving ||
+        operationModel.type == OperationTypeEnum.purchase && isRemoving) {
+      if (investmentModel.category.needPositionAndAveragePrice) {
+        final int custodialPosition =
+            investmentModel.custodialPosition - operationModel.quantity;
+        final double averagePrice = ((investmentModel.custodialPosition *
+                    investmentModel.averagePrice) -
+                (operationModel.quantity * operationModel.unitPrice)) /
+            custodialPosition;
+
+        return investmentModel.copyWith(
+          custodialPosition: custodialPosition,
+          averagePrice: averagePrice,
+        );
+      } else {
+        return investmentModel.copyWith(
+          amountInvested:
+              investmentModel.amountInvested - operationModel.totalPrice,
+        );
+      }
+    } else {
+      return investmentModel;
     }
   }
 }
