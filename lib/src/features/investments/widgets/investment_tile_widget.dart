@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:investhelper/src/features/investments/enums/category_enum.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 
@@ -72,9 +73,8 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (widget.investment.isEmpty ||
-                                (widget.investment.custodialPosition > 0 &&
-                                    widget.investment.averagePrice > 0)) ...[
+                            if (widget.investment.category
+                                .needPositionAndAveragePrice) ...[
                               FittedBox(
                                 child: Text(
                                   AppLocalizations.of(context)!
