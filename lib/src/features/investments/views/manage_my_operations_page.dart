@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:investhelper/src/core/widgets/dropdown_button_widget.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
@@ -27,7 +26,7 @@ class ManageMyOperationsPage extends StatefulWidget {
 }
 
 class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
-  InvestmentModel? _selectedInvestment;
+  late final ValueNotifier<InvestmentModel?> _selectedInvestment;
   OperationTypeEnum? _selectedOperationType;
   DateTime? _selectedOperationDate;
   late final TextEditingController _quantityController;
@@ -36,6 +35,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
 
   @override
   void initState() {
+    _selectedInvestment = ValueNotifier<InvestmentModel?>(null);
     _quantityController = TextEditingController();
     _unitPriceController = TextEditingController();
     _totalPriceController = TextEditingController();
@@ -44,6 +44,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
 
   @override
   void dispose() {
+    _selectedInvestment.dispose();
     _quantityController.dispose();
     _unitPriceController.dispose();
     _totalPriceController.dispose();
@@ -51,7 +52,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   }
 
   Future<void> _addNewOperation() async {
-    _selectedInvestment = null;
+    _selectedInvestment.value = null;
     _selectedOperationType = null;
     _selectedOperationDate = DateTime.now();
     _quantityController.clear();
@@ -67,7 +68,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
             try {
               LoadingWidget.dialog(context);
 
-              if (_selectedInvestment == null ||
+              if (_selectedInvestment.value == null ||
                   _selectedOperationDate == null ||
                   _selectedOperationType == null) {
                 throw AppException(AppExceptionType.emptyFields);
@@ -103,19 +104,32 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         const SizedBox(height: 10),
         _operationDatePicker,
         const SizedBox(height: 10),
-        if (_selectedInvestment != null)
-          if (_selectedInvestment!.category.needPositionAndAveragePrice) ...[
-            Row(
-              children: [
-                Expanded(child: _quantityTextField),
-                Expanded(child: _unitPriceTextField),
-              ],
-            ),
-            const SizedBox(height: 10),
-          ] else ...[
-            _totalPriceTextField,
-            const SizedBox(height: 10),
-          ],
+        ValueListenableBuilder(
+          valueListenable: _selectedInvestment,
+          builder: (_, __, ___) {
+            if (_selectedInvestment.value != null) {
+              if (_selectedInvestment
+                  .value!.category.needPositionAndAveragePrice) {
+                return Column(children: [
+                  Row(
+                    children: [
+                      Expanded(child: _quantityTextField),
+                      Expanded(child: _unitPriceTextField),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                ]);
+              } else {
+                return Column(children: [
+                  _totalPriceTextField,
+                  const SizedBox(height: 10),
+                ]);
+              }
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
       ],
     );
   }
@@ -185,10 +199,16 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
 
   Widget get _investmentDropDownButton => DropdownButtonWidget<InvestmentModel>(
         label: AppLocalizations.of(context)!.investment,
-        value: _selectedInvestment,
-        onChanged: (investment) => setState(() {
-          _selectedInvestment = investment;
-        }),
+        hint: AppLocalizations.of(context)!.investmentHint,
+        value: _selectedInvestment.value,
+        onChanged: (investment) {
+          if (investment != _selectedInvestment.value) {
+            _selectedInvestment.value = investment;
+            _quantityController.clear();
+            _unitPriceController.clear();
+            _totalPriceController.clear();
+          }
+        },
         items: widget.controller.investments.map((element) {
           return DropdownMenuItem(
             value: element,
@@ -212,6 +232,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   Widget get _operationTypeDropDownButton =>
       DropdownButtonWidget<OperationTypeEnum>(
         label: AppLocalizations.of(context)!.operationType,
+        hint: AppLocalizations.of(context)!.operationTypeHint,
         value: _selectedOperationType,
         onChanged: (operationType) => setState(() {
           _selectedOperationType = operationType;

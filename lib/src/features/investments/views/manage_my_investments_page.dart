@@ -32,7 +32,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   late final TextEditingController _custodialPositionController;
   late final TextEditingController _averagePriceController;
   late final TextEditingController _amountInvestedController;
-  CategoryEnum? _selectedCategory;
+  late final ValueNotifier<CategoryEnum?> _selectedCategory;
 
   @override
   void initState() {
@@ -40,6 +40,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
     _custodialPositionController = TextEditingController();
     _averagePriceController = TextEditingController();
     _amountInvestedController = TextEditingController();
+    _selectedCategory = ValueNotifier<CategoryEnum?>(null);
     super.initState();
   }
 
@@ -49,12 +50,13 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
     _custodialPositionController.dispose();
     _averagePriceController.dispose();
     _amountInvestedController.dispose();
+    _selectedCategory.dispose();
     super.dispose();
   }
 
   Future<void> _addNewInvestment() async {
     _nameController.clear();
-    _selectedCategory = null;
+    _selectedCategory.value = null;
     _custodialPositionController.clear();
     _averagePriceController.clear();
     _amountInvestedController.clear();
@@ -68,39 +70,21 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
             try {
               LoadingWidget.dialog(context);
 
-              if (_selectedCategory == null) {
+              if (_selectedCategory.value == null) {
                 throw AppException(AppExceptionType.emptyFields);
-              }
-
-              final custodialPosition =
-                  int.tryParse(_custodialPositionController.text) ?? 0;
-              final averagePrice =
-                  double.tryParse(_averagePriceController.text) ?? 0;
-              final amountInvested =
-                  double.tryParse(_amountInvestedController.text) ?? 0;
-
-              if (_selectedCategory!.needPositionAndAveragePrice) {
-                if (custodialPosition * averagePrice != amountInvested) {
-                  throw AppException(
-                    AppExceptionType.investmentIncorrectStartValues,
-                  );
-                }
-              } else {
-                if (custodialPosition != 0 || averagePrice != 0) {
-                  throw AppException(
-                    AppExceptionType.investmentIncorrectStartValues,
-                  );
-                }
               }
 
               await widget.controller.addNewInvestment(
                 CreateInvestmentModel(
                   userId: widget.controller.user!.id,
                   name: _nameController.text.trim(),
-                  category: _selectedCategory!,
-                  custodialPosition: custodialPosition,
-                  averagePrice: averagePrice,
-                  amountInvested: amountInvested,
+                  category: _selectedCategory.value!,
+                  custodialPosition:
+                      int.tryParse(_custodialPositionController.text) ?? 0,
+                  averagePrice:
+                      double.tryParse(_averagePriceController.text) ?? 0,
+                  amountInvested:
+                      double.tryParse(_amountInvestedController.text) ?? 0,
                   creationDate: DateTime.now(),
                 ),
               );
@@ -127,34 +111,38 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         _nameTextField,
         const SizedBox(height: 10),
         _categoryDropDownButton,
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Text(
-            AppLocalizations.of(context)!.addInvestmentsValuesAdvise,
-            style: Theme.of(context)
-                .textTheme
-                .titleSmall
-                ?.copyWith(color: Colors.grey),
-          ),
+        ValueListenableBuilder(
+          valueListenable: _selectedCategory,
+          builder: (_, category, ___) {
+            if (category != null) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      AppLocalizations.of(context)!.addInvestmentsValuesAdvise,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(color: Colors.grey),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  category.needPositionAndAveragePrice
+                      ? Row(
+                          children: [
+                            Expanded(child: _custodialPositionTextField),
+                            Expanded(child: _averagePriceTextField),
+                          ],
+                        )
+                      : _amountInvestedTextField,
+                ],
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
         ),
-        const SizedBox(height: 20),
-        Row(
-          children: [
-            Expanded(child: _custodialPositionTextField),
-            Expanded(child: _averagePriceTextField),
-          ],
-        ),
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: Text(
-            AppLocalizations.of(context)!.or,
-            style: Theme.of(context)
-                .textTheme
-                .titleSmall
-                ?.copyWith(color: Colors.grey),
-          ),
-        ),
-        _amountInvestedTextField
       ],
     );
   }
@@ -214,31 +202,6 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
       if (mounted) {
         LoadingWidget.hide(context);
         error.show(context);
-      }
-    }
-  }
-
-  void _onEditValues(bool isFromAmountInvested) {
-    final int custodialPosition =
-        int.tryParse(_custodialPositionController.text) ?? 0;
-    final double averagePrice =
-        double.tryParse(_averagePriceController.text) ?? 0;
-
-    if (!isFromAmountInvested) {
-      if (_amountInvestedController.text.isNotEmpty) {
-        _amountInvestedController.clear();
-      }
-      if (custodialPosition > 0 && averagePrice > 0) {
-        _amountInvestedController.text = AppFormatter.textFieldCurrency(
-          (custodialPosition * averagePrice).toString(),
-        );
-      }
-    } else {
-      final double amountInvested =
-          double.tryParse(_amountInvestedController.text) ?? 0;
-      if (amountInvested != (custodialPosition * averagePrice)) {
-        _custodialPositionController.clear();
-        _averagePriceController.clear();
       }
     }
   }
@@ -309,16 +272,21 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   Widget get _categoryDropDownButton => DropdownButtonWidget<CategoryEnum>(
         label: AppLocalizations.of(context)!.category,
         hint: AppLocalizations.of(context)!.selectCategory,
-        value: _selectedCategory,
+        value: _selectedCategory.value,
         items: CategoryEnum.values.map((e) {
           return DropdownMenuItem(
             value: e,
             child: CategoryIndicatorWidget(category: e),
           );
         }).toList(),
-        onChanged: (category) => setState(() {
-          _selectedCategory = category;
-        }),
+        onChanged: (category) {
+          if (category != _selectedCategory.value) {
+            _selectedCategory.value = category;
+            _custodialPositionController.clear();
+            _averagePriceController.clear();
+            _amountInvestedController.clear();
+          }
+        },
       );
 
   Widget get _custodialPositionTextField => TextFieldWidget(
@@ -332,7 +300,6 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         onChanged: (value) {
           _custodialPositionController.text =
               AppFormatter.textFieldInteger(value);
-          _onEditValues(false);
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
         textCapitalization: TextCapitalization.words,
@@ -349,7 +316,6 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         controller: _averagePriceController,
         onChanged: (value) {
           _averagePriceController.text = AppFormatter.textFieldCurrency(value);
-          _onEditValues(false);
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textCapitalization: TextCapitalization.words,
@@ -367,7 +333,6 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         onChanged: (value) {
           _amountInvestedController.text =
               AppFormatter.textFieldCurrency(value);
-          _onEditValues(true);
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textCapitalization: TextCapitalization.words,
