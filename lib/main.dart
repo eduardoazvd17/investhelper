@@ -20,6 +20,7 @@ import 'src/features/investments/services/investments_service.dart';
 import 'src/features/investments/views/investments_page.dart';
 import 'src/core/controllers/app_controller.dart';
 import 'src/features/investments/views/manage_my_investments_page.dart';
+import 'src/features/investments/views/manage_my_operations_page.dart';
 import 'src/features/settings/views/change_personal_data_page.dart';
 import 'src/features/settings/views/settings_page.dart';
 import 'src/features/splash_screen/views/splash_screen.dart';
@@ -122,6 +123,11 @@ class InvestHelperApp extends StatelessWidget {
             },
             ManageMyInvestmentsPage.routeName: (_) {
               return ManageMyInvestmentsPage(
+                controller: GetIt.I.get<InvestmentsController>(),
+              );
+            },
+            ManageMyOperationsPage.routeName: (_) {
+              return ManageMyOperationsPage(
                 controller: GetIt.I.get<InvestmentsController>(),
               );
             },

@@ -11,8 +11,8 @@ import '../models/investment_model.dart';
 class OperationTileWidget extends StatefulWidget {
   final OperationModel operation;
   final InvestmentModel investment;
-  final void Function(InvestmentModel)? onEdit;
-  final void Function(InvestmentModel)? onDelete;
+  final void Function(OperationModel)? onEdit;
+  final void Function(OperationModel)? onDelete;
   final bool hideValues;
   const OperationTileWidget({
     super.key,
@@ -140,14 +140,14 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                         if (widget.onEdit != null)
                           IconButton(
                             onPressed: () =>
-                                widget.onEdit!.call(widget.investment),
+                                widget.onEdit!.call(widget.operation),
                             visualDensity: VisualDensity.compact,
                             icon: const Icon(CupertinoIcons.pen),
                           ),
                         if (widget.onDelete != null)
                           IconButton(
                             onPressed: () =>
-                                widget.onDelete!.call(widget.investment),
+                                widget.onDelete!.call(widget.operation),
                             visualDensity: VisualDensity.compact,
                             icon: const Icon(CupertinoIcons.delete),
                           ),
