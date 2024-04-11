@@ -31,8 +31,8 @@ class AuthService {
       rethrow;
     } on FirebaseAuthException catch (_) {
       throw AppException(AppExceptionType.incorrectUserOrPassword);
-    } catch (_) {
-      throw AppException();
+    } catch (error) {
+      throw AppException(AppExceptionType.connectionError, error.toString());
     }
   }
 
@@ -78,8 +78,8 @@ class AuthService {
         default:
           throw AppException();
       }
-    } catch (_) {
-      throw AppException();
+    } catch (error) {
+      throw AppException(AppExceptionType.connectionError, error.toString());
     }
   }
 
@@ -98,8 +98,8 @@ class AuthService {
       rethrow;
     } on FirebaseAuthException catch (_) {
       throw AppException(AppExceptionType.invalidRecoveryEmail);
-    } catch (_) {
-      throw AppException();
+    } catch (error) {
+      throw AppException(AppExceptionType.connectionError, error.toString());
     }
   }
 }

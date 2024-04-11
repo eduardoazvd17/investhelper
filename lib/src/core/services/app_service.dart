@@ -96,8 +96,8 @@ class AppService {
       return userModel;
     } on AppException catch (_) {
       rethrow;
-    } catch (_) {
-      throw AppException(AppExceptionType.connectionError);
+    } catch (error) {
+      throw AppException(AppExceptionType.connectionError, error.toString());
     }
   }
 }

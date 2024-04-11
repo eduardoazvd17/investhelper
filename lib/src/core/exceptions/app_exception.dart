@@ -5,7 +5,11 @@ import '../widgets/dialog_widget.dart';
 
 class AppException implements Exception {
   final AppExceptionType type;
-  AppException([this.type = AppExceptionType.generic]);
+  AppException([this.type = AppExceptionType.generic, String? exception]) {
+    if (exception != null) {
+      debugPrint('[AppExcepion] $exception');
+    }
+  }
 
   Future<void> show(BuildContext context) async {
     await DialogWidget.show(

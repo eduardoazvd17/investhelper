@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:investhelper/src/core/exceptions/app_exception.dart';
 import 'package:investhelper/src/core/models/user_model.dart';
 import 'package:investhelper/src/features/investments/enums/operation_type.dart';
@@ -7,6 +8,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../models/create_investment_model.dart';
+import '../models/create_operation_model.dart';
 import '../models/goal_model.dart';
 import '../models/investment_model.dart';
 import '../models/operation_model.dart';
@@ -38,7 +40,18 @@ abstract class InvestmentsControllerBase with Store {
     if (user != null) {
       goals.addAll(await _service.loadGoals(user!.id));
       investments.addAll(await _service.loadInvestments(user!.id));
-      //thisMonthOperations
+      final now = DateTime.now();
+      thisMonthOperations.addAll(
+        await _service.loadOperations(
+          user!.id,
+          startDate: DateTime(now.year, now.month, 1),
+          endDate: DateTime(
+            now.year,
+            now.month,
+            DateUtils.getDaysInMonth(now.year, now.month),
+          ),
+        ),
+      );
     }
 
     isLoading = false;
@@ -151,6 +164,20 @@ abstract class InvestmentsControllerBase with Store {
   @observable
   ObservableList<OperationModel> thisMonthOperations =
       ObservableList<OperationModel>();
+
+  @action
+  Future<void> addNewOperation(
+    CreateOperationModel createOperationModel,
+  ) async {
+    try {
+      final OperationModel newOperation =
+          await _service.addNewOperation(createOperationModel);
+      thisMonthOperations.add(newOperation);
+      thisMonthOperations.sort((a, b) => b.date.compareTo(a.date));
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
 
   @computed
   double get thisMonthPurchasesTotal {

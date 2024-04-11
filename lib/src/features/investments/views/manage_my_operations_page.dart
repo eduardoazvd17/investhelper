@@ -91,14 +91,16 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                 throw AppException(AppExceptionType.emptyFields);
               }
 
-              CreateOperationModel(
-                userId: widget.controller.user!.id,
-                investmentId: _selectedInvestment.value!.id,
-                type: _selectedOperationType!,
-                date: _selectedOperationDate,
-                quantity: quantity,
-                unitPrice: unitPrice,
-                totalPrice: totalPrice,
+              await widget.controller.addNewOperation(
+                CreateOperationModel(
+                  userId: widget.controller.user!.id,
+                  investmentId: _selectedInvestment.value!.id,
+                  type: _selectedOperationType!,
+                  date: _selectedOperationDate,
+                  quantity: quantity,
+                  unitPrice: unitPrice,
+                  totalPrice: totalPrice,
+                ),
               );
 
               if (mounted) {
