@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import '../../../core/utils/app_formatter.dart';
 import '../models/goal_model.dart';
 
-class GoalCardTile extends StatefulWidget {
+class GoalTileWidget extends StatefulWidget {
   final GoalModel goal;
   final void Function(GoalModel)? onEdit;
   final void Function(GoalModel)? onDelete;
 
-  const GoalCardTile({
+  const GoalTileWidget({
     super.key,
     required this.goal,
     this.onEdit,
@@ -18,10 +18,10 @@ class GoalCardTile extends StatefulWidget {
   });
 
   @override
-  State<GoalCardTile> createState() => _GoalCardTileState();
+  State<GoalTileWidget> createState() => _GoalTileWidgetState();
 }
 
-class _GoalCardTileState extends State<GoalCardTile> {
+class _GoalTileWidgetState extends State<GoalTileWidget> {
   late final ScrollController _textScrollController;
 
   @override

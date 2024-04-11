@@ -7,8 +7,9 @@ import 'package:investhelper/src/features/investments/controllers/investments_co
 import 'package:investhelper/src/features/investments/views/manage_my_goals_page.dart';
 import 'package:investhelper/src/features/investments/widgets/daily_tips_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/diversity_chart_widget.dart';
-import 'package:investhelper/src/features/investments/widgets/goal_card_tile.dart';
+import 'package:investhelper/src/features/investments/widgets/goal_tile_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/investment_tile_widget.dart';
+import 'package:investhelper/src/features/investments/widgets/operation_tile_widget.dart';
 import 'package:investhelper/src/features/settings/views/settings_page.dart';
 import 'package:investhelper/src/l10n/l10n.dart';
 
@@ -16,6 +17,8 @@ import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
+import '../enums/operation_type.dart';
+import '../models/operation_model.dart';
 import '../widgets/category_listing_widget.dart';
 import '../widgets/investments_resume_card.dart';
 import 'manage_my_investments_page.dart';
@@ -257,7 +260,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: controller.goals.map((goal) {
-                              return GoalCardTile(goal: goal);
+                              return GoalTileWidget(goal: goal);
                             }).toList(),
                           ),
                         ),
@@ -345,6 +348,24 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                         .pushNamed(ManageMyInvestmentsPage.routeName),
                     child:
                         Text(AppLocalizations.of(context)!.accessMyInvestments),
+                  ),
+                ],
+              ),
+              SectionWidget(
+                title: AppLocalizations.of(context)!.monthsOperations,
+                content: [
+                  OperationTileWidget(
+                    operation: OperationModel(
+                      id: 'id',
+                      userId: controller.investments.last.userId,
+                      investmentId: controller.investments.last.id,
+                      type: OperationTypeEnum.purchase,
+                      date: DateTime.now(),
+                      quantity: 10,
+                      unitPrice: 1000,
+                      totalPrice: 10000,
+                    ),
+                    investment: controller.investments.last,
                   ),
                 ],
               ),

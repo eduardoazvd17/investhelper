@@ -10,7 +10,7 @@ import '../../../core/widgets/empty_list_widget.dart';
 import '../../../core/widgets/text_field_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../models/goal_model.dart';
-import '../widgets/goal_card_tile.dart';
+import '../widgets/goal_tile_widget.dart';
 
 class ManageMyGoalsPage extends StatefulWidget {
   static const routeName = "/manageMyGoals";
@@ -168,7 +168,7 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
                   children: widget.controller.goals.map((goal) {
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: GoalCardTile(
+                      child: GoalTileWidget(
                         goal: goal,
                         onEdit: _editGoal,
                         onDelete: _deleteGoal,
