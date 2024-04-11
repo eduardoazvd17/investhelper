@@ -8,6 +8,7 @@ class OperationModel {
   final DateTime date;
   final int quantity;
   final double unitPrice;
+  final double totalPrice;
   final String? annotation;
 
   OperationModel({
@@ -18,6 +19,7 @@ class OperationModel {
     required this.date,
     required this.quantity,
     required this.unitPrice,
+    required this.totalPrice,
     this.annotation,
   });
 }

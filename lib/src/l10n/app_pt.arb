@@ -176,5 +176,21 @@
   "editInvestment": "Editar investimento",
   "or": "Ou",
   "amountInvested": "Total investido",
-  "changeName": "Alterar nome"
+  "changeName": "Alterar nome",
+  "quantityDisplay": "Quantidade: {value}",
+  "@quantityDisplay": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "unitPriceDisplay": "Preço unitário: {value}",
+  "@unitPriceDisplay": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  }
 }

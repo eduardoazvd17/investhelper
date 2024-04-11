@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/utils/app_formatter.dart';
 import '../../../l10n/l10n.dart';
+import '../enums/operation_type.dart';
 
 class InvestmentsResumeCard extends StatelessWidget {
   final double totalInvestments;
@@ -46,14 +47,16 @@ class InvestmentsResumeCard extends StatelessWidget {
                 ),
               ],
             ),
-            Text(
-              hideValues
-                  ? '${AppFormatter.currencyPrefix} ••••••'
-                  : AppFormatter.currency(totalInvestments),
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(color: Colors.green),
+            FittedBox(
+              child: Text(
+                hideValues
+                    ? '${AppFormatter.currencyPrefix} ••••••'
+                    : AppFormatter.currency(totalInvestments),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge
+                    ?.copyWith(color: Colors.green),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 20, bottom: 10),
@@ -65,21 +68,19 @@ class InvestmentsResumeCard extends StatelessWidget {
             _movimentationTile(
               context: context,
               tooltip: AppLocalizations.of(context)!.purchaseOperations,
-              icon: CupertinoIcons.arrow_up_right,
               value: hideValues
                   ? '${AppFormatter.currencyPrefix} ••••••'
                   : AppFormatter.currency(thisMonthPurchasesTotal),
-              color: Colors.green,
+              operationType: OperationTypeEnum.purchase,
             ),
             const SizedBox(height: 5),
             _movimentationTile(
               context: context,
               tooltip: AppLocalizations.of(context)!.salesOperations,
-              icon: CupertinoIcons.arrow_down_left,
               value: hideValues
                   ? '${AppFormatter.currencyPrefix} ••••••'
                   : AppFormatter.currency(thisMonthSalesTotal),
-              color: Colors.red,
+              operationType: OperationTypeEnum.sale,
             ),
           ],
         ),
@@ -90,9 +91,8 @@ class InvestmentsResumeCard extends StatelessWidget {
   Widget _movimentationTile({
     required BuildContext context,
     required String tooltip,
-    required IconData icon,
     required String value,
-    required Color color,
+    required OperationTypeEnum operationType,
   }) {
     return Tooltip(
       message: tooltip,
@@ -100,14 +100,18 @@ class InvestmentsResumeCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Icon(
-            icon,
+            operationType.icon,
             size: 30,
-            color: color,
+            color: operationType.color,
           ),
-          Text(
-            value,
-            style:
-                Theme.of(context).textTheme.titleLarge?.copyWith(color: color),
+          FittedBox(
+            child: Text(
+              value,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(color: operationType.color),
+            ),
           ),
         ],
       ),
