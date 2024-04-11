@@ -13,14 +13,12 @@ import '../models/investment_model.dart';
 class OperationTileWidget extends StatefulWidget {
   final OperationModel operation;
   final InvestmentModel investment;
-  final void Function(OperationModel)? onEdit;
   final void Function(OperationModel)? onDelete;
   final bool hideValues;
   const OperationTileWidget({
     super.key,
     required this.operation,
     required this.investment,
-    this.onEdit,
     this.onDelete,
     this.hideValues = false,
   });
@@ -138,26 +136,18 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                     ],
                   ),
                 ),
-                if (widget.onEdit != null && widget.onDelete != null)
+                if (widget.onDelete != null)
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        if (widget.onEdit != null)
-                          IconButton(
-                            onPressed: () =>
-                                widget.onEdit!.call(widget.operation),
-                            visualDensity: VisualDensity.compact,
-                            icon: const Icon(CupertinoIcons.pen),
-                          ),
-                        if (widget.onDelete != null)
-                          IconButton(
-                            onPressed: () =>
-                                widget.onDelete!.call(widget.operation),
-                            visualDensity: VisualDensity.compact,
-                            icon: const Icon(CupertinoIcons.delete),
-                          ),
+                        IconButton(
+                          onPressed: () =>
+                              widget.onDelete!.call(widget.operation),
+                          visualDensity: VisualDensity.compact,
+                          icon: const Icon(CupertinoIcons.delete),
+                        ),
                       ],
                     ),
                   ),
