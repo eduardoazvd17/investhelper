@@ -127,7 +127,6 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         _nameTextField,
         const SizedBox(height: 10),
         _categoryDropDownButton,
-        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.all(10),
           child: Text(

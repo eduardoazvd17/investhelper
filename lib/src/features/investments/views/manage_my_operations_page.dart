@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:investhelper/src/core/widgets/dropdown_button_widget.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
+import 'package:investhelper/src/features/investments/enums/category_enum.dart';
+import 'package:investhelper/src/features/investments/models/investment_model.dart';
 import 'package:investhelper/src/features/investments/models/operation_model.dart';
+import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/operation_tile_widget.dart';
+import '../../../core/exceptions/app_exception.dart';
+import '../../../core/utils/app_formatter.dart';
 import '../../../core/widgets/empty_list_widget.dart';
+import '../../../core/widgets/loading_widget.dart';
+import '../../../core/widgets/modal_bottom_sheet_widget.dart';
+import '../../../core/widgets/text_field_widget.dart';
 import '../../../l10n/l10n.dart';
+import '../enums/operation_type.dart';
 
 class ManageMyOperationsPage extends StatefulWidget {
   static const routeName = "/manageMyOperations";
@@ -16,19 +27,106 @@ class ManageMyOperationsPage extends StatefulWidget {
 }
 
 class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
+  InvestmentModel? _selectedInvestment;
+  OperationTypeEnum? _selectedOperationType;
+  DateTime? _selectedOperationDate;
+  late final TextEditingController _quantityController;
+  late final TextEditingController _unitPriceController;
+  late final TextEditingController _totalPriceController;
+
   @override
   void initState() {
+    _quantityController = TextEditingController();
+    _unitPriceController = TextEditingController();
+    _totalPriceController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
+    _quantityController.dispose();
+    _unitPriceController.dispose();
+    _totalPriceController.dispose();
     super.dispose();
   }
 
-  Future<void> _addNewOperation() async {}
+  Future<void> _addNewOperation() async {
+    _selectedInvestment = null;
+    _selectedOperationType = null;
+    _selectedOperationDate = DateTime.now();
+    _quantityController.clear();
+    _unitPriceController.clear();
+    _totalPriceController.clear();
 
-  Future<void> _editOperation(OperationModel operationModel) async {}
+    await ModalBottomSheetWidget.show(
+      context,
+      title: AppLocalizations.of(context)!.addNewOperation,
+      actions: [
+        TextButton(
+          onPressed: () async {
+            try {
+              LoadingWidget.dialog(context);
+
+              if (_selectedInvestment == null ||
+                  _selectedOperationDate == null ||
+                  _selectedOperationType == null) {
+                throw AppException(AppExceptionType.emptyFields);
+              }
+
+              final quantity = int.tryParse(_quantityController.text) ?? 0;
+              final unitPrice = double.tryParse(_unitPriceController.text) ?? 0;
+              final totalPrice =
+                  double.tryParse(_totalPriceController.text) ?? 0;
+
+              if (mounted) {
+                LoadingWidget.hide(context);
+                Navigator.of(context).pop();
+              }
+            } on AppException catch (error) {
+              if (mounted) {
+                LoadingWidget.hide(context);
+                error.show(context);
+              }
+            }
+          },
+          child: Text(AppLocalizations.of(context)!.send),
+        ),
+        TextButton(
+          onPressed: Navigator.of(context).pop,
+          child: Text(AppLocalizations.of(context)!.cancel),
+        ),
+      ],
+      children: [
+        _investmentDropDownButton,
+        const SizedBox(height: 10),
+        _operationTypeDropDownButton,
+        const SizedBox(height: 10),
+        _operationDatePicker,
+        const SizedBox(height: 10),
+        if (_selectedInvestment != null)
+          if (_selectedInvestment!.category.needPositionAndAveragePrice) ...[
+            Row(
+              children: [
+                Expanded(child: _quantityTextField),
+                Expanded(child: _unitPriceTextField),
+              ],
+            ),
+            const SizedBox(height: 10),
+          ] else ...[
+            _totalPriceTextField,
+            const SizedBox(height: 10),
+          ],
+      ],
+    );
+  }
+
+  Future<void> _editOperation(OperationModel operationModel) async {
+    _selectedOperationType = operationModel.type;
+    _selectedOperationDate = operationModel.date;
+    _quantityController.text = operationModel.quantity.toString();
+    _unitPriceController.text = operationModel.unitPrice.toString();
+    _totalPriceController.text = operationModel.totalPrice.toString();
+  }
 
   Future<void> _deleteOperation(OperationModel operationModel) async {}
 
@@ -84,4 +182,101 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
       ),
     );
   }
+
+  Widget get _investmentDropDownButton => DropdownButtonWidget<InvestmentModel>(
+        label: AppLocalizations.of(context)!.investment,
+        value: _selectedInvestment,
+        onChanged: (investment) => setState(() {
+          _selectedInvestment = investment;
+        }),
+        items: widget.controller.investments.map((element) {
+          return DropdownMenuItem(
+            value: element,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(element.name),
+                FittedBox(
+                  child: CategoryIndicatorWidget(
+                    category: element.category,
+                    textColor: Colors.grey,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      );
+
+  Widget get _operationTypeDropDownButton =>
+      DropdownButtonWidget<OperationTypeEnum>(
+        label: AppLocalizations.of(context)!.operationType,
+        value: _selectedOperationType,
+        onChanged: (operationType) => setState(() {
+          _selectedOperationType = operationType;
+        }),
+        items: OperationTypeEnum.values.map((e) {
+          return DropdownMenuItem(
+            value: e,
+            child: Row(
+              children: [
+                Icon(e.icon, color: e.color),
+                const SizedBox(width: 10),
+                Text(e.getTitle(context)),
+              ],
+            ),
+          );
+        }).toList(),
+      );
+
+  Widget get _operationDatePicker => Container();
+
+  Widget get _quantityTextField => TextFieldWidget(
+        label: AppLocalizations.of(context)!.quantity,
+        prefix: const Padding(
+          padding: EdgeInsets.only(right: 5),
+          child: Text('x'),
+        ),
+        hint: '0',
+        controller: _quantityController,
+        onChanged: (value) {
+          _quantityController.text = AppFormatter.textFieldInteger(value);
+        },
+        keyboardType: const TextInputType.numberWithOptions(decimal: false),
+        textCapitalization: TextCapitalization.words,
+        textInputAction: TextInputAction.done,
+      );
+
+  Widget get _unitPriceTextField => TextFieldWidget(
+        label: AppLocalizations.of(context)!.unitPrice,
+        prefix: Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: Text(AppFormatter.currencyPrefix),
+        ),
+        hint: '0.00',
+        controller: _unitPriceController,
+        onChanged: (value) {
+          _unitPriceController.text = AppFormatter.textFieldCurrency(value);
+        },
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        textCapitalization: TextCapitalization.words,
+        textInputAction: TextInputAction.done,
+      );
+
+  Widget get _totalPriceTextField => TextFieldWidget(
+        label: AppLocalizations.of(context)!.totalPrice,
+        prefix: Padding(
+          padding: const EdgeInsets.only(right: 5),
+          child: Text(AppFormatter.currencyPrefix),
+        ),
+        hint: '0.00',
+        controller: _totalPriceController,
+        onChanged: (value) {
+          _totalPriceController.text = AppFormatter.textFieldCurrency(value);
+        },
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        textCapitalization: TextCapitalization.words,
+        textInputAction: TextInputAction.done,
+      );
 }

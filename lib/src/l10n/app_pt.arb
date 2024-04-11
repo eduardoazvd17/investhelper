@@ -196,5 +196,17 @@
   "emptyThisMonthOperations": "Nenhuma operação realizada este mês, suas operações recentes aparecerão aqui. Para visualizar todas as operações, acesse suas operações clicando no botão abaixo.",
   "accessMyOperations": "Acessar minhas operações",
   "myOperations": "Minhas operações",
-  "emptyManageMyOperationsText": "Nenhuma operação adicionada. Adicione suas operações dos seus investimentos para acompanhar seus gastos, utilize o botão flutuante para adicionar."
+  "emptyManageMyOperationsText": "Nenhuma operação adicionada. Adicione suas operações dos seus investimentos para acompanhar seus gastos, utilize o botão flutuante para adicionar.",
+  "addNewOperation": "Adicionar nova operação",
+  "editOperation": "Editar operação",
+  "investment": "Investimento",
+  "operationType": "Tipo de operação",
+  "operationDate": "Data da operação",
+  "quantity": "Quantidade",
+  "unitPrice": "Preço unitário",
+  "totalPrice": "Valor total",
+  "annotation": "Anotações",
+  "optionalHint": "(Opcional)",
+  "purchase": "Compra",
+  "sale": "Venda"
 }

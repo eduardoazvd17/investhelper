@@ -46,6 +46,7 @@ class _DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
           isExpanded: true,
           elevation: 24,
           iconSize: 35,
+          itemHeight: MediaQuery.of(context).textScaler.scale(60),
           borderRadius: BorderRadius.circular(10),
           underline: const SizedBox(),
           style: Theme.of(context).textTheme.bodyLarge,

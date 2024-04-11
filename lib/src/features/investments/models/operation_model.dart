@@ -9,7 +9,6 @@ class OperationModel {
   final int quantity;
   final double unitPrice;
   final double totalPrice;
-  final String? annotation;
 
   OperationModel({
     required this.id,
@@ -20,6 +19,5 @@ class OperationModel {
     required this.quantity,
     required this.unitPrice,
     required this.totalPrice,
-    this.annotation,
   });
 }

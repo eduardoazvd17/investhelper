@@ -196,5 +196,17 @@
     "emptyThisMonthOperations": "No operations performed this month, your recent operations will appear here. To view all operations, access your operations by clicking the button below.",
     "accessMyOperations": "Access my operations",
     "myOperations": "My operations",
-    "emptyManageMyOperationsText": "No operations added. Add your investment operations to track your expenses, use the floating button to add."
+    "emptyManageMyOperationsText": "No operations added. Add your investment operations to track your expenses, use the floating button to add.",
+    "addNewOperation": "Add new operation",
+    "editOperation": "Edit operation",
+    "investment": "Investment",
+    "operationType": "Operation type",
+    "operationDate": "Operation date",
+    "quantity": "Quantity",
+    "unitPrice": "Unit price",
+    "totalPrice": "Total price",
+    "annotation": "Annotations",
+    "optionalHint": "(Optional)",
+    "purchase": "Purchase",
+    "sale": "Sale"
 }
