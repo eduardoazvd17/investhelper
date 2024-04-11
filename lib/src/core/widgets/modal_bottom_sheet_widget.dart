@@ -108,24 +108,28 @@ class _ModalBottomSheetWidgetState extends State<ModalBottomSheetWidget> {
             ),
           ),
           const Divider(),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxHeight: MediaQuery.of(context).size.height -
-                  MediaQuery.of(context).viewInsets.bottom -
-                  MediaQuery.of(context).viewPadding.top -
-                  MediaQuery.of(context).padding.bottom -
-                  199,
-            ),
-            child: Scrollbar(
-              thumbVisibility: true,
-              controller: _scrollController,
-              child: SingleChildScrollView(
+          AnimatedSize(
+            curve: Curves.ease,
+            duration: const Duration(milliseconds: 300),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height -
+                    MediaQuery.of(context).viewInsets.bottom -
+                    MediaQuery.of(context).viewPadding.top -
+                    MediaQuery.of(context).padding.bottom -
+                    199,
+              ),
+              child: Scrollbar(
+                thumbVisibility: true,
                 controller: _scrollController,
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Column(children: widget.children),
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Column(children: widget.children),
+                  ),
                 ),
               ),
             ),
