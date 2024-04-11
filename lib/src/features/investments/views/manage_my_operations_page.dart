@@ -101,6 +101,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                   unitPrice: unitPrice,
                   totalPrice: totalPrice,
                 ),
+                _selectedInvestment.value!,
               );
 
               if (mounted) {

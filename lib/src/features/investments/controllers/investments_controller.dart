@@ -168,10 +168,20 @@ abstract class InvestmentsControllerBase with Store {
   @action
   Future<void> addNewOperation(
     CreateOperationModel createOperationModel,
+    InvestmentModel investmentModel,
   ) async {
     try {
-      final OperationModel newOperation =
-          await _service.addNewOperation(createOperationModel);
+      final (
+        OperationModel newOperation,
+        InvestmentModel newInvestment,
+      ) = await _service.addNewOperation(
+        createOperationModel,
+        investmentModel,
+      );
+
+      investments.removeWhere((e) => e.id == newInvestment.id);
+      investments.add(newInvestment);
+      investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
       thisMonthOperations.add(newOperation);
       thisMonthOperations.sort((a, b) => b.date.compareTo(a.date));
     } on AppException catch (_) {

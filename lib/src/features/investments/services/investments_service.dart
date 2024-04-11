@@ -203,23 +203,29 @@ class InvestmentsService {
     }
   }
 
-  Future<OperationModel> addNewOperation(
+  Future<(OperationModel, InvestmentModel)> addNewOperation(
     CreateOperationModel createOperationModel,
+    InvestmentModel investmentModel,
   ) async {
+    //TODO: UPDATE INVESTMENT MODEL TOTALS.
+
     try {
       final DocumentReference<Map<String, dynamic>> reference =
           _firestore.collection('operations').doc();
       await reference.set(createOperationModel.toMap());
 
-      return OperationModel(
-        id: reference.id,
-        userId: createOperationModel.userId,
-        investmentId: createOperationModel.investmentId,
-        type: createOperationModel.type,
-        date: createOperationModel.date,
-        quantity: createOperationModel.quantity,
-        unitPrice: createOperationModel.unitPrice,
-        totalPrice: createOperationModel.totalPrice,
+      return (
+        OperationModel(
+          id: reference.id,
+          userId: createOperationModel.userId,
+          investmentId: createOperationModel.investmentId,
+          type: createOperationModel.type,
+          date: createOperationModel.date,
+          quantity: createOperationModel.quantity,
+          unitPrice: createOperationModel.unitPrice,
+          totalPrice: createOperationModel.totalPrice,
+        ),
+        investmentModel,
       );
     } on AppException catch (_) {
       rethrow;
