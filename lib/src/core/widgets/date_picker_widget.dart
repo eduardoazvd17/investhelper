@@ -44,10 +44,13 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FittedBox(
-                child: Text(
-                  AppFormatter.dateWithDay(context, _selectedDate),
-                  style: Theme.of(context).textTheme.titleSmall,
+              Padding(
+                padding: const EdgeInsets.only(left: 10),
+                child: FittedBox(
+                  child: Text(
+                    AppFormatter.dateWithDay(context, _selectedDate),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
                 ),
               ),
               IconButton(
