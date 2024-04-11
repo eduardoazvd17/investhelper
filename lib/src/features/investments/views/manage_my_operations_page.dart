@@ -75,21 +75,19 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                 throw AppException(AppExceptionType.emptyFields);
               }
 
+              final bool needQuantityAndUnitPrice = _selectedInvestment
+                  .value!.category.needPositionAndAveragePrice;
               final quantity = int.tryParse(_quantityController.text) ?? 0;
               final unitPrice = double.tryParse(_unitPriceController.text) ?? 0;
               final totalPrice =
                   double.tryParse(_totalPriceController.text) ?? 0;
 
-              if (_selectedInvestment
-                          .value!.category.needPositionAndAveragePrice &&
-                      quantity <= 0 ||
-                  unitPrice <= 0) {
+              if (needQuantityAndUnitPrice &&
+                  (quantity <= 0 || unitPrice <= 0)) {
                 throw AppException(AppExceptionType.emptyFields);
               }
 
-              if (!_selectedInvestment
-                      .value!.category.needPositionAndAveragePrice &&
-                  totalPrice <= 0) {
+              if (needQuantityAndUnitPrice && totalPrice <= 0) {
                 throw AppException(AppExceptionType.emptyFields);
               }
 
