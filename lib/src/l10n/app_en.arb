@@ -192,5 +192,8 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "emptyThisMonthOperations": "No operations performed this month, your recent operations will appear here. To view all operations, access your operations by clicking the button below.",
+    "emptyManageMyOperationsText": "No operations added. Add your investment operations to track your expenses, use the floating button to add.",
+    "accessMyOperations": "Access my operations"
 }

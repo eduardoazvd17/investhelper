@@ -17,8 +17,6 @@ import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
-import '../enums/operation_type.dart';
-import '../models/operation_model.dart';
 import '../widgets/category_listing_widget.dart';
 import '../widgets/investments_resume_card.dart';
 import 'manage_my_investments_page.dart';
@@ -354,18 +352,44 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
               SectionWidget(
                 title: AppLocalizations.of(context)!.monthsOperations,
                 content: [
-                  OperationTileWidget(
-                    operation: OperationModel(
-                      id: 'id',
-                      userId: controller.investments.last.userId,
-                      investmentId: controller.investments.last.id,
-                      type: OperationTypeEnum.purchase,
-                      date: DateTime.now(),
-                      quantity: 10,
-                      unitPrice: 1000,
-                      totalPrice: 10000,
-                    ),
-                    investment: controller.investments.last,
+                  Observer(
+                    builder: (_) {
+                      final bool hasData =
+                          controller.thisMonthOperations.isNotEmpty;
+
+                      return SizedBox(
+                        height: hasData
+                            ? MediaQuery.of(context).textScaler.scale(225)
+                            : null,
+                        child: Visibility(
+                          visible: hasData,
+                          replacement: Padding(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            child: AdviseMessageWidget(
+                              message: AppLocalizations.of(context)!
+                                  .emptyThisMonthOperations,
+                            ),
+                          ),
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: controller.thisMonthOperations.map((o) {
+                              return OperationTileWidget(
+                                operation: o,
+                                investment: controller.investments.firstWhere(
+                                  (i) => i.id == o.investmentId,
+                                ),
+                                hideValues: controller.hideValues,
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child:
+                        Text(AppLocalizations.of(context)!.accessMyOperations),
                   ),
                 ],
               ),

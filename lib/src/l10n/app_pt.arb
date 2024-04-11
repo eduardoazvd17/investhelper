@@ -192,5 +192,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "emptyThisMonthOperations": "Nenhuma operação realizada este mês, suas operações recentes aparecerão aqui. Para visualizar todas as operações, acesse suas operações clicando no botão abaixo.",
+  "emptyManageMyOperationsText": "Nenhuma operação adicionada. Adicione suas operações dos seus investimentos para acompanhar seus gastos, utilize o botão flutuante para adicionar.",
+  "accessMyOperations": "Acessar minhas operações"
 }
