@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:investhelper/src/features/investments/enums/operation_type.dart';
@@ -77,12 +75,7 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                                     widget.hideValues
                                         ? '${AppFormatter.currencyPrefix} ••••••'
                                         : AppFormatter.currency(
-                                            max(
-                                              (widget.operation.quantity *
-                                                  widget.operation.unitPrice),
-                                              widget.operation.totalPrice,
-                                            ),
-                                          ),
+                                            widget.operation.value),
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge

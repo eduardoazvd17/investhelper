@@ -187,6 +187,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
 
   Future<void> _deleteInvestment(InvestmentModel investmentModel) async {
     try {
+      LoadingWidget.dialog(context);
       final bool? result = await DialogWidget.show(
         context,
         title: AppLocalizations.of(context)!.remove,
@@ -196,8 +197,9 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         actionType: DialogWidgetActionType.yesOrNo,
       );
       if (result != null && result) {
-        widget.controller.deleteInvestment(investmentModel);
+        await widget.controller.deleteInvestment(investmentModel);
       }
+      if (mounted) LoadingWidget.hide(context);
     } on AppException catch (error) {
       if (mounted) {
         LoadingWidget.hide(context);

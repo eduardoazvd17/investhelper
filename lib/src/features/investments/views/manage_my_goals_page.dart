@@ -119,6 +119,7 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
 
   Future<void> _deleteGoal(GoalModel goalModel) async {
     try {
+      LoadingWidget.dialog(context);
       final bool? result = await DialogWidget.show(
         context,
         title: AppLocalizations.of(context)!.remove,
@@ -127,6 +128,7 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
         actionType: DialogWidgetActionType.yesOrNo,
       );
       if (result != null && result) widget.controller.deleteGoal(goalModel);
+      if (mounted) LoadingWidget.hide(context);
     } on AppException catch (error) {
       if (mounted) {
         LoadingWidget.hide(context);

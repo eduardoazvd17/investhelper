@@ -208,5 +208,19 @@
   "annotation": "Anotações",
   "optionalHint": "(Opcional)",
   "purchase": "Compra",
-  "sale": "Venda"
+  "sale": "Venda",
+  "operationDescription": "Operação de {operation} no valor de {value} do investimento {investment}",
+  "@operationDescription": {
+    "placeholders": {
+      "operation": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "investment": {
+        "type": "String"
+      }
+    }
+  }
 }

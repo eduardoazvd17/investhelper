@@ -162,7 +162,16 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
 
   Future<void> _deleteOperation(OperationModel operationModel) async {
     try {
-      final String operationName = '';
+      LoadingWidget.dialog(context);
+      final InvestmentModel investmentModel = widget.controller.investments
+          .firstWhere((e) => e.id == operationModel.investmentId);
+
+      final String operationName =
+          AppLocalizations.of(context)!.operationDescription(
+        operationModel.type.getTitle(context).toLowerCase(),
+        AppFormatter.currency(operationModel.value),
+        investmentModel.name,
+      );
 
       final bool? result = await DialogWidget.show(
         context,
@@ -171,8 +180,10 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         actionType: DialogWidgetActionType.yesOrNo,
       );
       if (result != null && result) {
-        widget.controller.deleteOperation(operationModel);
+        await widget.controller
+            .deleteOperation(operationModel, investmentModel);
       }
+      if (mounted) LoadingWidget.hide(context);
     } on AppException catch (error) {
       if (mounted) {
         LoadingWidget.hide(context);

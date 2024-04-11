@@ -193,12 +193,11 @@ abstract class InvestmentsControllerBase with Store {
   @action
   Future<void> deleteOperation(
     OperationModel operationModel,
+    InvestmentModel investmentModel,
   ) async {
     try {
-      final InvestmentModel newInvestment = await _service.deleteOperation(
-        operationModel,
-        investments.firstWhere((e) => e.id == operationModel.investmentId),
-      );
+      final InvestmentModel newInvestment =
+          await _service.deleteOperation(operationModel, investmentModel);
 
       investments.removeWhere((e) => e.id == newInvestment.id);
       investments.add(newInvestment);

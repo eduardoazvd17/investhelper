@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'dart:math';
 import 'package:investhelper/src/features/investments/enums/operation_type.dart';
 
 class OperationModel {
@@ -11,6 +12,8 @@ class OperationModel {
   final int quantity;
   final double unitPrice;
   final double totalPrice;
+
+  double get value => max(quantity * unitPrice, totalPrice);
 
   OperationModel({
     required this.id,
