@@ -87,7 +87,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                 throw AppException(AppExceptionType.emptyFields);
               }
 
-              if (needQuantityAndUnitPrice && totalPrice <= 0) {
+              if (!needQuantityAndUnitPrice && totalPrice <= 0) {
                 throw AppException(AppExceptionType.emptyFields);
               }
 
