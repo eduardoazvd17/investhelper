@@ -9,65 +9,45 @@ enum CategoryEnum {
   fixedIncome,
   treasuryBonds,
   savingsAccount,
-  privatePensionPlans,
-  commodities,
-  etfs,
+  // privatePensionPlans,
+  // commodities,
+  // etfs,
   cryptocurrencies,
   others,
 }
 
 extension CategoryEnumExtension on CategoryEnum {
   String getTitle(BuildContext context) {
-    switch (this) {
-      case CategoryEnum.stocks:
-        return AppLocalizations.of(context)!.stocks;
-      case CategoryEnum.mutualFunds:
-        return AppLocalizations.of(context)!.mutualFunds;
-      case CategoryEnum.fixedIncome:
-        return AppLocalizations.of(context)!.fixedIncome;
-      case CategoryEnum.reits:
-        return AppLocalizations.of(context)!.reits;
-      case CategoryEnum.treasuryBonds:
-        return AppLocalizations.of(context)!.treasuryBonds;
-      case CategoryEnum.savingsAccount:
-        return AppLocalizations.of(context)!.savingsAccount;
-      case CategoryEnum.privatePensionPlans:
-        return AppLocalizations.of(context)!.privatePensionPlans;
-      case CategoryEnum.commodities:
-        return AppLocalizations.of(context)!.commodities;
-      case CategoryEnum.etfs:
-        return AppLocalizations.of(context)!.etfs;
-      case CategoryEnum.cryptocurrencies:
-        return AppLocalizations.of(context)!.cryptocurrencies;
-      case CategoryEnum.others:
-        return AppLocalizations.of(context)!.others;
-    }
+    return switch (this) {
+      CategoryEnum.stocks => AppLocalizations.of(context)!.stocks,
+      CategoryEnum.mutualFunds => AppLocalizations.of(context)!.mutualFunds,
+      CategoryEnum.fixedIncome => AppLocalizations.of(context)!.fixedIncome,
+      CategoryEnum.reits => AppLocalizations.of(context)!.reits,
+      CategoryEnum.treasuryBonds => AppLocalizations.of(context)!.treasuryBonds,
+      CategoryEnum.savingsAccount =>
+        AppLocalizations.of(context)!.savingsAccount,
+      // CategoryEnum.privatePensionPlans => AppLocalizations.of(context)!.privatePensionPlans;
+      // CategoryEnum.commodities => AppLocalizations.of(context)!.commodities;
+      // CategoryEnum.etfs => AppLocalizations.of(context)!.etfs;
+      CategoryEnum.cryptocurrencies =>
+        AppLocalizations.of(context)!.cryptocurrencies,
+      CategoryEnum.others => AppLocalizations.of(context)!.others
+    };
   }
 
   Color get color {
-    switch (this) {
-      case CategoryEnum.stocks:
-        return Colors.purple;
-      case CategoryEnum.mutualFunds:
-        return Colors.blue;
-      case CategoryEnum.fixedIncome:
-        return Colors.green;
-      case CategoryEnum.reits:
-        return Colors.brown;
-      case CategoryEnum.treasuryBonds:
-        return Colors.pink;
-      case CategoryEnum.savingsAccount:
-        return Colors.yellow;
-      case CategoryEnum.privatePensionPlans:
-        return Colors.grey;
-      case CategoryEnum.commodities:
-        return Colors.red;
-      case CategoryEnum.etfs:
-        return Colors.indigo;
-      case CategoryEnum.cryptocurrencies:
-        return Colors.orange;
-      case CategoryEnum.others:
-        return Colors.blueGrey;
-    }
+    return switch (this) {
+      CategoryEnum.stocks => Colors.purple,
+      CategoryEnum.mutualFunds => Colors.blue,
+      CategoryEnum.fixedIncome => Colors.green,
+      CategoryEnum.reits => Colors.brown,
+      CategoryEnum.treasuryBonds => Colors.pink,
+      CategoryEnum.savingsAccount => Colors.yellow,
+      // CategoryEnum.privatePensionPlans => Colors.grey;
+      // CategoryEnum.commodities => Colors.red;
+      // CategoryEnum.etfs => Colors.indigo;
+      CategoryEnum.cryptocurrencies => Colors.orange,
+      CategoryEnum.others => Colors.blueGrey
+    };
   }
 }
