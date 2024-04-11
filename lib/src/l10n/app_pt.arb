@@ -118,6 +118,8 @@
   "recoveryEmailSentMessage": "Se existir uma conta cadastrada com esse endereço e-mail, você receberá um link para redefinir sua senha.\n\nApós redefinir, faça login normalmente utilizando a sua nova senha.",
   "connectionErrorTitle": "Erro de conexão",
   "connectionErrorMessage": "Ocorreu um problema de conexão com o servidor, verifique sua conexão e tente novamente.",
+  "investmentIncorrectStartValuesErrorTitle": "Preenchimento de valores incorreto",
+  "investmentIncorrectStartValuesErrorMessage": "Atenção, para as categorias ações e fundos imobiliários você deve inserir os valores nos campos de posição inicial e preço médio inicial.\n\nAs demais categorias devem inserir os valores no campo de total investido.",
   "endSessionMessage": "Deseja realmente sair da sua conta?",
   "yes": "Sim",
   "no": "Não",

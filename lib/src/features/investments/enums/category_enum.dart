@@ -17,6 +17,14 @@ enum CategoryEnum {
 }
 
 extension CategoryEnumExtension on CategoryEnum {
+  bool get needPositionAndAveragePrice {
+    return switch (this) {
+      CategoryEnum.stocks => true,
+      CategoryEnum.reits => true,
+      CategoryEnum() => false,
+    };
+  }
+
   String getTitle(BuildContext context) {
     return switch (this) {
       CategoryEnum.stocks => AppLocalizations.of(context)!.stocks,

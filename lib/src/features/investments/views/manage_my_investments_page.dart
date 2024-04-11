@@ -72,17 +72,35 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                 throw AppException(AppExceptionType.emptyFields);
               }
 
+              final custodialPosition =
+                  int.tryParse(_custodialPositionController.text) ?? 0;
+              final averagePrice =
+                  double.tryParse(_averagePriceController.text) ?? 0;
+              final amountInvested =
+                  double.tryParse(_amountInvestedController.text) ?? 0;
+
+              if (_selectedCategory!.needPositionAndAveragePrice) {
+                if (custodialPosition * averagePrice != amountInvested) {
+                  throw AppException(
+                    AppExceptionType.investmentIncorrectStartValues,
+                  );
+                }
+              } else {
+                if (custodialPosition != 0 || averagePrice != 0) {
+                  throw AppException(
+                    AppExceptionType.investmentIncorrectStartValues,
+                  );
+                }
+              }
+
               await widget.controller.addNewInvestment(
                 CreateInvestmentModel(
                   userId: widget.controller.user!.id,
                   name: _nameController.text.trim(),
                   category: _selectedCategory!,
-                  custodialPosition:
-                      int.tryParse(_custodialPositionController.text) ?? 0,
-                  averagePrice:
-                      double.tryParse(_averagePriceController.text) ?? 0,
-                  amountInvested:
-                      double.tryParse(_amountInvestedController.text) ?? 0,
+                  custodialPosition: custodialPosition,
+                  averagePrice: averagePrice,
+                  amountInvested: amountInvested,
                   creationDate: DateTime.now(),
                 ),
               );
@@ -144,7 +162,6 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
 
   Future<void> _editInvestment(InvestmentModel investmentModel) async {
     _nameController.text = investmentModel.name;
-    _selectedCategory = investmentModel.category;
 
     await ModalBottomSheetWidget.show(
       context,
@@ -155,13 +172,8 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
             try {
               LoadingWidget.dialog(context);
 
-              if (_selectedCategory == null) {
-                throw AppException(AppExceptionType.emptyFields);
-              }
-
               await widget.controller.editInvestment(investmentModel.copyWith(
                 name: _nameController.text.trim(),
-                category: _selectedCategory,
               ));
 
               if (mounted) {
@@ -182,11 +194,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           child: Text(AppLocalizations.of(context)!.cancel),
         ),
       ],
-      children: [
-        _nameTextField,
-        const SizedBox(height: 10),
-        _categoryDropDownButton,
-      ],
+      children: [_nameTextField],
     );
   }
 

@@ -118,6 +118,8 @@
     "recoveryEmailSentMessage": "If there is an account registered with this email address, you will receive a link to reset your password.\n\nAfter resetting, log in normally using your new password.",
     "connectionErrorTitle": "Connection error",
     "connectionErrorMessage": "There was a problem connecting to the server, please check your connection and try again.",
+    "investmentIncorrectStartValuesErrorTitle": "Incorrect value filling",
+    "investmentIncorrectStartValuesErrorMessage": "Attention, for the stocks and real estate investment trusts (REITs) categories you must enter the values in the start position and avg start price fields.\n\nOther categories must enter the values in the amount invested field.",
     "endSessionMessage": "Do you really want to log out of your account?",
     "yes": "Yes",
     "no": "No",
