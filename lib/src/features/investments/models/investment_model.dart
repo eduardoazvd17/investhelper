@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:investhelper/src/features/investments/enums/category_enum.dart';
 
@@ -47,7 +46,6 @@ class InvestmentModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'userId': userId,
       'name': name,
       'category': category.index,
@@ -71,9 +69,4 @@ class InvestmentModel {
           DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory InvestmentModel.fromJson(String source) =>
-      InvestmentModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

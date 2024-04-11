@@ -3,12 +3,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:investhelper/src/core/widgets/dropdown_button_widget.dart';
 import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
 import 'package:investhelper/src/features/investments/enums/category_enum.dart';
+import 'package:investhelper/src/features/investments/models/create_operation_model.dart';
 import 'package:investhelper/src/features/investments/models/investment_model.dart';
 import 'package:investhelper/src/features/investments/models/operation_model.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/operation_tile_widget.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/utils/app_formatter.dart';
+import '../../../core/widgets/date_picker_widget.dart';
 import '../../../core/widgets/empty_list_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/modal_bottom_sheet_widget.dart';
@@ -28,7 +30,7 @@ class ManageMyOperationsPage extends StatefulWidget {
 class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   late final ValueNotifier<InvestmentModel?> _selectedInvestment;
   OperationTypeEnum? _selectedOperationType;
-  DateTime? _selectedOperationDate;
+  late DateTime _selectedOperationDate;
   late final TextEditingController _quantityController;
   late final TextEditingController _unitPriceController;
   late final TextEditingController _totalPriceController;
@@ -69,7 +71,6 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               LoadingWidget.dialog(context);
 
               if (_selectedInvestment.value == null ||
-                  _selectedOperationDate == null ||
                   _selectedOperationType == null) {
                 throw AppException(AppExceptionType.emptyFields);
               }
@@ -78,6 +79,29 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               final unitPrice = double.tryParse(_unitPriceController.text) ?? 0;
               final totalPrice =
                   double.tryParse(_totalPriceController.text) ?? 0;
+
+              if (_selectedInvestment
+                          .value!.category.needPositionAndAveragePrice &&
+                      quantity <= 0 ||
+                  unitPrice <= 0) {
+                throw AppException(AppExceptionType.emptyFields);
+              }
+
+              if (!_selectedInvestment
+                      .value!.category.needPositionAndAveragePrice &&
+                  totalPrice <= 0) {
+                throw AppException(AppExceptionType.emptyFields);
+              }
+
+              CreateOperationModel(
+                userId: widget.controller.user!.id,
+                investmentId: _selectedInvestment.value!.id,
+                type: _selectedOperationType!,
+                date: _selectedOperationDate,
+                quantity: quantity,
+                unitPrice: unitPrice,
+                totalPrice: totalPrice,
+              );
 
               if (mounted) {
                 LoadingWidget.hide(context);
@@ -251,7 +275,13 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         }).toList(),
       );
 
-  Widget get _operationDatePicker => Container();
+  Widget get _operationDatePicker => DatePickerWidget(
+        label: AppLocalizations.of(context)!.operationDate,
+        value: _selectedOperationDate,
+        onChange: (date) => setState(() {
+          _selectedOperationDate = date;
+        }),
+      );
 
   Widget get _quantityTextField => TextFieldWidget(
         label: AppLocalizations.of(context)!.quantity,

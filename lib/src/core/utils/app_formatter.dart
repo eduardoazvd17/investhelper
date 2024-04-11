@@ -25,6 +25,14 @@ class AppFormatter {
     return DateFormat.yMMMd().format(date);
   }
 
+  static String dateWithDay(BuildContext context, DateTime date) {
+    final String languageCode = Localizations.localeOf(context).languageCode;
+    if (languageCode == 'pt') {
+      return DateFormat.yMMMEd('pt_BR').format(date);
+    }
+    return DateFormat.yMMMEd().format(date);
+  }
+
   static String textFieldInteger(String value) {
     return value.replaceAll(RegExp(r'[^\d]'), '');
   }

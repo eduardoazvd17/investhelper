@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 class GoalModel {
   final String id;
@@ -13,6 +12,17 @@ class GoalModel {
     required this.description,
     required this.creationDate,
   });
+
+  GoalModel copyWith({
+    String? description,
+  }) {
+    return GoalModel(
+      id: id,
+      userId: userId,
+      description: description ?? this.description,
+      creationDate: creationDate,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -29,22 +39,6 @@ class GoalModel {
       description: map['description'] as String,
       creationDate:
           DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
-    );
-  }
-
-  String toJson() => json.encode(toMap());
-
-  factory GoalModel.fromJson(String source) =>
-      GoalModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  GoalModel copyWith({
-    String? description,
-  }) {
-    return GoalModel(
-      id: id,
-      userId: userId,
-      description: description ?? this.description,
-      creationDate: creationDate,
     );
   }
 }
