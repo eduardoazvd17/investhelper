@@ -34,7 +34,8 @@ class AppFormatter {
   }
 
   static String textFieldInteger(String value) {
-    return value.replaceAll(RegExp(r'[^\d]'), '');
+    final String newValue = value.replaceFirst(RegExp(r'^0+(?=[0-9])'), '');
+    return newValue.replaceAll(RegExp(r'[^\d]'), '');
   }
 
   static String textFieldCurrency(String value) {

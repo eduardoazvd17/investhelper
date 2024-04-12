@@ -329,7 +329,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           if (intValue > position &&
               _selectedOperationType == OperationTypeEnum.sale) {
             _quantityController.text =
-                AppFormatter.textFieldInteger(intValue.toString());
+                AppFormatter.textFieldInteger(position.toString());
           } else {
             _quantityController.text = AppFormatter.textFieldInteger(value);
           }
@@ -371,7 +371,8 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           if (doubleValue > amountInvested &&
               _selectedOperationType == OperationTypeEnum.sale) {
             _totalPriceController.text = AppFormatter.textFieldCurrency(
-                amountInvested.toStringAsFixed(2));
+              amountInvested.toStringAsFixed(2),
+            );
           } else {
             _totalPriceController.text = AppFormatter.textFieldCurrency(value);
           }
