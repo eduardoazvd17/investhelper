@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:investhelper/src/features/investments/enums/operation_type.dart';
 import 'package:investhelper/src/features/investments/models/operation_model.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
-import 'package:investhelper/src/l10n/l10n.dart';
 
 import '../../../core/utils/app_formatter.dart';
 import '../models/investment_model.dart';
@@ -45,73 +44,71 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2.5),
       child: SizedBox(
-        height: MediaQuery.of(context).textScaler.scale(225),
+        height: MediaQuery.of(context).textScaler.scale(214),
         width: 300,
         child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Icon(
+                            widget.operation.type.icon,
+                            color: widget.operation.type.color,
+                            size: 30,
+                          ),
+                          FittedBox(
+                            child: Text(
+                              widget.hideValues
+                                  ? '${AppFormatter.currencyPrefix} ••••••'
+                                  : AppFormatter.currency(
+                                      widget.operation.value),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(
+                                      color: widget.operation.type.color),
+                            ),
+                          ),
+                        ],
+                      ),
                       Expanded(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Icon(
-                                  widget.operation.type.icon,
-                                  color: widget.operation.type.color,
-                                  size: 30,
-                                ),
-                                FittedBox(
-                                  child: Text(
-                                    widget.hideValues
-                                        ? '${AppFormatter.currencyPrefix} ••••••'
-                                        : AppFormatter.currency(
-                                            widget.operation.value),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleLarge
-                                        ?.copyWith(
-                                            color: widget.operation.type.color),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            const SizedBox(height: 10),
                             if (widget.operation.quantity > 0 &&
                                 widget.operation.unitPrice > 0) ...[
+                              FittedBox(
+                                child: Text(
+                                  widget.hideValues
+                                      ? '••••••••'
+                                      : '${widget.operation.quantity}x ${AppFormatter.currency(widget.operation.unitPrice)}',
+                                ),
+                              ),
                               const SizedBox(height: 5),
-                              FittedBox(
-                                child: Text(
-                                  AppLocalizations.of(context)!.quantityDisplay(
-                                    widget.hideValues
-                                        ? '••••••'
-                                        : widget.operation.quantity.toString(),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 2.5),
-                              FittedBox(
-                                child: Text(
-                                  AppLocalizations.of(context)!
-                                      .unitPriceDisplay(
-                                    widget.hideValues
-                                        ? '${AppFormatter.currencyPrefix} ••••••'
-                                        : AppFormatter.currency(
-                                            widget.operation.unitPrice,
-                                          ),
-                                  ),
-                                ),
-                              ),
-                              const Divider(),
                             ],
+                            FittedBox(
+                              child: Text(
+                                AppFormatter.dateWithDay(
+                                  context,
+                                  widget.operation.date,
+                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.copyWith(color: Colors.grey),
+                              ),
+                            ),
+                            const SizedBox(height: 10),
                           ],
                         ),
                       ),
@@ -129,23 +126,22 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                     ],
                   ),
                 ),
-                if (widget.onDelete != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () =>
-                              widget.onDelete!.call(widget.operation),
-                          visualDensity: VisualDensity.compact,
-                          icon: const Icon(CupertinoIcons.delete),
-                        ),
-                      ],
-                    ),
+              ),
+              if (widget.onDelete != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        onPressed: () =>
+                            widget.onDelete!.call(widget.operation),
+                        icon: const Icon(CupertinoIcons.delete),
+                      ),
+                    ],
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
       ),

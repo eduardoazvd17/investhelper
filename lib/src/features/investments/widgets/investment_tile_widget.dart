@@ -47,12 +47,12 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
         height: MediaQuery.of(context).textScaler.scale(190),
         width: 300,
         child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -70,7 +70,7 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                       const SizedBox(height: 12.5),
                       Expanded(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             if (widget.investment.category
@@ -119,31 +119,29 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                     ],
                   ),
                 ),
-                if (widget.onEdit != null && widget.onDelete != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (widget.onEdit != null)
-                          IconButton(
-                            onPressed: () =>
-                                widget.onEdit!.call(widget.investment),
-                            visualDensity: VisualDensity.compact,
-                            icon: const Icon(CupertinoIcons.pen),
-                          ),
-                        if (widget.onDelete != null)
-                          IconButton(
-                            onPressed: () =>
-                                widget.onDelete!.call(widget.investment),
-                            visualDensity: VisualDensity.compact,
-                            icon: const Icon(CupertinoIcons.delete),
-                          ),
-                      ],
-                    ),
+              ),
+              if (widget.onEdit != null && widget.onDelete != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (widget.onEdit != null)
+                        IconButton(
+                          onPressed: () =>
+                              widget.onEdit!.call(widget.investment),
+                          icon: const Icon(CupertinoIcons.pen),
+                        ),
+                      if (widget.onDelete != null)
+                        IconButton(
+                          onPressed: () =>
+                              widget.onDelete!.call(widget.investment),
+                          icon: const Icon(CupertinoIcons.delete),
+                        ),
+                    ],
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
       ),

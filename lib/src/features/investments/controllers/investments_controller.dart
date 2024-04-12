@@ -115,16 +115,6 @@ abstract class InvestmentsControllerBase with Store {
   ObservableList<InvestmentModel> investments =
       ObservableList<InvestmentModel>();
 
-  @computed
-  double get totalInvestments {
-    if (investments.isNotEmpty) {
-      return investments.map((e) {
-        return e.amountInvested;
-      }).reduce((a, b) => a + b);
-    }
-    return 0.0;
-  }
-
   @action
   Future<void> addNewInvestment(
     CreateInvestmentModel createInvestmentModel,
@@ -159,6 +149,16 @@ abstract class InvestmentsControllerBase with Store {
     } on AppException catch (_) {
       rethrow;
     }
+  }
+
+  @computed
+  double get totalInvestments {
+    if (investments.isNotEmpty) {
+      return investments.map((e) {
+        return e.value;
+      }).reduce((a, b) => a + b);
+    }
+    return 0.0;
   }
 
   @observable

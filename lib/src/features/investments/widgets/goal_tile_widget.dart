@@ -39,16 +39,16 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 140,
-      width: 240,
+      height: MediaQuery.of(context).textScaler.scale(150),
+      width: 250,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 2.5),
         child: Card(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: Row(
-              children: [
-                Expanded(
+          child: Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,29 +76,27 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
                     ],
                   ),
                 ),
-                if (widget.onEdit != null && widget.onDelete != null)
-                  Padding(
-                    padding: const EdgeInsets.only(left: 10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (widget.onEdit != null)
-                          IconButton(
-                            onPressed: () => widget.onEdit!.call(widget.goal),
-                            visualDensity: VisualDensity.compact,
-                            icon: const Icon(CupertinoIcons.pen),
-                          ),
-                        if (widget.onDelete != null)
-                          IconButton(
-                            onPressed: () => widget.onDelete!.call(widget.goal),
-                            visualDensity: VisualDensity.compact,
-                            icon: const Icon(CupertinoIcons.delete),
-                          ),
-                      ],
-                    ),
+              ),
+              if (widget.onEdit != null && widget.onDelete != null)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      if (widget.onEdit != null)
+                        IconButton(
+                          onPressed: () => widget.onEdit!.call(widget.goal),
+                          icon: const Icon(CupertinoIcons.pen),
+                        ),
+                      if (widget.onDelete != null)
+                        IconButton(
+                          onPressed: () => widget.onDelete!.call(widget.goal),
+                          icon: const Icon(CupertinoIcons.delete),
+                        ),
+                    ],
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
       ),
