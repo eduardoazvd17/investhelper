@@ -222,5 +222,21 @@
                 "type": "String"
             }
         }
+    },
+    "positionDisplay": "Position: {value}",
+    "@positionDisplay": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "totalDisplay": "Total: {value}",
+    "@totalDisplay": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
     }
 }

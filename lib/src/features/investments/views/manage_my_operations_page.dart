@@ -265,8 +265,8 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               children: [
                 FittedBox(
                   child: Text(element.category.needPositionAndAveragePrice
-                      ? '${element.name} - ${AppLocalizations.of(context)!.custodialPositionDisplay(element.custodialPosition.toString())}'
-                      : '${element.name} - ${AppLocalizations.of(context)!.amountInvestedDisplay(AppFormatter.currency(element.amountInvested))}'),
+                      ? '${element.name} - ${AppLocalizations.of(context)!.positionDisplay(element.custodialPosition.toString())}'
+                      : '${element.name} - ${AppLocalizations.of(context)!.totalDisplay(AppFormatter.currency(element.amountInvested))}'),
                 ),
                 FittedBox(
                   child: CategoryIndicatorWidget(
