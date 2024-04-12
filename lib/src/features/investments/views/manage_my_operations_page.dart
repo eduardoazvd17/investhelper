@@ -263,7 +263,11 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(element.name),
+                FittedBox(
+                  child: Text(element.category.needPositionAndAveragePrice
+                      ? '${element.name} - ${AppLocalizations.of(context)!.custodialPositionDisplay(element.custodialPosition.toString())}'
+                      : '${element.name} - ${AppLocalizations.of(context)!.amountInvestedDisplay(AppFormatter.currency(element.amountInvested))}'),
+                ),
                 FittedBox(
                   child: CategoryIndicatorWidget(
                     category: element.category,
@@ -281,9 +285,12 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         label: AppLocalizations.of(context)!.operationType,
         hint: AppLocalizations.of(context)!.operationTypeHint,
         value: _selectedOperationType,
-        onChanged: (operationType) => setState(() {
-          _selectedOperationType = operationType;
-        }),
+        onChanged: (operationType) {
+          setState(() => _selectedOperationType = operationType);
+          _quantityController.clear();
+          _unitPriceController.clear();
+          _totalPriceController.clear();
+        },
         items: OperationTypeEnum.values.map((e) {
           return DropdownMenuItem(
             value: e,
@@ -315,7 +322,17 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         hint: '0',
         controller: _quantityController,
         onChanged: (value) {
-          _quantityController.text = AppFormatter.textFieldInteger(value);
+          final int position =
+              _selectedInvestment.value?.custodialPosition ?? 0;
+          final int intValue =
+              int.tryParse(AppFormatter.textFieldInteger(value)) ?? 0;
+          if (intValue > position &&
+              _selectedOperationType == OperationTypeEnum.sale) {
+            _quantityController.text =
+                AppFormatter.textFieldInteger(intValue.toString());
+          } else {
+            _quantityController.text = AppFormatter.textFieldInteger(value);
+          }
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
         textCapitalization: TextCapitalization.words,
@@ -347,7 +364,17 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         hint: '0.00',
         controller: _totalPriceController,
         onChanged: (value) {
-          _totalPriceController.text = AppFormatter.textFieldCurrency(value);
+          final double amountInvested =
+              _selectedInvestment.value?.amountInvested ?? 0;
+          final double doubleValue =
+              double.tryParse(AppFormatter.textFieldCurrency(value)) ?? 0;
+          if (doubleValue > amountInvested &&
+              _selectedOperationType == OperationTypeEnum.sale) {
+            _totalPriceController.text = AppFormatter.textFieldCurrency(
+                amountInvested.toStringAsFixed(2));
+          } else {
+            _totalPriceController.text = AppFormatter.textFieldCurrency(value);
+          }
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textCapitalization: TextCapitalization.words,
