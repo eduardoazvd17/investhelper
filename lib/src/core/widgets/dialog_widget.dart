@@ -5,11 +5,13 @@ import '../../l10n/l10n.dart';
 class DialogWidget extends StatelessWidget {
   final String title;
   final String message;
+  final Widget? messageWidget;
   final List<TextButton>? actions;
   const DialogWidget({
     super.key,
     required this.title,
     required this.message,
+    this.messageWidget,
     this.actions,
   });
 
@@ -17,6 +19,7 @@ class DialogWidget extends StatelessWidget {
     BuildContext context, {
     required String title,
     required String message,
+    Widget? messageWidget,
     required DialogWidgetActionType actionType,
   }) async {
     return await showDialog<bool?>(
@@ -25,6 +28,7 @@ class DialogWidget extends StatelessWidget {
         return DialogWidget(
           title: title,
           message: message,
+          messageWidget: messageWidget,
           actions: switch (actionType) {
             DialogWidgetActionType.close => [
                 TextButton(
@@ -52,7 +56,18 @@ class DialogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(title),
-      content: Text(message),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(message),
+          if (messageWidget != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: messageWidget!,
+            ),
+        ],
+      ),
       actions: actions ??
           [
             TextButton(

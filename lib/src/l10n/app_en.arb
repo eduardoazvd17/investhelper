@@ -247,5 +247,8 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "dontHaveInvestmentsTitle": "No investments added",
+    "dontHaveInvestmentsMessage": "You do not have added investments yet.\n\nAdd your investments to start entering operations.",
+    "goToMyInvestments": "Go to my investments"
 }

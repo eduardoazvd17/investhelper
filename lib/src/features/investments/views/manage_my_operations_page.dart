@@ -6,6 +6,7 @@ import 'package:investhelper/src/features/investments/enums/category_enum.dart';
 import 'package:investhelper/src/features/investments/models/create_operation_model.dart';
 import 'package:investhelper/src/features/investments/models/investment_model.dart';
 import 'package:investhelper/src/features/investments/models/operation_model.dart';
+import 'package:investhelper/src/features/investments/views/manage_my_investments_page.dart';
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 import 'package:investhelper/src/features/investments/widgets/operation_tile_widget.dart';
 import '../../../core/exceptions/app_exception.dart';
@@ -65,6 +66,27 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   }
 
   Future<void> _addNewOperation([OperationTypeEnum? operationType]) async {
+    if (widget.controller.investments.isEmpty) {
+      DialogWidget.show(
+        context,
+        title: AppLocalizations.of(context)!.dontHaveInvestmentsTitle,
+        message: AppLocalizations.of(context)!.dontHaveInvestmentsMessage,
+        messageWidget: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(
+                ManageMyInvestmentsPage.routeName,
+              );
+            },
+            child: Text(AppLocalizations.of(context)!.goToMyInvestments),
+          ),
+        ),
+        actionType: DialogWidgetActionType.close,
+      );
+      return;
+    }
+
     _selectedInvestment.value = null;
     _selectedOperationType = operationType;
     _selectedOperationDate = DateTime.now();
