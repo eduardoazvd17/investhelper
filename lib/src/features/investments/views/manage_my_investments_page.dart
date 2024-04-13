@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:investhelper/src/core/exceptions/app_exception.dart';
-import 'package:investhelper/src/core/utils/app_formatter.dart';
-import 'package:investhelper/src/core/widgets/dropdown_button_widget.dart';
-import 'package:investhelper/src/core/widgets/text_field_widget.dart';
-import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
-import 'package:investhelper/src/features/investments/models/create_investment_model.dart';
-import 'package:investhelper/src/features/investments/models/investment_model.dart';
-import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
+import '../../../core/exceptions/app_exception.dart';
+import '../../../core/utils/app_formatter.dart';
+import '../../../core/widgets/dropdown_button_widget.dart';
+import '../../../core/widgets/text_field_widget.dart';
+import '../controllers/investments_controller.dart';
+import '../models/create_investment_model.dart';
+import '../models/investment_model.dart';
+import '../widgets/category_indicator_widget.dart';
 
 import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/empty_list_widget.dart';

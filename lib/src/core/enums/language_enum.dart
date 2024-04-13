@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:investhelper/src/l10n/l10n.dart';
+import '../../l10n/l10n.dart';
 
 enum LanguageEnum {
   system,

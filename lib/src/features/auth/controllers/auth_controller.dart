@@ -1,9 +1,9 @@
-import 'package:investhelper/src/core/controllers/app_controller.dart';
-import 'package:investhelper/src/core/exceptions/app_exception.dart';
-import 'package:investhelper/src/core/models/user_model.dart';
-import 'package:investhelper/src/features/auth/models/login_user_model.dart';
-import 'package:investhelper/src/features/auth/models/register_user_model.dart';
-import 'package:investhelper/src/features/auth/services/auth_service.dart';
+import '../../../core/controllers/app_controller.dart';
+import '../../../core/exceptions/app_exception.dart';
+import '../../../core/models/user_model.dart';
+import '../models/login_user_model.dart';
+import '../models/register_user_model.dart';
+import '../services/auth_service.dart';
 import 'package:mobx/mobx.dart';
 
 part 'auth_controller.g.dart';

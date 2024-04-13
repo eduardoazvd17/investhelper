@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
-import 'package:investhelper/src/features/investments/views/investments_page.dart';
+import 'button_tile_widget.dart';
+import '../../features/investments/views/investments_page.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../features/auth/views/auth_page.dart';

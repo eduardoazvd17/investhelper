@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:investhelper/src/features/investments/enums/category_enum.dart';
-import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
-import 'package:investhelper/src/l10n/l10n.dart';
+import '../enums/category_enum.dart';
+import 'category_indicator_widget.dart';
+import '../../../l10n/l10n.dart';
 
 import '../../../core/utils/app_formatter.dart';
 import '../models/investment_model.dart';

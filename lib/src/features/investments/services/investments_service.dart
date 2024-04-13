@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:investhelper/src/features/investments/enums/category_enum.dart';
-import 'package:investhelper/src/features/investments/enums/operation_type.dart';
-import 'package:investhelper/src/features/investments/models/create_goal_model.dart';
-import 'package:investhelper/src/features/investments/models/create_operation_model.dart';
-import 'package:investhelper/src/features/investments/models/operation_model.dart';
+import '../enums/category_enum.dart';
+import '../enums/operation_type.dart';
+import '../models/create_goal_model.dart';
+import '../models/create_operation_model.dart';
+import '../models/operation_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/exceptions/app_exception.dart';

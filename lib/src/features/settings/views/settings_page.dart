@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:investhelper/src/core/widgets/button_tile_widget.dart';
-import 'package:investhelper/src/core/widgets/dropdown_button_widget.dart';
-import 'package:investhelper/src/core/widgets/section_widget.dart';
-import 'package:investhelper/src/core/enums/language_enum.dart';
-import 'package:investhelper/src/features/auth/views/auth_page.dart';
+import '../../../core/widgets/button_tile_widget.dart';
+import '../../../core/widgets/dropdown_button_widget.dart';
+import '../../../core/widgets/section_widget.dart';
+import '../../../core/enums/language_enum.dart';
+import '../../auth/views/auth_page.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/models/user_model.dart';

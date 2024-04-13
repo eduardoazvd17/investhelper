@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
+import 'category_indicator_widget.dart';
 
 import '../enums/category_enum.dart';
 import '../models/investment_model.dart';

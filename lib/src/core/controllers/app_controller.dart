@@ -1,5 +1,5 @@
-import 'package:investhelper/src/core/enums/language_enum.dart';
-import 'package:investhelper/src/core/exceptions/app_exception.dart';
+import '../enums/language_enum.dart';
+import '../exceptions/app_exception.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
 

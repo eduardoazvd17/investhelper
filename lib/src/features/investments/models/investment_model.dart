@@ -2,7 +2,7 @@
 
 import 'dart:math';
 
-import 'package:investhelper/src/features/investments/enums/category_enum.dart';
+import '../enums/category_enum.dart';
 
 class InvestmentModel {
   final String id;

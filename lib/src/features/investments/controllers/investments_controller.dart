@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:investhelper/src/core/exceptions/app_exception.dart';
-import 'package:investhelper/src/core/models/user_model.dart';
-import 'package:investhelper/src/features/investments/enums/operation_type.dart';
-import 'package:investhelper/src/features/investments/models/create_goal_model.dart';
-import 'package:investhelper/src/features/investments/models/daily_tip_dto.dart';
+import '../../../core/exceptions/app_exception.dart';
+import '../../../core/models/user_model.dart';
+import '../enums/operation_type.dart';
+import '../models/create_goal_model.dart';
+import '../models/daily_tip_dto.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:investhelper/src/l10n/l10n.dart';
+import '../../l10n/l10n.dart';
 
 enum ThemeEnum {
   system,

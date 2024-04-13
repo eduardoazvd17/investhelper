@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:investhelper/src/core/widgets/loading_widget.dart';
-import 'package:investhelper/src/core/widgets/modal_bottom_sheet_widget.dart';
-import 'package:investhelper/src/features/investments/controllers/investments_controller.dart';
-import 'package:investhelper/src/features/investments/models/create_goal_model.dart';
+import '../../../core/widgets/loading_widget.dart';
+import '../../../core/widgets/modal_bottom_sheet_widget.dart';
+import '../controllers/investments_controller.dart';
+import '../models/create_goal_model.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/empty_list_widget.dart';

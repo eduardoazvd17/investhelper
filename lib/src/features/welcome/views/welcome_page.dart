@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:investhelper/src/core/controllers/app_controller.dart';
-import 'package:investhelper/src/features/settings/views/settings_page.dart';
-import 'package:investhelper/src/l10n/l10n.dart';
+import '../../../core/controllers/app_controller.dart';
+import '../../settings/views/settings_page.dart';
+import '../../../l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../auth/views/auth_page.dart';

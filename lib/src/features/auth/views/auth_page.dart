@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:investhelper/src/core/exceptions/app_exception.dart';
-import 'package:investhelper/src/features/auth/models/login_user_model.dart';
-import 'package:investhelper/src/features/auth/models/register_user_model.dart';
-import 'package:investhelper/src/features/investments/views/investments_page.dart';
-import 'package:investhelper/src/l10n/l10n.dart';
+import '../../../core/exceptions/app_exception.dart';
+import '../models/login_user_model.dart';
+import '../models/register_user_model.dart';
+import '../../investments/views/investments_page.dart';
+import '../../../l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../core/widgets/dialog_widget.dart';
