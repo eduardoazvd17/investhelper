@@ -318,6 +318,12 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         final int? custodialPosition =
             _selectedInvestment.value?.custodialPosition;
 
+        if (custodialPosition != null &&
+            custodialPosition == 0 &&
+            _selectedOperationType == OperationTypeEnum.sale) {
+          _selectedOperationType = null;
+        }
+
         return DropdownButtonWidget<OperationTypeEnum>(
           label: AppLocalizations.of(context)!.operationType,
           hint: AppLocalizations.of(context)!.operationTypeHint,
