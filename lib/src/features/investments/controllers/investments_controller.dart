@@ -146,6 +146,10 @@ abstract class InvestmentsControllerBase with Store {
     try {
       await _service.deleteInvestment(investmentModel);
       investments.remove(investmentModel);
+
+      thisMonthOperations.removeWhere(
+        (e) => e.investmentId == investmentModel.id,
+      );
     } on AppException catch (_) {
       rethrow;
     }
