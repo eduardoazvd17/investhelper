@@ -297,29 +297,9 @@ class InvestmentsService {
     InvestmentModel investmentModel,
     bool isRemoving,
   ) {
-    if (operationModel.type == OperationTypeEnum.purchase && !isRemoving ||
-        operationModel.type == OperationTypeEnum.sale && isRemoving) {
-      if (investmentModel.category.needPositionAndAveragePrice) {
-        final int custodialPosition =
-            investmentModel.custodialPosition + operationModel.quantity;
-        final double averagePrice = ((investmentModel.custodialPosition *
-                    investmentModel.averagePrice) +
-                (operationModel.quantity * operationModel.unitPrice)) /
-            custodialPosition;
-
-        return investmentModel.copyWith(
-          custodialPosition: custodialPosition,
-          averagePrice: averagePrice,
-        );
-      } else {
-        return investmentModel.copyWith(
-          amountInvested:
-              investmentModel.amountInvested + operationModel.totalPrice,
-        );
-      }
-    } else if (operationModel.type == OperationTypeEnum.sale && !isRemoving ||
-        operationModel.type == OperationTypeEnum.purchase && isRemoving) {
-      if (investmentModel.category.needPositionAndAveragePrice) {
+    if (operationModel.type == OperationTypeEnum.purchase &&
+        investmentModel.category.needPositionAndAveragePrice) {
+      if (isRemoving) {
         final int custodialPosition =
             investmentModel.custodialPosition - operationModel.quantity;
         final double averagePrice = ((investmentModel.custodialPosition *
@@ -332,9 +312,16 @@ class InvestmentsService {
           averagePrice: averagePrice,
         );
       } else {
+        final int custodialPosition =
+            investmentModel.custodialPosition + operationModel.quantity;
+        final double averagePrice = ((investmentModel.custodialPosition *
+                    investmentModel.averagePrice) +
+                (operationModel.quantity * operationModel.unitPrice)) /
+            custodialPosition;
+
         return investmentModel.copyWith(
-          amountInvested:
-              investmentModel.amountInvested - operationModel.totalPrice,
+          custodialPosition: custodialPosition,
+          averagePrice: averagePrice,
         );
       }
     } else {
