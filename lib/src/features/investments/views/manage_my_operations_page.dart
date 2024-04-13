@@ -158,32 +158,31 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
       ],
       children: [
         _investmentDropDownButton,
-        const SizedBox(height: 10),
-        _operationTypeDropDownButton,
-        const SizedBox(height: 10),
-        _operationDatePicker,
-        const SizedBox(height: 10),
         ValueListenableBuilder(
           valueListenable: _selectedInvestment,
           builder: (_, __, ___) {
             if (_selectedInvestment.value != null) {
-              if (_selectedInvestment
-                  .value!.category.needPositionAndAveragePrice) {
-                return Column(children: [
-                  Row(
-                    children: [
-                      Expanded(child: _quantityTextField),
-                      Expanded(child: _unitPriceTextField),
-                    ],
-                  ),
+              return Column(
+                children: [
                   const SizedBox(height: 10),
-                ]);
-              } else {
-                return Column(children: [
-                  _totalPriceTextField,
+                  _operationTypeDropDownButton,
                   const SizedBox(height: 10),
-                ]);
-              }
+                  _operationDatePicker,
+                  if (_selectedInvestment
+                      .value!.category.needPositionAndAveragePrice) ...[
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(child: _quantityTextField),
+                        Expanded(child: _unitPriceTextField),
+                      ],
+                    ),
+                  ] else ...[
+                    const SizedBox(height: 10),
+                    _totalPriceTextField,
+                  ],
+                ],
+              );
             } else {
               return const SizedBox();
             }
@@ -313,30 +312,44 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         }).toList(),
       );
 
-  Widget get _operationTypeDropDownButton =>
-      DropdownButtonWidget<OperationTypeEnum>(
-        label: AppLocalizations.of(context)!.operationType,
-        hint: AppLocalizations.of(context)!.operationTypeHint,
-        value: _selectedOperationType,
-        onChanged: (operationType) {
-          setState(() => _selectedOperationType = operationType);
-          _quantityController.clear();
-          _unitPriceController.clear();
-          _totalPriceController.clear();
-        },
-        items: OperationTypeEnum.values.map((e) {
-          return DropdownMenuItem(
-            value: e,
-            child: Row(
-              children: [
-                Icon(e.icon, color: e.color),
-                const SizedBox(width: 10),
-                Text(e.getTitle(context)),
-              ],
-            ),
-          );
-        }).toList(),
-      );
+  Widget get _operationTypeDropDownButton => ValueListenableBuilder(
+      valueListenable: _selectedInvestment,
+      builder: (_, __, ___) {
+        final int? custodialPosition =
+            _selectedInvestment.value?.custodialPosition;
+
+        return DropdownButtonWidget<OperationTypeEnum>(
+          label: AppLocalizations.of(context)!.operationType,
+          hint: AppLocalizations.of(context)!.operationTypeHint,
+          value: _selectedOperationType,
+          onChanged: (operationType) {
+            setState(() => _selectedOperationType = operationType);
+            _quantityController.clear();
+            _unitPriceController.clear();
+            _totalPriceController.clear();
+          },
+          items: OperationTypeEnum.values.map((e) {
+            final bool isEnabled = custodialPosition == null ||
+                e == OperationTypeEnum.sale && custodialPosition > 0 ||
+                e == OperationTypeEnum.purchase;
+
+            return DropdownMenuItem(
+              value: e,
+              enabled: isEnabled,
+              child: Opacity(
+                opacity: isEnabled ? 1.0 : 0.5,
+                child: Row(
+                  children: [
+                    Icon(e.icon, color: e.color),
+                    const SizedBox(width: 10),
+                    Text(e.getTitle(context)),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        );
+      });
 
   Widget get _operationDatePicker => DatePickerWidget(
         label: AppLocalizations.of(context)!.operationDate,
