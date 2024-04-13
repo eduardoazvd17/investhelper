@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class ButtonTileWidget extends StatelessWidget {
   final String text;
-  final void Function() onTap;
+  final void Function()? onTap;
   final Color? color;
   final bool showBorder;
   final Color? backgroundColor;
@@ -19,13 +19,15 @@ class ButtonTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color color = this.color ??
-        Theme.of(context)
-            .elevatedButtonTheme
-            .style
-            ?.backgroundColor
-            ?.resolve(MaterialState.values.toSet()) ??
-        Theme.of(context).primaryColor;
+    final Color color = onTap == null
+        ? Colors.grey
+        : this.color ??
+            Theme.of(context)
+                .elevatedButtonTheme
+                .style
+                ?.backgroundColor
+                ?.resolve(MaterialState.values.toSet()) ??
+            Theme.of(context).primaryColor;
 
     return Padding(
       padding: const EdgeInsets.all(8),
@@ -34,7 +36,7 @@ class ButtonTileWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: Container(
           decoration: BoxDecoration(
-            color: backgroundColor,
+            color: onTap == null ? null : backgroundColor,
             border: showBorder ? Border.all(color: color) : null,
             borderRadius: BorderRadius.circular(10),
           ),

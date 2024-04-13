@@ -43,6 +43,9 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
     _unitPriceController = TextEditingController();
     _totalPriceController = TextEditingController();
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _shouldOpenAddOperationModal();
+    });
   }
 
   @override
@@ -54,9 +57,16 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
     super.dispose();
   }
 
-  Future<void> _addNewOperation() async {
+  _shouldOpenAddOperationModal() {
+    final args = ModalRoute.of(context)?.settings.arguments;
+    if (args != null && args is OperationTypeEnum) {
+      _addNewOperation(args);
+    }
+  }
+
+  Future<void> _addNewOperation([OperationTypeEnum? operationType]) async {
     _selectedInvestment.value = null;
-    _selectedOperationType = null;
+    _selectedOperationType = operationType;
     _selectedOperationDate = DateTime.now();
     _quantityController.clear();
     _unitPriceController.clear();

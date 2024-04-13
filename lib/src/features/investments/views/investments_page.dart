@@ -18,6 +18,7 @@ import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
+import '../enums/operation_type.dart';
 import '../widgets/category_listing_widget.dart';
 import '../widgets/investments_resume_card.dart';
 import 'manage_my_investments_page.dart';
@@ -186,13 +187,19 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 title: AppLocalizations.of(context)!.quickActions,
                 content: [
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context).pushNamed(
+                      ManageMyOperationsPage.routeName,
+                      arguments: OperationTypeEnum.purchase,
+                    ),
                     icon: const Icon(CupertinoIcons.arrow_up_right),
                     label: Text(
                         AppLocalizations.of(context)!.insertPurchaseOperation),
                   ),
                   TextButton.icon(
-                    onPressed: () {},
+                    onPressed: () => Navigator.of(context).pushNamed(
+                      ManageMyOperationsPage.routeName,
+                      arguments: OperationTypeEnum.sale,
+                    ),
                     icon: const Icon(CupertinoIcons.arrow_down_left),
                     label:
                         Text(AppLocalizations.of(context)!.insertSaleOperation),
@@ -407,15 +414,9 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 title: AppLocalizations.of(context)!.productsAndServices,
                 content: [
                   ButtonTileWidget(
-                    icon: CupertinoIcons.arrow_up_arrow_down,
-                    text: AppLocalizations.of(context)!
-                        .operationsHistoryPerformed,
-                    onTap: () {},
-                  ),
-                  ButtonTileWidget(
                     icon: CupertinoIcons.doc_chart,
                     text: AppLocalizations.of(context)!.exportInvestmentReport,
-                    onTap: () {},
+                    onTap: null,
                   ),
                 ],
               ),
