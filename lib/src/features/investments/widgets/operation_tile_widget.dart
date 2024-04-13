@@ -5,6 +5,7 @@ import 'package:investhelper/src/features/investments/models/operation_model.dar
 import 'package:investhelper/src/features/investments/widgets/category_indicator_widget.dart';
 
 import '../../../core/utils/app_formatter.dart';
+import '../../../l10n/l10n.dart';
 import '../models/investment_model.dart';
 
 class OperationTileWidget extends StatefulWidget {
@@ -87,12 +88,27 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                             const SizedBox(height: 10),
                             if (widget.operation.quantity > 0 &&
                                 widget.operation.unitPrice > 0) ...[
-                              FittedBox(
-                                child: Text(
-                                  widget.hideValues
-                                      ? '••••••••'
-                                      : '${widget.operation.quantity}x ${AppFormatter.currency(widget.operation.unitPrice)}',
-                                ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  FittedBox(
+                                    child: Text(
+                                      widget.hideValues
+                                          ? '••••••••'
+                                          : '${widget.operation.quantity}x ${AppFormatter.currency(widget.operation.unitPrice)} ',
+                                    ),
+                                  ),
+                                  if (widget.operation.type ==
+                                      OperationTypeEnum.sale)
+                                    FittedBox(
+                                      child: Text(
+                                        widget.hideValues
+                                            ? '••••••••'
+                                            : ' ${AppLocalizations.of(context)!.profitDisplay(AppFormatter.currency(widget.operation.profit))}',
+                                      ),
+                                    ),
+                                ],
                               ),
                               const SizedBox(height: 5),
                             ],

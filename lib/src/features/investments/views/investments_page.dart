@@ -174,6 +174,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                         thisMonthPurchasesTotal:
                             controller.thisMonthPurchasesTotal,
                         thisMonthSalesTotal: controller.thisMonthSalesTotal,
+                        thisMonthProfitTotal: controller.thisMonthProfitTotal,
                         hideValues: controller.hideValues,
                         toggleHideValues: controller.toggleHideValues,
                       );

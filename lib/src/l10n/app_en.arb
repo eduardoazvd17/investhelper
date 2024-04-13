@@ -238,5 +238,14 @@
                 "type": "String"
             }
         }
+    },
+    "salesOperationProfit": "Profit from sales operation",
+    "profitDisplay": "Profit: {value}",
+    "@profitDisplay": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
     }
 }

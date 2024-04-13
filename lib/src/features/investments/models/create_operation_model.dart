@@ -10,6 +10,7 @@ class CreateOperationModel {
   final int quantity;
   final double unitPrice;
   final double totalPrice;
+  final double lastAveragePrice;
 
   CreateOperationModel({
     required this.userId,
@@ -19,6 +20,7 @@ class CreateOperationModel {
     required this.quantity,
     required this.unitPrice,
     required this.totalPrice,
+    required this.lastAveragePrice,
   });
 
   Map<String, dynamic> toMap() {
@@ -30,6 +32,7 @@ class CreateOperationModel {
       'quantity': quantity,
       'unitPrice': unitPrice,
       'totalPrice': totalPrice,
+      'lastAveragePrice': lastAveragePrice,
     };
   }
 }

@@ -223,6 +223,7 @@ class InvestmentsService {
         quantity: createOperationModel.quantity,
         unitPrice: createOperationModel.unitPrice,
         totalPrice: createOperationModel.totalPrice,
+        lastAveragePrice: createOperationModel.lastAveragePrice,
       );
 
       final InvestmentModel newInvestment = _updateInvestmentValues(

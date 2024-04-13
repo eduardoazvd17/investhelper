@@ -9,6 +9,7 @@ class InvestmentsResumeCard extends StatelessWidget {
   final double totalInvestments;
   final double thisMonthPurchasesTotal;
   final double thisMonthSalesTotal;
+  final double thisMonthProfitTotal;
   final bool hideValues;
   final void Function() toggleHideValues;
 
@@ -17,6 +18,7 @@ class InvestmentsResumeCard extends StatelessWidget {
     required this.totalInvestments,
     required this.thisMonthPurchasesTotal,
     required this.thisMonthSalesTotal,
+    required this.thisMonthProfitTotal,
     required this.hideValues,
     required this.toggleHideValues,
   });
@@ -82,6 +84,15 @@ class InvestmentsResumeCard extends StatelessWidget {
                   : AppFormatter.currency(thisMonthSalesTotal),
               operationType: OperationTypeEnum.sale,
             ),
+            const SizedBox(height: 5),
+            _movimentationTile(
+              context: context,
+              tooltip: AppLocalizations.of(context)!.salesOperationProfit,
+              value: hideValues
+                  ? '${AppFormatter.currencyPrefix} ••••••'
+                  : AppFormatter.currency(thisMonthProfitTotal),
+              operationType: null,
+            ),
           ],
         ),
       ),
@@ -92,7 +103,7 @@ class InvestmentsResumeCard extends StatelessWidget {
     required BuildContext context,
     required String tooltip,
     required String value,
-    required OperationTypeEnum operationType,
+    required OperationTypeEnum? operationType,
   }) {
     return Tooltip(
       message: tooltip,
@@ -100,9 +111,9 @@ class InvestmentsResumeCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Icon(
-            operationType.icon,
+            operationType?.icon ?? Icons.attach_money,
             size: 30,
-            color: operationType.color,
+            color: operationType?.color,
           ),
           FittedBox(
             child: Text(
@@ -110,7 +121,7 @@ class InvestmentsResumeCard extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .titleLarge
-                  ?.copyWith(color: operationType.color),
+                  ?.copyWith(color: operationType?.color),
             ),
           ),
         ],

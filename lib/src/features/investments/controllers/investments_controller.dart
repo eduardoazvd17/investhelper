@@ -236,4 +236,14 @@ abstract class InvestmentsControllerBase with Store {
     }
     return 0.0;
   }
+
+  @computed
+  double get thisMonthProfitTotal {
+    if (thisMonthOperations.isNotEmpty) {
+      return thisMonthOperations.isEmpty
+          ? 0.0
+          : thisMonthOperations.map((e) => e.profit).reduce((a, b) => a + b);
+    }
+    return 0.0;
+  }
 }

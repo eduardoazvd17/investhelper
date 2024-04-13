@@ -12,8 +12,16 @@ class OperationModel {
   final int quantity;
   final double unitPrice;
   final double totalPrice;
+  final double lastAveragePrice;
 
   double get value => max(quantity * unitPrice, totalPrice);
+
+  double get profit {
+    if (type == OperationTypeEnum.sale && lastAveragePrice > 0) {
+      return (unitPrice - lastAveragePrice) * quantity;
+    }
+    return 0.0;
+  }
 
   OperationModel({
     required this.id,
@@ -24,6 +32,7 @@ class OperationModel {
     required this.quantity,
     required this.unitPrice,
     required this.totalPrice,
+    required this.lastAveragePrice,
   });
 
   OperationModel copyWith({
@@ -32,6 +41,7 @@ class OperationModel {
     int? quantity,
     double? unitPrice,
     double? totalPrice,
+    double? lastAveragePrice,
   }) {
     return OperationModel(
       id: id,
@@ -42,6 +52,7 @@ class OperationModel {
       quantity: quantity ?? this.quantity,
       unitPrice: unitPrice ?? this.unitPrice,
       totalPrice: totalPrice ?? this.totalPrice,
+      lastAveragePrice: lastAveragePrice ?? this.lastAveragePrice,
     );
   }
 
@@ -54,6 +65,7 @@ class OperationModel {
       'quantity': quantity,
       'unitPrice': unitPrice,
       'totalPrice': totalPrice,
+      'lastAveragePrice': lastAveragePrice,
     };
   }
 
@@ -67,6 +79,7 @@ class OperationModel {
       quantity: map['quantity'] as int,
       unitPrice: map['unitPrice'] as double,
       totalPrice: map['totalPrice'] as double,
+      lastAveragePrice: map['lastAveragePrice'] as double,
     );
   }
 }

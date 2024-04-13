@@ -238,5 +238,14 @@
         "type": "String"
       }
     }
+  },
+  "salesOperationProfit": "Lucro nas operações de venda",
+  "profitDisplay": "Lucro: {value}",
+  "@profitDisplay": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   }
 }

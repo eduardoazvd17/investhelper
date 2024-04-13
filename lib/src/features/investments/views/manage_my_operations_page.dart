@@ -101,6 +101,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                   quantity: quantity,
                   unitPrice: unitPrice,
                   totalPrice: totalPrice,
+                  lastAveragePrice: _selectedInvestment.value!.averagePrice,
                 ),
                 _selectedInvestment.value!,
               );
