@@ -250,5 +250,7 @@
     },
     "dontHaveInvestmentsTitle": "No investments added",
     "dontHaveInvestmentsMessage": "You do not have added investments yet.\n\nAdd your investments to start entering operations.",
-    "goToMyInvestments": "Go to my investments"
+    "goToMyInvestments": "Go to my investments",
+    "invalidValueErrorTitle": "Invalid value",
+    "invalidValueErrorMessage": "Check the values entered in the form, the values must always be greater than 0."
 }

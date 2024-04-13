@@ -117,11 +117,11 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
 
               if (needQuantityAndUnitPrice &&
                   (quantity <= 0 || unitPrice <= 0)) {
-                throw AppException(AppExceptionType.emptyFields);
+                throw AppException(AppExceptionType.invalidValue);
               }
 
               if (!needQuantityAndUnitPrice && totalPrice <= 0) {
-                throw AppException(AppExceptionType.emptyFields);
+                throw AppException(AppExceptionType.invalidValue);
               }
 
               await widget.controller.addNewOperation(

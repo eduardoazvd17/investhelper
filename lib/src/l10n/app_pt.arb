@@ -250,5 +250,7 @@
   },
   "dontHaveInvestmentsTitle": "Nenhum investimento adicionado",
   "dontHaveInvestmentsMessage": "Você ainda não possui investimentos adicionados.\n\nAdicione seus investimentos para começar a inserir as operações.",
-  "goToMyInvestments": "Ir para meus investimentos"
+  "goToMyInvestments": "Ir para meus investimentos",
+  "invalidValueErrorTitle": "Valor inválido",
+  "invalidValueErrorMessage": "Verifique os valores inseridos no formulário, os valores devem ser sempre maiores que 0."
 }
