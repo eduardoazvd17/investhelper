@@ -165,7 +165,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               return Column(
                 children: [
                   const SizedBox(height: 10),
-                  _operationTypeDropDownButton,
+                  _operationTypeDropDownButton(_selectedInvestment.value),
                   const SizedBox(height: 10),
                   _operationDatePicker,
                   if (_selectedInvestment
@@ -312,50 +312,58 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         }).toList(),
       );
 
-  Widget get _operationTypeDropDownButton => ValueListenableBuilder(
-      valueListenable: _selectedInvestment,
-      builder: (_, __, ___) {
-        final int? custodialPosition =
-            _selectedInvestment.value?.custodialPosition;
-
-        if (custodialPosition != null &&
-            custodialPosition == 0 &&
+  Widget _operationTypeDropDownButton(InvestmentModel? selectedInvestment) {
+    if (selectedInvestment != null) {
+      if (selectedInvestment.category.needPositionAndAveragePrice) {
+        final int custodialPosition = selectedInvestment.custodialPosition;
+        if (custodialPosition == 0 &&
             _selectedOperationType == OperationTypeEnum.sale) {
           _selectedOperationType = null;
         }
+      } else {
+        final double amountInvested = selectedInvestment.amountInvested;
+        if (amountInvested == 0 &&
+            _selectedOperationType == OperationTypeEnum.sale) {
+          _selectedOperationType = null;
+        }
+      }
+    }
 
-        return DropdownButtonWidget<OperationTypeEnum>(
-          label: AppLocalizations.of(context)!.operationType,
-          hint: AppLocalizations.of(context)!.operationTypeHint,
-          value: _selectedOperationType,
-          onChanged: (operationType) {
-            setState(() => _selectedOperationType = operationType);
-            _quantityController.clear();
-            _unitPriceController.clear();
-            _totalPriceController.clear();
-          },
-          items: OperationTypeEnum.values.map((e) {
-            final bool isEnabled = custodialPosition == null ||
-                e == OperationTypeEnum.sale && custodialPosition > 0 ||
-                e == OperationTypeEnum.purchase;
+    return DropdownButtonWidget<OperationTypeEnum>(
+      label: AppLocalizations.of(context)!.operationType,
+      hint: AppLocalizations.of(context)!.operationTypeHint,
+      value: _selectedOperationType,
+      onChanged: (operationType) {
+        setState(() => _selectedOperationType = operationType);
+        _quantityController.clear();
+        _unitPriceController.clear();
+        _totalPriceController.clear();
+      },
+      items: OperationTypeEnum.values.map((e) {
+        final bool disableSale = selectedInvestment != null
+            ? (selectedInvestment.category.needPositionAndAveragePrice
+                ? selectedInvestment.custodialPosition <= 0
+                : selectedInvestment.amountInvested <= 0)
+            : false;
+        final bool isEnabled = disableSale ? e != OperationTypeEnum.sale : true;
 
-            return DropdownMenuItem(
-              value: e,
-              enabled: isEnabled,
-              child: Opacity(
-                opacity: isEnabled ? 1.0 : 0.5,
-                child: Row(
-                  children: [
-                    Icon(e.icon, color: e.color),
-                    const SizedBox(width: 10),
-                    Text(e.getTitle(context)),
-                  ],
-                ),
-              ),
-            );
-          }).toList(),
+        return DropdownMenuItem(
+          value: e,
+          enabled: isEnabled,
+          child: Opacity(
+            opacity: isEnabled ? 1.0 : 0.5,
+            child: Row(
+              children: [
+                Icon(e.icon, color: e.color),
+                const SizedBox(width: 10),
+                Text(e.getTitle(context)),
+              ],
+            ),
+          ),
         );
-      });
+      }).toList(),
+    );
+  }
 
   Widget get _operationDatePicker => DatePickerWidget(
         label: AppLocalizations.of(context)!.operationDate,
