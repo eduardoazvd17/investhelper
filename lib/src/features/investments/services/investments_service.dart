@@ -167,23 +167,14 @@ class InvestmentsService {
   Future<bool> deleteInvestment(InvestmentModel investmentModel) async {
     try {
       final batch = _firestore.batch();
-
-      final investmentReference =
-          _firestore.collection('investments').doc(investmentModel.id);
-      batch.delete(investmentReference);
-
+      batch.delete(
+        _firestore.collection('investments').doc(investmentModel.id),
+      );
       await _firestore
           .collection('operations')
           .where('investmentId', isEqualTo: investmentModel.id)
           .get()
-          .then(
-        (query) {
-          for (var element in query.docs) {
-            batch.delete(element.reference);
-          }
-        },
-      );
-
+          .then((query) => query.docs.map((e) => batch.delete(e.reference)));
       await batch.commit();
       return true;
     } on AppException catch (_) {
