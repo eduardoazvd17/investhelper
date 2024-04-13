@@ -1,9 +1,9 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'category_indicator_widget.dart';
 
 import '../enums/category_enum.dart';
 import '../models/investment_model.dart';
+import 'category_indicator_widget.dart';
 
 class DiversityChartWidget extends StatelessWidget {
   final double totalInvestments;

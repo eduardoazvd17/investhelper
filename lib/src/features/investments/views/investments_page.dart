@@ -1,26 +1,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+
+import '../../../core/utils/widget_event_handler.dart';
+import '../../../core/widgets/advise_message_widget.dart';
 import '../../../core/widgets/app_auth_overlay.dart';
 import '../../../core/widgets/button_tile_widget.dart';
+import '../../../core/widgets/loading_widget.dart';
+import '../../../core/widgets/section_widget.dart';
+import '../../../l10n/l10n.dart';
+import '../../settings/views/settings_page.dart';
 import '../controllers/investments_controller.dart';
-import 'manage_my_goals_page.dart';
-import 'manage_my_operations_page.dart';
+import '../widgets/category_listing_widget.dart';
 import '../widgets/daily_tips_widget.dart';
 import '../widgets/diversity_chart_widget.dart';
 import '../widgets/goal_tile_widget.dart';
 import '../widgets/investment_tile_widget.dart';
-import '../widgets/operation_tile_widget.dart';
-import '../../settings/views/settings_page.dart';
-import '../../../l10n/l10n.dart';
-
-import '../../../core/utils/widget_event_handler.dart';
-import '../../../core/widgets/advise_message_widget.dart';
-import '../../../core/widgets/loading_widget.dart';
-import '../../../core/widgets/section_widget.dart';
-import '../widgets/category_listing_widget.dart';
 import '../widgets/investments_resume_card.dart';
+import '../widgets/operation_tile_widget.dart';
+import 'manage_my_goals_page.dart';
 import 'manage_my_investments_page.dart';
+import 'manage_my_operations_page.dart';
 
 class InvestmentsPage extends StatefulWidget {
   static const String routeName = "/investments";

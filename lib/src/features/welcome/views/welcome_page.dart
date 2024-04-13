@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../core/controllers/app_controller.dart';
-import '../../settings/views/settings_page.dart';
-import '../../../l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../core/controllers/app_controller.dart';
+import '../../../l10n/l10n.dart';
 import '../../auth/views/auth_page.dart';
+import '../../settings/views/settings_page.dart';
 
 class WelcomePage extends StatefulWidget {
   static const String routeName = "/welcome";

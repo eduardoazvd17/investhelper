@@ -1,11 +1,12 @@
-import '../enums/language_enum.dart';
-import '../exceptions/app_exception.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
 
+import '../enums/language_enum.dart';
 import '../enums/theme_enum.dart';
+import '../exceptions/app_exception.dart';
 import '../models/user_model.dart';
 import '../services/app_service.dart';
+
 part 'app_controller.g.dart';
 
 class AppController = AppControllerBase with _$AppController;

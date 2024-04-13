@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../enums/category_enum.dart';
-import 'category_indicator_widget.dart';
-import '../../../l10n/l10n.dart';
 
 import '../../../core/utils/app_formatter.dart';
+import '../../../l10n/l10n.dart';
+import '../enums/category_enum.dart';
 import '../models/investment_model.dart';
+import 'category_indicator_widget.dart';
 
 class InvestmentTileWidget extends StatefulWidget {
   final InvestmentModel investment;

@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../enums/operation_type.dart';
-import '../models/operation_model.dart';
-import 'category_indicator_widget.dart';
 
 import '../../../core/utils/app_formatter.dart';
 import '../../../l10n/l10n.dart';
+import '../enums/operation_type.dart';
 import '../models/investment_model.dart';
+import '../models/operation_model.dart';
+import 'category_indicator_widget.dart';
 
 class OperationTileWidget extends StatefulWidget {
   final OperationModel operation;

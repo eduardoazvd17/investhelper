@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import '../../../core/widgets/button_tile_widget.dart';
-import '../../../core/widgets/dropdown_button_widget.dart';
-import '../../../core/widgets/section_widget.dart';
-import '../../../core/enums/language_enum.dart';
-import '../../auth/views/auth_page.dart';
 
 import '../../../core/controllers/app_controller.dart';
-import '../../../core/models/user_model.dart';
-import '../../../core/widgets/dialog_widget.dart';
-import '../../../l10n/l10n.dart';
+import '../../../core/enums/language_enum.dart';
 import '../../../core/enums/theme_enum.dart';
+import '../../../core/models/user_model.dart';
+import '../../../core/widgets/button_tile_widget.dart';
+import '../../../core/widgets/dialog_widget.dart';
+import '../../../core/widgets/dropdown_button_widget.dart';
+import '../../../core/widgets/section_widget.dart';
+import '../../../l10n/l10n.dart';
+import '../../auth/views/auth_page.dart';
 import '../../investments/views/investments_page.dart';
 import 'change_personal_data_page.dart';
 

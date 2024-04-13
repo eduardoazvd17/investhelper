@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import '../exceptions/app_exception.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
 import '../enums/language_enum.dart';
 import '../enums/theme_enum.dart';
+import '../exceptions/app_exception.dart';
 import '../models/user_model.dart';
 
 class AppService {

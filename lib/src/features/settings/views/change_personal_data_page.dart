@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/modal_bottom_sheet_widget.dart';
 import '../../../core/widgets/section_widget.dart';
-import '../../../l10n/l10n.dart';
-
 import '../../../core/widgets/text_field_widget.dart';
+import '../../../l10n/l10n.dart';
 
 class ChangePersonalDataPage extends StatefulWidget {
   static const String routeName = "/changePersonalData";

@@ -3,14 +3,14 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'button_tile_widget.dart';
-import '../../features/investments/views/investments_page.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../features/auth/views/auth_page.dart';
+import '../../features/investments/views/investments_page.dart';
 import '../../l10n/l10n.dart';
 import '../controllers/app_controller.dart';
 import '../utils/widget_event_handler.dart';
+import 'button_tile_widget.dart';
 import 'dialog_widget.dart';
 
 class AppAuthOverlay extends StatefulWidget {

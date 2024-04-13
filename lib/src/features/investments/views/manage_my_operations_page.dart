@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import '../../../core/widgets/dropdown_button_widget.dart';
-import '../controllers/investments_controller.dart';
-import '../enums/category_enum.dart';
-import '../models/create_operation_model.dart';
-import '../models/investment_model.dart';
-import '../models/operation_model.dart';
-import 'manage_my_investments_page.dart';
-import '../widgets/category_indicator_widget.dart';
-import '../widgets/operation_tile_widget.dart';
+
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/utils/app_formatter.dart';
 import '../../../core/widgets/date_picker_widget.dart';
 import '../../../core/widgets/dialog_widget.dart';
+import '../../../core/widgets/dropdown_button_widget.dart';
 import '../../../core/widgets/empty_list_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/modal_bottom_sheet_widget.dart';
 import '../../../core/widgets/text_field_widget.dart';
 import '../../../l10n/l10n.dart';
+import '../controllers/investments_controller.dart';
+import '../enums/category_enum.dart';
 import '../enums/operation_type.dart';
+import '../models/create_operation_model.dart';
+import '../models/investment_model.dart';
+import '../models/operation_model.dart';
+import '../widgets/category_indicator_widget.dart';
+import '../widgets/operation_tile_widget.dart';
+import 'manage_my_investments_page.dart';
 
 class ManageMyOperationsPage extends StatefulWidget {
   static const routeName = "/manageMyOperations";

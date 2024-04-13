@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../../core/models/user_model.dart';
+
 import '../../../core/exceptions/app_exception.dart';
+import '../../../core/models/user_model.dart';
 import '../models/login_user_model.dart';
 import '../models/register_user_model.dart';
 

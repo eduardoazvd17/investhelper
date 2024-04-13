@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../../../core/exceptions/app_exception.dart';
-import '../models/login_user_model.dart';
-import '../models/register_user_model.dart';
-import '../../investments/views/investments_page.dart';
-import '../../../l10n/l10n.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../core/exceptions/app_exception.dart';
 import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/text_field_widget.dart';
+import '../../../l10n/l10n.dart';
+import '../../investments/views/investments_page.dart';
 import '../../settings/views/settings_page.dart';
 import '../controllers/auth_controller.dart';
+import '../models/login_user_model.dart';
+import '../models/register_user_model.dart';
 
 class AuthPage extends StatefulWidget {
   static const String routeName = "/auth";

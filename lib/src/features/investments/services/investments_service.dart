@@ -1,18 +1,19 @@
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '../enums/category_enum.dart';
-import '../enums/operation_type.dart';
-import '../models/create_goal_model.dart';
-import '../models/create_operation_model.dart';
-import '../models/operation_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/exceptions/app_exception.dart';
+import '../enums/category_enum.dart';
+import '../enums/operation_type.dart';
+import '../models/create_goal_model.dart';
 import '../models/create_investment_model.dart';
+import '../models/create_operation_model.dart';
 import '../models/daily_tip_dto.dart';
 import '../models/goal_model.dart';
 import '../models/investment_model.dart';
+import '../models/operation_model.dart';
 
 class InvestmentsService {
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;

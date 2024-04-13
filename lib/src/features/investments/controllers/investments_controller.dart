@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
+
+import '../../../core/controllers/app_controller.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/models/user_model.dart';
 import '../enums/operation_type.dart';
 import '../models/create_goal_model.dart';
-import '../models/daily_tip_dto.dart';
-import 'package:mobx/mobx.dart';
-
-import '../../../core/controllers/app_controller.dart';
 import '../models/create_investment_model.dart';
 import '../models/create_operation_model.dart';
+import '../models/daily_tip_dto.dart';
 import '../models/goal_model.dart';
 import '../models/investment_model.dart';
 import '../models/operation_model.dart';
 import '../services/investments_service.dart';
+
 part 'investments_controller.g.dart';
 
 class InvestmentsController = InvestmentsControllerBase
