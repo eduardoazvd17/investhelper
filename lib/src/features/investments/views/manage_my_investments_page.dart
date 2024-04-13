@@ -42,6 +42,12 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
     _amountInvestedController = TextEditingController();
     _selectedCategory = ValueNotifier<CategoryEnum?>(null);
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final args = ModalRoute.of(context)?.settings.arguments;
+      if (args != null && args is bool && args) {
+        _addNewInvestment();
+      }
+    });
   }
 
   @override

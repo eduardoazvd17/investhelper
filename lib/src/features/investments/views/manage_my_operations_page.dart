@@ -44,8 +44,12 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
     _unitPriceController = TextEditingController();
     _totalPriceController = TextEditingController();
     super.initState();
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _shouldOpenAddOperationModal();
+      final args = ModalRoute.of(context)?.settings.arguments;
+      if (args != null && args is bool && args) {
+        _addNewOperation();
+      }
     });
   }
 
@@ -58,14 +62,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
     super.dispose();
   }
 
-  _shouldOpenAddOperationModal() {
-    final args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null && args is OperationTypeEnum) {
-      _addNewOperation(args);
-    }
-  }
-
-  Future<void> _addNewOperation([OperationTypeEnum? operationType]) async {
+  Future<void> _addNewOperation() async {
     if (widget.controller.investments.isEmpty) {
       DialogWidget.show(
         context,
@@ -88,7 +85,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
     }
 
     _selectedInvestment.value = null;
-    _selectedOperationType = operationType;
+    _selectedOperationType = null;
     _selectedOperationDate = DateTime.now();
     _quantityController.clear();
     _unitPriceController.clear();
@@ -165,7 +162,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               return Column(
                 children: [
                   const SizedBox(height: 10),
-                  _operationTypeDropDownButton(_selectedInvestment.value),
+                  _operationTypeDropDownButton,
                   const SizedBox(height: 10),
                   _operationDatePicker,
                   if (_selectedInvestment
@@ -312,67 +309,23 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         }).toList(),
       );
 
-  Widget _operationTypeDropDownButton(InvestmentModel? selectedInvestment) {
-    if (selectedInvestment != null) {
-      if (selectedInvestment.category.needPositionAndAveragePrice) {
-        final int custodialPosition = selectedInvestment.custodialPosition;
-        if (custodialPosition == 0 &&
-            _selectedOperationType == OperationTypeEnum.sale) {
-          _selectedOperationType = null;
-        }
-      } else {
-        final double amountInvested = selectedInvestment.amountInvested;
-        if (amountInvested == 0 &&
-            _selectedOperationType == OperationTypeEnum.sale) {
-          _selectedOperationType = null;
-        }
-      }
-    }
-
+  Widget get _operationTypeDropDownButton {
     return DropdownButtonWidget<OperationTypeEnum>(
       label: AppLocalizations.of(context)!.operationType,
       hint: AppLocalizations.of(context)!.operationTypeHint,
       value: _selectedOperationType,
       onChanged: (operationType) {
         setState(() => _selectedOperationType = operationType);
-        if (operationType == OperationTypeEnum.sale &&
-            selectedInvestment != null) {
-          if (selectedInvestment.category.needPositionAndAveragePrice) {
-            final int quantity =
-                int.tryParse(_quantityController.text.trim()) ?? 0;
-            if (quantity > selectedInvestment.custodialPosition) {
-              _quantityController.clear();
-              _unitPriceController.clear();
-            }
-          } else {
-            final double total =
-                double.tryParse(_totalPriceController.text.trim()) ?? 0;
-            if (total > selectedInvestment.amountInvested) {
-              _totalPriceController.clear();
-            }
-          }
-        }
       },
       items: OperationTypeEnum.values.map((e) {
-        final bool disableSale = selectedInvestment != null
-            ? (selectedInvestment.category.needPositionAndAveragePrice
-                ? selectedInvestment.custodialPosition <= 0
-                : selectedInvestment.amountInvested <= 0)
-            : false;
-        final bool isEnabled = disableSale ? e != OperationTypeEnum.sale : true;
-
         return DropdownMenuItem(
           value: e,
-          enabled: isEnabled,
-          child: Opacity(
-            opacity: isEnabled ? 1.0 : 0.5,
-            child: Row(
-              children: [
-                Icon(e.icon, color: e.color),
-                const SizedBox(width: 10),
-                Text(e.getTitle(context)),
-              ],
-            ),
+          child: Row(
+            children: [
+              Icon(e.icon, color: e.color),
+              const SizedBox(width: 10),
+              Text(e.getTitle(context)),
+            ],
           ),
         );
       }).toList(),
@@ -396,17 +349,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         hint: '0',
         controller: _quantityController,
         onChanged: (value) {
-          final int position =
-              _selectedInvestment.value?.custodialPosition ?? 0;
-          final int intValue =
-              int.tryParse(AppFormatter.textFieldInteger(value)) ?? 0;
-          if (intValue > position &&
-              _selectedOperationType == OperationTypeEnum.sale) {
-            _quantityController.text =
-                AppFormatter.textFieldInteger(position.toString());
-          } else {
-            _quantityController.text = AppFormatter.textFieldInteger(value);
-          }
+          _quantityController.text = AppFormatter.textFieldInteger(value);
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
         textCapitalization: TextCapitalization.words,
@@ -438,18 +381,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         hint: '0.00',
         controller: _totalPriceController,
         onChanged: (value) {
-          final double amountInvested =
-              _selectedInvestment.value?.amountInvested ?? 0;
-          final double doubleValue =
-              double.tryParse(AppFormatter.textFieldCurrency(value)) ?? 0;
-          if (doubleValue > amountInvested &&
-              _selectedOperationType == OperationTypeEnum.sale) {
-            _totalPriceController.text = AppFormatter.textFieldCurrency(
-              amountInvested.toStringAsFixed(2),
-            );
-          } else {
-            _totalPriceController.text = AppFormatter.textFieldCurrency(value);
-          }
+          _totalPriceController.text = AppFormatter.textFieldCurrency(value);
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textCapitalization: TextCapitalization.words,

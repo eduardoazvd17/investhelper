@@ -18,7 +18,6 @@ import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
-import '../enums/operation_type.dart';
 import '../widgets/category_listing_widget.dart';
 import '../widgets/investments_resume_card.dart';
 import 'manage_my_investments_page.dart';
@@ -188,21 +187,23 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 content: [
                   TextButton.icon(
                     onPressed: () => Navigator.of(context).pushNamed(
-                      ManageMyOperationsPage.routeName,
-                      arguments: OperationTypeEnum.purchase,
+                      ManageMyInvestmentsPage.routeName,
+                      arguments: true,
                     ),
-                    icon: const Icon(CupertinoIcons.arrow_up_right),
+                    icon: const Icon(CupertinoIcons.chart_bar),
                     label: Text(
-                        AppLocalizations.of(context)!.insertPurchaseOperation),
+                      AppLocalizations.of(context)!.addNewInvestment,
+                    ),
                   ),
                   TextButton.icon(
                     onPressed: () => Navigator.of(context).pushNamed(
                       ManageMyOperationsPage.routeName,
-                      arguments: OperationTypeEnum.sale,
+                      arguments: true,
                     ),
-                    icon: const Icon(CupertinoIcons.arrow_down_left),
-                    label:
-                        Text(AppLocalizations.of(context)!.insertSaleOperation),
+                    icon: const Icon(CupertinoIcons.arrow_up_arrow_down),
+                    label: Text(
+                      AppLocalizations.of(context)!.addNewOperation,
+                    ),
                   ),
                 ],
               ),
