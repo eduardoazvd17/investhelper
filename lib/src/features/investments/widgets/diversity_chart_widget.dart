@@ -21,9 +21,8 @@ class DiversityChartWidget extends StatelessWidget {
           investments.where((e) => e.category == category);
 
       if (investmentsByCategory.isNotEmpty) {
-        final double valueByCategory = investmentsByCategory
-            .map((e) => e.amountInvested)
-            .reduce((a, b) => a + b);
+        final double valueByCategory =
+            investmentsByCategory.map((e) => e.value).reduce((a, b) => a + b);
 
         result.putIfAbsent(
           category,
