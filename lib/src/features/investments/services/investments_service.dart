@@ -324,6 +324,17 @@ class InvestmentsService {
           averagePrice: averagePrice,
         );
       }
+    } else if (operationModel.type == OperationTypeEnum.sale &&
+        investmentModel.category.needPositionAndAveragePrice) {
+      if (isRemoving) {
+        final int custodialPosition =
+            investmentModel.custodialPosition + operationModel.quantity;
+        return investmentModel.copyWith(custodialPosition: custodialPosition);
+      } else {
+        final int custodialPosition =
+            investmentModel.custodialPosition - operationModel.quantity;
+        return investmentModel.copyWith(custodialPosition: custodialPosition);
+      }
     } else {
       return investmentModel;
     }
