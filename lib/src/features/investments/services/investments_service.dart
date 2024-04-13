@@ -232,12 +232,9 @@ class InvestmentsService {
 
         final List<OperationModel> operations = await loadOperations(
           investmentModel.userId,
-          startDate: operationIsAfter
-              ? investmentModel.creationDate
-              : createOperationModel.date,
-          endDate: operationIsAfter
-              ? createOperationModel.date
-              : investmentModel.creationDate,
+          startDate:
+              operationIsAfter ? investmentModel.creationDate : DateTime(2000),
+          endDate: createOperationModel.date,
           operationType: OperationTypeEnum.purchase,
         );
         operations.sort((a, b) => b.date.compareTo(a.date));
