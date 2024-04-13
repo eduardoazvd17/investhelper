@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   static const _kCenterTitle = true;
@@ -10,9 +11,11 @@ class AppTheme {
   static final _kSecondaryLightBackgroundColor = Colors.grey[100];
   static const _kDarkBackgroundColor = Colors.black;
   static final _kSecondaryDarkBackgroundColor = Colors.grey[900];
+  static final _kFontFamilly = GoogleFonts.ptSansNarrow().fontFamily;
 
   static ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
+        fontFamily: _kFontFamilly,
         primaryColor: _kPrimaryColor[200],
         scaffoldBackgroundColor: _kLightBackgroundColor,
         colorScheme: ColorScheme.fromSeed(
@@ -80,6 +83,7 @@ class AppTheme {
 
   static ThemeData get darkTheme => ThemeData(
         useMaterial3: true,
+        fontFamily: _kFontFamilly,
         primaryColor: _kPrimaryColor[200],
         scaffoldBackgroundColor: _kDarkBackgroundColor,
         colorScheme: ColorScheme.fromSeed(
