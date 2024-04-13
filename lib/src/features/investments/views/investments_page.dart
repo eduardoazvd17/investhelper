@@ -231,12 +231,12 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                       );
                     },
                   ),
-                  TextButton(
-                    onPressed: () => Navigator.of(context)
-                        .pushNamed(ManageMyInvestmentsPage.routeName),
-                    child:
-                        Text(AppLocalizations.of(context)!.accessMyInvestments),
-                  ),
+                  // TextButton(
+                  //   onPressed: () => Navigator.of(context)
+                  //       .pushNamed(ManageMyInvestmentsPage.routeName),
+                  //   child:
+                  //       Text(AppLocalizations.of(context)!.accessMyInvestments),
+                  // ),
                 ],
               ),
               SectionWidget(
