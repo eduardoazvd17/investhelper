@@ -335,9 +335,23 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
       value: _selectedOperationType,
       onChanged: (operationType) {
         setState(() => _selectedOperationType = operationType);
-        _quantityController.clear();
-        _unitPriceController.clear();
-        _totalPriceController.clear();
+        if (operationType == OperationTypeEnum.sale &&
+            selectedInvestment != null) {
+          if (selectedInvestment.category.needPositionAndAveragePrice) {
+            final int quantity =
+                int.tryParse(_quantityController.text.trim()) ?? 0;
+            if (quantity > selectedInvestment.custodialPosition) {
+              _quantityController.clear();
+              _unitPriceController.clear();
+            }
+          } else {
+            final double total =
+                double.tryParse(_totalPriceController.text.trim()) ?? 0;
+            if (total > selectedInvestment.amountInvested) {
+              _totalPriceController.clear();
+            }
+          }
+        }
       },
       items: OperationTypeEnum.values.map((e) {
         final bool disableSale = selectedInvestment != null
