@@ -75,9 +75,10 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               Navigator.of(context).pop();
               Navigator.of(context).pushNamed(
                 ManageMyInvestmentsPage.routeName,
+                arguments: true,
               );
             },
-            child: Text(AppLocalizations.of(context)!.goToMyInvestments),
+            child: Text(AppLocalizations.of(context)!.addNewInvestment),
           ),
         ),
         actionType: DialogWidgetActionType.close,
