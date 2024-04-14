@@ -80,18 +80,29 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                 throw AppException(AppExceptionType.emptyFields);
               }
 
+              final int custodialPosition =
+                  int.tryParse(_custodialPositionController.text) ?? 0;
+              final double averagePrice =
+                  double.tryParse(_averagePriceController.text) ?? 0;
+              final double amountInvested =
+                  double.tryParse(_amountInvestedController.text) ?? 0;
+              final DateTime now = DateTime.now();
+              final DateTime? lastOperationDate =
+                  (custodialPosition > 0 && averagePrice > 0 ||
+                          amountInvested > 0)
+                      ? now
+                      : null;
+
               await widget.controller.addNewInvestment(
                 CreateInvestmentModel(
                   userId: widget.controller.user!.id,
                   name: _nameController.text.trim(),
                   category: _selectedCategory.value!,
-                  custodialPosition:
-                      int.tryParse(_custodialPositionController.text) ?? 0,
-                  averagePrice:
-                      double.tryParse(_averagePriceController.text) ?? 0,
-                  amountInvested:
-                      double.tryParse(_amountInvestedController.text) ?? 0,
-                  creationDate: DateTime.now(),
+                  custodialPosition: custodialPosition,
+                  averagePrice: averagePrice,
+                  amountInvested: amountInvested,
+                  creationDate: now,
+                  lastOperationDate: lastOperationDate,
                 ),
               );
 

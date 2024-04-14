@@ -131,8 +131,6 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                   quantity: quantity,
                   unitPrice: unitPrice,
                   totalPrice: totalPrice,
-                  lastCustodialPosition:
-                      _selectedInvestment.value!.custodialPosition,
                   lastAveragePrice: _selectedInvestment.value!.averagePrice,
                 ),
                 _selectedInvestment.value!,
@@ -160,16 +158,16 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         _investmentDropDownButton,
         ValueListenableBuilder(
           valueListenable: _selectedInvestment,
-          builder: (_, __, ___) {
-            if (_selectedInvestment.value != null) {
+          builder: (_, selectedInvestment, ___) {
+            if (selectedInvestment != null) {
               return Column(
                 children: [
                   const SizedBox(height: 10),
-                  _operationTypeDropDownButton,
+                  _operationTypeDropDownButton(selectedInvestment),
                   const SizedBox(height: 10),
-                  _operationDatePicker,
-                  if (_selectedInvestment
-                      .value!.category.needPositionAndAveragePrice) ...[
+                  _operationDatePicker(selectedInvestment),
+                  if (selectedInvestment
+                      .category.needPositionAndAveragePrice) ...[
                     const SizedBox(height: 10),
                     Row(
                       children: [
@@ -312,36 +310,65 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         }).toList(),
       );
 
-  Widget get _operationTypeDropDownButton {
+  Widget _operationTypeDropDownButton(InvestmentModel selectedInvestment) {
     return DropdownButtonWidget<OperationTypeEnum>(
       label: AppLocalizations.of(context)!.operationType,
       hint: AppLocalizations.of(context)!.operationTypeHint,
       value: _selectedOperationType,
       onChanged: (operationType) {
         setState(() => _selectedOperationType = operationType);
+        if (operationType == OperationTypeEnum.sale) {
+          if (selectedInvestment.category.needPositionAndAveragePrice) {
+            final int quantity =
+                int.tryParse(_quantityController.text.trim()) ?? 0;
+            if (quantity > selectedInvestment.custodialPosition) {
+              _quantityController.clear();
+              _unitPriceController.clear();
+            }
+          } else {
+            final double total =
+                double.tryParse(_totalPriceController.text.trim()) ?? 0;
+            if (total > selectedInvestment.amountInvested) {
+              _totalPriceController.clear();
+            }
+          }
+        }
       },
       items: OperationTypeEnum.values.map((e) {
+        final bool disableSale =
+            (selectedInvestment.category.needPositionAndAveragePrice
+                ? selectedInvestment.custodialPosition <= 0
+                : selectedInvestment.amountInvested <= 0);
+        final bool isEnabled = disableSale ? e != OperationTypeEnum.sale : true;
+
         return DropdownMenuItem(
           value: e,
-          child: Row(
-            children: [
-              Icon(e.icon, color: e.color),
-              const SizedBox(width: 10),
-              Text(e.getTitle(context)),
-            ],
+          enabled: isEnabled,
+          child: Opacity(
+            opacity: isEnabled ? 1.0 : 0.5,
+            child: Row(
+              children: [
+                Icon(e.icon, color: e.color),
+                const SizedBox(width: 10),
+                Text(e.getTitle(context)),
+              ],
+            ),
           ),
         );
       }).toList(),
     );
   }
 
-  Widget get _operationDatePicker => DatePickerWidget(
-        label: AppLocalizations.of(context)!.operationDate,
-        value: _selectedOperationDate,
-        onChange: (date) => setState(() {
-          _selectedOperationDate = date;
-        }),
-      );
+  Widget _operationDatePicker(InvestmentModel? selectedInvestment) {
+    return DatePickerWidget(
+      label: AppLocalizations.of(context)!.operationDate,
+      value: _selectedOperationDate,
+      minDate: selectedInvestment?.lastOperationDate,
+      onChange: (date) => setState(() {
+        _selectedOperationDate = date;
+      }),
+    );
+  }
 
   Widget get _quantityTextField => TextFieldWidget(
         label: AppLocalizations.of(context)!.quantity,
@@ -352,7 +379,17 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         hint: '0',
         controller: _quantityController,
         onChanged: (value) {
-          _quantityController.text = AppFormatter.textFieldInteger(value);
+          final int position =
+              _selectedInvestment.value?.custodialPosition ?? 0;
+          final int intValue =
+              int.tryParse(AppFormatter.textFieldInteger(value)) ?? 0;
+          if (intValue > position &&
+              _selectedOperationType == OperationTypeEnum.sale) {
+            _quantityController.text =
+                AppFormatter.textFieldInteger(position.toString());
+          } else {
+            _quantityController.text = AppFormatter.textFieldInteger(value);
+          }
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
         textCapitalization: TextCapitalization.words,
@@ -384,7 +421,18 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         hint: '0.00',
         controller: _totalPriceController,
         onChanged: (value) {
-          _totalPriceController.text = AppFormatter.textFieldCurrency(value);
+          final double amountInvested =
+              _selectedInvestment.value?.amountInvested ?? 0;
+          final double doubleValue =
+              double.tryParse(AppFormatter.textFieldCurrency(value)) ?? 0;
+          if (doubleValue > amountInvested &&
+              _selectedOperationType == OperationTypeEnum.sale) {
+            _totalPriceController.text = AppFormatter.textFieldCurrency(
+              amountInvested.toStringAsFixed(2),
+            );
+          } else {
+            _totalPriceController.text = AppFormatter.textFieldCurrency(value);
+          }
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textCapitalization: TextCapitalization.words,

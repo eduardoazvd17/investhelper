@@ -9,6 +9,7 @@ class CreateInvestmentModel {
   final double averagePrice;
   final double amountInvested;
   final DateTime creationDate;
+  final DateTime? lastOperationDate;
 
   CreateInvestmentModel({
     required this.userId,
@@ -18,6 +19,7 @@ class CreateInvestmentModel {
     required this.averagePrice,
     required this.amountInvested,
     required this.creationDate,
+    required this.lastOperationDate,
   });
 
   Map<String, dynamic> toMap() {
@@ -29,6 +31,7 @@ class CreateInvestmentModel {
       'averagePrice': averagePrice,
       'amountInvested': amountInvested,
       'creationDate': creationDate.millisecondsSinceEpoch,
+      'lastOperationDate': lastOperationDate?.millisecondsSinceEpoch,
     };
   }
 }

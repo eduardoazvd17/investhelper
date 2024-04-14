@@ -6,11 +6,13 @@ import '../utils/app_formatter.dart';
 class DatePickerWidget extends StatefulWidget {
   final String label;
   final DateTime value;
+  final DateTime? minDate;
   final void Function(DateTime) onChange;
   const DatePickerWidget({
     super.key,
     required this.label,
     required this.value,
+    this.minDate,
     required this.onChange,
   });
 
@@ -59,19 +61,35 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
                   DateTime? selectedDate = await showDatePicker(
                     context: context,
                     currentDate: _selectedDate,
-                    firstDate: DateTime(2000),
+                    firstDate: widget.minDate ?? DateTime(2000),
                     lastDate: now,
                   );
 
                   if (selectedDate != null) {
-                    selectedDate = DateTime(
-                      selectedDate.year,
-                      selectedDate.month,
-                      selectedDate.day,
-                      now.hour,
-                      now.minute,
-                      now.second,
-                    );
+                    if (widget.minDate != null &&
+                        widget.minDate!.month == selectedDate.year &&
+                        widget.minDate!.month == selectedDate.month &&
+                        widget.minDate!.day == selectedDate.day) {
+                      selectedDate = DateTime(
+                        selectedDate.year,
+                        selectedDate.month,
+                        selectedDate.day,
+                        widget.minDate!.hour,
+                        widget.minDate!.minute,
+                        widget.minDate!.second,
+                        widget.minDate!.millisecond + 1,
+                      );
+                    } else {
+                      selectedDate = DateTime(
+                        selectedDate.year,
+                        selectedDate.month,
+                        selectedDate.day,
+                        now.hour,
+                        now.minute,
+                        now.second,
+                        now.millisecond,
+                      );
+                    }
                   }
 
                   setState(() {

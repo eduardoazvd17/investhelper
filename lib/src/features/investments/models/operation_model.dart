@@ -12,7 +12,6 @@ class OperationModel {
   final int quantity;
   final double unitPrice;
   final double totalPrice;
-  final int lastCustodialPosition;
   final double lastAveragePrice;
 
   double get value => max(quantity * unitPrice, totalPrice);
@@ -33,7 +32,6 @@ class OperationModel {
     required this.quantity,
     required this.unitPrice,
     required this.totalPrice,
-    required this.lastCustodialPosition,
     required this.lastAveragePrice,
   });
 
@@ -43,7 +41,6 @@ class OperationModel {
     int? quantity,
     double? unitPrice,
     double? totalPrice,
-    int? lastCustodialPosition,
     double? lastAveragePrice,
   }) {
     return OperationModel(
@@ -55,8 +52,6 @@ class OperationModel {
       quantity: quantity ?? this.quantity,
       unitPrice: unitPrice ?? this.unitPrice,
       totalPrice: totalPrice ?? this.totalPrice,
-      lastCustodialPosition:
-          lastCustodialPosition ?? this.lastCustodialPosition,
       lastAveragePrice: lastAveragePrice ?? this.lastAveragePrice,
     );
   }
@@ -70,7 +65,6 @@ class OperationModel {
       'quantity': quantity,
       'unitPrice': unitPrice,
       'totalPrice': totalPrice,
-      'lastCustodialPosition': lastCustodialPosition,
       'lastAveragePrice': lastAveragePrice,
     };
   }
@@ -85,7 +79,6 @@ class OperationModel {
       quantity: map['quantity'] as int,
       unitPrice: map['unitPrice'] as double,
       totalPrice: map['totalPrice'] as double,
-      lastCustodialPosition: map['lastCustodialPosition'] as int,
       lastAveragePrice: map['lastAveragePrice'] as double,
     );
   }

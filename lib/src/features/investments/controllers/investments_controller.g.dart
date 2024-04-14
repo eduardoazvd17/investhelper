@@ -44,6 +44,13 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
           Computed<double>(() => super.thisMonthSalesTotal,
               name: 'InvestmentsControllerBase.thisMonthSalesTotal'))
       .value;
+  Computed<double>? _$thisMonthProfitTotalComputed;
+
+  @override
+  double get thisMonthProfitTotal => (_$thisMonthProfitTotalComputed ??=
+          Computed<double>(() => super.thisMonthProfitTotal,
+              name: 'InvestmentsControllerBase.thisMonthProfitTotal'))
+      .value;
 
   late final _$isLoadingAtom =
       Atom(name: 'InvestmentsControllerBase.isLoading', context: context);
@@ -165,6 +172,65 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
     return _$editGoalAsyncAction.run(() => super.editGoal(goalModel));
   }
 
+  late final _$deleteGoalAsyncAction =
+      AsyncAction('InvestmentsControllerBase.deleteGoal', context: context);
+
+  @override
+  Future<void> deleteGoal(GoalModel goalModel) {
+    return _$deleteGoalAsyncAction.run(() => super.deleteGoal(goalModel));
+  }
+
+  late final _$addNewInvestmentAsyncAction = AsyncAction(
+      'InvestmentsControllerBase.addNewInvestment',
+      context: context);
+
+  @override
+  Future<void> addNewInvestment(CreateInvestmentModel createInvestmentModel) {
+    return _$addNewInvestmentAsyncAction
+        .run(() => super.addNewInvestment(createInvestmentModel));
+  }
+
+  late final _$editInvestmentAsyncAction =
+      AsyncAction('InvestmentsControllerBase.editInvestment', context: context);
+
+  @override
+  Future<void> editInvestment(InvestmentModel investmentModel) {
+    return _$editInvestmentAsyncAction
+        .run(() => super.editInvestment(investmentModel));
+  }
+
+  late final _$deleteInvestmentAsyncAction = AsyncAction(
+      'InvestmentsControllerBase.deleteInvestment',
+      context: context);
+
+  @override
+  Future<void> deleteInvestment(InvestmentModel investmentModel) {
+    return _$deleteInvestmentAsyncAction
+        .run(() => super.deleteInvestment(investmentModel));
+  }
+
+  late final _$addNewOperationAsyncAction = AsyncAction(
+      'InvestmentsControllerBase.addNewOperation',
+      context: context);
+
+  @override
+  Future<void> addNewOperation(CreateOperationModel createOperationModel,
+      InvestmentModel investmentModel) {
+    return _$addNewOperationAsyncAction.run(
+        () => super.addNewOperation(createOperationModel, investmentModel));
+  }
+
+  late final _$deleteOperationAsyncAction = AsyncAction(
+      'InvestmentsControllerBase.deleteOperation',
+      context: context);
+
+  @override
+  Future<void> deleteOperation(
+      OperationModel operationModel, InvestmentModel investmentModel) {
+    return _$deleteOperationAsyncAction
+        .run(() => super.deleteOperation(operationModel, investmentModel));
+  }
+
   late final _$InvestmentsControllerBaseActionController =
       ActionController(name: 'InvestmentsControllerBase', context: context);
 
@@ -192,7 +258,8 @@ user: ${user},
 shouldRequestAuth: ${shouldRequestAuth},
 totalInvestments: ${totalInvestments},
 thisMonthPurchasesTotal: ${thisMonthPurchasesTotal},
-thisMonthSalesTotal: ${thisMonthSalesTotal}
+thisMonthSalesTotal: ${thisMonthSalesTotal},
+thisMonthProfitTotal: ${thisMonthProfitTotal}
     ''';
   }
 }

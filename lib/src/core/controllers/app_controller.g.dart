@@ -166,6 +166,24 @@ mixin _$AppController on AppControllerBase, Store {
     return _$initializeAsyncAction.run(() => super.initialize());
   }
 
+  late final _$_biometricsSecurityCheckAsyncAction = AsyncAction(
+      'AppControllerBase._biometricsSecurityCheck',
+      context: context);
+
+  @override
+  Future<void> _biometricsSecurityCheck() {
+    return _$_biometricsSecurityCheckAsyncAction
+        .run(() => super._biometricsSecurityCheck());
+  }
+
+  late final _$changeUserNameAsyncAction =
+      AsyncAction('AppControllerBase.changeUserName', context: context);
+
+  @override
+  Future<void> changeUserName(String name) {
+    return _$changeUserNameAsyncAction.run(() => super.changeUserName(name));
+  }
+
   late final _$logoutAsyncAction =
       AsyncAction('AppControllerBase.logout', context: context);
 

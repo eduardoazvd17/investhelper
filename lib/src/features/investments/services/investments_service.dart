@@ -167,7 +167,8 @@ class InvestmentsService {
 
   Future<bool> deleteInvestment(InvestmentModel investmentModel) async {
     try {
-      final batch = _firestore.batch();
+      final WriteBatch batch = _firestore.batch();
+
       final investmentReference =
           _firestore.collection('investments').doc(investmentModel.id);
       batch.delete(investmentReference);
@@ -204,11 +205,13 @@ class InvestmentsService {
           .where('userId', isEqualTo: userId);
 
       if (startDate != null || endDate != null) {
-        query = query.where(
-          'date',
-          isGreaterThanOrEqualTo: startDate?.millisecondsSinceEpoch,
-          isLessThanOrEqualTo: endDate?.millisecondsSinceEpoch,
-        );
+        query = query
+            .where(
+              'date',
+              isGreaterThanOrEqualTo: startDate?.millisecondsSinceEpoch,
+              isLessThanOrEqualTo: endDate?.millisecondsSinceEpoch,
+            )
+            .orderBy('date', descending: descending);
       }
       if (investmentId != null) {
         query = query.where('investmentId', isEqualTo: investmentId);
@@ -219,7 +222,6 @@ class InvestmentsService {
       if (limit != null) {
         query = query.limit(limit);
       }
-      query.orderBy('date', descending: descending);
 
       final QuerySnapshot<Map<String, dynamic>> queryResult = await query.get();
       final operations = queryResult.docs.map((doc) {
@@ -243,58 +245,6 @@ class InvestmentsService {
           _firestore.collection('operations').doc();
       await reference.set(createOperationModel.toMap());
 
-      final int lastCustodialPosition;
-      final double lastAveragePrice;
-      if (investmentModel.category.needPositionAndAveragePrice &&
-          createOperationModel.type == OperationTypeEnum.sale) {
-        final List<OperationModel> afterPurchases = await loadOperations(
-          investmentModel.userId,
-          investmentId: investmentModel.id,
-          startDate: createOperationModel.date,
-          operationType: OperationTypeEnum.purchase,
-          limit: 1,
-        );
-
-        if (afterPurchases.isNotEmpty) {
-          final List<OperationModel> beforePurchases = await loadOperations(
-            investmentModel.userId,
-            investmentId: investmentModel.id,
-            endDate: createOperationModel.date,
-            operationType: OperationTypeEnum.purchase,
-            limit: 1,
-            descending: true,
-          );
-
-          if (beforePurchases.isNotEmpty) {
-            final double purchaseLastAveragePrice =
-                beforePurchases.first.lastAveragePrice;
-            if (purchaseLastAveragePrice == 0) {
-              lastCustodialPosition = beforePurchases.first.quantity;
-              lastAveragePrice = beforePurchases.first.unitPrice;
-            } else {
-              final int custodialPosition = beforePurchases.first.quantity +
-                  createOperationModel.quantity;
-              final double averagePrice = ((beforePurchases.first.quantity *
-                          beforePurchases.first.unitPrice) +
-                      (createOperationModel.quantity *
-                          createOperationModel.unitPrice)) /
-                  custodialPosition;
-              lastCustodialPosition = custodialPosition;
-              lastAveragePrice = averagePrice;
-            }
-          } else {
-            lastCustodialPosition = createOperationModel.lastCustodialPosition;
-            lastAveragePrice = createOperationModel.lastAveragePrice;
-          }
-        } else {
-          lastCustodialPosition = createOperationModel.lastCustodialPosition;
-          lastAveragePrice = createOperationModel.lastAveragePrice;
-        }
-      } else {
-        lastCustodialPosition = createOperationModel.lastCustodialPosition;
-        lastAveragePrice = createOperationModel.lastAveragePrice;
-      }
-
       final OperationModel operationModel = OperationModel(
         id: reference.id,
         userId: createOperationModel.userId,
@@ -304,15 +254,15 @@ class InvestmentsService {
         quantity: createOperationModel.quantity,
         unitPrice: createOperationModel.unitPrice,
         totalPrice: createOperationModel.totalPrice,
-        lastCustodialPosition: lastCustodialPosition,
-        lastAveragePrice: lastAveragePrice,
+        lastAveragePrice: investmentModel.averagePrice,
       );
 
-      final InvestmentModel newInvestment = _updateInvestmentValues(
+      final InvestmentModel newInvestment =
+          _updateInvestmentWithOperationValues(
         operationModel,
         investmentModel,
         false,
-      );
+      ).copyWith(lastOperationDate: operationModel.date);
       await editInvestment(newInvestment);
 
       return (operationModel, newInvestment);
@@ -330,11 +280,23 @@ class InvestmentsService {
     try {
       await _firestore.collection('operations').doc(operationModel.id).delete();
 
-      final InvestmentModel newInvestment = _updateInvestmentValues(
+      final List<OperationModel> beforeOperations = await loadOperations(
+        investmentModel.userId,
+        investmentId: investmentModel.id,
+        endDate: operationModel.date,
+        limit: 1,
+        descending: true,
+      );
+
+      final DateTime? lastOperationDate =
+          beforeOperations.isEmpty ? null : beforeOperations.first.date;
+
+      final InvestmentModel newInvestment =
+          _updateInvestmentWithOperationValues(
         operationModel,
         investmentModel,
         true,
-      );
+      ).copyWith(lastOperationDate: lastOperationDate);
       await editInvestment(newInvestment);
 
       return newInvestment;
@@ -374,7 +336,7 @@ class InvestmentsService {
     }
   }
 
-  InvestmentModel _updateInvestmentValues(
+  InvestmentModel _updateInvestmentWithOperationValues(
     OperationModel operationModel,
     InvestmentModel investmentModel,
     bool isRemoving,
@@ -389,6 +351,7 @@ class InvestmentsService {
                         investmentModel.averagePrice) -
                     (operationModel.quantity * operationModel.unitPrice)) /
                 custodialPosition;
+
             final bool isEmpty = custodialPosition <= 0 || averagePrice <= 0;
             return investmentModel.copyWith(
               custodialPosition: isEmpty ? 0 : custodialPosition,
@@ -412,6 +375,7 @@ class InvestmentsService {
           if (isRemoving) {
             final int custodialPosition =
                 investmentModel.custodialPosition + operationModel.quantity;
+
             final bool isEmpty =
                 custodialPosition <= 0 || investmentModel.averagePrice <= 0;
             return investmentModel.copyWith(
@@ -421,6 +385,7 @@ class InvestmentsService {
           } else {
             final int custodialPosition =
                 investmentModel.custodialPosition - operationModel.quantity;
+
             final bool isEmpty =
                 custodialPosition <= 0 || investmentModel.averagePrice <= 0;
             return investmentModel.copyWith(
@@ -435,12 +400,14 @@ class InvestmentsService {
           if (isRemoving) {
             final double amountInvested =
                 investmentModel.amountInvested - operationModel.totalPrice;
+
             return investmentModel.copyWith(
               amountInvested: amountInvested <= 0 ? 0 : amountInvested,
             );
           } else {
             final double amountInvested =
                 investmentModel.amountInvested + operationModel.totalPrice;
+
             return investmentModel.copyWith(
               amountInvested: amountInvested <= 0 ? 0 : amountInvested,
             );
@@ -449,12 +416,15 @@ class InvestmentsService {
           if (isRemoving) {
             final double amountInvested =
                 investmentModel.amountInvested + operationModel.totalPrice;
+
             return investmentModel.copyWith(
               amountInvested: amountInvested <= 0 ? 0 : amountInvested,
+              lastOperationDate: operationModel.date,
             );
           } else {
             final double amountInvested =
                 investmentModel.amountInvested - operationModel.totalPrice;
+
             return investmentModel.copyWith(
               amountInvested: amountInvested <= 0 ? 0 : amountInvested,
             );

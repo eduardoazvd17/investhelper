@@ -10,7 +10,6 @@ class CreateOperationModel {
   final int quantity;
   final double unitPrice;
   final double totalPrice;
-  final int lastCustodialPosition;
   final double lastAveragePrice;
 
   CreateOperationModel({
@@ -21,7 +20,6 @@ class CreateOperationModel {
     required this.quantity,
     required this.unitPrice,
     required this.totalPrice,
-    required this.lastCustodialPosition,
     required this.lastAveragePrice,
   });
 
@@ -34,7 +32,6 @@ class CreateOperationModel {
       'quantity': quantity,
       'unitPrice': unitPrice,
       'totalPrice': totalPrice,
-      'lastCustodialPosition': lastCustodialPosition,
       'lastAveragePrice': lastAveragePrice,
     };
   }

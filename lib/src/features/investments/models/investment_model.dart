@@ -13,6 +13,7 @@ class InvestmentModel {
   final double averagePrice;
   final double amountInvested;
   final DateTime creationDate;
+  final DateTime? lastOperationDate;
 
   double get value => max(custodialPosition * averagePrice, amountInvested);
 
@@ -33,6 +34,7 @@ class InvestmentModel {
     required this.averagePrice,
     required this.amountInvested,
     required this.creationDate,
+    this.lastOperationDate,
   });
 
   InvestmentModel copyWith({
@@ -40,6 +42,7 @@ class InvestmentModel {
     int? custodialPosition,
     double? averagePrice,
     double? amountInvested,
+    DateTime? lastOperationDate,
   }) {
     return InvestmentModel(
       id: id,
@@ -50,6 +53,7 @@ class InvestmentModel {
       averagePrice: averagePrice ?? this.averagePrice,
       amountInvested: amountInvested ?? this.amountInvested,
       creationDate: creationDate,
+      lastOperationDate: lastOperationDate,
     );
   }
 
@@ -62,6 +66,7 @@ class InvestmentModel {
       'averagePrice': averagePrice,
       'amountInvested': amountInvested,
       'creationDate': creationDate.millisecondsSinceEpoch,
+      'lastOperationDate': lastOperationDate?.millisecondsSinceEpoch,
     };
   }
 
@@ -76,6 +81,9 @@ class InvestmentModel {
       amountInvested: map['amountInvested'] as double,
       creationDate:
           DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
+      lastOperationDate: map['lastOperationDate'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['lastOperationDate'] as int)
+          : null,
     );
   }
 }
