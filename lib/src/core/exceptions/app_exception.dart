@@ -1,3 +1,4 @@
+import 'dart:developer' as developer;
 import 'package:flutter/material.dart';
 import '../../l10n/l10n.dart';
 
@@ -7,7 +8,11 @@ class AppException implements Exception {
   final AppExceptionType type;
   AppException([this.type = AppExceptionType.generic, String? exception]) {
     if (exception != null) {
-      debugPrint('[AppExcepion] $exception');
+      developer.log(
+        exception,
+        name: '[AppExcepion]',
+        time: DateTime.now(),
+      );
     }
   }
 
