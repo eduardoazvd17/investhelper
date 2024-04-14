@@ -53,6 +53,12 @@ class AppTheme {
           ),
         ),
         dialogTheme: DialogTheme(
+          actionsPadding: const EdgeInsets.only(
+            bottom: 25,
+            left: 25,
+            right: 25,
+            top: 0,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
@@ -122,6 +128,12 @@ class AppTheme {
           ),
         ),
         dialogTheme: DialogTheme(
+          actionsPadding: const EdgeInsets.only(
+            bottom: 25,
+            left: 25,
+            right: 25,
+            top: 0,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
