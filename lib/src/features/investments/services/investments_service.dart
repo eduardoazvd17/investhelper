@@ -228,22 +228,24 @@ class InvestmentsService {
       final double lastAveragePrice;
       if (investmentModel.category.needPositionAndAveragePrice &&
           createOperationModel.type == OperationTypeEnum.sale) {
-        final operationIsAfter =
+        final operationIsAfterCreation =
             createOperationModel.date.isAfter(investmentModel.creationDate);
 
-        final List<OperationModel> operations = await loadOperations(
+        final List<OperationModel> purchaseOperations = await loadOperations(
           investmentModel.userId,
-          startDate:
-              operationIsAfter ? investmentModel.creationDate : DateTime(2000),
+          startDate: operationIsAfterCreation
+              ? investmentModel.creationDate
+              : DateTime(2000),
           endDate: createOperationModel.date,
           operationType: OperationTypeEnum.purchase,
         );
-        operations.sort((a, b) => b.date.compareTo(a.date));
-        lastAveragePrice = operations.isEmpty
+        purchaseOperations.sort((a, b) => b.date.compareTo(a.date));
+
+        lastAveragePrice = purchaseOperations.isEmpty
             ? createOperationModel.lastAveragePrice
-            : ((operations.first.lastAveragePrice == 0)
-                ? operations.first.unitPrice
-                : operations.first.lastAveragePrice);
+            : ((purchaseOperations.first.lastAveragePrice == 0)
+                ? purchaseOperations.first.unitPrice
+                : purchaseOperations.first.lastAveragePrice);
       } else {
         lastAveragePrice = createOperationModel.lastAveragePrice;
       }
@@ -341,10 +343,10 @@ class InvestmentsService {
                         investmentModel.averagePrice) -
                     (operationModel.quantity * operationModel.unitPrice)) /
                 custodialPosition;
-
+            final bool isEmpty = custodialPosition <= 0 || averagePrice <= 0;
             return investmentModel.copyWith(
-              custodialPosition: custodialPosition < 0 ? 0 : custodialPosition,
-              averagePrice: custodialPosition < 0 ? 0 : averagePrice,
+              custodialPosition: isEmpty ? 0 : custodialPosition,
+              averagePrice: isEmpty ? 0 : averagePrice,
             );
           } else {
             final int custodialPosition =
@@ -354,23 +356,30 @@ class InvestmentsService {
                     (operationModel.quantity * operationModel.unitPrice)) /
                 custodialPosition;
 
+            final bool isEmpty = custodialPosition <= 0 || averagePrice <= 0;
             return investmentModel.copyWith(
-              custodialPosition: custodialPosition < 0 ? 0 : custodialPosition,
-              averagePrice: custodialPosition < 0 ? 0 : averagePrice,
+              custodialPosition: isEmpty ? 0 : custodialPosition,
+              averagePrice: isEmpty ? 0 : averagePrice,
             );
           }
         case OperationTypeEnum.sale:
           if (isRemoving) {
             final int custodialPosition =
                 investmentModel.custodialPosition + operationModel.quantity;
+            final bool isEmpty =
+                custodialPosition <= 0 || investmentModel.averagePrice <= 0;
             return investmentModel.copyWith(
-              custodialPosition: custodialPosition < 0 ? 0 : custodialPosition,
+              custodialPosition: isEmpty ? 0 : custodialPosition,
+              averagePrice: isEmpty ? 0 : investmentModel.averagePrice,
             );
           } else {
             final int custodialPosition =
                 investmentModel.custodialPosition - operationModel.quantity;
+            final bool isEmpty =
+                custodialPosition <= 0 || investmentModel.averagePrice <= 0;
             return investmentModel.copyWith(
-              custodialPosition: custodialPosition < 0 ? 0 : custodialPosition,
+              custodialPosition: isEmpty ? 0 : custodialPosition,
+              averagePrice: isEmpty ? 0 : investmentModel.averagePrice,
             );
           }
       }
@@ -380,24 +389,28 @@ class InvestmentsService {
           if (isRemoving) {
             final double amountInvested =
                 investmentModel.amountInvested - operationModel.totalPrice;
-            return investmentModel.copyWith(amountInvested: amountInvested);
+            return investmentModel.copyWith(
+              amountInvested: amountInvested <= 0 ? 0 : amountInvested,
+            );
           } else {
             final double amountInvested =
                 investmentModel.amountInvested + operationModel.totalPrice;
-            return investmentModel.copyWith(amountInvested: amountInvested);
+            return investmentModel.copyWith(
+              amountInvested: amountInvested <= 0 ? 0 : amountInvested,
+            );
           }
         case OperationTypeEnum.sale:
           if (isRemoving) {
             final double amountInvested =
                 investmentModel.amountInvested + operationModel.totalPrice;
             return investmentModel.copyWith(
-              amountInvested: amountInvested < 0 ? 0 : amountInvested,
+              amountInvested: amountInvested <= 0 ? 0 : amountInvested,
             );
           } else {
             final double amountInvested =
                 investmentModel.amountInvested - operationModel.totalPrice;
             return investmentModel.copyWith(
-              amountInvested: amountInvested < 0 ? 0 : amountInvested,
+              amountInvested: amountInvested <= 0 ? 0 : amountInvested,
             );
           }
       }
