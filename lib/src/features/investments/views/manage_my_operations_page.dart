@@ -45,7 +45,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
     _unitPriceController = TextEditingController();
     _totalPriceController = TextEditingController();
     super.initState();
-    
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final args = ModalRoute.of(context)?.settings.arguments;
       if (args != null && args is bool && args) {
@@ -131,6 +131,8 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                   quantity: quantity,
                   unitPrice: unitPrice,
                   totalPrice: totalPrice,
+                  lastCustodialPosition:
+                      _selectedInvestment.value!.custodialPosition,
                   lastAveragePrice: _selectedInvestment.value!.averagePrice,
                 ),
                 _selectedInvestment.value!,

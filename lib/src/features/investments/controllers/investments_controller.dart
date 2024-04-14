@@ -50,7 +50,11 @@ abstract class InvestmentsControllerBase with Store {
             now.year,
             now.month,
             DateUtils.getDaysInMonth(now.year, now.month),
+            23,
+            59,
+            59,
           ),
+          descending: true,
         ),
       );
     }

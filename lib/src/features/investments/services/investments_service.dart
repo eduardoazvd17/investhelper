@@ -187,27 +187,41 @@ class InvestmentsService {
 
   Future<List<OperationModel>> loadOperations(
     String userId, {
-    required DateTime startDate,
-    required DateTime endDate,
+    DateTime? startDate,
+    DateTime? endDate,
     OperationTypeEnum? operationType,
+    String? investmentId,
+    int? limit,
+    bool descending = false,
   }) async {
     try {
-      final Query<Map<String, dynamic>> dateQuery = _firestore
+      Query<Map<String, dynamic>> query = _firestore
           .collection('operations')
-          .where('userId', isEqualTo: userId)
-          .where('date',
-              isGreaterThanOrEqualTo: startDate.millisecondsSinceEpoch)
-          .where('date', isLessThanOrEqualTo: endDate.millisecondsSinceEpoch);
+          .where('userId', isEqualTo: userId);
 
-      final QuerySnapshot<Map<String, dynamic>> query = (operationType != null)
-          ? await dateQuery.where('type', isEqualTo: operationType.index).get()
-          : await dateQuery.get();
+      if (startDate != null || endDate != null) {
+        query = query.where(
+          'date',
+          isGreaterThanOrEqualTo: startDate?.millisecondsSinceEpoch,
+          isLessThanOrEqualTo: endDate?.millisecondsSinceEpoch,
+        );
+      }
+      if (investmentId != null) {
+        query = query.where('investmentId', isEqualTo: investmentId);
+      }
+      if (operationType != null) {
+        query = query.where('type', isEqualTo: operationType.index);
+      }
+      if (limit != null) {
+        query = query.limit(limit);
+      }
+      query.orderBy('date', descending: descending);
 
-      final operations = query.docs.map((doc) {
+      final QuerySnapshot<Map<String, dynamic>> queryResult = await query.get();
+      final operations = queryResult.docs.map((doc) {
         final Map<String, dynamic> data = doc.data()..['id'] = doc.id;
         return OperationModel.fromMap(data);
       }).toList();
-      operations.sort((a, b) => b.date.compareTo(a.date));
       return operations;
     } on AppException catch (_) {
       rethrow;
@@ -225,28 +239,55 @@ class InvestmentsService {
           _firestore.collection('operations').doc();
       await reference.set(createOperationModel.toMap());
 
+      final int lastCustodialPosition;
       final double lastAveragePrice;
       if (investmentModel.category.needPositionAndAveragePrice &&
           createOperationModel.type == OperationTypeEnum.sale) {
-        final operationIsAfterCreation =
-            createOperationModel.date.isAfter(investmentModel.creationDate);
-
-        final List<OperationModel> purchaseOperations = await loadOperations(
+        final List<OperationModel> afterPurchases = await loadOperations(
           investmentModel.userId,
-          startDate: operationIsAfterCreation
-              ? investmentModel.creationDate
-              : DateTime(2000),
-          endDate: createOperationModel.date,
+          investmentId: investmentModel.id,
+          startDate: createOperationModel.date,
           operationType: OperationTypeEnum.purchase,
+          limit: 1,
         );
-        purchaseOperations.sort((a, b) => b.date.compareTo(a.date));
 
-        lastAveragePrice = purchaseOperations.isEmpty
-            ? createOperationModel.lastAveragePrice
-            : ((purchaseOperations.first.lastAveragePrice == 0)
-                ? purchaseOperations.first.unitPrice
-                : purchaseOperations.first.lastAveragePrice);
+        if (afterPurchases.isNotEmpty) {
+          final List<OperationModel> beforePurchases = await loadOperations(
+            investmentModel.userId,
+            investmentId: investmentModel.id,
+            endDate: createOperationModel.date,
+            operationType: OperationTypeEnum.purchase,
+            limit: 1,
+            descending: true,
+          );
+
+          if (beforePurchases.isNotEmpty) {
+            final double purchaseLastAveragePrice =
+                beforePurchases.first.lastAveragePrice;
+            if (purchaseLastAveragePrice == 0) {
+              lastCustodialPosition = beforePurchases.first.quantity;
+              lastAveragePrice = beforePurchases.first.unitPrice;
+            } else {
+              final int custodialPosition = beforePurchases.first.quantity +
+                  createOperationModel.quantity;
+              final double averagePrice = ((beforePurchases.first.quantity *
+                          beforePurchases.first.unitPrice) +
+                      (createOperationModel.quantity *
+                          createOperationModel.unitPrice)) /
+                  custodialPosition;
+              lastCustodialPosition = custodialPosition;
+              lastAveragePrice = averagePrice;
+            }
+          } else {
+            lastCustodialPosition = createOperationModel.lastCustodialPosition;
+            lastAveragePrice = createOperationModel.lastAveragePrice;
+          }
+        } else {
+          lastCustodialPosition = createOperationModel.lastCustodialPosition;
+          lastAveragePrice = createOperationModel.lastAveragePrice;
+        }
       } else {
+        lastCustodialPosition = createOperationModel.lastCustodialPosition;
         lastAveragePrice = createOperationModel.lastAveragePrice;
       }
 
@@ -259,6 +300,7 @@ class InvestmentsService {
         quantity: createOperationModel.quantity,
         unitPrice: createOperationModel.unitPrice,
         totalPrice: createOperationModel.totalPrice,
+        lastCustodialPosition: lastCustodialPosition,
         lastAveragePrice: lastAveragePrice,
       );
 
