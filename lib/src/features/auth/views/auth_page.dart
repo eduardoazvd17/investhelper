@@ -138,7 +138,11 @@ class _AuthPageState extends State<AuthPage> {
     return GestureDetector(
       onTap: _hideKeyboard,
       child: Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
           actions: [
             IconButton(
               onPressed: () {
@@ -149,6 +153,7 @@ class _AuthPageState extends State<AuthPage> {
           ],
         ),
         body: SafeArea(
+          top: false,
           child: Center(
             child: SingleChildScrollView(
               child: Padding(
@@ -156,9 +161,12 @@ class _AuthPageState extends State<AuthPage> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SizedBox(
-                      height: 250,
-                      child: Lottie.asset('assets/animations/auth.json'),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 25),
+                      child: SizedBox(
+                        height: 250,
+                        child: Lottie.asset('assets/animations/auth.json'),
+                      ),
                     ),
                     switch (_currentPageState) {
                       AuthPageState.login => _loginStateContent,
