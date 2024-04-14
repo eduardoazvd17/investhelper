@@ -172,10 +172,8 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                 ),
               ),
               if (widget.onDelete != null &&
-                      widget.operation.date
-                          .isAfter(widget.investment.lastOperationDate!) ||
-                  widget.operation.date
-                      .isAtSameMomentAs(widget.investment.lastOperationDate!))
+                  !widget.operation.date
+                      .isBefore(widget.investment.lastOperationDate!))
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Column(

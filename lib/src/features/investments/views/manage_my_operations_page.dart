@@ -254,14 +254,20 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                 child: ListView(
                   children:
                       widget.controller.thisMonthOperations.map((operation) {
+                    final InvestmentModel investment =
+                        widget.controller.investments.firstWhere(
+                      (e) => e.id == operation.investmentId,
+                    );
+
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5),
                       child: OperationTileWidget(
                         operation: operation,
-                        investment: widget.controller.investments.firstWhere(
-                          (e) => e.id == operation.investmentId,
-                        ),
-                        onDelete: _deleteOperation,
+                        investment: investment,
+                        onDelete: operation.date
+                                .isBefore(investment.lastOperationDate!)
+                            ? null
+                            : _deleteOperation,
                       ),
                     );
                   }).toList(),

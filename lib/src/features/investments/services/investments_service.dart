@@ -278,8 +278,7 @@ class InvestmentsService {
     InvestmentModel investmentModel,
   ) async {
     try {
-      if (!operationModel.date
-          .isAtSameMomentAs(investmentModel.lastOperationDate!)) {
+      if (operationModel.date.isBefore(investmentModel.lastOperationDate!)) {
         throw AppException(AppExceptionType.generic);
       }
 
