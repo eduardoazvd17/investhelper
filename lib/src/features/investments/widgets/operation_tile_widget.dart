@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/utils/app_formatter.dart';
 import '../../../l10n/l10n.dart';
+import '../enums/category_enum.dart';
 import '../enums/operation_type.dart';
 import '../models/investment_model.dart';
 import '../models/operation_model.dart';
@@ -86,8 +87,8 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(height: 10),
-                            if (widget.operation.quantity > 0 &&
-                                widget.operation.unitPrice > 0) ...[
+                            if (widget.investment.category
+                                .needPositionAndAveragePrice) ...[
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -112,17 +113,44 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                               ),
                               const SizedBox(height: 5),
                             ],
-                            FittedBox(
-                              child: Text(
-                                AppFormatter.dateWithDay(
-                                  context,
-                                  widget.operation.date,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                FittedBox(
+                                  child: Text(
+                                    AppFormatter.dateWithDay(
+                                      context,
+                                      widget.operation.date,
+                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall
+                                        ?.copyWith(
+                                          color: Colors.grey,
+                                        ),
+                                  ),
                                 ),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.copyWith(color: Colors.grey),
-                              ),
+                                if (widget.operation.type ==
+                                        OperationTypeEnum.sale &&
+                                    widget.investment.category
+                                        .needPositionAndAveragePrice)
+                                  FittedBox(
+                                    child: Text(
+                                      AppLocalizations.of(context)!
+                                          .averagePriceDisplay(
+                                        AppFormatter.currency(
+                                          widget.operation.lastAveragePrice,
+                                        ),
+                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall
+                                          ?.copyWith(
+                                            color: Colors.grey,
+                                          ),
+                                    ),
+                                  ),
+                              ],
                             ),
                             const SizedBox(height: 10),
                           ],
