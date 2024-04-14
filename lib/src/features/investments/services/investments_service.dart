@@ -296,14 +296,15 @@ class InvestmentsService {
       final DateTime? lastOperationDate =
           beforeOperations.isEmpty ? null : beforeOperations.first.date;
 
-      final InvestmentModel newInvestment =
-          _updateInvestmentWithOperationValues(
-        operationModel,
-        investmentModel,
-        true,
-      ).copyWith(lastOperationDate: lastOperationDate);
+      final InvestmentModel newInvestment = await editInvestment(
+        _updateInvestmentWithOperationValues(
+          operationModel,
+          investmentModel,
+          true,
+        ).copyWith(lastOperationDate: lastOperationDate),
+      );
 
-      return await editInvestment(newInvestment);
+      return newInvestment;
     } on AppException catch (_) {
       rethrow;
     } catch (error) {
