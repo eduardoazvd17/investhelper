@@ -75,6 +75,7 @@ class AppTheme {
           backgroundColor: _kPrimaryColor,
         ),
         datePickerTheme: DatePickerThemeData(
+          backgroundColor: _kSecondaryLightBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
@@ -143,6 +144,7 @@ class AppTheme {
           backgroundColor: _kPrimaryColor[200],
         ),
         datePickerTheme: DatePickerThemeData(
+          backgroundColor: _kSecondaryDarkBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
