@@ -168,7 +168,7 @@
     "investmentNameHint": "Enter investment name or ticker",
     "category": "Category",
     "selectCategory": "Select category...",
-    "addInvestmentsValuesAdvise": "The information below is optional. Only fill in if you do not wish to manually enter your previous operations.\n\nAttention: Use data from your bank/investment brokerage. These values will be used along with your future operations to update your data.",
+    "addInvestmentsValuesAdvise": "The information below is optional. Only fill in if you do not wish to manually enter your previous operations.\n\nAttention: Use data from your bank/investment brokerage. These values will be used along with your future operations to update your data.\no\nWhen entering this data, you can only add more recent operations, the operations must be added in chronological order.",
     "startCustodialPosition": "Start position",
     "startAveragePrice": "Avg start price",
     "editInvestment": "Edit investment",

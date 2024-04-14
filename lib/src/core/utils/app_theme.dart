@@ -11,7 +11,7 @@ class AppTheme {
   static final _kSecondaryLightBackgroundColor = Colors.grey[100];
   static const _kDarkBackgroundColor = Colors.black;
   static final _kSecondaryDarkBackgroundColor = Colors.grey[900];
-  static final _kFontFamilly = GoogleFonts.ptSansNarrow().fontFamily;
+  static final _kFontFamilly = GoogleFonts.roboto().fontFamily;
 
   static ThemeData get lightTheme => ThemeData(
         useMaterial3: true,

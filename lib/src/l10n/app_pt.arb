@@ -168,7 +168,7 @@
   "investmentNameHint": "Insira o nome ou ticker do investimento",
   "category": "Categoria",
   "selectCategory": "Selecione a categoria...",
-  "addInvestmentsValuesAdvise": "As informações abaixo são opcionais. Preencha apenas se não desejar inserir manualmente suas operações anteriores.\n\nAtenção: Utilize dados do seu banco/corretora de investimentos. Esse valores serão utilizados junto com suas operações futuras para atualizar seus dados.",
+  "addInvestmentsValuesAdvise": "As informações abaixo são opcionais. Preencha apenas se não desejar inserir manualmente suas operações anteriores.\n\nAtenção: Utilize dados do seu banco/corretora de investimentos. Esse valores serão utilizados junto com suas operações futuras para atualizar seus dados.\n\nAo inserir esses dados, você só conseguirar adicionar operações mais recentes, as operações devem ser adicionadas em ordem cronológicas.",
   "startCustodialPosition": "Posição inicial",
   "startAveragePrice": "Preço médio inicial",
   "editInvestment": "Editar investimento",
