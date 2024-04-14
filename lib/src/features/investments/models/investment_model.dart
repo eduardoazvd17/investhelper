@@ -34,7 +34,7 @@ class InvestmentModel {
     required this.averagePrice,
     required this.amountInvested,
     required this.creationDate,
-    this.lastOperationDate,
+    required this.lastOperationDate,
   });
 
   InvestmentModel copyWith({
