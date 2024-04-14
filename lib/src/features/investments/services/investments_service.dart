@@ -140,6 +140,7 @@ class InvestmentsService {
         averagePrice: createInvestmentModel.averagePrice,
         amountInvested: createInvestmentModel.amountInvested,
         creationDate: createInvestmentModel.creationDate,
+        lastOperationDate: createInvestmentModel.lastOperationDate,
       );
     } on AppException catch (_) {
       rethrow;
