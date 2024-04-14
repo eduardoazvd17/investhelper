@@ -278,6 +278,11 @@ class InvestmentsService {
     InvestmentModel investmentModel,
   ) async {
     try {
+      if (!operationModel.date
+          .isAtSameMomentAs(investmentModel.lastOperationDate!)) {
+        throw AppException(AppExceptionType.generic);
+      }
+
       await _firestore.collection('operations').doc(operationModel.id).delete();
 
       final List<OperationModel> beforeOperations = await loadOperations(
