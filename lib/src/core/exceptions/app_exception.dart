@@ -10,7 +10,7 @@ class AppException implements Exception {
     if (exception != null) {
       developer.log(
         exception,
-        name: '[AppExcepion]',
+        name: 'AppExcepion',
         time: DateTime.now(),
       );
     }
