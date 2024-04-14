@@ -258,14 +258,13 @@ class InvestmentsService {
         lastAveragePrice: investmentModel.averagePrice,
       );
 
-      final InvestmentModel newInvestment =
-          _updateInvestmentWithOperationValues(
-        operationModel,
-        investmentModel,
-        false,
-      ).copyWith(lastOperationDate: operationModel.date);
-      await editInvestment(newInvestment);
-
+      final InvestmentModel newInvestment = await editInvestment(
+        _updateInvestmentWithOperationValues(
+          operationModel,
+          investmentModel,
+          false,
+        ).copyWith(lastOperationDate: operationModel.date),
+      );
       return (operationModel, newInvestment);
     } on AppException catch (_) {
       rethrow;
@@ -303,9 +302,8 @@ class InvestmentsService {
         investmentModel,
         true,
       ).copyWith(lastOperationDate: lastOperationDate);
-      await editInvestment(newInvestment);
 
-      return newInvestment;
+      return await editInvestment(newInvestment);
     } on AppException catch (_) {
       rethrow;
     } catch (error) {
