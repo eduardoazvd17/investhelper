@@ -45,7 +45,7 @@ class SettingsPage extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Column(
               children: [
                 Observer(

@@ -160,7 +160,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
       child: SingleChildScrollView(
         controller: _overviewScrollController,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -309,7 +309,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
       child: SingleChildScrollView(
         controller: _detailsScrollController,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -83,7 +83,7 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Observer(
               builder: (context) {
                 return Column(
