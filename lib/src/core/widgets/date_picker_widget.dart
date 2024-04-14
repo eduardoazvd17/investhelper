@@ -55,12 +55,25 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
               ),
               IconButton(
                 onPressed: () async {
-                  final DateTime? selectedDate = await showDatePicker(
+                  final now = DateTime.now();
+                  DateTime? selectedDate = await showDatePicker(
                     context: context,
                     currentDate: _selectedDate,
                     firstDate: DateTime(2000),
-                    lastDate: DateTime.now(),
+                    lastDate: now,
                   );
+
+                  if (selectedDate != null) {
+                    selectedDate = DateTime(
+                      selectedDate.year,
+                      selectedDate.month,
+                      selectedDate.day,
+                      now.hour,
+                      now.minute,
+                      now.second,
+                    );
+                  }
+
                   setState(() {
                     _selectedDate = selectedDate ?? DateTime.now();
                   });
