@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '../../../core/exceptions/app_exception.dart';
+import '../../../core/widgets/button_tile_widget.dart';
 import '../../../core/widgets/date_range_picker_widget.dart';
 import '../../../core/widgets/drawer_widget.dart';
 import '../../../core/widgets/dropdown_button_widget.dart';
@@ -45,25 +48,28 @@ class FiltersDrawerWidget extends StatelessWidget {
                 value: null,
                 child: Text(AppLocalizations.of(context)!.all),
               ),
-              ...controller.investments.map((element) {
-                return DropdownMenuItem(
-                  value: element.id,
-                  child: Row(
-                    children: [
-                      CategoryIndicatorWidget(
-                        category: element.category,
-                        textColor: Colors.grey,
-                        hideText: true,
-                      ),
-                      Expanded(child: Text(element.name)),
-                    ],
-                  ),
-                );
-              }),
+              ...controller.investments.map(
+                (element) {
+                  return DropdownMenuItem(
+                    value: element.id,
+                    child: Row(
+                      children: [
+                        CategoryIndicatorWidget(
+                          category: element.category,
+                          textColor: Colors.grey,
+                          hideText: true,
+                        ),
+                        Expanded(child: Text(element.name)),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ],
           );
         },
       ),
+      const SizedBox(height: 10),
       Observer(
         builder: (_) {
           return DropdownButtonWidget<OperationTypeEnum?>(
@@ -96,6 +102,7 @@ class FiltersDrawerWidget extends StatelessWidget {
           );
         },
       ),
+      const SizedBox(height: 10),
       Observer(
         builder: (_) {
           return DateRangePickerWidget(
@@ -107,6 +114,67 @@ class FiltersDrawerWidget extends StatelessWidget {
               controller.endDateFilter = endDate;
             },
           );
+        },
+      ),
+      const SizedBox(height: 10),
+      Observer(
+        builder: (_) {
+          return DropdownButtonWidget<bool>(
+            label: AppLocalizations.of(context)!.orderByDate,
+            value: controller.descendingFilter,
+            onChanged: (order) {
+              controller.descendingFilter = order ?? true;
+            },
+            items: [
+              DropdownMenuItem(
+                value: false,
+                child: Row(
+                  children: [
+                    const Icon(CupertinoIcons.sort_down),
+                    const SizedBox(width: 10),
+                    Text(AppLocalizations.of(context)!.ascending),
+                  ],
+                ),
+              ),
+              DropdownMenuItem(
+                value: true,
+                child: Row(
+                  children: [
+                    const Icon(CupertinoIcons.sort_up),
+                    const SizedBox(width: 10),
+                    Text(AppLocalizations.of(context)!.descending),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+      const SizedBox(height: 10),
+      ButtonTileWidget(
+        icon: Icons.done,
+        text: 'Aplicar filtros',
+        color: Theme.of(context).scaffoldBackgroundColor,
+        backgroundColor: Theme.of(context)
+            .elevatedButtonTheme
+            .style
+            ?.backgroundColor
+            ?.resolve(MaterialState.values.toSet()),
+        onTap: () async {
+          try {
+            Navigator.of(context).pop();
+            await controller.onChangeOperationsFilters();
+          } on AppException catch (error) {
+            if (context.mounted) error.show(context);
+          }
+        },
+      ),
+      ButtonTileWidget(
+        icon: Icons.restore,
+        text: 'Resetar',
+        onTap: () {
+          controller.resetOperationsFilters();
+          Navigator.of(context).pop();
         },
       ),
     ];

@@ -282,5 +282,8 @@
             }
         }
     },
-    "period": "Period (max 30 days)"
+    "period": "Period (max 30 days)",
+    "orderByDate": "Order by date",
+    "ascending": "Ascending",
+    "descending": "Descending"
 }
