@@ -127,7 +127,7 @@ class _ModalBottomSheetWidgetState extends State<ModalBottomSheetWidget> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 25,
+                      horizontal: 20,
                       vertical: 10,
                     ),
                     child: Column(children: widget.children),

@@ -265,7 +265,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 25),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Observer(
             builder: (_) {
               return Column(
