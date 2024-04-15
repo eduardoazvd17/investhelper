@@ -286,5 +286,6 @@
     "orderByDate": "Order by date",
     "ascending": "Ascending",
     "descending": "Descending",
+    "applyFilters": "Apply filters",
     "resetFilters": "Reset filters"
 }

@@ -240,9 +240,6 @@ abstract class InvestmentsControllerBase with Store {
     startDateFilter = DateTimeUtils.currentMonthFirstDay;
     endDateFilter = DateTime.now();
     descendingFilter = true;
-
-    operationsWithFilter.clear();
-    operationsWithFilter.addAll(thisMonthOperations);
   }
 
   @observable

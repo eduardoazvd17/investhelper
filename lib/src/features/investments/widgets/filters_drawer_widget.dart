@@ -151,6 +151,14 @@ class FiltersDrawerWidget extends StatelessWidget {
       const SizedBox(height: 20),
       Center(
         child: TextButton.icon(
+          icon: const Icon(Icons.done),
+          label: Text(AppLocalizations.of(context)!.applyFilters),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
+      const SizedBox(height: 20),
+      Center(
+        child: TextButton.icon(
           icon: const Icon(Icons.restore),
           label: Text(AppLocalizations.of(context)!.resetFilters),
           onPressed: () {
