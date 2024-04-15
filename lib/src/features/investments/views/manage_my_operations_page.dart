@@ -399,71 +399,59 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   }
 
   Widget get _enabledFiltersWidget {
-    return Observer(
-      builder: (_) {
-        final List<FiltersIndicatorBarItem> filters = [];
-
-        if (widget.controller.investmentIdFilter != null) {
-          final investment = widget.controller.investments.firstWhere(
-            (e) => e.id == widget.controller.investmentIdFilter!,
-          );
-          filters.add(
-            FiltersIndicatorBarItem(
-              icon: const Icon(CupertinoIcons.chart_bar),
-              title: investment.name,
-              onRemove: () {
-                widget.controller.investmentIdFilter = null;
-                widget.controller.onChangeOperationsFilters();
-              },
-            ),
-          );
-        }
-
-        if (widget.controller.operationTypeFilter != null) {
-          filters.add(
-            FiltersIndicatorBarItem(
-              icon: const Icon(CupertinoIcons.arrow_up_arrow_down),
-              title: widget.controller.operationTypeFilter!.getTitle(context),
-              onRemove: () {
-                widget.controller.operationTypeFilter = null;
-                widget.controller.onChangeOperationsFilters();
-              },
-            ),
-          );
-        }
-
-        filters.addAll(
-          [
-            FiltersIndicatorBarItem(
-              icon: const Icon(CupertinoIcons.calendar),
-              title: '${AppLocalizations.of(context)!.fromDisplay(
-                AppFormatter.date(
-                  context,
-                  widget.controller.startDateFilter,
-                ),
-              )} - ${AppLocalizations.of(context)!.toDisplay(
-                AppFormatter.date(
-                  context,
-                  widget.controller.endDateFilter,
-                ),
-              )}',
-            ),
-            FiltersIndicatorBarItem(
-              icon: widget.controller.descendingFilter
-                  ? const Icon(CupertinoIcons.sort_down)
-                  : const Icon(CupertinoIcons.sort_up),
-              title: widget.controller.descendingFilter
-                  ? AppLocalizations.of(context)!.descending
-                  : AppLocalizations.of(context)!.ascending,
-            ),
-          ],
-        );
-
-        return Builder(
-          builder: (context) {
+    return Builder(
+      builder: (context) {
+        return Observer(
+          builder: (_) {
             return FiltersIndicatorBarWidget(
-              filters,
               onOpenFilters: Scaffold.of(context).openEndDrawer,
+              [
+                if (widget.controller.investmentIdFilter != null)
+                  FiltersIndicatorBarItem(
+                    icon: const Icon(CupertinoIcons.chart_bar),
+                    title: widget.controller.investments
+                        .firstWhere(
+                          (e) => e.id == widget.controller.investmentIdFilter!,
+                        )
+                        .name,
+                    onRemove: () {
+                      widget.controller.investmentIdFilter = null;
+                      widget.controller.onChangeOperationsFilters();
+                    },
+                  ),
+                if (widget.controller.operationTypeFilter != null)
+                  FiltersIndicatorBarItem(
+                    icon: const Icon(CupertinoIcons.arrow_up_arrow_down),
+                    title: widget.controller.operationTypeFilter!
+                        .getTitle(context),
+                    onRemove: () {
+                      widget.controller.operationTypeFilter = null;
+                      widget.controller.onChangeOperationsFilters();
+                    },
+                  ),
+                FiltersIndicatorBarItem(
+                  icon: const Icon(CupertinoIcons.calendar),
+                  title: '${AppLocalizations.of(context)!.fromDisplay(
+                    AppFormatter.date(
+                      context,
+                      widget.controller.startDateFilter,
+                    ),
+                  )} - ${AppLocalizations.of(context)!.toDisplay(
+                    AppFormatter.date(
+                      context,
+                      widget.controller.endDateFilter,
+                    ),
+                  )}',
+                ),
+                FiltersIndicatorBarItem(
+                  icon: widget.controller.descendingFilter
+                      ? const Icon(CupertinoIcons.sort_down)
+                      : const Icon(CupertinoIcons.sort_up),
+                  title: widget.controller.descendingFilter
+                      ? AppLocalizations.of(context)!.descending
+                      : AppLocalizations.of(context)!.ascending,
+                ),
+              ],
             );
           },
         );
