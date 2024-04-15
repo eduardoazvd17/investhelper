@@ -42,7 +42,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          padding: const EdgeInsets.all(10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

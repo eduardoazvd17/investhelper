@@ -55,8 +55,8 @@ class _DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
           padding: const EdgeInsets.only(
             left: 15,
             right: 15,
-            top: 10,
-            bottom: 10,
+            top: 5,
+            bottom: 5,
           ),
           items: widget.items,
           onChanged: (value) {
