@@ -239,10 +239,11 @@ abstract class InvestmentsControllerBase with Store {
       investments.add(newInvestment);
       investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
 
+      final DateTime now = DateTime.now();
       final bool isAfterStartDate =
           !newOperation.date.isBefore(startDateFilter);
       final bool isBeforeEndDate =
-          DateTimeUtils.isSameDay(DateTime.now(), endDateFilter) ||
+          DateTimeUtils.isSameDay(now, endDateFilter) ||
               !newOperation.date.isAfter(endDateFilter);
       if (isAfterStartDate && isBeforeEndDate) {
         operationsWithFilter.add(newOperation);
@@ -255,8 +256,10 @@ abstract class InvestmentsControllerBase with Store {
         });
       }
 
-      thisMonthOperations.add(newOperation);
-      thisMonthOperations.sort((a, b) => b.date.compareTo(a.date));
+      if (DateTimeUtils.isSameMonth(now, newOperation.date)) {
+        thisMonthOperations.add(newOperation);
+        thisMonthOperations.sort((a, b) => b.date.compareTo(a.date));
+      }
     } on AppException catch (_) {
       rethrow;
     }
