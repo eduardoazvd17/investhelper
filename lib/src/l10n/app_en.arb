@@ -265,5 +265,21 @@
     },
     "operationsFiltersTitle": "Filter operations",
     "any": "Any",
-    "all": "All"
+    "all": "All",
+    "fromDisplay": "From: {value}",
+    "@fromDisplay": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "toDisplay": "To: {value}",
+    "@toDisplay": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    }
 }

@@ -43,10 +43,7 @@ class FiltersDrawerWidget extends StatelessWidget {
             items: [
               DropdownMenuItem(
                 value: null,
-                child: Text(
-                  AppLocalizations.of(context)!.all,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
+                child: Text(AppLocalizations.of(context)!.all),
               ),
               ...controller.investments.map((element) {
                 return DropdownMenuItem(
@@ -79,10 +76,7 @@ class FiltersDrawerWidget extends StatelessWidget {
             items: [
               DropdownMenuItem(
                 value: null,
-                child: Text(
-                  AppLocalizations.of(context)!.any,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
+                child: Text(AppLocalizations.of(context)!.any),
               ),
               ...OperationTypeEnum.values.map(
                 (element) {

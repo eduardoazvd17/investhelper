@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../l10n/l10n.dart';
 import '../utils/app_formatter.dart';
 
 class DateRangePickerWidget extends StatefulWidget {
@@ -57,13 +58,17 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
                   children: [
                     FittedBox(
                       child: Text(
-                        AppFormatter.dateWithDay(context, _selectedStartDate),
+                        AppLocalizations.of(context)!.fromDisplay(
+                          AppFormatter.date(context, _selectedStartDate),
+                        ),
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),
                     FittedBox(
                       child: Text(
-                        AppFormatter.dateWithDay(context, _selectedEndDate),
+                        AppLocalizations.of(context)!.toDisplay(
+                          AppFormatter.date(context, _selectedEndDate),
+                        ),
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),
@@ -74,19 +79,35 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
                 onPressed: () async {
                   final now = DateTime.now();
 
-                  DateTimeRange? selectedRange = await showDateRangePicker(
-                    context: context,
-                    initialDateRange: DateTimeRange(
-                      start: _selectedStartDate,
-                      end: _selectedEndDate,
-                    ),
-                    firstDate: DateTime(2000),
-                    lastDate: now,
-                  );
+                  DateTimeRange? selectedRange;
+                  do {
+                    selectedRange = await showDateRangePicker(
+                      context: context,
+                      initialDateRange: DateTimeRange(
+                        start: _selectedStartDate,
+                        end: _selectedEndDate,
+                      ),
+                      firstDate: DateTime(2000),
+                      lastDate: now,
+                    );
+                    if (selectedRange != null &&
+                        selectedRange.duration.inDays > widget.maxInterval) {
+                      final int exceededDays =
+                          selectedRange.duration.inDays - widget.maxInterval;
+
+                      setState(() {
+                        _selectedStartDate = selectedRange!.start;
+                        _selectedEndDate = selectedRange.end.subtract(
+                          Duration(days: exceededDays),
+                        );
+                      });
+                    }
+                  } while (selectedRange != null &&
+                      selectedRange.duration.inDays > widget.maxInterval);
 
                   if (selectedRange != null) {
                     setState(() {
-                      _selectedStartDate = selectedRange.start;
+                      _selectedStartDate = selectedRange!.start;
                       _selectedEndDate = selectedRange.end;
                     });
                     widget.onChange.call(_selectedStartDate, _selectedEndDate);
