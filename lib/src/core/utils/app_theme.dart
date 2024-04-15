@@ -88,6 +88,9 @@ class AppTheme {
         ),
         drawerTheme: DrawerThemeData(
           backgroundColor: _kSecondaryLightBackgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(_kBorderRadius),
+          ),
         ),
       );
 
@@ -166,6 +169,9 @@ class AppTheme {
         ),
         drawerTheme: DrawerThemeData(
           backgroundColor: _kSecondaryDarkBackgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(_kBorderRadius),
+          ),
         ),
       );
 }
