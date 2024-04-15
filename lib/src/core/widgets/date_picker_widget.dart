@@ -90,12 +90,12 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
                         now.millisecond,
                       );
                     }
-                  }
 
-                  setState(() {
-                    _selectedDate = selectedDate ?? DateTime.now();
-                  });
-                  widget.onChange.call(_selectedDate);
+                    setState(() {
+                      _selectedDate = selectedDate!;
+                    });
+                    widget.onChange.call(_selectedDate);
+                  }
                 },
                 icon: const Icon(CupertinoIcons.calendar),
               ),
