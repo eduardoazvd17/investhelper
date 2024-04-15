@@ -262,5 +262,6 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "operationsFiltersTitle": "Filter operations"
 }

@@ -18,6 +18,7 @@ import '../models/create_operation_model.dart';
 import '../models/investment_model.dart';
 import '../models/operation_model.dart';
 import '../widgets/category_indicator_widget.dart';
+import '../widgets/filters_drawer_widget.dart';
 import '../widgets/operation_tile_widget.dart';
 import 'manage_my_investments_page.dart';
 
@@ -239,7 +240,10 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      endDrawer: _filtersDrawerWidget,
+      endDrawer: FiltersDrawerWidget(
+        type: FiltersDrawerWidgetType.operations,
+        controller: widget.controller,
+      ),
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.myOperations),
         actions: [
@@ -298,8 +302,6 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
       ),
     );
   }
-
-  Widget get _filtersDrawerWidget => Drawer();
 
   Widget get _investmentDropDownButton => DropdownButtonWidget<InvestmentModel>(
         label: AppLocalizations.of(context)!.investment,

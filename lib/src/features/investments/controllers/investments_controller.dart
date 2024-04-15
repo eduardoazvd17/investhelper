@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/exceptions/app_exception.dart';
+import '../../../core/utils/date_time_utils.dart';
 import '../../../core/models/user_model.dart';
 import '../enums/operation_type.dart';
 import '../models/create_goal_model.dart';
@@ -41,22 +41,15 @@ abstract class InvestmentsControllerBase with Store {
     if (user != null) {
       goals.addAll(await _service.loadGoals(user!.id));
       investments.addAll(await _service.loadInvestments(user!.id));
-      final now = DateTime.now();
       thisMonthOperations.addAll(
         await _service.loadOperations(
           user!.id,
-          startDate: DateTime(now.year, now.month, 1),
-          endDate: DateTime(
-            now.year,
-            now.month,
-            DateUtils.getDaysInMonth(now.year, now.month),
-            23,
-            59,
-            59,
-          ),
+          startDate: DateTimeUtils.currentMonthFirstDay,
+          endDate: DateTimeUtils.currentMonthLastDay,
           descending: true,
         ),
       );
+      filteredOperations.addAll(thisMonthOperations);
     }
 
     isLoading = false;
@@ -173,10 +166,56 @@ abstract class InvestmentsControllerBase with Store {
     return 0.0;
   }
 
-  //TODO: CRIAR MECANISMO DE FILTRO.
   @observable
   ObservableList<OperationModel> filteredOperations =
       ObservableList<OperationModel>();
+
+  @observable
+  String? investmentIdFilter;
+
+  @observable
+  OperationTypeEnum? operationTypeFilter;
+
+  @observable
+  DateTime? startDateFilter = DateTimeUtils.currentMonthFirstDay;
+
+  @observable
+  DateTime? endDateFilter = DateTimeUtils.currentMonthLastDay;
+
+  @observable
+  bool descendingFilter = true;
+
+  @action
+  Future<void> onChangeOperationsFilters() async {
+    try {
+      final List<OperationModel> operations = await _service.loadOperations(
+        user!.id,
+        startDate: startDateFilter,
+        endDate: endDateFilter,
+        operationType: operationTypeFilter,
+        investmentId: investmentIdFilter,
+        limit: null,
+        descending: descendingFilter,
+      );
+
+      filteredOperations.clear();
+      filteredOperations.addAll(operations);
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
+
+  @action
+  void resetOperationsFilters() {
+    investmentIdFilter = null;
+    operationTypeFilter = null;
+    startDateFilter = DateTimeUtils.currentMonthFirstDay;
+    endDateFilter = DateTimeUtils.currentMonthLastDay;
+    descendingFilter = true;
+
+    filteredOperations.clear();
+    filteredOperations.addAll(thisMonthOperations);
+  }
 
   @observable
   ObservableList<OperationModel> thisMonthOperations =

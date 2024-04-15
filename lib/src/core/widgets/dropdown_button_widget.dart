@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class DropdownButtonWidget<T> extends StatefulWidget {
-  final String label;
+  final String? label;
   final T? value;
   final String? hint;
   final List<DropdownMenuItem<T>> items;
   final void Function(T?) onChanged;
   const DropdownButtonWidget({
     super.key,
-    required this.label,
+    this.label,
     this.value,
     this.hint,
     required this.items,
@@ -34,13 +34,14 @@ class _DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: Text(
-            widget.label,
-            style: Theme.of(context).textTheme.titleMedium,
+        if (widget.label != null)
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Text(
+              widget.label!,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
           ),
-        ),
         DropdownButton<T>(
           value: _selectedItem,
           isExpanded: true,
