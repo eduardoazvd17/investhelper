@@ -46,7 +46,7 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 2.5),
       child: SizedBox(
-        height: MediaQuery.of(context).textScaler.scale(214),
+        height: MediaQuery.of(context).textScaler.scale(237),
         width: 300,
         child: Card(
           child: Row(
@@ -66,93 +66,116 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                             color: widget.operation.type.color,
                             size: 30,
                           ),
-                          FittedBox(
-                            child: Text(
-                              widget.hideValues
-                                  ? '${AppFormatter.currencyPrefix} ••••••'
-                                  : AppFormatter.currency(
-                                      widget.operation.value),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleLarge
-                                  ?.copyWith(
-                                      color: widget.operation.type.color),
+                          Flexible(
+                            child: FittedBox(
+                              child: Text(
+                                widget.hideValues
+                                    ? '${AppFormatter.currencyPrefix} ••••••'
+                                    : AppFormatter.currency(
+                                        widget.operation.value),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.copyWith(
+                                        color: widget.operation.type.color),
+                              ),
                             ),
                           ),
                         ],
                       ),
+                      if (widget
+                          .investment.category.needPositionAndAveragePrice)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Flexible(
+                              child: FittedBox(
+                                child: Text(
+                                  widget.hideValues
+                                      ? '••••••••'
+                                      : '${widget.operation.quantity}x ${AppFormatter.currency(widget.operation.unitPrice)}',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(
+                                        color: Colors.grey,
+                                      ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(height: 10),
                             if (widget.investment.category
-                                .needPositionAndAveragePrice) ...[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  FittedBox(
-                                    child: Text(
-                                      widget.hideValues
-                                          ? '••••••••'
-                                          : '${widget.operation.quantity}x ${AppFormatter.currency(widget.operation.unitPrice)} ',
-                                    ),
-                                  ),
-                                  if (widget.operation.type ==
-                                      OperationTypeEnum.sale)
-                                    FittedBox(
-                                      child: Text(
-                                        widget.hideValues
-                                            ? '••••••••'
-                                            : ' ${AppLocalizations.of(context)!.profitDisplay(AppFormatter.currency(widget.operation.profit))}',
+                                    .needPositionAndAveragePrice &&
+                                widget.operation.type ==
+                                    OperationTypeEnum.sale) ...[
+                              Flexible(
+                                child: FittedBox(
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .averagePriceDisplay(
+                                      AppFormatter.currency(
+                                        widget.operation.lastAveragePrice,
                                       ),
                                     ),
-                                ],
-                              ),
-                              const SizedBox(height: 5),
-                            ],
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                FittedBox(
-                                  child: Text(
-                                    AppFormatter.dateWithDay(
-                                      context,
-                                      widget.operation.date,
-                                    ),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleSmall
-                                        ?.copyWith(
-                                          color: Colors.grey,
-                                        ),
                                   ),
                                 ),
-                                if (widget.operation.type ==
-                                        OperationTypeEnum.sale &&
-                                    widget.investment.category
-                                        .needPositionAndAveragePrice)
-                                  FittedBox(
-                                    child: Text(
-                                      AppLocalizations.of(context)!
-                                          .averagePriceDisplay(
-                                        AppFormatter.currency(
-                                          widget.operation.lastAveragePrice,
-                                        ),
-                                      ),
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall
-                                          ?.copyWith(
-                                            color: Colors.grey,
+                              ),
+                              Flexible(
+                                child: FittedBox(
+                                  child: Text(
+                                    widget.hideValues
+                                        ? '••••••••'
+                                        : AppLocalizations.of(context)!
+                                            .profitDisplay(
+                                            AppFormatter.currency(
+                                              widget.operation.profit,
+                                            ),
+                                          ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                            if (widget.operation.type ==
+                                OperationTypeEnum.purchase)
+                              Flexible(
+                                child: FittedBox(
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .averagePriceVariationDisplay(
+                                      (widget.operation.variation.isNegative
+                                              ? ''
+                                              : '+') +
+                                          AppFormatter.currency(
+                                            widget.operation.variation,
                                           ),
                                     ),
                                   ),
-                              ],
+                                ),
+                              ),
+                            FittedBox(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: Text(
+                                  AppFormatter.dateWithDay(
+                                    context,
+                                    widget.operation.date,
+                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleSmall
+                                      ?.copyWith(
+                                        color: Colors.grey,
+                                      ),
+                                ),
+                              ),
                             ),
-                            const SizedBox(height: 10),
                           ],
                         ),
                       ),

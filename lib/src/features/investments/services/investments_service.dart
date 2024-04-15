@@ -255,6 +255,7 @@ class InvestmentsService {
         quantity: createOperationModel.quantity,
         unitPrice: createOperationModel.unitPrice,
         totalPrice: createOperationModel.totalPrice,
+        lastCustodialPosition: investmentModel.custodialPosition,
         lastAveragePrice: investmentModel.averagePrice,
       );
 

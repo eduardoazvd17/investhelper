@@ -371,7 +371,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
 
                       return SizedBox(
                         height: hasData
-                            ? MediaQuery.of(context).textScaler.scale(214)
+                            ? MediaQuery.of(context).textScaler.scale(237)
                             : null,
                         child: Visibility(
                           visible: hasData,

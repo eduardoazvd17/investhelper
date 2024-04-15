@@ -254,5 +254,13 @@
     "goToMyInvestments": "Go to my investments",
     "invalidValueErrorTitle": "Invalid value",
     "invalidValueErrorMessage": "Check the values entered in the form, the values must always be greater than 0.",
-    "operationsCronologicalOrderAdvise": "Attention: Operations are inserted in chronological order. Therefore, when adding an operation on a certain date, you will only be able to add operations from that last date of the inserted operation.\n\nThe same works to remove an operation but in descending order , it must be removed from the most recent to the oldest.\n\nThis is a security measure to ensure that the calculation is 100% accurate."
+    "operationsCronologicalOrderAdvise": "Attention: Operations are inserted in chronological order. Therefore, when adding an operation on a certain date, you will only be able to add operations from that last date of the inserted operation.\n\nThe same works to remove an operation but in descending order , it must be removed from the most recent to the oldest.\n\nThis is a security measure to ensure that the calculation is 100% accurate.",
+    "averagePriceVariationDisplay": "Average price variation: {value}",
+    "@averagePriceVariationDisplay": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    }
 }

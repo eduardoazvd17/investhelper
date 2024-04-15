@@ -40,7 +40,7 @@ class _GoalTileWidgetState extends State<GoalTileWidget> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: MediaQuery.of(context).textScaler.scale(150),
-      width: 250,
+      width: 300,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 2.5),
         child: Card(
