@@ -141,8 +141,10 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                                 ),
                               ),
                             ],
-                            if (widget.operation.type ==
-                                OperationTypeEnum.purchase)
+                            if (widget.investment.category
+                                    .needPositionAndAveragePrice &&
+                                widget.operation.type ==
+                                    OperationTypeEnum.purchase)
                               Flexible(
                                 child: FittedBox(
                                   child: Text(
