@@ -42,6 +42,7 @@ class FiltersDrawerWidget extends StatelessWidget {
             value: controller.investmentIdFilter,
             onChanged: (investmentId) {
               controller.investmentIdFilter = investmentId;
+              controller.onChangeOperationsFilters();
             },
             items: [
               DropdownMenuItem(
@@ -78,6 +79,9 @@ class FiltersDrawerWidget extends StatelessWidget {
             value: controller.operationTypeFilter,
             onChanged: (operationType) {
               controller.operationTypeFilter = operationType;
+              controller.onChangeOperationsFilters().catchError((error) {
+                if (error is AppException) error.show(context);
+              });
             },
             items: [
               DropdownMenuItem(
@@ -112,6 +116,7 @@ class FiltersDrawerWidget extends StatelessWidget {
             onChange: (startDate, endDate) {
               controller.startDateFilter = startDate;
               controller.endDateFilter = endDate;
+              controller.onChangeOperationsFilters();
             },
           );
         },
@@ -124,6 +129,7 @@ class FiltersDrawerWidget extends StatelessWidget {
             value: controller.descendingFilter,
             onChanged: (order) {
               controller.descendingFilter = order ?? true;
+              controller.onChangeOperationsFilters();
             },
             items: [
               DropdownMenuItem(
@@ -150,32 +156,16 @@ class FiltersDrawerWidget extends StatelessWidget {
           );
         },
       ),
-      const SizedBox(height: 10),
-      ButtonTileWidget(
-        icon: Icons.done,
-        text: 'Aplicar filtros',
-        color: Theme.of(context).scaffoldBackgroundColor,
-        backgroundColor: Theme.of(context)
-            .elevatedButtonTheme
-            .style
-            ?.backgroundColor
-            ?.resolve(MaterialState.values.toSet()),
-        onTap: () async {
-          try {
+      const SizedBox(height: 20),
+      Center(
+        child: TextButton.icon(
+          icon: const Icon(Icons.restore),
+          label: Text(AppLocalizations.of(context)!.resetFilters),
+          onPressed: () {
+            controller.resetOperationsFilters();
             Navigator.of(context).pop();
-            await controller.onChangeOperationsFilters();
-          } on AppException catch (error) {
-            if (context.mounted) error.show(context);
-          }
-        },
-      ),
-      ButtonTileWidget(
-        icon: Icons.restore,
-        text: 'Resetar',
-        onTap: () {
-          controller.resetOperationsFilters();
-          Navigator.of(context).pop();
-        },
+          },
+        ),
       ),
     ];
   }

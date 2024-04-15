@@ -285,5 +285,6 @@
   "period": "Período (max 30 dias)",
   "orderByDate": "Ordem por data",
   "ascending": "Crescente",
-  "descending": "Decrescente"
+  "descending": "Decrescente",
+  "resetFilters": "Resetar filtros"
 }
