@@ -189,9 +189,17 @@ abstract class InvestmentsControllerBase with Store {
   Future<void> onChangeOperationsFilters() async {
     try {
       final List<OperationModel> operations;
-      if (startDateFilter == DateTimeUtils.currentMonthFirstDay &&
+      if (!startDateFilter.isBefore(DateTimeUtils.currentMonthFirstDay) &&
           DateTimeUtils.isSameMonth(DateTime.now(), endDateFilter)) {
         operations = List<OperationModel>.from(thisMonthOperations);
+
+        operations.removeWhere(
+          (e) {
+            return e.date.isBefore(startDateFilter) ||
+                e.date.isAfter(endDateFilter);
+          },
+        );
+
         if (investmentIdFilter != null) {
           operations.removeWhere((e) => e.investmentId != investmentIdFilter);
         }
