@@ -414,20 +414,12 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                           (e) => e.id == widget.controller.investmentIdFilter!,
                         )
                         .name,
-                    onRemove: () {
-                      widget.controller.investmentIdFilter = null;
-                      widget.controller.onChangeOperationsFilters();
-                    },
                   ),
                 if (widget.controller.operationTypeFilter != null)
                   FiltersIndicatorBarItem(
                     icon: const Icon(CupertinoIcons.arrow_up_arrow_down),
                     title: widget.controller.operationTypeFilter!
                         .getTitle(context),
-                    onRemove: () {
-                      widget.controller.operationTypeFilter = null;
-                      widget.controller.onChangeOperationsFilters();
-                    },
                   ),
                 FiltersIndicatorBarItem(
                   icon: const Icon(CupertinoIcons.calendar),

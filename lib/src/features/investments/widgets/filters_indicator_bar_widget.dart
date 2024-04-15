@@ -33,18 +33,6 @@ class FiltersIndicatorBarWidget extends StatelessWidget {
                           ),
                         ),
                       Text(filter.title),
-                      if (filter.onRemove != null)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: InkWell(
-                            onTap: filter.onRemove,
-                            borderRadius: BorderRadius.circular(10),
-                            child: const SizedBox(
-                              height: 20,
-                              child: FittedBox(child: Icon(Icons.close)),
-                            ),
-                          ),
-                        ),
                     ],
                   ),
                 ),
@@ -60,6 +48,5 @@ class FiltersIndicatorBarWidget extends StatelessWidget {
 class FiltersIndicatorBarItem {
   final String title;
   final Icon? icon;
-  final void Function()? onRemove;
-  FiltersIndicatorBarItem({required this.title, this.icon, this.onRemove});
+  FiltersIndicatorBarItem({required this.title, this.icon});
 }
