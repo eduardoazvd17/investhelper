@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '../../../core/widgets/date_range_picker_widget.dart';
 import '../../../core/widgets/drawer_widget.dart';
 import '../../../core/widgets/dropdown_button_widget.dart';
 import '../../../l10n/l10n.dart';
@@ -42,22 +43,22 @@ class FiltersDrawerWidget extends StatelessWidget {
             items: [
               DropdownMenuItem(
                 value: null,
-                child: Text(AppLocalizations.of(context)!.all),
+                child: Text(
+                  AppLocalizations.of(context)!.all,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
               ...controller.investments.map((element) {
                 return DropdownMenuItem(
                   value: element.id,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
                     children: [
-                      FittedBox(child: Text(element.name)),
-                      FittedBox(
-                        child: CategoryIndicatorWidget(
-                          category: element.category,
-                          textColor: Colors.grey,
-                        ),
+                      CategoryIndicatorWidget(
+                        category: element.category,
+                        textColor: Colors.grey,
+                        hideText: true,
                       ),
+                      Expanded(child: Text(element.name)),
                     ],
                   ),
                 );
@@ -78,24 +79,42 @@ class FiltersDrawerWidget extends StatelessWidget {
             items: [
               DropdownMenuItem(
                 value: null,
-                child: Text(AppLocalizations.of(context)!.any),
+                child: Text(
+                  AppLocalizations.of(context)!.any,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
-              ...OperationTypeEnum.values.map((element) {
-                return DropdownMenuItem(
-                  value: element,
-                  child: Row(
-                    children: [
-                      Icon(element.icon, color: element.color),
-                      const SizedBox(width: 10),
-                      Text(element.getTitle(context)),
-                    ],
-                  ),
-                );
-              }),
+              ...OperationTypeEnum.values.map(
+                (element) {
+                  return DropdownMenuItem(
+                    value: element,
+                    child: Row(
+                      children: [
+                        Icon(element.icon, color: element.color),
+                        const SizedBox(width: 10),
+                        Text(element.getTitle(context)),
+                      ],
+                    ),
+                  );
+                },
+              ),
             ],
           );
         },
-      )
+      ),
+      Observer(
+        builder: (_) {
+          return DateRangePickerWidget(
+            label: AppLocalizations.of(context)!.operationDate,
+            startDate: controller.startDateFilter,
+            endDate: controller.endDateFilter,
+            onChange: (startDate, endDate) {
+              controller.startDateFilter = startDate;
+              controller.endDateFilter = endDate;
+            },
+          );
+        },
+      ),
     ];
   }
 }

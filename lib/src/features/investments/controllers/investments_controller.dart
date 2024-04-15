@@ -2,8 +2,8 @@ import 'package:mobx/mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/exceptions/app_exception.dart';
-import '../../../core/utils/date_time_utils.dart';
 import '../../../core/models/user_model.dart';
+import '../../../core/utils/date_time_utils.dart';
 import '../enums/operation_type.dart';
 import '../models/create_goal_model.dart';
 import '../models/create_investment_model.dart';
@@ -45,7 +45,7 @@ abstract class InvestmentsControllerBase with Store {
         await _service.loadOperations(
           user!.id,
           startDate: DateTimeUtils.currentMonthFirstDay,
-          endDate: DateTimeUtils.currentMonthLastDay,
+          endDate: DateTime.now(),
           descending: true,
         ),
       );
@@ -177,10 +177,10 @@ abstract class InvestmentsControllerBase with Store {
   OperationTypeEnum? operationTypeFilter;
 
   @observable
-  DateTime? startDateFilter = DateTimeUtils.currentMonthFirstDay;
+  DateTime startDateFilter = DateTimeUtils.currentMonthFirstDay;
 
   @observable
-  DateTime? endDateFilter = DateTimeUtils.currentMonthLastDay;
+  DateTime endDateFilter = DateTime.now();
 
   @observable
   bool descendingFilter = true;
@@ -210,7 +210,7 @@ abstract class InvestmentsControllerBase with Store {
     investmentIdFilter = null;
     operationTypeFilter = null;
     startDateFilter = DateTimeUtils.currentMonthFirstDay;
-    endDateFilter = DateTimeUtils.currentMonthLastDay;
+    endDateFilter = DateTime.now();
     descendingFilter = true;
 
     filteredOperations.clear();
@@ -239,7 +239,17 @@ abstract class InvestmentsControllerBase with Store {
       investments.add(newInvestment);
       investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
 
-      //TODO: ADICIONAR NA filteredOperations SE A DATA DE HOJE ESTIVER NOS FILTROS.
+      if (!newOperation.date.isBefore(startDateFilter) &&
+          !newOperation.date.isAfter(endDateFilter)) {
+        filteredOperations.add(newOperation);
+        filteredOperations.sort((a, b) {
+          if (descendingFilter) {
+            return b.date.compareTo(a.date);
+          } else {
+            return a.date.compareTo(b.date);
+          }
+        });
+      }
 
       thisMonthOperations.add(newOperation);
       thisMonthOperations.sort((a, b) => b.date.compareTo(a.date));

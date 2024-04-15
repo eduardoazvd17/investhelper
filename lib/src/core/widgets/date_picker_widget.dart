@@ -35,7 +35,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(bottom: 5, left: 5),
+          padding: const EdgeInsets.all(5),
           child: Text(
             widget.label,
             style: Theme.of(context).textTheme.titleMedium,
