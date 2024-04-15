@@ -188,15 +188,35 @@ abstract class InvestmentsControllerBase with Store {
   @action
   Future<void> onChangeOperationsFilters() async {
     try {
-      final List<OperationModel> operations = await _service.loadOperations(
-        user!.id,
-        startDate: startDateFilter,
-        endDate: endDateFilter,
-        operationType: operationTypeFilter,
-        investmentId: investmentIdFilter,
-        limit: null,
-        descending: descendingFilter,
-      );
+      final List<OperationModel> operations;
+      if (startDateFilter == DateTimeUtils.currentMonthFirstDay &&
+          DateTimeUtils.isSameMonth(DateTime.now(), endDateFilter)) {
+        operations = List<OperationModel>.from(thisMonthOperations);
+        if (investmentIdFilter != null) {
+          operations.removeWhere((e) => e.investmentId != investmentIdFilter);
+        }
+        if (operationTypeFilter != null) {
+          operations.removeWhere((e) => e.type != operationTypeFilter);
+        }
+
+        operations.sort((a, b) {
+          if (descendingFilter) {
+            return b.date.compareTo(a.date);
+          } else {
+            return a.date.compareTo(b.date);
+          }
+        });
+      } else {
+        operations = await _service.loadOperations(
+          user!.id,
+          startDate: startDateFilter,
+          endDate: endDateFilter,
+          operationType: operationTypeFilter,
+          investmentId: investmentIdFilter,
+          limit: null,
+          descending: descendingFilter,
+        );
+      }
 
       operationsWithFilter.clear();
       operationsWithFilter.addAll(operations);
