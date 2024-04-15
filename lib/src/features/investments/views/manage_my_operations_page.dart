@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -19,6 +20,7 @@ import '../models/investment_model.dart';
 import '../models/operation_model.dart';
 import '../widgets/category_indicator_widget.dart';
 import '../widgets/filters_drawer_widget.dart';
+import '../widgets/filters_indicator_bar_widget.dart';
 import '../widgets/operation_tile_widget.dart';
 import 'manage_my_investments_page.dart';
 
@@ -266,35 +268,43 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           padding: const EdgeInsets.symmetric(horizontal: 25),
           child: Observer(
             builder: (_) {
-              return Visibility(
-                visible: widget.controller.operationsWithFilter.isNotEmpty,
-                replacement: Center(
-                  child: EmptyListWidget(
-                    message: AppLocalizations.of(context)!
-                        .emptyManageMyOperationsText,
-                  ),
-                ),
-                child: ListView(
-                  children:
-                      widget.controller.operationsWithFilter.map((operation) {
-                    final InvestmentModel investment =
-                        widget.controller.investments.firstWhere(
-                      (e) => e.id == operation.investmentId,
-                    );
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: OperationTileWidget(
-                        operation: operation,
-                        investment: investment,
-                        onDelete: operation.date
-                                .isBefore(investment.lastOperationDate!)
-                            ? null
-                            : _deleteOperation,
+              return Column(
+                children: [
+                  _enabledFiltersWidget,
+                  Expanded(
+                    child: Visibility(
+                      visible:
+                          widget.controller.operationsWithFilter.isNotEmpty,
+                      replacement: Center(
+                        child: EmptyListWidget(
+                          message: AppLocalizations.of(context)!
+                              .emptyManageMyOperationsText,
+                        ),
                       ),
-                    );
-                  }).toList(),
-                ),
+                      child: ListView(
+                        children: widget.controller.operationsWithFilter
+                            .map((operation) {
+                          final InvestmentModel investment =
+                              widget.controller.investments.firstWhere(
+                            (e) => e.id == operation.investmentId,
+                          );
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: OperationTileWidget(
+                              operation: operation,
+                              investment: investment,
+                              onDelete: operation.date
+                                      .isBefore(investment.lastOperationDate!)
+                                  ? null
+                                  : _deleteOperation,
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ],
               );
             },
           ),
@@ -385,6 +395,79 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           ),
         );
       }).toList(),
+    );
+  }
+
+  Widget get _enabledFiltersWidget {
+    return Observer(
+      builder: (_) {
+        final List<FiltersIndicatorBarItem> filters = [];
+
+        if (widget.controller.investmentIdFilter != null) {
+          final investment = widget.controller.investments.firstWhere(
+            (e) => e.id == widget.controller.investmentIdFilter!,
+          );
+          filters.add(
+            FiltersIndicatorBarItem(
+              icon: const Icon(CupertinoIcons.chart_bar),
+              title: investment.name,
+              onRemove: () {
+                widget.controller.investmentIdFilter = null;
+                widget.controller.onChangeOperationsFilters();
+              },
+            ),
+          );
+        }
+
+        if (widget.controller.operationTypeFilter != null) {
+          filters.add(
+            FiltersIndicatorBarItem(
+              icon: const Icon(CupertinoIcons.arrow_up_arrow_down),
+              title: widget.controller.operationTypeFilter!.getTitle(context),
+              onRemove: () {
+                widget.controller.operationTypeFilter = null;
+                widget.controller.onChangeOperationsFilters();
+              },
+            ),
+          );
+        }
+
+        filters.addAll(
+          [
+            FiltersIndicatorBarItem(
+              icon: const Icon(CupertinoIcons.calendar),
+              title: '${AppLocalizations.of(context)!.fromDisplay(
+                AppFormatter.date(
+                  context,
+                  widget.controller.startDateFilter,
+                ),
+              )} - ${AppLocalizations.of(context)!.toDisplay(
+                AppFormatter.date(
+                  context,
+                  widget.controller.endDateFilter,
+                ),
+              )}',
+            ),
+            FiltersIndicatorBarItem(
+              icon: widget.controller.descendingFilter
+                  ? const Icon(CupertinoIcons.sort_down)
+                  : const Icon(CupertinoIcons.sort_up),
+              title: widget.controller.descendingFilter
+                  ? AppLocalizations.of(context)!.descending
+                  : AppLocalizations.of(context)!.ascending,
+            ),
+          ],
+        );
+
+        return Builder(
+          builder: (context) {
+            return FiltersIndicatorBarWidget(
+              filters,
+              onOpenFilters: Scaffold.of(context).openEndDrawer,
+            );
+          },
+        );
+      },
     );
   }
 

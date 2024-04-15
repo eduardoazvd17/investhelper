@@ -130,7 +130,7 @@ class FiltersDrawerWidget extends StatelessWidget {
                 value: false,
                 child: Row(
                   children: [
-                    const Icon(CupertinoIcons.sort_down),
+                    const Icon(CupertinoIcons.sort_up),
                     const SizedBox(width: 10),
                     Text(AppLocalizations.of(context)!.ascending),
                   ],
@@ -140,7 +140,7 @@ class FiltersDrawerWidget extends StatelessWidget {
                 value: true,
                 child: Row(
                   children: [
-                    const Icon(CupertinoIcons.sort_up),
+                    const Icon(CupertinoIcons.sort_down),
                     const SizedBox(width: 10),
                     Text(AppLocalizations.of(context)!.descending),
                   ],
