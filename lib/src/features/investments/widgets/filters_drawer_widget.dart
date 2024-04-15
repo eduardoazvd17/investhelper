@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import '../../../core/exceptions/app_exception.dart';
-import '../../../core/widgets/button_tile_widget.dart';
 import '../../../core/widgets/date_range_picker_widget.dart';
 import '../../../core/widgets/drawer_widget.dart';
 import '../../../core/widgets/dropdown_button_widget.dart';
@@ -42,7 +40,6 @@ class FiltersDrawerWidget extends StatelessWidget {
             value: controller.investmentIdFilter,
             onChanged: (investmentId) {
               controller.investmentIdFilter = investmentId;
-              controller.onChangeOperationsFilters();
             },
             items: [
               DropdownMenuItem(
@@ -79,9 +76,6 @@ class FiltersDrawerWidget extends StatelessWidget {
             value: controller.operationTypeFilter,
             onChanged: (operationType) {
               controller.operationTypeFilter = operationType;
-              controller.onChangeOperationsFilters().catchError((error) {
-                if (error is AppException) error.show(context);
-              });
             },
             items: [
               DropdownMenuItem(
@@ -116,7 +110,6 @@ class FiltersDrawerWidget extends StatelessWidget {
             onChange: (startDate, endDate) {
               controller.startDateFilter = startDate;
               controller.endDateFilter = endDate;
-              controller.onChangeOperationsFilters();
             },
           );
         },
@@ -129,7 +122,6 @@ class FiltersDrawerWidget extends StatelessWidget {
             value: controller.descendingFilter,
             onChanged: (order) {
               controller.descendingFilter = order ?? true;
-              controller.onChangeOperationsFilters();
             },
             items: [
               DropdownMenuItem(
