@@ -144,7 +144,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                           ?.copyWith(color: Colors.grey),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 10),
                   category.needPositionAndAveragePrice
                       ? Row(
                           children: [
@@ -153,6 +153,17 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                           ],
                         )
                       : _amountInvestedTextField,
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      AppLocalizations.of(context)!.addInvestmentsValuesAdvise2,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(color: Colors.grey),
+                    ),
+                  ),
                 ],
               );
             } else {

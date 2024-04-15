@@ -167,6 +167,17 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                   _operationTypeDropDownButton(selectedInvestment),
                   const SizedBox(height: 10),
                   _operationDatePicker(selectedInvestment),
+                  Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      AppLocalizations.of(context)!
+                          .operationsCronologicalOrderAdvise,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(color: Colors.grey),
+                    ),
+                  ),
                   if (selectedInvestment
                       .category.needPositionAndAveragePrice) ...[
                     const SizedBox(height: 10),

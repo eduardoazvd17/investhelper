@@ -168,7 +168,8 @@
     "investmentNameHint": "Enter investment name or ticker",
     "category": "Category",
     "selectCategory": "Select category...",
-    "addInvestmentsValuesAdvise": "The information below is optional. Only fill in if you do not wish to manually enter your previous operations.\n\nAttention: Use data from your bank/investment brokerage. These values will be used along with your future operations to update your data.\no\nWhen entering this data, you can only add more recent operations, the operations must be added in chronological order.",
+    "addInvestmentsValuesAdvise": "The information below is optional. Only fill in if you do not wish to manually enter your previous operations.\n\nAttention: Use data from your bank/investment brokerage. These values will be used along with your future operations to update your data.",
+    "addInvestmentsValuesAdvise2": "When entering this data, you can only add more recent operations, the operations must be added in chronological order.",
     "startCustodialPosition": "Start position",
     "startAveragePrice": "Avg start price",
     "editInvestment": "Edit investment",
@@ -252,5 +253,6 @@
     "dontHaveInvestmentsMessage": "You do not have added investments yet.\n\nAdd your investments to start entering operations.",
     "goToMyInvestments": "Go to my investments",
     "invalidValueErrorTitle": "Invalid value",
-    "invalidValueErrorMessage": "Check the values entered in the form, the values must always be greater than 0."
+    "invalidValueErrorMessage": "Check the values entered in the form, the values must always be greater than 0.",
+    "operationsCronologicalOrderAdvise": "Attention: Operations are inserted in chronological order. Therefore, when adding an operation on a certain date, you will only be able to add operations from that last date of the inserted operation.\n\nThe same works to remove an operation but in descending order , it must be removed from the most recent to the oldest.\n\nThis is a security measure to ensure that the calculation is 100% accurate."
 }

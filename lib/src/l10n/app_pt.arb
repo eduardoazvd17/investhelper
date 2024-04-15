@@ -168,7 +168,8 @@
   "investmentNameHint": "Insira o nome ou ticker do investimento",
   "category": "Categoria",
   "selectCategory": "Selecione a categoria...",
-  "addInvestmentsValuesAdvise": "As informações abaixo são opcionais. Preencha apenas se não desejar inserir manualmente suas operações anteriores.\n\nAtenção: Utilize dados do seu banco/corretora de investimentos. Esse valores serão utilizados junto com suas operações futuras para atualizar seus dados.\n\nAo inserir esses dados, você só conseguirar adicionar operações mais recentes, as operações devem ser adicionadas em ordem cronológicas.",
+  "addInvestmentsValuesAdvise": "As informações abaixo são opcionais. Preencha apenas se não desejar inserir manualmente suas operações anteriores.\n\nAtenção: Utilize dados do seu banco/corretora de investimentos. Esse valores serão utilizados junto com suas operações futuras para atualizar seus dados.",
+  "addInvestmentsValuesAdvise2": "Ao inserir esses dados, você só conseguirá adicionar operações mais recentes, as operações devem ser adicionadas em ordem cronológica.",
   "startCustodialPosition": "Posição inicial",
   "startAveragePrice": "Preço médio inicial",
   "editInvestment": "Editar investimento",
@@ -252,5 +253,6 @@
   "dontHaveInvestmentsMessage": "Você ainda não possui investimentos adicionados.\n\nAdicione seus investimentos para começar a inserir as operações.",
   "goToMyInvestments": "Ir para meus investimentos",
   "invalidValueErrorTitle": "Valor inválido",
-  "invalidValueErrorMessage": "Verifique os valores inseridos no formulário, os valores devem ser sempre maiores que 0."
+  "invalidValueErrorMessage": "Verifique os valores inseridos no formulário, os valores devem ser sempre maiores que 0.",
+  "operationsCronologicalOrderAdvise": "Atenção: As operações são inseridas em ordem cronológica. Portanto ao adicionar uma operação em uma determinada data, você só poderá adicionar operações a partir dessa ultima data da operação inserida.\n\nO mesmo funciona para remover uma operação porém em ordem decrescente, deve-se remover da mais recente para a mais antiga.\n\nEssa é uma medida de segurança para garantir que o cálculo esteja 100% preciso."
 }
