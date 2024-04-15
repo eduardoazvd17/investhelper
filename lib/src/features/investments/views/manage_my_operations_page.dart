@@ -242,7 +242,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      onDrawerChanged: (isOpenning) {
+      onEndDrawerChanged: (isOpenning) {
         if (!isOpenning) {
           widget.controller.onChangeOperationsFilters().catchError((error) {
             if (error is AppException) error.show(context);
