@@ -263,5 +263,7 @@
             }
         }
     },
-    "operationsFiltersTitle": "Filter operations"
+    "operationsFiltersTitle": "Filter operations",
+    "any": "Any",
+    "all": "All"
 }

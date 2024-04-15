@@ -263,5 +263,7 @@
       }
     }
   },
-  "operationsFiltersTitle": "Filtrar operações"
+  "operationsFiltersTitle": "Filtrar operações",
+  "any": "Qualquer",
+  "all": "Todos"
 }

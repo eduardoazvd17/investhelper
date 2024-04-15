@@ -5,7 +5,7 @@ import '../../../core/widgets/drawer_widget.dart';
 import '../../../core/widgets/dropdown_button_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../controllers/investments_controller.dart';
-import '../models/investment_model.dart';
+import '../enums/operation_type.dart';
 import 'category_indicator_widget.dart';
 
 class FiltersDrawerWidget extends StatelessWidget {
@@ -30,21 +30,23 @@ class FiltersDrawerWidget extends StatelessWidget {
 
   List<Widget> _operationsFilters(BuildContext context) {
     return [
-      _filterItemTile(
-        context,
-        title: AppLocalizations.of(context)!.investment,
-        onRemove: () => controller.investmentIdFilter = null,
-        child: Observer(
-          builder: (_) {
-            return DropdownButtonWidget<InvestmentModel?>(
-              hint: AppLocalizations.of(context)!.investmentHint,
-              value: null,
-              onChanged: (investment) {
-                controller.investmentIdFilter = investment?.id;
-              },
-              items: controller.investments.map((element) {
+      Observer(
+        builder: (_) {
+          return DropdownButtonWidget<String?>(
+            label: AppLocalizations.of(context)!.investment,
+            hint: AppLocalizations.of(context)!.investmentHint,
+            value: controller.investmentIdFilter,
+            onChanged: (investmentId) {
+              controller.investmentIdFilter = investmentId;
+            },
+            items: [
+              DropdownMenuItem(
+                value: null,
+                child: Text(AppLocalizations.of(context)!.all),
+              ),
+              ...controller.investments.map((element) {
                 return DropdownMenuItem(
-                  value: element,
+                  value: element.id,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,37 +61,42 @@ class FiltersDrawerWidget extends StatelessWidget {
                     ],
                   ),
                 );
-              }).toList(),
-            );
-          },
-        ),
+              }),
+            ],
+          );
+        },
       ),
+      Observer(
+        builder: (_) {
+          return DropdownButtonWidget<OperationTypeEnum?>(
+            label: AppLocalizations.of(context)!.operationType,
+            hint: AppLocalizations.of(context)!.operationTypeHint,
+            value: controller.operationTypeFilter,
+            onChanged: (operationType) {
+              controller.operationTypeFilter = operationType;
+            },
+            items: [
+              DropdownMenuItem(
+                value: null,
+                child: Text(AppLocalizations.of(context)!.any),
+              ),
+              ...OperationTypeEnum.values.map((element) {
+                return DropdownMenuItem(
+                  value: element,
+                  child: Row(
+                    children: [
+                      Icon(element.icon, color: element.color),
+                      const SizedBox(width: 10),
+                      Text(element.getTitle(context)),
+                    ],
+                  ),
+                );
+              }),
+            ],
+          );
+        },
+      )
     ];
-  }
-
-  Widget _filterItemTile(
-    BuildContext context, {
-    required String title,
-    required void Function() onRemove,
-    required Widget child,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(title),
-            TextButton.icon(
-              onPressed: onRemove,
-              icon: const Icon(Icons.close),
-              label: Text(AppLocalizations.of(context)!.remove),
-            ),
-          ],
-        ),
-        child,
-      ],
-    );
   }
 }
 

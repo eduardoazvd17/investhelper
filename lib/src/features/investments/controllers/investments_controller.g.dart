@@ -132,6 +132,102 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
     });
   }
 
+  late final _$filteredOperationsAtom = Atom(
+      name: 'InvestmentsControllerBase.filteredOperations', context: context);
+
+  @override
+  ObservableList<OperationModel> get filteredOperations {
+    _$filteredOperationsAtom.reportRead();
+    return super.filteredOperations;
+  }
+
+  @override
+  set filteredOperations(ObservableList<OperationModel> value) {
+    _$filteredOperationsAtom.reportWrite(value, super.filteredOperations, () {
+      super.filteredOperations = value;
+    });
+  }
+
+  late final _$investmentIdFilterAtom = Atom(
+      name: 'InvestmentsControllerBase.investmentIdFilter', context: context);
+
+  @override
+  String? get investmentIdFilter {
+    _$investmentIdFilterAtom.reportRead();
+    return super.investmentIdFilter;
+  }
+
+  @override
+  set investmentIdFilter(String? value) {
+    _$investmentIdFilterAtom.reportWrite(value, super.investmentIdFilter, () {
+      super.investmentIdFilter = value;
+    });
+  }
+
+  late final _$operationTypeFilterAtom = Atom(
+      name: 'InvestmentsControllerBase.operationTypeFilter', context: context);
+
+  @override
+  OperationTypeEnum? get operationTypeFilter {
+    _$operationTypeFilterAtom.reportRead();
+    return super.operationTypeFilter;
+  }
+
+  @override
+  set operationTypeFilter(OperationTypeEnum? value) {
+    _$operationTypeFilterAtom.reportWrite(value, super.operationTypeFilter, () {
+      super.operationTypeFilter = value;
+    });
+  }
+
+  late final _$startDateFilterAtom =
+      Atom(name: 'InvestmentsControllerBase.startDateFilter', context: context);
+
+  @override
+  DateTime? get startDateFilter {
+    _$startDateFilterAtom.reportRead();
+    return super.startDateFilter;
+  }
+
+  @override
+  set startDateFilter(DateTime? value) {
+    _$startDateFilterAtom.reportWrite(value, super.startDateFilter, () {
+      super.startDateFilter = value;
+    });
+  }
+
+  late final _$endDateFilterAtom =
+      Atom(name: 'InvestmentsControllerBase.endDateFilter', context: context);
+
+  @override
+  DateTime? get endDateFilter {
+    _$endDateFilterAtom.reportRead();
+    return super.endDateFilter;
+  }
+
+  @override
+  set endDateFilter(DateTime? value) {
+    _$endDateFilterAtom.reportWrite(value, super.endDateFilter, () {
+      super.endDateFilter = value;
+    });
+  }
+
+  late final _$descendingFilterAtom = Atom(
+      name: 'InvestmentsControllerBase.descendingFilter', context: context);
+
+  @override
+  bool get descendingFilter {
+    _$descendingFilterAtom.reportRead();
+    return super.descendingFilter;
+  }
+
+  @override
+  set descendingFilter(bool value) {
+    _$descendingFilterAtom.reportWrite(value, super.descendingFilter, () {
+      super.descendingFilter = value;
+    });
+  }
+
   late final _$thisMonthOperationsAtom = Atom(
       name: 'InvestmentsControllerBase.thisMonthOperations', context: context);
 
@@ -209,6 +305,16 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
         .run(() => super.deleteInvestment(investmentModel));
   }
 
+  late final _$onChangeOperationsFiltersAsyncAction = AsyncAction(
+      'InvestmentsControllerBase.onChangeOperationsFilters',
+      context: context);
+
+  @override
+  Future<void> onChangeOperationsFilters() {
+    return _$onChangeOperationsFiltersAsyncAction
+        .run(() => super.onChangeOperationsFilters());
+  }
+
   late final _$addNewOperationAsyncAction = AsyncAction(
       'InvestmentsControllerBase.addNewOperation',
       context: context);
@@ -246,6 +352,17 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
   }
 
   @override
+  void resetOperationsFilters() {
+    final _$actionInfo = _$InvestmentsControllerBaseActionController
+        .startAction(name: 'InvestmentsControllerBase.resetOperationsFilters');
+    try {
+      return super.resetOperationsFilters();
+    } finally {
+      _$InvestmentsControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isLoading: ${isLoading},
@@ -253,6 +370,12 @@ hideValues: ${hideValues},
 dailyTip: ${dailyTip},
 goals: ${goals},
 investments: ${investments},
+filteredOperations: ${filteredOperations},
+investmentIdFilter: ${investmentIdFilter},
+operationTypeFilter: ${operationTypeFilter},
+startDateFilter: ${startDateFilter},
+endDateFilter: ${endDateFilter},
+descendingFilter: ${descendingFilter},
 thisMonthOperations: ${thisMonthOperations},
 user: ${user},
 shouldRequestAuth: ${shouldRequestAuth},
