@@ -281,5 +281,6 @@
         "type": "String"
       }
     }
-  }
+  },
+  "period": "Período (max 30 dias)"
 }

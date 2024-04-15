@@ -99,7 +99,7 @@ class FiltersDrawerWidget extends StatelessWidget {
       Observer(
         builder: (_) {
           return DateRangePickerWidget(
-            label: AppLocalizations.of(context)!.operationDate,
+            label: AppLocalizations.of(context)!.period,
             startDate: controller.startDateFilter,
             endDate: controller.endDateFilter,
             onChange: (startDate, endDate) {

@@ -90,11 +90,11 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
                       firstDate: DateTime(2000),
                       lastDate: now,
                     );
+
                     if (selectedRange != null &&
                         selectedRange.duration.inDays > widget.maxInterval) {
                       final int exceededDays =
                           selectedRange.duration.inDays - widget.maxInterval;
-
                       setState(() {
                         _selectedStartDate = selectedRange!.start;
                         _selectedEndDate = selectedRange.end.subtract(
@@ -107,9 +107,21 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
 
                   if (selectedRange != null) {
                     setState(() {
-                      _selectedStartDate = selectedRange!.start;
-                      _selectedEndDate = selectedRange.end;
+                      _selectedStartDate = DateTime(
+                        selectedRange!.start.year,
+                        selectedRange.start.month,
+                        selectedRange.start.day,
+                      );
+                      _selectedEndDate = DateTime(
+                        selectedRange.end.year,
+                        selectedRange.end.month,
+                        selectedRange.end.day,
+                        23,
+                        59,
+                        59,
+                      );
                     });
+
                     widget.onChange.call(_selectedStartDate, _selectedEndDate);
                   }
                 },
