@@ -21,7 +21,7 @@ class DrawerWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 20,
-                horizontal: 25,
+                horizontal: 20,
               ),
               child: Row(
                 children: [
@@ -46,7 +46,7 @@ class DrawerWidget extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: children,
