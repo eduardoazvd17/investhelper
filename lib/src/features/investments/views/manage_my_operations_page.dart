@@ -239,12 +239,17 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      endDrawer: _filtersDrawerWidget,
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.myOperations),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.filter_list),
+          Builder(
+            builder: (context) {
+              return IconButton(
+                onPressed: () => Scaffold.of(context).openEndDrawer(),
+                icon: const Icon(Icons.filter_list),
+              );
+            },
           ),
         ],
       ),
@@ -293,6 +298,8 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
       ),
     );
   }
+
+  Widget get _filtersDrawerWidget => Drawer();
 
   Widget get _investmentDropDownButton => DropdownButtonWidget<InvestmentModel>(
         label: AppLocalizations.of(context)!.investment,

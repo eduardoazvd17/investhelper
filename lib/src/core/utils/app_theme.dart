@@ -86,6 +86,9 @@ class AppTheme {
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
         ),
+        drawerTheme: DrawerThemeData(
+          backgroundColor: _kSecondaryLightBackgroundColor,
+        ),
       );
 
   static ThemeData get darkTheme => ThemeData(
@@ -160,6 +163,9 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
+        ),
+        drawerTheme: DrawerThemeData(
+          backgroundColor: _kSecondaryDarkBackgroundColor,
         ),
       );
 }

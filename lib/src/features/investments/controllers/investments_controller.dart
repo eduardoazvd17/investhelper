@@ -151,6 +151,10 @@ abstract class InvestmentsControllerBase with Store {
     try {
       await _service.deleteInvestment(investmentModel);
       investments.remove(investmentModel);
+
+      filteredOperations.removeWhere(
+        (e) => e.investmentId == investmentModel.id,
+      );
       thisMonthOperations.removeWhere(
         (e) => e.investmentId == investmentModel.id,
       );
@@ -168,6 +172,11 @@ abstract class InvestmentsControllerBase with Store {
     }
     return 0.0;
   }
+
+  //TODO: CRIAR MECANISMO DE FILTRO.
+  @observable
+  ObservableList<OperationModel> filteredOperations =
+      ObservableList<OperationModel>();
 
   @observable
   ObservableList<OperationModel> thisMonthOperations =
@@ -191,6 +200,8 @@ abstract class InvestmentsControllerBase with Store {
       investments.add(newInvestment);
       investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
 
+      //TODO: ADICIONAR NA filteredOperations SE A DATA DE HOJE ESTIVER NOS FILTROS.
+
       thisMonthOperations.add(newOperation);
       thisMonthOperations.sort((a, b) => b.date.compareTo(a.date));
     } on AppException catch (_) {
@@ -211,6 +222,7 @@ abstract class InvestmentsControllerBase with Store {
       investments.add(newInvestment);
       investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
 
+      filteredOperations.remove(operationModel);
       thisMonthOperations.remove(operationModel);
     } on AppException catch (_) {
       rethrow;
