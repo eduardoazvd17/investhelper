@@ -267,7 +267,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           child: Observer(
             builder: (_) {
               return Visibility(
-                visible: widget.controller.thisMonthOperations.isNotEmpty,
+                visible: widget.controller.operationsWithFilter.isNotEmpty,
                 replacement: Center(
                   child: EmptyListWidget(
                     message: AppLocalizations.of(context)!
@@ -276,7 +276,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                 ),
                 child: ListView(
                   children:
-                      widget.controller.thisMonthOperations.map((operation) {
+                      widget.controller.operationsWithFilter.map((operation) {
                     final InvestmentModel investment =
                         widget.controller.investments.firstWhere(
                       (e) => e.id == operation.investmentId,

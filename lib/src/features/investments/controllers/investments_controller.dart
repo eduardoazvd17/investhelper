@@ -49,7 +49,7 @@ abstract class InvestmentsControllerBase with Store {
           descending: true,
         ),
       );
-      filteredOperations.addAll(thisMonthOperations);
+      operationsWithFilter.addAll(thisMonthOperations);
     }
 
     isLoading = false;
@@ -145,7 +145,7 @@ abstract class InvestmentsControllerBase with Store {
       await _service.deleteInvestment(investmentModel);
       investments.remove(investmentModel);
 
-      filteredOperations.removeWhere(
+      operationsWithFilter.removeWhere(
         (e) => e.investmentId == investmentModel.id,
       );
       thisMonthOperations.removeWhere(
@@ -167,7 +167,7 @@ abstract class InvestmentsControllerBase with Store {
   }
 
   @observable
-  ObservableList<OperationModel> filteredOperations =
+  ObservableList<OperationModel> operationsWithFilter =
       ObservableList<OperationModel>();
 
   @observable
@@ -198,8 +198,8 @@ abstract class InvestmentsControllerBase with Store {
         descending: descendingFilter,
       );
 
-      filteredOperations.clear();
-      filteredOperations.addAll(operations);
+      operationsWithFilter.clear();
+      operationsWithFilter.addAll(operations);
     } on AppException catch (_) {
       rethrow;
     }
@@ -213,8 +213,8 @@ abstract class InvestmentsControllerBase with Store {
     endDateFilter = DateTime.now();
     descendingFilter = true;
 
-    filteredOperations.clear();
-    filteredOperations.addAll(thisMonthOperations);
+    operationsWithFilter.clear();
+    operationsWithFilter.addAll(thisMonthOperations);
   }
 
   @observable
@@ -239,10 +239,14 @@ abstract class InvestmentsControllerBase with Store {
       investments.add(newInvestment);
       investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
 
-      if (!newOperation.date.isBefore(startDateFilter) &&
-          !newOperation.date.isAfter(endDateFilter)) {
-        filteredOperations.add(newOperation);
-        filteredOperations.sort((a, b) {
+      final bool isAfterStartDate =
+          !newOperation.date.isBefore(startDateFilter);
+      final bool isBeforeEndDate =
+          DateTimeUtils.isSameDay(DateTime.now(), endDateFilter) ||
+              !newOperation.date.isAfter(endDateFilter);
+      if (isAfterStartDate && isBeforeEndDate) {
+        operationsWithFilter.add(newOperation);
+        operationsWithFilter.sort((a, b) {
           if (descendingFilter) {
             return b.date.compareTo(a.date);
           } else {
@@ -271,7 +275,7 @@ abstract class InvestmentsControllerBase with Store {
       investments.add(newInvestment);
       investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
 
-      filteredOperations.remove(operationModel);
+      operationsWithFilter.remove(operationModel);
       thisMonthOperations.remove(operationModel);
     } on AppException catch (_) {
       rethrow;

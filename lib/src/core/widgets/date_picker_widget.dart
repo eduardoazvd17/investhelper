@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/app_formatter.dart';
+import '../utils/date_time_utils.dart';
 
 class DatePickerWidget extends StatefulWidget {
   final String label;
@@ -67,9 +68,8 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
 
                   if (selectedDate != null) {
                     if (widget.minDate != null &&
-                        widget.minDate!.month == selectedDate.year &&
-                        widget.minDate!.month == selectedDate.month &&
-                        widget.minDate!.day == selectedDate.day) {
+                        DateTimeUtils.isSameDay(
+                            widget.minDate!, selectedDate)) {
                       selectedDate = DateTime(
                         selectedDate.year,
                         selectedDate.month,
