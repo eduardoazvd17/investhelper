@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../../../core/utils/app_theme.dart';
 
@@ -16,10 +17,12 @@ class _SplashScreenState extends State<SplashScreen> {
       title: 'InvestHelper',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: Center(
-        child: Image.asset(
-          'assets/app_icon/android.png',
-          height: 180,
+      home: Scaffold(
+        body: Center(
+          child: Image.asset(
+            'assets/app_icon/android.png',
+            height: 190,
+          ),
         ),
       ),
     );
