@@ -9,14 +9,14 @@ class DateRangePickerWidget extends StatefulWidget {
   final String label;
   final DateTime? startDate;
   final DateTime? endDate;
-  final int maxInterval;
+  final int? maxInterval;
   final void Function(DateTime? start, DateTime? end) onChange;
   const DateRangePickerWidget({
     super.key,
     required this.label,
     required this.startDate,
     required this.endDate,
-    this.maxInterval = 30,
+    this.maxInterval,
     required this.onChange,
   });
 
@@ -49,19 +49,22 @@ class _DateRangePickerWidgetState extends State<DateRangePickerWidget> {
         lastDate: now,
       );
 
-      if (selectedRange != null &&
-          selectedRange.duration.inDays > widget.maxInterval) {
-        final int exceededDays =
-            selectedRange.duration.inDays - widget.maxInterval;
-        setState(() {
-          _selectedStartDate = selectedRange!.start;
-          _selectedEndDate = selectedRange.end.subtract(
-            Duration(days: exceededDays),
-          );
-        });
+      if (widget.maxInterval != null) {
+        if (selectedRange != null &&
+            selectedRange.duration.inDays > widget.maxInterval!) {
+          final int exceededDays =
+              selectedRange.duration.inDays - widget.maxInterval!;
+          setState(() {
+            _selectedStartDate = selectedRange!.start;
+            _selectedEndDate = selectedRange.end.subtract(
+              Duration(days: exceededDays),
+            );
+          });
+        }
       }
-    } while (selectedRange != null &&
-        selectedRange.duration.inDays > widget.maxInterval);
+    } while (widget.maxInterval != null &&
+        selectedRange != null &&
+        selectedRange.duration.inDays > widget.maxInterval!);
 
     if (selectedRange != null) {
       setState(() {
