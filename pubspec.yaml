@@ -54,6 +54,7 @@ dependencies:
   flutter_native_splash: ^2.4.0
   package_info_plus: ^7.0.0
   google_fonts: ^6.2.1
+  flutter_animate: ^4.5.0
 
 dev_dependencies:
   change_app_package_name: ^1.1.0
