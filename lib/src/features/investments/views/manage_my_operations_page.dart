@@ -281,8 +281,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                   _enabledFiltersWidget,
                   Expanded(
                     child: Visibility(
-                      visible:
-                          widget.controller.operationsWithFilter.isNotEmpty,
+                      visible: widget.controller.filteredOperations.isNotEmpty,
                       replacement: Center(
                         child: EmptyListWidget(
                           message: AppLocalizations.of(context)!
@@ -290,7 +289,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                         ),
                       ),
                       child: ListView(
-                        children: widget.controller.operationsWithFilter
+                        children: widget.controller.filteredOperations
                             .map((operation) {
                           final InvestmentModel investment =
                               widget.controller.investments.firstWhere(

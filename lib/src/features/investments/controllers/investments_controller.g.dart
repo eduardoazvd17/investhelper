@@ -136,16 +136,15 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
       name: 'InvestmentsControllerBase.operationsWithFilter', context: context);
 
   @override
-  ObservableList<OperationModel> get operationsWithFilter {
+  ObservableList<OperationModel> get filteredOperations {
     _$operationsWithFilterAtom.reportRead();
-    return super.operationsWithFilter;
+    return super.filteredOperations;
   }
 
   @override
-  set operationsWithFilter(ObservableList<OperationModel> value) {
-    _$operationsWithFilterAtom.reportWrite(value, super.operationsWithFilter,
-        () {
-      super.operationsWithFilter = value;
+  set filteredOperations(ObservableList<OperationModel> value) {
+    _$operationsWithFilterAtom.reportWrite(value, super.filteredOperations, () {
+      super.filteredOperations = value;
     });
   }
 
@@ -371,7 +370,7 @@ hideValues: ${hideValues},
 dailyTip: ${dailyTip},
 goals: ${goals},
 investments: ${investments},
-operationsWithFilter: ${operationsWithFilter},
+operationsWithFilter: ${filteredOperations},
 investmentIdFilter: ${investmentIdFilter},
 operationTypeFilter: ${operationTypeFilter},
 startDateFilter: ${startDateFilter},

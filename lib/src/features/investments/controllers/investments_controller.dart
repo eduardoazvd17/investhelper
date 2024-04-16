@@ -49,7 +49,7 @@ abstract class InvestmentsControllerBase with Store {
           descending: true,
         ),
       );
-      operationsWithFilter.addAll(thisMonthOperations);
+      filteredOperations.addAll(thisMonthOperations);
     }
 
     isLoading = false;
@@ -145,7 +145,10 @@ abstract class InvestmentsControllerBase with Store {
       await _service.deleteInvestment(investmentModel);
       investments.remove(investmentModel);
 
-      operationsWithFilter.removeWhere(
+      allOperations?.removeWhere(
+        (e) => e.investmentId == investmentModel.id,
+      );
+      filteredOperations.removeWhere(
         (e) => e.investmentId == investmentModel.id,
       );
       thisMonthOperations.removeWhere(
@@ -167,7 +170,10 @@ abstract class InvestmentsControllerBase with Store {
   }
 
   @observable
-  ObservableList<OperationModel> operationsWithFilter =
+  ObservableList<OperationModel>? allOperations;
+
+  @observable
+  ObservableList<OperationModel> filteredOperations =
       ObservableList<OperationModel>();
 
   @observable
@@ -188,34 +194,15 @@ abstract class InvestmentsControllerBase with Store {
   @action
   Future<void> onChangeOperationsFilters() async {
     try {
-      final bool hasDate = startDateFilter != null && endDateFilter != null;
       final List<OperationModel> operations;
-      if (hasDate &&
+      final bool hasDate = startDateFilter != null && endDateFilter != null;
+
+      if (allOperations != null) {
+        operations = List<OperationModel>.from(allOperations!);
+      } else if (hasDate &&
           !startDateFilter!.isBefore(DateTimeUtils.currentMonthFirstDay) &&
           DateTimeUtils.isSameMonth(DateTime.now(), endDateFilter!)) {
         operations = List<OperationModel>.from(thisMonthOperations);
-
-        operations.removeWhere(
-          (e) {
-            return e.date.isBefore(startDateFilter!) ||
-                e.date.isAfter(endDateFilter!);
-          },
-        );
-
-        if (investmentIdFilter != null) {
-          operations.removeWhere((e) => e.investmentId != investmentIdFilter);
-        }
-        if (operationTypeFilter != null) {
-          operations.removeWhere((e) => e.type != operationTypeFilter);
-        }
-
-        operations.sort((a, b) {
-          if (descendingFilter) {
-            return b.date.compareTo(a.date);
-          } else {
-            return a.date.compareTo(b.date);
-          }
-        });
       } else {
         operations = await _service.loadOperations(
           user!.id,
@@ -226,10 +213,16 @@ abstract class InvestmentsControllerBase with Store {
           limit: null,
           descending: descendingFilter,
         );
+        if (!hasDate &&
+            operationTypeFilter == null &&
+            investmentIdFilter == null) {
+          allOperations = ObservableList.of(operations);
+        }
       }
 
-      operationsWithFilter.clear();
-      operationsWithFilter.addAll(operations);
+      _filterAndSortOperations(operations);
+      filteredOperations.clear();
+      filteredOperations.addAll(operations);
     } on AppException catch (_) {
       rethrow;
     }
@@ -266,28 +259,14 @@ abstract class InvestmentsControllerBase with Store {
       investments.add(newInvestment);
       investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
 
-      final DateTime now = DateTime.now();
-      final bool hasDate = startDateFilter != null && endDateFilter != null;
-      final bool isAfterStartDate = startDateFilter != null &&
-          !newOperation.date.isBefore(startDateFilter!);
-      final bool isBeforeEndDate = endDateFilter != null &&
-              DateTimeUtils.isSameDay(now, endDateFilter!) ||
-          !newOperation.date.isAfter(endDateFilter!);
+      allOperations?.add(newOperation);
 
-      if (!hasDate || (isAfterStartDate && isBeforeEndDate)) {
-        operationsWithFilter.add(newOperation);
-        operationsWithFilter.sort((a, b) {
-          if (descendingFilter) {
-            return b.date.compareTo(a.date);
-          } else {
-            return a.date.compareTo(b.date);
-          }
-        });
-      }
+      filteredOperations.add(newOperation);
+      _filterAndSortOperations(filteredOperations);
 
-      if (DateTimeUtils.isSameMonth(now, newOperation.date)) {
+      if (DateTimeUtils.isSameMonth(DateTime.now(), newOperation.date)) {
         thisMonthOperations.add(newOperation);
-        thisMonthOperations.sort((a, b) => b.date.compareTo(a.date));
+        _filterAndSortOperations(thisMonthOperations, sortOnly: true);
       }
     } on AppException catch (_) {
       rethrow;
@@ -307,7 +286,8 @@ abstract class InvestmentsControllerBase with Store {
       investments.add(newInvestment);
       investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
 
-      operationsWithFilter.remove(operationModel);
+      allOperations?.remove(operationModel);
+      filteredOperations.remove(operationModel);
       thisMonthOperations.remove(operationModel);
     } on AppException catch (_) {
       rethrow;
@@ -350,5 +330,35 @@ abstract class InvestmentsControllerBase with Store {
           : thisMonthOperations.map((e) => e.profit).reduce((a, b) => a + b);
     }
     return 0.0;
+  }
+
+  void _filterAndSortOperations(
+    List<OperationModel> operations, {
+    bool sortOnly = false,
+  }) {
+    if (!sortOnly && startDateFilter != null && endDateFilter != null) {
+      operations.removeWhere(
+        (e) {
+          return e.date.isBefore(startDateFilter!) ||
+              e.date.isAfter(endDateFilter!);
+        },
+      );
+    }
+
+    if (!sortOnly && investmentIdFilter != null) {
+      operations.removeWhere((e) => e.investmentId != investmentIdFilter);
+    }
+
+    if (!sortOnly && operationTypeFilter != null) {
+      operations.removeWhere((e) => e.type != operationTypeFilter);
+    }
+
+    operations.sort((a, b) {
+      if (descendingFilter) {
+        return b.date.compareTo(a.date);
+      } else {
+        return a.date.compareTo(b.date);
+      }
+    });
   }
 }
