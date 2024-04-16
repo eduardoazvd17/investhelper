@@ -138,6 +138,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                   lastCustodialPosition:
                       _selectedInvestment.value!.custodialPosition,
                   lastAveragePrice: _selectedInvestment.value!.averagePrice,
+                  category: _selectedInvestment.value!.category,
                 ),
                 _selectedInvestment.value!,
               );

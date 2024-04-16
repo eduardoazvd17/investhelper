@@ -257,6 +257,7 @@ class InvestmentsService {
         totalPrice: createOperationModel.totalPrice,
         lastCustodialPosition: investmentModel.custodialPosition,
         lastAveragePrice: investmentModel.averagePrice,
+        category: investmentModel.category,
       );
 
       final InvestmentModel newInvestment = await editInvestment(

@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'dart:math';
+
+import '../enums/category_enum.dart';
 import '../enums/operation_type.dart';
 
 class OperationModel {
@@ -14,6 +16,7 @@ class OperationModel {
   final double totalPrice;
   final int lastCustodialPosition;
   final double lastAveragePrice;
+  final CategoryEnum category;
 
   double get value => max(quantity * unitPrice, totalPrice);
 
@@ -47,6 +50,7 @@ class OperationModel {
     required this.totalPrice,
     required this.lastCustodialPosition,
     required this.lastAveragePrice,
+    required this.category,
   });
 
   OperationModel copyWith({
@@ -70,6 +74,7 @@ class OperationModel {
       lastCustodialPosition:
           lastCustodialPosition ?? this.lastCustodialPosition,
       lastAveragePrice: lastAveragePrice ?? this.lastAveragePrice,
+      category: category,
     );
   }
 
@@ -84,6 +89,7 @@ class OperationModel {
       'totalPrice': totalPrice,
       'lastCustodialPosition': lastCustodialPosition,
       'lastAveragePrice': lastAveragePrice,
+      'category': category.index,
     };
   }
 
@@ -99,6 +105,7 @@ class OperationModel {
       totalPrice: map['totalPrice'] as double,
       lastCustodialPosition: map['lastCustodialPosition'] as int,
       lastAveragePrice: map['lastAveragePrice'] as double,
+      category: CategoryEnum.values[map['category'] as int],
     );
   }
 }

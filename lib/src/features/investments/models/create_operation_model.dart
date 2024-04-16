@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import '../enums/category_enum.dart';
 import '../enums/operation_type.dart';
 
 class CreateOperationModel {
@@ -12,6 +13,7 @@ class CreateOperationModel {
   final double totalPrice;
   final int lastCustodialPosition;
   final double lastAveragePrice;
+  final CategoryEnum category;
 
   CreateOperationModel({
     required this.userId,
@@ -23,6 +25,7 @@ class CreateOperationModel {
     required this.totalPrice,
     required this.lastCustodialPosition,
     required this.lastAveragePrice,
+    required this.category,
   });
 
   Map<String, dynamic> toMap() {
@@ -36,6 +39,7 @@ class CreateOperationModel {
       'totalPrice': totalPrice,
       'lastCustodialPosition': lastCustodialPosition,
       'lastAveragePrice': lastAveragePrice,
+      'category': category,
     };
   }
 }
