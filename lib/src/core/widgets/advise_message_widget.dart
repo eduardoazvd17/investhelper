@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class AdviseMessageWidget extends StatelessWidget {
   final String message;
@@ -11,8 +12,8 @@ class AdviseMessageWidget extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.only(left: 10, right: 20),
           child: Icon(Icons.info_outline),
-        ),
-        Expanded(child: Text(message))
+        ).animate().slideX().fade(),
+        Expanded(child: Text(message)).animate().slideY().fade()
       ],
     );
   }

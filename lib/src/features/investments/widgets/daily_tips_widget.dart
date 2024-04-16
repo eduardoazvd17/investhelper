@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../models/daily_tip_dto.dart';
 
@@ -36,6 +37,6 @@ class DailyTipsWidget extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ).animate().slideX().fade();
   }
 }

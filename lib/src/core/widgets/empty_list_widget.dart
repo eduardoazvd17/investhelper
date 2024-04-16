@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
 class EmptyListWidget extends StatelessWidget {
@@ -16,7 +17,7 @@ class EmptyListWidget extends StatelessWidget {
           child: Lottie.asset(
             'assets/animations/not_found.json',
           ),
-        ),
+        ).animate().slideY().fade(),
         Text(
           message,
           textAlign: TextAlign.center,
@@ -24,7 +25,7 @@ class EmptyListWidget extends StatelessWidget {
               .textTheme
               .titleMedium
               ?.copyWith(color: Colors.grey),
-        ),
+        ).animate().slideX().fade(),
         const SizedBox(height: animationSize / 2),
       ],
     );
