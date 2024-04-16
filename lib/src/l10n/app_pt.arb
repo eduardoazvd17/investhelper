@@ -282,7 +282,7 @@
       }
     }
   },
-  "period": "Período (max 30 dias)",
+  "period": "Período",
   "orderByDate": "Ordem por data",
   "ascending": "Crescente",
   "descending": "Decrescente",
