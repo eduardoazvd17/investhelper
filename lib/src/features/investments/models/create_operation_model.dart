@@ -39,7 +39,7 @@ class CreateOperationModel {
       'totalPrice': totalPrice,
       'lastCustodialPosition': lastCustodialPosition,
       'lastAveragePrice': lastAveragePrice,
-      'category': category,
+      'category': category.index,
     };
   }
 }
