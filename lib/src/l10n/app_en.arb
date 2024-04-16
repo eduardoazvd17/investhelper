@@ -287,5 +287,7 @@
     "ascending": "Ascending",
     "descending": "Descending",
     "applyFilters": "Apply filters",
-    "resetFilters": "Reset filters"
+    "resetFilters": "Reset filters",
+    "pastMonth": "Last month",
+    "thisMonth": "This month"
 }

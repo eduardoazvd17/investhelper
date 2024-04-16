@@ -185,13 +185,13 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
       Atom(name: 'InvestmentsControllerBase.startDateFilter', context: context);
 
   @override
-  DateTime get startDateFilter {
+  DateTime? get startDateFilter {
     _$startDateFilterAtom.reportRead();
     return super.startDateFilter;
   }
 
   @override
-  set startDateFilter(DateTime value) {
+  set startDateFilter(DateTime? value) {
     _$startDateFilterAtom.reportWrite(value, super.startDateFilter, () {
       super.startDateFilter = value;
     });
@@ -201,13 +201,13 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
       Atom(name: 'InvestmentsControllerBase.endDateFilter', context: context);
 
   @override
-  DateTime get endDateFilter {
+  DateTime? get endDateFilter {
     _$endDateFilterAtom.reportRead();
     return super.endDateFilter;
   }
 
   @override
-  set endDateFilter(DateTime value) {
+  set endDateFilter(DateTime? value) {
     _$endDateFilterAtom.reportWrite(value, super.endDateFilter, () {
       super.endDateFilter = value;
     });

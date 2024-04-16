@@ -430,17 +430,20 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                   ),
                 FiltersIndicatorBarItem(
                   icon: const Icon(CupertinoIcons.calendar),
-                  title: '${AppLocalizations.of(context)!.fromDisplay(
-                    AppFormatter.date(
-                      context,
-                      widget.controller.startDateFilter,
-                    ),
-                  )} - ${AppLocalizations.of(context)!.toDisplay(
-                    AppFormatter.date(
-                      context,
-                      widget.controller.endDateFilter,
-                    ),
-                  )}',
+                  title: widget.controller.startDateFilter != null &&
+                          widget.controller.endDateFilter != null
+                      ? '${AppLocalizations.of(context)!.fromDisplay(
+                          AppFormatter.date(
+                            context,
+                            widget.controller.startDateFilter!,
+                          ),
+                        )} - ${AppLocalizations.of(context)!.toDisplay(
+                          AppFormatter.date(
+                            context,
+                            widget.controller.endDateFilter!,
+                          ),
+                        )}'
+                      : AppLocalizations.of(context)!.all,
                 ),
                 FiltersIndicatorBarItem(
                   icon: widget.controller.descendingFilter

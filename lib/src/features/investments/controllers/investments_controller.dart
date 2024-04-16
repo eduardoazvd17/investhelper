@@ -177,10 +177,10 @@ abstract class InvestmentsControllerBase with Store {
   OperationTypeEnum? operationTypeFilter;
 
   @observable
-  DateTime startDateFilter = DateTimeUtils.currentMonthFirstDay;
+  DateTime? startDateFilter = DateTimeUtils.currentMonthFirstDay;
 
   @observable
-  DateTime endDateFilter = DateTime.now();
+  DateTime? endDateFilter = DateTime.now();
 
   @observable
   bool descendingFilter = true;
@@ -188,15 +188,17 @@ abstract class InvestmentsControllerBase with Store {
   @action
   Future<void> onChangeOperationsFilters() async {
     try {
+      final bool hasDate = startDateFilter != null && endDateFilter != null;
       final List<OperationModel> operations;
-      if (!startDateFilter.isBefore(DateTimeUtils.currentMonthFirstDay) &&
-          DateTimeUtils.isSameMonth(DateTime.now(), endDateFilter)) {
+      if (hasDate &&
+          !startDateFilter!.isBefore(DateTimeUtils.currentMonthFirstDay) &&
+          DateTimeUtils.isSameMonth(DateTime.now(), endDateFilter!)) {
         operations = List<OperationModel>.from(thisMonthOperations);
 
         operations.removeWhere(
           (e) {
-            return e.date.isBefore(startDateFilter) ||
-                e.date.isAfter(endDateFilter);
+            return e.date.isBefore(startDateFilter!) ||
+                e.date.isAfter(endDateFilter!);
           },
         );
 
@@ -265,12 +267,14 @@ abstract class InvestmentsControllerBase with Store {
       investments.sort((a, b) => b.creationDate.compareTo(a.creationDate));
 
       final DateTime now = DateTime.now();
-      final bool isAfterStartDate =
-          !newOperation.date.isBefore(startDateFilter);
-      final bool isBeforeEndDate =
-          DateTimeUtils.isSameDay(now, endDateFilter) ||
-              !newOperation.date.isAfter(endDateFilter);
-      if (isAfterStartDate && isBeforeEndDate) {
+      final bool hasDate = startDateFilter != null && endDateFilter != null;
+      final bool isAfterStartDate = startDateFilter != null &&
+          !newOperation.date.isBefore(startDateFilter!);
+      final bool isBeforeEndDate = endDateFilter != null &&
+              DateTimeUtils.isSameDay(now, endDateFilter!) ||
+          !newOperation.date.isAfter(endDateFilter!);
+
+      if (!hasDate || (isAfterStartDate && isBeforeEndDate)) {
         operationsWithFilter.add(newOperation);
         operationsWithFilter.sort((a, b) {
           if (descendingFilter) {
