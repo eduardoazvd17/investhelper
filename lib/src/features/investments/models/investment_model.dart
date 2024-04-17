@@ -18,7 +18,6 @@ class InvestmentModel {
     final double value;
     if (category.hasQuotas) {
       value = custodialPosition * averagePrice;
-      return custodialPosition * averagePrice;
     } else if (category.isCrypto) {
       value = cryptoPosition * averagePrice;
     } else {

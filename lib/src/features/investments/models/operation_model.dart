@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'dart:math';
-
 import '../enums/category_enum.dart';
 import '../enums/operation_type.dart';
 
@@ -21,28 +19,36 @@ class OperationModel {
   final double lastCryptoPosition;
   final double lastAmountInvested;
 
-  double get value => max(quantity * unitPrice, totalPrice);
+  double get value {
+    final double value;
+    if (category.hasQuotas) {
+      value = quantity * unitPrice;
+    } else {
+      value = totalPrice;
+    }
+    return value <= 0 ? 0 : value;
+  }
 
   double get profit {
     if (type == OperationTypeEnum.sale) {
       if (category.hasQuotas && lastAveragePrice > 0) {
         return (unitPrice - lastAveragePrice) * quantity;
       }
+
       if (category.isCrypto &&
           lastAmountInvested > 0 &&
           lastCryptoPosition > 0) {
-        final double averagePrice = lastAmountInvested * cryptoQuantity;
+        final double averagePrice = lastAmountInvested / cryptoQuantity;
         final double salePrice = totalPrice / cryptoQuantity;
-       return (salePrice - averagePrice) * cryptoQuantity;
-        
+        return (salePrice - averagePrice) * cryptoQuantity;
       }
     }
 
     return 0.0;
   }
 
-  double get variation {
-    if (type == OperationTypeEnum.purchase) {
+  double get averagePriceVariation {
+    if (type == OperationTypeEnum.purchase && category.hasQuotas) {
       final double previousTotal = lastAveragePrice * lastCustodialPosition;
       final double operationTotal = unitPrice * quantity;
       final int custodialPosition = lastCustodialPosition + quantity;
