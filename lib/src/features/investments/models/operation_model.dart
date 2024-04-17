@@ -31,9 +31,10 @@ class OperationModel {
       if (category.isCrypto &&
           lastAmountInvested > 0 &&
           lastCryptoPosition > 0) {
-        final double proportionalValue =
-            (lastAmountInvested * cryptoQuantity) / lastCryptoPosition;
-        return totalPrice - proportionalValue;
+        final double averagePrice = lastAmountInvested * cryptoQuantity;
+        final double salePrice = totalPrice / cryptoQuantity;
+       return (salePrice - averagePrice) * cryptoQuantity;
+        
       }
     }
 

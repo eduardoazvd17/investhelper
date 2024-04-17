@@ -85,12 +85,16 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
 
               final int custodialPosition =
                   int.tryParse(_custodialPositionController.text) ?? 0;
-              final double averagePrice =
-                  double.tryParse(_averagePriceController.text) ?? 0;
               final double amountInvested =
                   double.tryParse(_amountInvestedController.text) ?? 0;
               final double cryptoPosition =
                   double.tryParse(_cryptoPositionController.text) ?? 0;
+
+              final bool isCrypto = _selectedCategory.value!.isCrypto;
+
+              final double averagePrice = isCrypto
+                  ? (amountInvested / cryptoPosition)
+                  : double.tryParse(_averagePriceController.text) ?? 0;
 
               final DateTime now = DateTime.now();
               final DateTime? lastOperationDate =

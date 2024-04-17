@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'dart:math';
-
 import '../enums/category_enum.dart';
 
 class InvestmentModel {
@@ -16,14 +14,37 @@ class InvestmentModel {
   final DateTime? lastOperationDate;
   final double cryptoPosition;
 
-  double get value => max(custodialPosition * averagePrice, amountInvested);
+  double get value {
+    final double value;
+    if (category.hasQuotas) {
+      value = custodialPosition * averagePrice;
+      return custodialPosition * averagePrice;
+    } else if (category.isCrypto) {
+      value = cryptoPosition * averagePrice;
+    } else {
+      value = amountInvested;
+    }
+    return value <= 0 ? 0 : value;
+  }
 
   bool get hasData {
-    return (custodialPosition > 0 && averagePrice > 0) || amountInvested > 0;
+    if (category.hasQuotas) {
+      return custodialPosition > 0 && averagePrice > 0;
+    }
+    if (category.isCrypto) {
+      return cryptoPosition > 0 && averagePrice > 0;
+    }
+    return amountInvested > 0;
   }
 
   bool get isEmpty {
-    return custodialPosition == 0 && averagePrice == 0 && amountInvested == 0;
+    if (category.hasQuotas) {
+      return custodialPosition <= 0 && averagePrice <= 0;
+    }
+    if (category.isCrypto) {
+      return cryptoPosition <= 0 && averagePrice <= 0;
+    }
+    return amountInvested <= 0;
   }
 
   InvestmentModel({
