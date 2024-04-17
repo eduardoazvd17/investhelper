@@ -453,9 +453,14 @@ class InvestmentsService {
             final double cryptoPosition =
                 investmentModel.cryptoPosition + operationModel.cryptoQuantity;
 
+            final double averagePrice = investmentModel.category.isCrypto
+                ? (amountInvested / cryptoPosition)
+                : investmentModel.averagePrice;
+
             return investmentModel.copyWith(
               amountInvested: amountInvested <= 0 ? 0 : amountInvested,
               cryptoPosition: cryptoPosition <= 0 ? 0 : cryptoPosition,
+              averagePrice: averagePrice <= 0 ? 0 : averagePrice,
             );
           }
         case OperationTypeEnum.sale:
