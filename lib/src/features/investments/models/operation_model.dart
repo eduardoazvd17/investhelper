@@ -35,12 +35,9 @@ class OperationModel {
         return (unitPrice - lastAveragePrice) * quantity;
       }
 
-      if (category.isCrypto &&
-          lastAmountInvested > 0 &&
-          lastCryptoPosition > 0) {
-        final double averagePrice = lastAmountInvested / cryptoQuantity;
-        final double salePrice = totalPrice / cryptoQuantity;
-        return (salePrice - averagePrice) * cryptoQuantity;
+      if (category.isCrypto && lastAveragePrice > 0) {
+        final double difference = cryptoQuantity * lastAveragePrice;
+        return totalPrice - difference;
       }
     }
 

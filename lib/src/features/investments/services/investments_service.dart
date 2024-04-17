@@ -440,13 +440,10 @@ class InvestmentsService {
               ? (investmentModel.amountInvested + operationModel.totalPrice)
               : (investmentModel.amountInvested - operationModel.totalPrice);
 
-          final double averagePrice = (amountInvested / cryptoPosition);
-          final bool isEmpty =
-              amountInvested <= 0 || cryptoPosition <= 0 || averagePrice <= 0;
+          final bool isEmpty = amountInvested <= 0 || cryptoPosition <= 0;
           return investmentModel.copyWith(
             cryptoPosition: isEmpty ? 0 : cryptoPosition,
             amountInvested: isEmpty ? 0 : amountInvested,
-            averagePrice: isEmpty ? 0 : averagePrice,
           );
       }
     } else {
