@@ -426,8 +426,8 @@ class InvestmentsService {
           final bool isEmpty =
               amountInvested <= 0 || cryptoPosition <= 0 || averagePrice <= 0;
           return investmentModel.copyWith(
-            amountInvested: isEmpty ? 0 : amountInvested,
             cryptoPosition: isEmpty ? 0 : cryptoPosition,
+            amountInvested: isEmpty ? 0 : amountInvested,
             averagePrice: isEmpty ? 0 : averagePrice,
           );
         case OperationTypeEnum.sale:
@@ -444,8 +444,8 @@ class InvestmentsService {
           final bool isEmpty =
               amountInvested <= 0 || cryptoPosition <= 0 || averagePrice <= 0;
           return investmentModel.copyWith(
-            amountInvested: isEmpty ? 0 : amountInvested,
             cryptoPosition: isEmpty ? 0 : cryptoPosition,
+            amountInvested: isEmpty ? 0 : amountInvested,
             averagePrice: isEmpty ? 0 : averagePrice,
           );
       }
