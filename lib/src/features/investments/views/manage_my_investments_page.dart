@@ -92,9 +92,10 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
 
               final bool isCrypto = _selectedCategory.value!.isCrypto;
 
-              final double averagePrice = isCrypto
-                  ? (amountInvested / cryptoPosition)
-                  : double.tryParse(_averagePriceController.text) ?? 0;
+              final double averagePrice =
+                  isCrypto && amountInvested > 0 && cryptoPosition > 0
+                      ? (amountInvested / cryptoPosition)
+                      : double.tryParse(_averagePriceController.text) ?? 0;
 
               final DateTime now = DateTime.now();
               final DateTime? lastOperationDate =
