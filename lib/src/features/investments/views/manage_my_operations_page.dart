@@ -110,8 +110,8 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                 throw AppException(AppExceptionType.emptyFields);
               }
 
-              final bool needQuantityAndUnitPrice = _selectedInvestment
-                  .value!.category.needPositionAndAveragePrice;
+              final bool needQuantityAndUnitPrice =
+                  _selectedInvestment.value!.category.hasQuotas;
               final quantity = int.tryParse(_quantityController.text) ?? 0;
               final unitPrice = double.tryParse(_unitPriceController.text) ?? 0;
               final totalPrice =
@@ -184,8 +184,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                           ?.copyWith(color: Colors.grey),
                     ),
                   ),
-                  if (selectedInvestment
-                      .category.needPositionAndAveragePrice) ...[
+                  if (selectedInvestment.category.hasQuotas) ...[
                     const SizedBox(height: 10),
                     Row(
                       children: [
@@ -340,7 +339,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FittedBox(
-                  child: Text(element.category.needPositionAndAveragePrice
+                  child: Text(element.category.hasQuotas
                       ? '${element.name} - ${AppLocalizations.of(context)!.positionDisplay(element.custodialPosition.toString())}'
                       : '${element.name} - ${AppLocalizations.of(context)!.totalDisplay(AppFormatter.currency(element.amountInvested))}'),
                 ),
@@ -364,7 +363,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
       onChanged: (operationType) {
         setState(() => _selectedOperationType = operationType);
         if (operationType == OperationTypeEnum.sale) {
-          if (selectedInvestment.category.needPositionAndAveragePrice) {
+          if (selectedInvestment.category.hasQuotas) {
             final int quantity =
                 int.tryParse(_quantityController.text.trim()) ?? 0;
             if (quantity > selectedInvestment.custodialPosition) {
@@ -381,10 +380,9 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         }
       },
       items: OperationTypeEnum.values.map((e) {
-        final bool disableSale =
-            (selectedInvestment.category.needPositionAndAveragePrice
-                ? selectedInvestment.custodialPosition <= 0
-                : selectedInvestment.amountInvested <= 0);
+        final bool disableSale = (selectedInvestment.category.hasQuotas
+            ? selectedInvestment.custodialPosition <= 0
+            : selectedInvestment.amountInvested <= 0);
         final bool isEnabled = disableSale ? e != OperationTypeEnum.sale : true;
 
         return DropdownMenuItem(

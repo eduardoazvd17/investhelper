@@ -83,8 +83,7 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                           ),
                         ],
                       ),
-                      if (widget
-                          .investment.category.needPositionAndAveragePrice)
+                      if (widget.investment.category.hasQuotas)
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -110,8 +109,7 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (widget.investment.category
-                                    .needPositionAndAveragePrice &&
+                            if (widget.investment.category.hasQuotas &&
                                 widget.operation.type ==
                                     OperationTypeEnum.sale) ...[
                               Flexible(
@@ -141,8 +139,7 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                                 ),
                               ),
                             ],
-                            if (widget.investment.category
-                                    .needPositionAndAveragePrice &&
+                            if (widget.investment.category.hasQuotas &&
                                 widget.operation.type ==
                                     OperationTypeEnum.purchase)
                               Flexible(

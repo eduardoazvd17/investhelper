@@ -73,8 +73,7 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (widget.investment.category
-                                .needPositionAndAveragePrice) ...[
+                            if (widget.investment.category.hasQuotas) ...[
                               FittedBox(
                                 child: Text(
                                   AppLocalizations.of(context)!

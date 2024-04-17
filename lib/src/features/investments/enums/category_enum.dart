@@ -17,9 +17,17 @@ enum CategoryEnum {
 }
 
 extension CategoryEnumExtension on CategoryEnum {
-  bool get needPositionAndAveragePrice {
+  bool get isCrypto {
+    return switch (this) {
+      CategoryEnum.cryptocurrencies => true,
+      CategoryEnum() => false,
+    };
+  }
+
+  bool get hasQuotas {
     return switch (this) {
       CategoryEnum.stocks => true,
+      CategoryEnum.mutualFunds => true,
       CategoryEnum.reits => true,
       CategoryEnum() => false,
     };

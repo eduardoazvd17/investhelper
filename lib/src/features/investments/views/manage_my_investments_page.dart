@@ -145,7 +145,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  category.needPositionAndAveragePrice
+                  category.hasQuotas
                       ? Row(
                           children: [
                             Expanded(child: _custodialPositionTextField),

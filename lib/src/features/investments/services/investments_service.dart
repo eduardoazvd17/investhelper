@@ -347,7 +347,7 @@ class InvestmentsService {
     InvestmentModel investmentModel,
     bool isRemoving,
   ) {
-    if (investmentModel.category.needPositionAndAveragePrice) {
+    if (investmentModel.category.hasQuotas) {
       switch (operationModel.type) {
         case OperationTypeEnum.purchase:
           if (isRemoving) {
