@@ -379,112 +379,94 @@ class InvestmentsService {
     if (investmentModel.category.hasQuotas) {
       switch (operationModel.type) {
         case OperationTypeEnum.purchase:
-          if (isRemoving) {
-            final int custodialPosition =
-                investmentModel.custodialPosition - operationModel.quantity;
-            final double averagePrice = ((investmentModel.custodialPosition *
-                        investmentModel.averagePrice) -
-                    (operationModel.quantity * operationModel.unitPrice)) /
-                custodialPosition;
+          final int custodialPosition = isRemoving
+              ? (investmentModel.custodialPosition - operationModel.quantity)
+              : (investmentModel.custodialPosition + operationModel.quantity);
 
-            final bool isEmpty = custodialPosition <= 0 || averagePrice <= 0;
-            return investmentModel.copyWith(
-              custodialPosition: isEmpty ? 0 : custodialPosition,
-              averagePrice: isEmpty ? 0 : averagePrice,
-            );
-          } else {
-            final int custodialPosition =
-                investmentModel.custodialPosition + operationModel.quantity;
-            final double averagePrice = ((investmentModel.custodialPosition *
-                        investmentModel.averagePrice) +
-                    (operationModel.quantity * operationModel.unitPrice)) /
-                custodialPosition;
+          final double investmentTotalValue =
+              investmentModel.custodialPosition * investmentModel.averagePrice;
+          final double operationTotalValue =
+              operationModel.quantity * operationModel.unitPrice;
+          final double averagePrice = (isRemoving
+                  ? (investmentTotalValue - operationTotalValue)
+                  : (investmentTotalValue + operationTotalValue)) /
+              custodialPosition;
 
-            final bool isEmpty = custodialPosition <= 0 || averagePrice <= 0;
-            return investmentModel.copyWith(
-              custodialPosition: isEmpty ? 0 : custodialPosition,
-              averagePrice: isEmpty ? 0 : averagePrice,
-            );
-          }
+          final bool isEmpty = custodialPosition <= 0 || averagePrice <= 0;
+          return investmentModel.copyWith(
+            custodialPosition: isEmpty ? 0 : custodialPosition,
+            averagePrice: isEmpty ? 0 : averagePrice,
+          );
         case OperationTypeEnum.sale:
-          if (isRemoving) {
-            final int custodialPosition =
-                investmentModel.custodialPosition + operationModel.quantity;
+          final int custodialPosition = isRemoving
+              ? (investmentModel.custodialPosition + operationModel.quantity)
+              : (investmentModel.custodialPosition - operationModel.quantity);
 
-            final bool isEmpty =
-                custodialPosition <= 0 || investmentModel.averagePrice <= 0;
-            return investmentModel.copyWith(
-              custodialPosition: isEmpty ? 0 : custodialPosition,
-              averagePrice: isEmpty ? 0 : investmentModel.averagePrice,
-            );
-          } else {
-            final int custodialPosition =
-                investmentModel.custodialPosition - operationModel.quantity;
+          final bool isEmpty =
+              custodialPosition <= 0 || investmentModel.averagePrice <= 0;
+          return investmentModel.copyWith(
+            custodialPosition: isEmpty ? 0 : custodialPosition,
+            averagePrice: isEmpty ? 0 : investmentModel.averagePrice,
+          );
+      }
+    } else if (operationModel.category.isCrypto) {
+      switch (operationModel.type) {
+        case OperationTypeEnum.purchase:
+          final double cryptoPosition = isRemoving
+              ? (investmentModel.cryptoPosition - operationModel.cryptoQuantity)
+              : (investmentModel.cryptoPosition +
+                  operationModel.cryptoQuantity);
 
-            final bool isEmpty =
-                custodialPosition <= 0 || investmentModel.averagePrice <= 0;
-            return investmentModel.copyWith(
-              custodialPosition: isEmpty ? 0 : custodialPosition,
-              averagePrice: isEmpty ? 0 : investmentModel.averagePrice,
-            );
-          }
+          final double amountInvested = isRemoving
+              ? (investmentModel.amountInvested - operationModel.totalPrice)
+              : (investmentModel.amountInvested + operationModel.totalPrice);
+
+          final double averagePrice = (amountInvested / cryptoPosition);
+
+          final bool isEmpty =
+              amountInvested <= 0 || cryptoPosition <= 0 || averagePrice <= 0;
+          return investmentModel.copyWith(
+            amountInvested: isEmpty ? 0 : amountInvested,
+            cryptoPosition: isEmpty ? 0 : cryptoPosition,
+            averagePrice: isEmpty ? 0 : averagePrice,
+          );
+        case OperationTypeEnum.sale:
+          final double cryptoPosition = isRemoving
+              ? (investmentModel.cryptoPosition + operationModel.cryptoQuantity)
+              : (investmentModel.cryptoPosition -
+                  operationModel.cryptoQuantity);
+
+          final double amountInvested = isRemoving
+              ? (investmentModel.amountInvested + operationModel.totalPrice)
+              : (investmentModel.amountInvested - operationModel.totalPrice);
+
+          final double averagePrice = (amountInvested / cryptoPosition);
+          final bool isEmpty =
+              amountInvested <= 0 || cryptoPosition <= 0 || averagePrice <= 0;
+          return investmentModel.copyWith(
+            amountInvested: isEmpty ? 0 : amountInvested,
+            cryptoPosition: isEmpty ? 0 : cryptoPosition,
+            averagePrice: isEmpty ? 0 : averagePrice,
+          );
       }
     } else {
       switch (operationModel.type) {
         case OperationTypeEnum.purchase:
-          if (isRemoving) {
-            final double amountInvested =
-                investmentModel.amountInvested - operationModel.totalPrice;
-            final double cryptoPosition =
-                investmentModel.cryptoPosition - operationModel.cryptoQuantity;
+          final double amountInvested = isRemoving
+              ? (investmentModel.amountInvested - operationModel.totalPrice)
+              : (investmentModel.amountInvested + operationModel.totalPrice);
 
-            final double averagePrice = investmentModel.category.isCrypto
-                ? (amountInvested / cryptoPosition)
-                : investmentModel.averagePrice;
-
-            return investmentModel.copyWith(
-              amountInvested: amountInvested <= 0 ? 0 : amountInvested,
-              cryptoPosition: cryptoPosition <= 0 ? 0 : cryptoPosition,
-              averagePrice: averagePrice <= 0 ? 0 : averagePrice,
-            );
-          } else {
-            final double amountInvested =
-                investmentModel.amountInvested + operationModel.totalPrice;
-            final double cryptoPosition =
-                investmentModel.cryptoPosition + operationModel.cryptoQuantity;
-
-            final double averagePrice = investmentModel.category.isCrypto
-                ? (amountInvested / cryptoPosition)
-                : investmentModel.averagePrice;
-
-            return investmentModel.copyWith(
-              amountInvested: amountInvested <= 0 ? 0 : amountInvested,
-              cryptoPosition: cryptoPosition <= 0 ? 0 : cryptoPosition,
-              averagePrice: averagePrice <= 0 ? 0 : averagePrice,
-            );
-          }
+          return investmentModel.copyWith(
+            amountInvested: amountInvested <= 0 ? 0 : amountInvested,
+          );
         case OperationTypeEnum.sale:
-          if (isRemoving) {
-            final double amountInvested =
-                investmentModel.amountInvested + operationModel.totalPrice;
-            final double cryptoPosition =
-                investmentModel.cryptoPosition + operationModel.cryptoQuantity;
+          final double amountInvested = isRemoving
+              ? (investmentModel.amountInvested + operationModel.totalPrice)
+              : (investmentModel.amountInvested - operationModel.totalPrice);
 
-            return investmentModel.copyWith(
-              amountInvested: amountInvested <= 0 ? 0 : amountInvested,
-              cryptoPosition: cryptoPosition <= 0 ? 0 : cryptoPosition,
-            );
-          } else {
-            final double amountInvested =
-                investmentModel.amountInvested - operationModel.totalPrice;
-            final double cryptoPosition =
-                investmentModel.cryptoPosition - operationModel.cryptoQuantity;
-
-            return investmentModel.copyWith(
-              amountInvested: amountInvested <= 0 ? 0 : amountInvested,
-              cryptoPosition: cryptoPosition <= 0 ? 0 : cryptoPosition,
-            );
-          }
+          return investmentModel.copyWith(
+            amountInvested: amountInvested <= 0 ? 0 : amountInvested,
+          );
       }
     }
   }
