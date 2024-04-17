@@ -128,6 +128,8 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                   category: _selectedInvestment.value!.category,
                   cryptoQuantity:
                       double.tryParse(_cryptoQuantityController.text) ?? 0,
+                  lastCryptoPosition: _selectedInvestment.value!.cryptoPosition,
+                  lastAmountInvested: _selectedInvestment.value!.amountInvested,
                 ),
                 _selectedInvestment.value!,
               );
@@ -332,8 +334,9 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FittedBox(
-                  child: Text(element.category.hasQuotas
-                      ? '${element.name} - ${AppLocalizations.of(context)!.positionDisplay(element.custodialPosition.toString())}'
+                  child: Text(element.category.hasQuotas ||
+                          element.category.isCrypto
+                      ? '${element.name} - ${AppLocalizations.of(context)!.positionDisplay(element.category.isCrypto ? element.cryptoPosition.toString() : element.custodialPosition.toString())}'
                       : '${element.name} - ${AppLocalizations.of(context)!.totalDisplay(AppFormatter.currency(element.amountInvested))}'),
                 ),
                 FittedBox(
@@ -488,21 +491,6 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         textInputAction: TextInputAction.done,
       );
 
-  Widget get _cryptoQuantityTextField => TextFieldWidget(
-        label: AppLocalizations.of(context)!.quantity,
-        prefix: const Padding(
-          padding: EdgeInsets.only(right: 5),
-          child: Text('x'),
-        ),
-        hint: '0',
-        controller: _cryptoQuantityController,
-        onChanged: (value) {
-          _cryptoQuantityController.text = AppFormatter.cryptoFloat(value);
-        },
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        textInputAction: TextInputAction.done,
-      );
-
   Widget get _unitPriceTextField => TextFieldWidget(
         label: AppLocalizations.of(context)!.unitPrice,
         prefix: Padding(
@@ -527,17 +515,31 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         hint: '0.00',
         controller: _totalPriceController,
         onChanged: (value) {
-          final double amountInvested =
-              _selectedInvestment.value?.amountInvested ?? 0;
+          _totalPriceController.text = AppFormatter.textFieldCurrency(value);
+        },
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        textInputAction: TextInputAction.done,
+      );
+
+  Widget get _cryptoQuantityTextField => TextFieldWidget(
+        label: AppLocalizations.of(context)!.quantity,
+        prefix: const Padding(
+          padding: EdgeInsets.only(right: 5),
+          child: Text('x'),
+        ),
+        hint: '0',
+        controller: _cryptoQuantityController,
+        onChanged: (value) {
+          final double cryptoPosition =
+              _selectedInvestment.value?.cryptoPosition ?? 0;
           final double doubleValue =
-              double.tryParse(AppFormatter.textFieldCurrency(value)) ?? 0;
-          if (doubleValue > amountInvested &&
+              double.tryParse(AppFormatter.cryptoFloat(value)) ?? 0;
+          if (doubleValue > cryptoPosition &&
               _selectedOperationType == OperationTypeEnum.sale) {
-            _totalPriceController.text = AppFormatter.textFieldCurrency(
-              amountInvested.toStringAsFixed(2),
-            );
+            _cryptoQuantityController.text =
+                AppFormatter.cryptoFloat(cryptoPosition.toString());
           } else {
-            _totalPriceController.text = AppFormatter.textFieldCurrency(value);
+            _cryptoQuantityController.text = AppFormatter.cryptoFloat(value);
           }
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),

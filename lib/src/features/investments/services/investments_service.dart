@@ -127,14 +127,19 @@ class InvestmentsService {
         throw AppException(AppExceptionType.emptyFields);
       }
 
-      if ((createInvestmentModel.category.hasQuotas &&
-              (createInvestmentModel.custodialPosition <= 0 ||
-                  createInvestmentModel.averagePrice <= 0)) ||
-          (!createInvestmentModel.category.hasQuotas &&
-              createInvestmentModel.amountInvested <= 0) ||
-          (createInvestmentModel.category.isCrypto &&
-              createInvestmentModel.cryptoPosition == 0)) {
-        throw AppException(AppExceptionType.invalidValue);
+      if (createInvestmentModel.custodialPosition != 0 ||
+          createInvestmentModel.averagePrice != 0 ||
+          createInvestmentModel.amountInvested != 0 ||
+          createInvestmentModel.cryptoPosition != 0) {
+        if ((createInvestmentModel.category.hasQuotas &&
+                (createInvestmentModel.custodialPosition <= 0 ||
+                    createInvestmentModel.averagePrice <= 0)) ||
+            (!createInvestmentModel.category.hasQuotas &&
+                createInvestmentModel.amountInvested <= 0) ||
+            (createInvestmentModel.category.isCrypto &&
+                createInvestmentModel.cryptoPosition <= 0)) {
+          throw AppException(AppExceptionType.invalidValue);
+        }
       }
 
       final DocumentReference<Map<String, dynamic>> reference =
@@ -280,6 +285,8 @@ class InvestmentsService {
         lastAveragePrice: investmentModel.averagePrice,
         category: investmentModel.category,
         cryptoQuantity: createOperationModel.cryptoQuantity,
+        lastCryptoPosition: investmentModel.cryptoPosition,
+        lastAmountInvested: investmentModel.amountInvested,
       );
 
       final InvestmentModel newInvestment = await editInvestment(

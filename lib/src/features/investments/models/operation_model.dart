@@ -18,13 +18,25 @@ class OperationModel {
   final double lastAveragePrice;
   final CategoryEnum category;
   final double cryptoQuantity;
+  final double lastCryptoPosition;
+  final double lastAmountInvested;
 
   double get value => max(quantity * unitPrice, totalPrice);
 
   double get profit {
-    if (type == OperationTypeEnum.sale && lastAveragePrice > 0) {
-      return (unitPrice - lastAveragePrice) * quantity;
+    if (type == OperationTypeEnum.sale) {
+      if (category.hasQuotas && lastAveragePrice > 0) {
+        return (unitPrice - lastAveragePrice) * quantity;
+      }
+      if (category.isCrypto &&
+          lastAmountInvested > 0 &&
+          lastCryptoPosition > 0) {
+        final double proportionalValue =
+            (lastAmountInvested * cryptoQuantity) / lastCryptoPosition;
+        return totalPrice - proportionalValue;
+      }
     }
+
     return 0.0;
   }
 
@@ -53,6 +65,8 @@ class OperationModel {
     required this.lastAveragePrice,
     required this.category,
     required this.cryptoQuantity,
+    required this.lastCryptoPosition,
+    required this.lastAmountInvested,
   });
 
   OperationModel copyWith({
@@ -64,6 +78,8 @@ class OperationModel {
     int? lastCustodialPosition,
     double? lastAveragePrice,
     double? cryptoQuantity,
+    double? lastCryptoPosition,
+    double? lastAmountInvested,
   }) {
     return OperationModel(
       id: id,
@@ -79,6 +95,8 @@ class OperationModel {
       lastAveragePrice: lastAveragePrice ?? this.lastAveragePrice,
       category: category,
       cryptoQuantity: cryptoQuantity ?? this.cryptoQuantity,
+      lastCryptoPosition: lastCryptoPosition ?? this.lastCryptoPosition,
+      lastAmountInvested: lastAmountInvested ?? this.lastAmountInvested,
     );
   }
 
@@ -94,6 +112,9 @@ class OperationModel {
       'lastCustodialPosition': lastCustodialPosition,
       'lastAveragePrice': lastAveragePrice,
       'category': category.index,
+      'cryptoQuantity': cryptoQuantity,
+      'lastCryptoPosition': lastCryptoPosition,
+      'lastAmountInvested': lastAmountInvested,
     };
   }
 
@@ -111,6 +132,8 @@ class OperationModel {
       lastAveragePrice: map['lastAveragePrice'] as double,
       category: CategoryEnum.values[map['category'] as int],
       cryptoQuantity: map['cryptoQuantity'] as double,
+      lastCryptoPosition: map['lastCryptoPosition'] as double,
+      lastAmountInvested: map['lastAmountInvested'] as double,
     );
   }
 }

@@ -112,35 +112,37 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (widget.investment.category.hasQuotas &&
-                                widget.operation.type ==
-                                    OperationTypeEnum.sale) ...[
-                              Flexible(
-                                child: FittedBox(
-                                  child: Text(
-                                    AppLocalizations.of(context)!
-                                        .averagePriceDisplay(
-                                      AppFormatter.currency(
-                                        widget.operation.lastAveragePrice,
+                            if (widget.operation.type ==
+                                OperationTypeEnum.sale) ...[
+                              if (widget.investment.category.hasQuotas)
+                                Flexible(
+                                  child: FittedBox(
+                                    child: Text(
+                                      AppLocalizations.of(context)!
+                                          .averagePriceDisplay(
+                                        AppFormatter.currency(
+                                          widget.operation.lastAveragePrice,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Flexible(
-                                child: FittedBox(
-                                  child: Text(
-                                    widget.hideValues
-                                        ? '••••••••'
-                                        : AppLocalizations.of(context)!
-                                            .profitDisplay(
-                                            AppFormatter.currency(
-                                              widget.operation.profit,
+                              if (widget.investment.category.hasQuotas ||
+                                  widget.investment.category.isCrypto)
+                                Flexible(
+                                  child: FittedBox(
+                                    child: Text(
+                                      widget.hideValues
+                                          ? '••••••••'
+                                          : AppLocalizations.of(context)!
+                                              .profitDisplay(
+                                              AppFormatter.currency(
+                                                widget.operation.profit,
+                                              ),
                                             ),
-                                          ),
+                                    ),
                                   ),
                                 ),
-                              ),
                             ],
                             if (widget.investment.category.hasQuotas &&
                                 widget.operation.type ==
