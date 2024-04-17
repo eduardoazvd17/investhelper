@@ -9,9 +9,6 @@ enum CategoryEnum {
   fixedIncome,
   treasuryBonds,
   savingsAccount,
-  // privatePensionPlans,
-  // commodities,
-  // etfs,
   cryptocurrencies,
   others,
 }
@@ -42,9 +39,6 @@ extension CategoryEnumExtension on CategoryEnum {
       CategoryEnum.treasuryBonds => AppLocalizations.of(context)!.treasuryBonds,
       CategoryEnum.savingsAccount =>
         AppLocalizations.of(context)!.savingsAccount,
-      // CategoryEnum.privatePensionPlans => AppLocalizations.of(context)!.privatePensionPlans;
-      // CategoryEnum.commodities => AppLocalizations.of(context)!.commodities;
-      // CategoryEnum.etfs => AppLocalizations.of(context)!.etfs;
       CategoryEnum.cryptocurrencies =>
         AppLocalizations.of(context)!.cryptocurrencies,
       CategoryEnum.others => AppLocalizations.of(context)!.others
@@ -59,9 +53,6 @@ extension CategoryEnumExtension on CategoryEnum {
       CategoryEnum.reits => Colors.brown,
       CategoryEnum.treasuryBonds => Colors.pink,
       CategoryEnum.savingsAccount => Colors.yellow,
-      // CategoryEnum.privatePensionPlans => Colors.grey;
-      // CategoryEnum.commodities => Colors.red;
-      // CategoryEnum.etfs => Colors.indigo;
       CategoryEnum.cryptocurrencies => Colors.orange,
       CategoryEnum.others => Colors.blueGrey
     };
