@@ -127,6 +127,16 @@ class InvestmentsService {
         throw AppException(AppExceptionType.emptyFields);
       }
 
+      if ((createInvestmentModel.category.hasQuotas &&
+              (createInvestmentModel.custodialPosition <= 0 ||
+                  createInvestmentModel.averagePrice <= 0)) ||
+          (!createInvestmentModel.category.hasQuotas &&
+              createInvestmentModel.amountInvested <= 0) ||
+          (createInvestmentModel.category.isCrypto &&
+              createInvestmentModel.cryptoPosition == 0)) {
+        throw AppException(AppExceptionType.invalidValue);
+      }
+
       final DocumentReference<Map<String, dynamic>> reference =
           _firestore.collection('investments').doc();
       await reference.set(createInvestmentModel.toMap());
@@ -141,6 +151,7 @@ class InvestmentsService {
         amountInvested: createInvestmentModel.amountInvested,
         creationDate: createInvestmentModel.creationDate,
         lastOperationDate: createInvestmentModel.lastOperationDate,
+        cryptoPosition: createInvestmentModel.cryptoPosition,
       );
     } on AppException catch (_) {
       rethrow;
@@ -242,6 +253,16 @@ class InvestmentsService {
     InvestmentModel investmentModel,
   ) async {
     try {
+      if ((createOperationModel.category.hasQuotas &&
+              (createOperationModel.quantity <= 0 ||
+                  createOperationModel.unitPrice <= 0)) ||
+          (!createOperationModel.category.hasQuotas &&
+              createOperationModel.totalPrice <= 0) ||
+          (createOperationModel.category.isCrypto &&
+              createOperationModel.cryptoQuantity == 0)) {
+        throw AppException(AppExceptionType.invalidValue);
+      }
+
       final DocumentReference<Map<String, dynamic>> reference =
           _firestore.collection('operations').doc();
       await reference.set(createOperationModel.toMap());
@@ -258,6 +279,7 @@ class InvestmentsService {
         lastCustodialPosition: investmentModel.custodialPosition,
         lastAveragePrice: investmentModel.averagePrice,
         category: investmentModel.category,
+        cryptoQuantity: createOperationModel.cryptoQuantity,
       );
 
       final InvestmentModel newInvestment = await editInvestment(
@@ -406,33 +428,44 @@ class InvestmentsService {
           if (isRemoving) {
             final double amountInvested =
                 investmentModel.amountInvested - operationModel.totalPrice;
+            final double cryptoPosition =
+                investmentModel.cryptoPosition - operationModel.cryptoQuantity;
 
             return investmentModel.copyWith(
               amountInvested: amountInvested <= 0 ? 0 : amountInvested,
+              cryptoPosition: cryptoPosition <= 0 ? 0 : cryptoPosition,
             );
           } else {
             final double amountInvested =
                 investmentModel.amountInvested + operationModel.totalPrice;
+            final double cryptoPosition =
+                investmentModel.cryptoPosition + operationModel.cryptoQuantity;
 
             return investmentModel.copyWith(
               amountInvested: amountInvested <= 0 ? 0 : amountInvested,
+              cryptoPosition: cryptoPosition <= 0 ? 0 : cryptoPosition,
             );
           }
         case OperationTypeEnum.sale:
           if (isRemoving) {
             final double amountInvested =
                 investmentModel.amountInvested + operationModel.totalPrice;
+            final double cryptoPosition =
+                investmentModel.cryptoPosition + operationModel.cryptoQuantity;
 
             return investmentModel.copyWith(
               amountInvested: amountInvested <= 0 ? 0 : amountInvested,
-              lastOperationDate: operationModel.date,
+              cryptoPosition: cryptoPosition <= 0 ? 0 : cryptoPosition,
             );
           } else {
             final double amountInvested =
                 investmentModel.amountInvested - operationModel.totalPrice;
+            final double cryptoPosition =
+                investmentModel.cryptoPosition - operationModel.cryptoQuantity;
 
             return investmentModel.copyWith(
               amountInvested: amountInvested <= 0 ? 0 : amountInvested,
+              cryptoPosition: cryptoPosition <= 0 ? 0 : cryptoPosition,
             );
           }
       }

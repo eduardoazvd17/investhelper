@@ -73,6 +73,20 @@ class _InvestmentTileWidgetState extends State<InvestmentTileWidget> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            if (widget.investment.category.isCrypto) ...[
+                              FittedBox(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .custodialPositionDisplay(
+                                    widget.hideValues
+                                        ? '••••••'
+                                        : widget.investment.cryptoPosition
+                                            .toString(),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 2.5),
+                            ],
                             if (widget.investment.category.hasQuotas) ...[
                               FittedBox(
                                 child: Text(

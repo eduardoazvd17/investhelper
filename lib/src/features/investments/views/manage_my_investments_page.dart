@@ -32,6 +32,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   late final TextEditingController _custodialPositionController;
   late final TextEditingController _averagePriceController;
   late final TextEditingController _amountInvestedController;
+  late final TextEditingController _cryptoPositionController;
   late final ValueNotifier<CategoryEnum?> _selectedCategory;
 
   @override
@@ -40,6 +41,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
     _custodialPositionController = TextEditingController();
     _averagePriceController = TextEditingController();
     _amountInvestedController = TextEditingController();
+    _cryptoPositionController = TextEditingController();
     _selectedCategory = ValueNotifier<CategoryEnum?>(null);
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -56,6 +58,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
     _custodialPositionController.dispose();
     _averagePriceController.dispose();
     _amountInvestedController.dispose();
+    _cryptoPositionController.dispose();
     _selectedCategory.dispose();
     super.dispose();
   }
@@ -86,10 +89,14 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                   double.tryParse(_averagePriceController.text) ?? 0;
               final double amountInvested =
                   double.tryParse(_amountInvestedController.text) ?? 0;
+              final double cryptoPosition =
+                  double.tryParse(_cryptoPositionController.text) ?? 0;
+
               final DateTime now = DateTime.now();
               final DateTime? lastOperationDate =
                   (custodialPosition > 0 && averagePrice > 0 ||
-                          amountInvested > 0)
+                          amountInvested > 0 ||
+                          cryptoPosition > 0)
                       ? now
                       : null;
 
@@ -103,6 +110,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                   amountInvested: amountInvested,
                   creationDate: now,
                   lastOperationDate: lastOperationDate,
+                  cryptoPosition: cryptoPosition,
                 ),
               );
 
@@ -145,14 +153,20 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  category.hasQuotas
-                      ? Row(
-                          children: [
-                            Expanded(child: _custodialPositionTextField),
-                            Expanded(child: _averagePriceTextField),
-                          ],
-                        )
-                      : _amountInvestedTextField,
+                  if (category.hasQuotas)
+                    Row(
+                      children: [
+                        Expanded(child: _custodialPositionTextField),
+                        Expanded(child: _averagePriceTextField),
+                      ],
+                    )
+                  else ...[
+                    if (category.isCrypto) ...[
+                      _cryptoPositionTextField,
+                      const SizedBox(height: 10),
+                    ],
+                    _amountInvestedTextField,
+                  ],
                   const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.all(10),
@@ -332,7 +346,6 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
               AppFormatter.textFieldInteger(value);
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
-        textCapitalization: TextCapitalization.words,
         textInputAction: TextInputAction.done,
       );
 
@@ -348,7 +361,6 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           _averagePriceController.text = AppFormatter.textFieldCurrency(value);
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        textCapitalization: TextCapitalization.words,
         textInputAction: TextInputAction.done,
       );
 
@@ -365,7 +377,21 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
               AppFormatter.textFieldCurrency(value);
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        textCapitalization: TextCapitalization.words,
+        textInputAction: TextInputAction.done,
+      );
+
+  Widget get _cryptoPositionTextField => TextFieldWidget(
+        label: AppLocalizations.of(context)!.startCustodialPosition,
+        prefix: const Padding(
+          padding: EdgeInsets.only(right: 5),
+          child: Text('x'),
+        ),
+        hint: '0',
+        controller: _cryptoPositionController,
+        onChanged: (value) {
+          _cryptoPositionController.text = AppFormatter.cryptoFloat(value);
+        },
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textInputAction: TextInputAction.done,
       );
 }

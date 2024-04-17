@@ -10,6 +10,7 @@ class CreateInvestmentModel {
   final double amountInvested;
   final DateTime creationDate;
   final DateTime? lastOperationDate;
+  final double cryptoPosition;
 
   CreateInvestmentModel({
     required this.userId,
@@ -20,6 +21,7 @@ class CreateInvestmentModel {
     required this.amountInvested,
     required this.creationDate,
     required this.lastOperationDate,
+    required this.cryptoPosition,
   });
 
   Map<String, dynamic> toMap() {
@@ -32,6 +34,7 @@ class CreateInvestmentModel {
       'amountInvested': amountInvested,
       'creationDate': creationDate.millisecondsSinceEpoch,
       'lastOperationDate': lastOperationDate?.millisecondsSinceEpoch,
+      'cryptoPosition': cryptoPosition,
     };
   }
 }

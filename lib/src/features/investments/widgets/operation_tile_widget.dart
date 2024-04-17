@@ -83,7 +83,8 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                           ),
                         ],
                       ),
-                      if (widget.investment.category.hasQuotas)
+                      if (widget.investment.category.hasQuotas ||
+                          widget.investment.category.isCrypto)
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -92,7 +93,9 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                                 child: Text(
                                   widget.hideValues
                                       ? '••••••••'
-                                      : '${widget.operation.quantity}x ${AppFormatter.currency(widget.operation.unitPrice)}',
+                                      : widget.investment.category.isCrypto
+                                          ? '${widget.operation.cryptoQuantity}'
+                                          : '${widget.operation.quantity}x ${AppFormatter.currency(widget.operation.unitPrice)}',
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleSmall

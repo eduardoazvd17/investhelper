@@ -14,6 +14,7 @@ class CreateOperationModel {
   final int lastCustodialPosition;
   final double lastAveragePrice;
   final CategoryEnum category;
+  final double cryptoQuantity;
 
   CreateOperationModel({
     required this.userId,
@@ -26,6 +27,7 @@ class CreateOperationModel {
     required this.lastCustodialPosition,
     required this.lastAveragePrice,
     required this.category,
+    required this.cryptoQuantity,
   });
 
   Map<String, dynamic> toMap() {
@@ -40,6 +42,7 @@ class CreateOperationModel {
       'lastCustodialPosition': lastCustodialPosition,
       'lastAveragePrice': lastAveragePrice,
       'category': category.index,
+      'cryptoQuantity' : cryptoQuantity,
     };
   }
 }

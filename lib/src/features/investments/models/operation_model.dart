@@ -17,6 +17,7 @@ class OperationModel {
   final int lastCustodialPosition;
   final double lastAveragePrice;
   final CategoryEnum category;
+  final double cryptoQuantity;
 
   double get value => max(quantity * unitPrice, totalPrice);
 
@@ -51,6 +52,7 @@ class OperationModel {
     required this.lastCustodialPosition,
     required this.lastAveragePrice,
     required this.category,
+    required this.cryptoQuantity,
   });
 
   OperationModel copyWith({
@@ -61,6 +63,7 @@ class OperationModel {
     double? totalPrice,
     int? lastCustodialPosition,
     double? lastAveragePrice,
+    double? cryptoQuantity,
   }) {
     return OperationModel(
       id: id,
@@ -75,6 +78,7 @@ class OperationModel {
           lastCustodialPosition ?? this.lastCustodialPosition,
       lastAveragePrice: lastAveragePrice ?? this.lastAveragePrice,
       category: category,
+      cryptoQuantity: cryptoQuantity ?? this.cryptoQuantity,
     );
   }
 
@@ -106,6 +110,7 @@ class OperationModel {
       lastCustodialPosition: map['lastCustodialPosition'] as int,
       lastAveragePrice: map['lastAveragePrice'] as double,
       category: CategoryEnum.values[map['category'] as int],
+      cryptoQuantity: map['cryptoQuantity'] as double,
     );
   }
 }

@@ -40,6 +40,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   late final TextEditingController _quantityController;
   late final TextEditingController _unitPriceController;
   late final TextEditingController _totalPriceController;
+  late final TextEditingController _cryptoQuantityController;
 
   @override
   void initState() {
@@ -47,6 +48,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
     _quantityController = TextEditingController();
     _unitPriceController = TextEditingController();
     _totalPriceController = TextEditingController();
+    _cryptoQuantityController = TextEditingController();
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -63,6 +65,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
     _quantityController.dispose();
     _unitPriceController.dispose();
     _totalPriceController.dispose();
+    _cryptoQuantityController.dispose();
     super.dispose();
   }
 
@@ -110,35 +113,21 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                 throw AppException(AppExceptionType.emptyFields);
               }
 
-              final bool needQuantityAndUnitPrice =
-                  _selectedInvestment.value!.category.hasQuotas;
-              final quantity = int.tryParse(_quantityController.text) ?? 0;
-              final unitPrice = double.tryParse(_unitPriceController.text) ?? 0;
-              final totalPrice =
-                  double.tryParse(_totalPriceController.text) ?? 0;
-
-              if (needQuantityAndUnitPrice &&
-                  (quantity <= 0 || unitPrice <= 0)) {
-                throw AppException(AppExceptionType.invalidValue);
-              }
-
-              if (!needQuantityAndUnitPrice && totalPrice <= 0) {
-                throw AppException(AppExceptionType.invalidValue);
-              }
-
               await widget.controller.addNewOperation(
                 CreateOperationModel(
                   userId: widget.controller.user!.id,
                   investmentId: _selectedInvestment.value!.id,
                   type: _selectedOperationType!,
                   date: _selectedOperationDate,
-                  quantity: quantity,
-                  unitPrice: unitPrice,
-                  totalPrice: totalPrice,
+                  quantity: int.tryParse(_quantityController.text) ?? 0,
+                  unitPrice: double.tryParse(_unitPriceController.text) ?? 0,
+                  totalPrice: double.tryParse(_totalPriceController.text) ?? 0,
                   lastCustodialPosition:
                       _selectedInvestment.value!.custodialPosition,
                   lastAveragePrice: _selectedInvestment.value!.averagePrice,
                   category: _selectedInvestment.value!.category,
+                  cryptoQuantity:
+                      double.tryParse(_cryptoQuantityController.text) ?? 0,
                 ),
                 _selectedInvestment.value!,
               );
@@ -193,6 +182,10 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                       ],
                     ),
                   ] else ...[
+                    if (selectedInvestment.category.isCrypto) ...[
+                      const SizedBox(height: 10),
+                      _cryptoQuantityTextField,
+                    ],
                     const SizedBox(height: 10),
                     _totalPriceTextField,
                   ],
@@ -492,7 +485,21 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           }
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
-        textCapitalization: TextCapitalization.words,
+        textInputAction: TextInputAction.done,
+      );
+
+  Widget get _cryptoQuantityTextField => TextFieldWidget(
+        label: AppLocalizations.of(context)!.quantity,
+        prefix: const Padding(
+          padding: EdgeInsets.only(right: 5),
+          child: Text('x'),
+        ),
+        hint: '0',
+        controller: _cryptoQuantityController,
+        onChanged: (value) {
+          _cryptoQuantityController.text = AppFormatter.cryptoFloat(value);
+        },
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textInputAction: TextInputAction.done,
       );
 
@@ -508,7 +515,6 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           _unitPriceController.text = AppFormatter.textFieldCurrency(value);
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        textCapitalization: TextCapitalization.words,
         textInputAction: TextInputAction.done,
       );
 
@@ -535,7 +541,6 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           }
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        textCapitalization: TextCapitalization.words,
         textInputAction: TextInputAction.done,
       );
 }

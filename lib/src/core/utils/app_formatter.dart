@@ -55,6 +55,21 @@ class AppFormatter {
     return formattedNumbers;
   }
 
+  static String cryptoFloat(String value) {
+    final String removeLeftZero =
+        value.replaceFirst(RegExp(r'^0+(?=[0-9])'), '');
+    final String replaceComma = removeLeftZero.replaceAll(',', '.');
+    String formattedNumbers = replaceComma.replaceAll(RegExp(r'[^\d.]'), '');
+    if (formattedNumbers.contains('.')) {
+      final split = formattedNumbers.split('.');
+      final float = split.last;
+      split.removeLast();
+      return '${split.join()}.$float';
+    } else {
+      return formattedNumbers;
+    }
+  }
+
   static String ticker(String value) {
     final RegExp tickerRegex = RegExp(
       r'[a-zA-Z]{4}(([1-9]{1}[0-1]{1})|[1-9]{1})',
