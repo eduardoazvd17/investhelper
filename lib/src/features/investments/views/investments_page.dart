@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '../../../core/exceptions/app_exception.dart';
 import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
 import '../../../core/widgets/app_auth_overlay.dart';
@@ -117,15 +118,22 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
       body: SafeArea(
         child: Observer(
           builder: (_) {
-            return Visibility(
-              visible: !controller.isLoading,
-              replacement: const Center(child: LoadingWidget()),
-              child: switch (_currentPage) {
-                0 => _overviewTabContent,
-                1 => _detailsTabContent,
-                int() => const SizedBox(),
-              },
-            );
+            if (widget.controller.isLoading) {
+              return const Center(child: LoadingWidget());
+            }
+
+            if (widget.controller.loadUserDataError != null) {
+              return AppExceptionWidget(
+                error: widget.controller.loadUserDataError!,
+                onRetryCallback: widget.controller.loadUserData,
+              );
+            }
+
+            return switch (_currentPage) {
+              0 => _overviewTabContent,
+              1 => _detailsTabContent,
+              int() => const SizedBox(),
+            };
           },
         ),
       ),

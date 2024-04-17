@@ -289,5 +289,6 @@
     "applyFilters": "Apply filters",
     "resetFilters": "Reset filters",
     "pastMonth": "Last month",
-    "thisMonth": "This month"
+    "thisMonth": "This month",
+    "tryAgain": "Try again"
 }

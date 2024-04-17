@@ -19,9 +19,53 @@ class AppException implements Exception {
   Future<void> show(BuildContext context) async {
     await DialogWidget.show(
       context,
-      title: type.title(context),
-      message: type.message(context),
+      title: type.getTitle(context),
+      message: type.getMessage(context),
       actionType: DialogWidgetActionType.close,
+    );
+  }
+}
+
+class AppExceptionWidget extends StatelessWidget {
+  final AppExceptionType error;
+  final void Function() onRetryCallback;
+  const AppExceptionWidget({
+    super.key,
+    required this.error,
+    required this.onRetryCallback,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              error.getTitle(context),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 2.5),
+            Text(
+              error.getMessage(context),
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(color: Colors.grey),
+            ),
+            const SizedBox(height: 10),
+            TextButton.icon(
+              onPressed: onRetryCallback,
+              icon: const Icon(Icons.refresh),
+              label: Text(AppLocalizations.of(context)!.tryAgain),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -40,7 +84,7 @@ enum AppExceptionType {
 }
 
 extension AppExceptionTypeExtension on AppExceptionType {
-  String title(BuildContext context) {
+  String getTitle(BuildContext context) {
     return switch (this) {
       AppExceptionType.generic =>
         AppLocalizations.of(context)!.genericErrorTitle,
@@ -65,7 +109,7 @@ extension AppExceptionTypeExtension on AppExceptionType {
     };
   }
 
-  String message(BuildContext context) {
+  String getMessage(BuildContext context) {
     return switch (this) {
       AppExceptionType.generic =>
         AppLocalizations.of(context)!.genericErrorMessage,

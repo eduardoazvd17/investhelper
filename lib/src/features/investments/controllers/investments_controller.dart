@@ -31,28 +31,42 @@ abstract class InvestmentsControllerBase with Store {
   }
 
   @observable
+  AppExceptionType? loadUserDataError;
+
+  @observable
   bool isLoading = true;
 
   @action
   Future<void> loadUserData() async {
-    hideValues = await _service.loadHideValues();
-    dailyTip = await _service.loadDailyTip();
-
-    if (user != null) {
-      goals.addAll(await _service.loadGoals(user!.id));
-      investments.addAll(await _service.loadInvestments(user!.id));
-      thisMonthOperations.addAll(
-        await _service.loadOperations(
-          user!.id,
-          startDate: DateTimeUtils.currentMonthFirstDay,
-          endDate: DateTime.now(),
-          descending: true,
-        ),
-      );
-      filteredOperations.addAll(thisMonthOperations);
+    isLoading = true;
+    try {
+      loadUserDataError = null;
+      hideValues = await _service.loadHideValues();
+      dailyTip = await _service.loadDailyTip();
+      if (user != null) {
+        goals.addAll(await _service.loadGoals(user!.id));
+        investments.addAll(await _service.loadInvestments(user!.id));
+        await loadThisMonthOperations();
+        filteredOperations.addAll(thisMonthOperations);
+      }
+    } catch (_) {
+      loadUserDataError = AppExceptionType.connectionError;
     }
-
     isLoading = false;
+  }
+
+  @action
+  Future<void> loadThisMonthOperations() async {
+    thisMonthOperations.clear();
+    thisMonthOperations.addAll(
+      await _service.loadOperations(
+        user!.id,
+        startDate: DateTimeUtils.currentMonthFirstDay,
+        endDate: DateTime.now(),
+        descending: true,
+      ),
+    );
+    _filterAndSortOperations(thisMonthOperations, sortOnly: true);
   }
 
   @computed
