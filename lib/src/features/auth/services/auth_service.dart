@@ -31,6 +31,9 @@ class AuthService {
     } on AppException catch (_) {
       rethrow;
     } on FirebaseAuthException catch (_) {
+      if (_.code == "network-request-failed") {
+        throw AppException(AppExceptionType.connectionError);
+      }
       throw AppException(AppExceptionType.incorrectUserOrPassword);
     } catch (error) {
       throw AppException(AppExceptionType.connectionError, error.toString());
@@ -76,6 +79,8 @@ class AuthService {
           throw AppException(AppExceptionType.invalidEmail);
         case 'weak-password':
           throw AppException(AppExceptionType.invalidPassword);
+        case 'network-request-failed':
+          throw AppException(AppExceptionType.connectionError);
         default:
           throw AppException();
       }
@@ -98,6 +103,9 @@ class AuthService {
     } on AppException catch (_) {
       rethrow;
     } on FirebaseAuthException catch (_) {
+      if (_.code == "network-request-failed") {
+        throw AppException(AppExceptionType.connectionError);
+      }
       throw AppException(AppExceptionType.invalidRecoveryEmail);
     } catch (error) {
       throw AppException(AppExceptionType.connectionError, error.toString());
