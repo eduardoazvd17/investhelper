@@ -339,8 +339,12 @@ abstract class InvestmentsControllerBase with Store {
     if (!sortOnly && startDateFilter != null && endDateFilter != null) {
       operations.removeWhere(
         (e) {
-          return e.date.isBefore(startDateFilter!) ||
-              e.date.isAfter(endDateFilter!);
+          final now = DateTime.now();
+          final DateTime endDate = DateTimeUtils.isSameDay(now, endDateFilter!)
+              ? now
+              : DateTimeUtils.withLastSecondOfDay(endDateFilter!);
+          return e.date.isBefore(DateTimeUtils.removeTime(startDateFilter!)) ||
+              e.date.isAfter(endDate);
         },
       );
     }
