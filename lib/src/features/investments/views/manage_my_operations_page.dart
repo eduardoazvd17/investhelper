@@ -366,10 +366,11 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               _quantityController.clear();
               _unitPriceController.clear();
             }
-          } else {
-            final double total =
-                double.tryParse(_totalPriceController.text.trim()) ?? 0;
-            if (total > selectedInvestment.amountInvested) {
+          } else if (selectedInvestment.category.isCrypto) {
+            final double cryptoQuantity =
+                double.tryParse(_cryptoQuantityController.text.trim()) ?? 0;
+            if (cryptoQuantity > selectedInvestment.cryptoPosition) {
+              _quantityController.clear();
               _totalPriceController.clear();
             }
           }
@@ -378,7 +379,9 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
       items: OperationTypeEnum.values.map((e) {
         final bool disableSale = (selectedInvestment.category.hasQuotas
             ? selectedInvestment.custodialPosition <= 0
-            : selectedInvestment.amountInvested <= 0);
+            : (selectedInvestment.category.isCrypto
+                ? selectedInvestment.cryptoPosition <= 0
+                : selectedInvestment.amountInvested <= 0));
         final bool isEnabled = disableSale ? e != OperationTypeEnum.sale : true;
 
         return DropdownMenuItem(
