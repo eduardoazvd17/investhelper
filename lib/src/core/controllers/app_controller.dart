@@ -45,6 +45,9 @@ abstract class AppControllerBase with Store {
   }
 
   @observable
+  late String appVersion;
+
+  @observable
   bool showWelcomePage = true;
 
   @action
@@ -132,7 +135,4 @@ abstract class AppControllerBase with Store {
       _service.saveLanguage(language);
     }
   }
-
-  @observable
-  late String appVersion;
 }

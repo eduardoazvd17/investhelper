@@ -30,11 +30,20 @@ abstract class InvestmentsControllerBase with Store {
     loadUserData();
   }
 
+  @computed
+  UserModel? get user => _appController.user;
+
+  @computed
+  bool get shouldRequestAuth => _appController.shouldRequestAuth;
+
   @observable
-  AppExceptionType? loadUserDataError;
+  DailyTipDTO? dailyTip;
 
   @observable
   bool isLoading = true;
+
+  @observable
+  AppExceptionType? loadUserDataError;
 
   @action
   Future<void> loadUserData() async {
@@ -55,26 +64,6 @@ abstract class InvestmentsControllerBase with Store {
     isLoading = false;
   }
 
-  @action
-  Future<void> loadThisMonthOperations() async {
-    thisMonthOperations.clear();
-    thisMonthOperations.addAll(
-      await _service.loadOperations(
-        user!.id,
-        startDate: DateTimeUtils.currentMonthFirstDay,
-        endDate: DateTime.now(),
-        descending: true,
-      ),
-    );
-    _filterAndSortOperations(thisMonthOperations, sortOnly: true);
-  }
-
-  @computed
-  UserModel? get user => _appController.user;
-
-  @computed
-  bool get shouldRequestAuth => _appController.shouldRequestAuth;
-
   @observable
   bool hideValues = true;
 
@@ -83,9 +72,6 @@ abstract class InvestmentsControllerBase with Store {
     hideValues = !hideValues;
     _service.saveHideValues(hideValues);
   }
-
-  @observable
-  DailyTipDTO? dailyTip;
 
   @observable
   ObservableList<GoalModel> goals = ObservableList<GoalModel>();
@@ -126,6 +112,16 @@ abstract class InvestmentsControllerBase with Store {
   @observable
   ObservableList<InvestmentModel> investments =
       ObservableList<InvestmentModel>();
+
+  @computed
+  double get totalInvestments {
+    if (investments.isNotEmpty) {
+      return investments.map((e) {
+        return e.value;
+      }).reduce((a, b) => a + b);
+    }
+    return 0.0;
+  }
 
   @action
   Future<void> addNewInvestment(
@@ -171,16 +167,6 @@ abstract class InvestmentsControllerBase with Store {
     } on AppException catch (_) {
       rethrow;
     }
-  }
-
-  @computed
-  double get totalInvestments {
-    if (investments.isNotEmpty) {
-      return investments.map((e) {
-        return e.value;
-      }).reduce((a, b) => a + b);
-    }
-    return 0.0;
   }
 
   @observable
@@ -251,10 +237,6 @@ abstract class InvestmentsControllerBase with Store {
     descendingFilter = true;
   }
 
-  @observable
-  ObservableList<OperationModel> thisMonthOperations =
-      ObservableList<OperationModel>();
-
   @action
   Future<void> addNewOperation(
     CreateOperationModel createOperationModel,
@@ -306,6 +288,24 @@ abstract class InvestmentsControllerBase with Store {
     } on AppException catch (_) {
       rethrow;
     }
+  }
+
+  @observable
+  ObservableList<OperationModel> thisMonthOperations =
+      ObservableList<OperationModel>();
+
+  @action
+  Future<void> loadThisMonthOperations() async {
+    thisMonthOperations.clear();
+    thisMonthOperations.addAll(
+      await _service.loadOperations(
+        user!.id,
+        startDate: DateTimeUtils.currentMonthFirstDay,
+        endDate: DateTime.now(),
+        descending: true,
+      ),
+    );
+    _filterAndSortOperations(thisMonthOperations, sortOnly: true);
   }
 
   @computed
