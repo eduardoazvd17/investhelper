@@ -64,72 +64,72 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   }
 
   Future<void> _addNewInvestment() async {
+    onAddNewInvestment() async {
+      try {
+        LoadingWidget.dialog(context);
+
+        if (_selectedCategory.value == null) {
+          throw AppException(AppExceptionType.emptyFields);
+        }
+
+        final int custodialPosition =
+            int.tryParse(_custodialPositionController.text) ?? 0;
+        final double amountInvested =
+            double.tryParse(_amountInvestedController.text) ?? 0;
+        final double cryptoPosition =
+            double.tryParse(_cryptoPositionController.text) ?? 0;
+        final double averagePrice = _selectedCategory.value!.isCrypto &&
+                amountInvested > 0 &&
+                cryptoPosition > 0
+            ? (amountInvested / cryptoPosition)
+            : double.tryParse(_averagePriceController.text) ?? 0;
+
+        final DateTime now = DateTime.now();
+        final DateTime? lastOperationDate =
+            (custodialPosition > 0 && averagePrice > 0 ||
+                    amountInvested > 0 ||
+                    cryptoPosition > 0)
+                ? now
+                : null;
+
+        await widget.controller.addNewInvestment(
+          CreateInvestmentModel(
+            userId: widget.controller.user!.id,
+            name: _nameController.text.trim(),
+            category: _selectedCategory.value!,
+            custodialPosition: custodialPosition,
+            averagePrice: averagePrice,
+            amountInvested: amountInvested,
+            creationDate: now,
+            lastOperationDate: lastOperationDate,
+            cryptoPosition: cryptoPosition,
+          ),
+        );
+
+        if (mounted) {
+          LoadingWidget.hide(context);
+          Navigator.of(context).pop();
+        }
+      } on AppException catch (error) {
+        if (mounted) {
+          LoadingWidget.hide(context);
+          error.show(context);
+        }
+      }
+    }
+
     _nameController.clear();
     _selectedCategory.value = null;
     _custodialPositionController.clear();
     _averagePriceController.clear();
     _amountInvestedController.clear();
-
+    _cryptoPositionController.clear();
     await ModalBottomSheetWidget.show(
       context,
       title: AppLocalizations.of(context)!.addNewInvestment,
       actions: [
         TextButton(
-          onPressed: () async {
-            try {
-              LoadingWidget.dialog(context);
-
-              if (_selectedCategory.value == null) {
-                throw AppException(AppExceptionType.emptyFields);
-              }
-
-              final int custodialPosition =
-                  int.tryParse(_custodialPositionController.text) ?? 0;
-              final double amountInvested =
-                  double.tryParse(_amountInvestedController.text) ?? 0;
-              final double cryptoPosition =
-                  double.tryParse(_cryptoPositionController.text) ?? 0;
-
-              final bool isCrypto = _selectedCategory.value!.isCrypto;
-
-              final double averagePrice =
-                  isCrypto && amountInvested > 0 && cryptoPosition > 0
-                      ? (amountInvested / cryptoPosition)
-                      : double.tryParse(_averagePriceController.text) ?? 0;
-
-              final DateTime now = DateTime.now();
-              final DateTime? lastOperationDate =
-                  (custodialPosition > 0 && averagePrice > 0 ||
-                          amountInvested > 0 ||
-                          cryptoPosition > 0)
-                      ? now
-                      : null;
-
-              await widget.controller.addNewInvestment(
-                CreateInvestmentModel(
-                  userId: widget.controller.user!.id,
-                  name: _nameController.text.trim(),
-                  category: _selectedCategory.value!,
-                  custodialPosition: custodialPosition,
-                  averagePrice: averagePrice,
-                  amountInvested: amountInvested,
-                  creationDate: now,
-                  lastOperationDate: lastOperationDate,
-                  cryptoPosition: cryptoPosition,
-                ),
-              );
-
-              if (mounted) {
-                LoadingWidget.hide(context);
-                Navigator.of(context).pop();
-              }
-            } on AppException catch (error) {
-              if (mounted) {
-                LoadingWidget.hide(context);
-                error.show(context);
-              }
-            }
-          },
+          onPressed: onAddNewInvestment,
           child: Text(AppLocalizations.of(context)!.send),
         ),
         TextButton(
@@ -195,32 +195,35 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   }
 
   Future<void> _editInvestment(InvestmentModel investmentModel) async {
-    _nameController.text = investmentModel.name;
+    onEditInvestment() async {
+      try {
+        LoadingWidget.dialog(context);
 
+        await widget.controller.editInvestment(
+          investmentModel.copyWith(
+            name: _nameController.text.trim(),
+          ),
+        );
+
+        if (mounted) {
+          LoadingWidget.hide(context);
+          Navigator.of(context).pop();
+        }
+      } on AppException catch (error) {
+        if (mounted) {
+          LoadingWidget.hide(context);
+          error.show(context);
+        }
+      }
+    }
+
+    _nameController.text = investmentModel.name;
     await ModalBottomSheetWidget.show(
       context,
       title: AppLocalizations.of(context)!.editInvestment,
       actions: [
         TextButton(
-          onPressed: () async {
-            try {
-              LoadingWidget.dialog(context);
-
-              await widget.controller.editInvestment(investmentModel.copyWith(
-                name: _nameController.text.trim(),
-              ));
-
-              if (mounted) {
-                LoadingWidget.hide(context);
-                Navigator.of(context).pop();
-              }
-            } on AppException catch (error) {
-              if (mounted) {
-                LoadingWidget.hide(context);
-                error.show(context);
-              }
-            }
-          },
+          onPressed: onEditInvestment,
           child: Text(AppLocalizations.of(context)!.save),
         ),
         TextButton(
@@ -228,13 +231,16 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           child: Text(AppLocalizations.of(context)!.cancel),
         ),
       ],
-      children: [_nameTextField],
+      children: [
+        _nameTextField,
+      ],
     );
   }
 
   Future<void> _deleteInvestment(InvestmentModel investmentModel) async {
     try {
       LoadingWidget.dialog(context);
+
       final bool? result = await DialogWidget.show(
         context,
         title: AppLocalizations.of(context)!.remove,
@@ -243,9 +249,11 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         ),
         actionType: DialogWidgetActionType.yesOrNo,
       );
+
       if (result != null && result) {
         await widget.controller.deleteInvestment(investmentModel);
       }
+
       if (mounted) LoadingWidget.hide(context);
     } on AppException catch (error) {
       if (mounted) {

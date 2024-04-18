@@ -38,35 +38,37 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
   }
 
   Future<void> _addNewGoal() async {
-    _descriptionController.clear();
+    onAddNewGoal() async {
+      try {
+        LoadingWidget.dialog(context);
 
+        await widget.controller.addNewGoal(
+          CreateGoalModel(
+            userId: widget.controller.user!.id,
+            description: _descriptionController.text.trim(),
+            creationDate: DateTime.now(),
+          ),
+        );
+
+        if (mounted) {
+          LoadingWidget.hide(context);
+          Navigator.of(context).pop();
+        }
+      } on AppException catch (error) {
+        if (mounted) {
+          LoadingWidget.hide(context);
+          error.show(context);
+        }
+      }
+    }
+
+    _descriptionController.clear();
     await ModalBottomSheetWidget.show(
       context,
       title: AppLocalizations.of(context)!.addNewGoal,
       actions: [
         TextButton(
-          onPressed: () async {
-            try {
-              LoadingWidget.dialog(context);
-              await widget.controller.addNewGoal(
-                CreateGoalModel(
-                  userId: widget.controller.user!.id,
-                  description: _descriptionController.text.trim(),
-                  creationDate: DateTime.now(),
-                ),
-              );
-
-              if (mounted) {
-                LoadingWidget.hide(context);
-                Navigator.of(context).pop();
-              }
-            } on AppException catch (error) {
-              if (mounted) {
-                LoadingWidget.hide(context);
-                error.show(context);
-              }
-            }
-          },
+          onPressed: onAddNewGoal,
           child: Text(AppLocalizations.of(context)!.send),
         ),
         TextButton(
@@ -74,39 +76,42 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
           child: Text(AppLocalizations.of(context)!.cancel),
         ),
       ],
-      children: [_descriptionTextField],
+      children: [
+        _descriptionTextField,
+      ],
     );
   }
 
   Future<void> _editGoal(GoalModel goalModel) async {
-    _descriptionController.text = goalModel.description;
+    onEditGoal() async {
+      try {
+        LoadingWidget.dialog(context);
 
+        await widget.controller.editGoal(
+          goalModel.copyWith(
+            description: _descriptionController.text.trim(),
+          ),
+        );
+
+        if (mounted) {
+          LoadingWidget.hide(context);
+          Navigator.of(context).pop();
+        }
+      } on AppException catch (error) {
+        if (mounted) {
+          LoadingWidget.hide(context);
+          error.show(context);
+        }
+      }
+    }
+
+    _descriptionController.text = goalModel.description;
     await ModalBottomSheetWidget.show(
       context,
       title: AppLocalizations.of(context)!.editGoal,
       actions: [
         TextButton(
-          onPressed: () async {
-            try {
-              LoadingWidget.dialog(context);
-
-              await widget.controller.editGoal(
-                goalModel.copyWith(
-                  description: _descriptionController.text.trim(),
-                ),
-              );
-
-              if (mounted) {
-                LoadingWidget.hide(context);
-                Navigator.of(context).pop();
-              }
-            } on AppException catch (error) {
-              if (mounted) {
-                LoadingWidget.hide(context);
-                error.show(context);
-              }
-            }
-          },
+          onPressed: onEditGoal,
           child: Text(AppLocalizations.of(context)!.save),
         ),
         TextButton(
@@ -121,6 +126,7 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
   Future<void> _deleteGoal(GoalModel goalModel) async {
     try {
       LoadingWidget.dialog(context);
+
       final bool? result = await DialogWidget.show(
         context,
         title: AppLocalizations.of(context)!.remove,
@@ -128,7 +134,11 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
             AppLocalizations.of(context)!.removeMessage(goalModel.description),
         actionType: DialogWidgetActionType.yesOrNo,
       );
-      if (result != null && result) widget.controller.deleteGoal(goalModel);
+
+      if (result != null && result) {
+        widget.controller.deleteGoal(goalModel);
+      }
+
       if (mounted) LoadingWidget.hide(context);
     } on AppException catch (error) {
       if (mounted) {

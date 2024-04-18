@@ -30,8 +30,9 @@ class SettingsPage extends StatelessWidget {
     if (result != null && result) {
       appController.logout();
       if (!context.mounted) return;
-      Navigator.of(context)
-          .popUntil(ModalRoute.withName(InvestmentsPage.routeName));
+      Navigator.of(context).popUntil(
+        ModalRoute.withName(InvestmentsPage.routeName),
+      );
       Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
     }
   }

@@ -70,26 +70,47 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   }
 
   Future<void> _addNewOperation() async {
-    if (widget.controller.investments.isEmpty) {
-      DialogWidget.show(
-        context,
-        title: AppLocalizations.of(context)!.dontHaveInvestmentsTitle,
-        message: AppLocalizations.of(context)!.dontHaveInvestmentsMessage,
-        messageWidget: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              Navigator.of(context).pushNamed(
-                ManageMyInvestmentsPage.routeName,
-                arguments: true,
-              );
-            },
-            child: Text(AppLocalizations.of(context)!.addNewInvestment),
+    if (_checkIfInvestmentsIsEmpty()) return;
+
+    onAddNewOperation() async {
+      try {
+        LoadingWidget.dialog(context);
+
+        if (_selectedInvestment.value == null ||
+            _selectedOperationType == null) {
+          throw AppException(AppExceptionType.emptyFields);
+        }
+
+        await widget.controller.addNewOperation(
+          CreateOperationModel(
+            userId: widget.controller.user!.id,
+            investmentId: _selectedInvestment.value!.id,
+            type: _selectedOperationType!,
+            date: _selectedOperationDate,
+            quantity: int.tryParse(_quantityController.text) ?? 0,
+            unitPrice: double.tryParse(_unitPriceController.text) ?? 0,
+            totalPrice: double.tryParse(_totalPriceController.text) ?? 0,
+            lastCustodialPosition: _selectedInvestment.value!.custodialPosition,
+            lastAveragePrice: _selectedInvestment.value!.averagePrice,
+            category: _selectedInvestment.value!.category,
+            cryptoQuantity:
+                double.tryParse(_cryptoQuantityController.text) ?? 0,
+            lastCryptoPosition: _selectedInvestment.value!.cryptoPosition,
+            lastAmountInvested: _selectedInvestment.value!.amountInvested,
           ),
-        ),
-        actionType: DialogWidgetActionType.close,
-      );
-      return;
+          _selectedInvestment.value!,
+        );
+
+        if (mounted) {
+          LoadingWidget.hide(context);
+          Navigator.of(context).pop();
+        }
+      } on AppException catch (error) {
+        if (mounted) {
+          LoadingWidget.hide(context);
+          error.show(context);
+        }
+      }
     }
 
     _selectedInvestment.value = null;
@@ -98,53 +119,13 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
     _quantityController.clear();
     _unitPriceController.clear();
     _totalPriceController.clear();
-
+    _cryptoQuantityController.clear();
     await ModalBottomSheetWidget.show(
       context,
       title: AppLocalizations.of(context)!.addNewOperation,
       actions: [
         TextButton(
-          onPressed: () async {
-            try {
-              LoadingWidget.dialog(context);
-
-              if (_selectedInvestment.value == null ||
-                  _selectedOperationType == null) {
-                throw AppException(AppExceptionType.emptyFields);
-              }
-
-              await widget.controller.addNewOperation(
-                CreateOperationModel(
-                  userId: widget.controller.user!.id,
-                  investmentId: _selectedInvestment.value!.id,
-                  type: _selectedOperationType!,
-                  date: _selectedOperationDate,
-                  quantity: int.tryParse(_quantityController.text) ?? 0,
-                  unitPrice: double.tryParse(_unitPriceController.text) ?? 0,
-                  totalPrice: double.tryParse(_totalPriceController.text) ?? 0,
-                  lastCustodialPosition:
-                      _selectedInvestment.value!.custodialPosition,
-                  lastAveragePrice: _selectedInvestment.value!.averagePrice,
-                  category: _selectedInvestment.value!.category,
-                  cryptoQuantity:
-                      double.tryParse(_cryptoQuantityController.text) ?? 0,
-                  lastCryptoPosition: _selectedInvestment.value!.cryptoPosition,
-                  lastAmountInvested: _selectedInvestment.value!.amountInvested,
-                ),
-                _selectedInvestment.value!,
-              );
-
-              if (mounted) {
-                LoadingWidget.hide(context);
-                Navigator.of(context).pop();
-              }
-            } on AppException catch (error) {
-              if (mounted) {
-                LoadingWidget.hide(context);
-                error.show(context);
-              }
-            }
-          },
+          onPressed: onAddNewOperation,
           child: Text(AppLocalizations.of(context)!.send),
         ),
         TextButton(
@@ -205,6 +186,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   Future<void> _deleteOperation(OperationModel operationModel) async {
     try {
       LoadingWidget.dialog(context);
+
       final InvestmentModel investmentModel = widget.controller.investments
           .firstWhere((e) => e.id == operationModel.investmentId);
 
@@ -221,10 +203,14 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         message: AppLocalizations.of(context)!.removeMessage(operationName),
         actionType: DialogWidgetActionType.yesOrNo,
       );
+
       if (result != null && result) {
-        await widget.controller
-            .deleteOperation(operationModel, investmentModel);
+        await widget.controller.deleteOperation(
+          operationModel,
+          investmentModel,
+        );
       }
+
       if (mounted) LoadingWidget.hide(context);
     } on AppException catch (error) {
       if (mounted) {
@@ -232,6 +218,31 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         error.show(context);
       }
     }
+  }
+
+  bool _checkIfInvestmentsIsEmpty() {
+    final bool isEmpty = widget.controller.investments.isEmpty;
+    if (isEmpty) {
+      DialogWidget.show(
+        context,
+        title: AppLocalizations.of(context)!.dontHaveInvestmentsTitle,
+        message: AppLocalizations.of(context)!.dontHaveInvestmentsMessage,
+        messageWidget: Center(
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pushNamed(
+                ManageMyInvestmentsPage.routeName,
+                arguments: true,
+              );
+            },
+            child: Text(AppLocalizations.of(context)!.addNewInvestment),
+          ),
+        ),
+        actionType: DialogWidgetActionType.close,
+      );
+    }
+    return isEmpty;
   }
 
   @override

@@ -68,6 +68,7 @@ class _AuthPageState extends State<AuthPage> {
   Future<void> _makeLogin() async {
     try {
       LoadingWidget.dialog(context);
+
       await widget.controller.makeLogin(
         LoginUserModel(
           email: _emailController.text.trim(),
@@ -88,6 +89,7 @@ class _AuthPageState extends State<AuthPage> {
   Future<void> _makeRegister() async {
     try {
       LoadingWidget.dialog(context);
+
       await widget.controller.makeRegister(
         RegisterUserModel(
           name: _nameController.text.trim(),
@@ -110,6 +112,7 @@ class _AuthPageState extends State<AuthPage> {
   Future<void> _sendRecoveryEmail() async {
     try {
       LoadingWidget.dialog(context);
+
       await widget.controller.sendRecoveryEmail(
         _emailController.text.trim(),
       );
