@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'firebase_options.dart';
 import 'src/core/controllers/app_controller.dart';
@@ -36,6 +38,7 @@ Future<void> main() async {
 
 Future<AppController> _loadDependencies() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await MobileAds.instance.initialize();
   final appController = GetIt.I.registerSingleton(
     AppController(service: AppService()),
   );

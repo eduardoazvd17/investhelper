@@ -9,6 +9,7 @@ import '../../../core/widgets/app_auth_overlay.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../../../l10n/l10n.dart';
+import '../../ads/widgets/banner_ad_widget.dart';
 import '../../settings/views/settings_page.dart';
 import '../controllers/investments_controller.dart';
 import '../widgets/category_listing_widget.dart';
@@ -116,25 +117,32 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         ],
       ),
       body: SafeArea(
-        child: Observer(
-          builder: (_) {
-            if (widget.controller.isLoading) {
-              return const Center(child: LoadingWidget());
-            }
+        child: Column(
+          children: [
+            Expanded(
+              child: Observer(
+                builder: (_) {
+                  if (widget.controller.isLoading) {
+                    return const Center(child: LoadingWidget());
+                  }
 
-            if (widget.controller.loadUserDataError != null) {
-              return AppExceptionWidget(
-                error: widget.controller.loadUserDataError!,
-                onRetryCallback: widget.controller.loadUserData,
-              );
-            }
+                  if (widget.controller.loadUserDataError != null) {
+                    return AppExceptionWidget(
+                      error: widget.controller.loadUserDataError!,
+                      onRetryCallback: widget.controller.loadUserData,
+                    );
+                  }
 
-            return switch (_currentPage) {
-              0 => _overviewTabContent,
-              1 => _detailsTabContent,
-              int() => const SizedBox(),
-            };
-          },
+                  return switch (_currentPage) {
+                    0 => _overviewTabContent,
+                    1 => _detailsTabContent,
+                    int() => const SizedBox(),
+                  };
+                },
+              ),
+            ),
+            const BannerAdWidget(),
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
