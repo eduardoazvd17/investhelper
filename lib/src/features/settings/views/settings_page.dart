@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/enums/language_enum.dart';
@@ -164,6 +165,34 @@ class SettingsPage extends StatelessWidget {
                           applicationVersion: appController.appVersion,
                           children: [
                             Text(AppLocalizations.of(context)!.aboutAppText),
+                            const SizedBox(height: 10),
+                            ListTile(
+                              onTap: () async {
+                                final Uri url =
+                                    Uri.parse('https://eduardoazevedo.com');
+                                if (await canLaunchUrl(url)) {
+                                  await launchUrl(url);
+                                }
+                              },
+                              isThreeLine: true,
+                              contentPadding: EdgeInsets.zero,
+                              title: Text(
+                                AppLocalizations.of(context)!.developedBy,
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text('Eduardo Azevedo Regueira'),
+                                  Text(
+                                    'eduardoazevedo.com',
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              trailing: const Icon(Icons.link),
+                            ),
                           ],
                           applicationIcon: Image.asset(
                             'assets/images/logo.png',
