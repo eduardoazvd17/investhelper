@@ -148,6 +148,7 @@ class _ModalBottomSheetWidgetState extends State<ModalBottomSheetWidget> {
                 children: widget.actions!,
               ),
             ),
+            const SizedBox(height: 10),
           ],
         ],
       ),
