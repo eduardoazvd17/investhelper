@@ -143,7 +143,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 },
               ),
             ),
-            const BannerAdWidget(),
+            //const BannerAdWidget(),
           ],
         ),
       ),
