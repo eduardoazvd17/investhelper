@@ -42,27 +42,40 @@ class _DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
               style: Theme.of(context).textTheme.titleMedium,
             ),
           ),
-        DropdownButton<T>(
-          value: _selectedItem,
-          isExpanded: true,
-          elevation: 24,
-          iconSize: 35,
-          itemHeight: MediaQuery.of(context).textScaler.scale(60),
-          borderRadius: BorderRadius.circular(10),
-          underline: const SizedBox(),
-          style: Theme.of(context).textTheme.bodyLarge,
-          hint: widget.hint != null ? Text(widget.hint!) : null,
-          padding: const EdgeInsets.only(
-            left: 15,
-            right: 15,
-            top: 5,
-            bottom: 5,
+        Padding(
+          padding: const EdgeInsets.only(top: 10, left: 12, right: 12),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Theme.of(context).textTheme.titleMedium?.color ??
+                    Colors.grey,
+                width: 0.6,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: DropdownButton<T>(
+              value: _selectedItem,
+              isExpanded: true,
+              elevation: 24,
+              iconSize: 35,
+              itemHeight: MediaQuery.of(context).textScaler.scale(60),
+              borderRadius: BorderRadius.circular(10),
+              underline: const SizedBox(),
+              style: Theme.of(context).textTheme.bodyLarge,
+              hint: widget.hint != null ? Text(widget.hint!) : null,
+              padding: const EdgeInsets.only(
+                left: 15,
+                right: 15,
+                top: 5,
+                bottom: 5,
+              ),
+              items: widget.items,
+              onChanged: (value) {
+                setState(() => _selectedItem = value);
+                widget.onChanged.call(value);
+              },
+            ),
           ),
-          items: widget.items,
-          onChanged: (value) {
-            setState(() => _selectedItem = value);
-            widget.onChanged.call(value);
-          },
         ),
       ],
     );
