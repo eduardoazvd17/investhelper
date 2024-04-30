@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/utils/widget_event_handler.dart';
@@ -63,6 +64,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     _overviewScrollController.dispose();
     _detailsScrollController.dispose();
     WidgetsBinding.instance.removeObserver(_widgetEventHandler);
+    GetIt.I.resetLazySingleton(instance: widget.controller);
     super.dispose();
   }
 
