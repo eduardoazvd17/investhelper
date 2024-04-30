@@ -43,7 +43,7 @@ class _DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
             ),
           ),
         Padding(
-          padding: const EdgeInsets.only(top: 10, left: 12, right: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(

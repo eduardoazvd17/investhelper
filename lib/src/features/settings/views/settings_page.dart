@@ -128,7 +128,7 @@ class SettingsPage extends StatelessWidget {
                         );
                       },
                     ),
-                    const Divider(),
+                    const SizedBox(height: 10),
                     Observer(builder: (_) {
                       return DropdownButtonWidget<LanguageEnum>(
                         label: AppLocalizations.of(context)!.appLanguage,
