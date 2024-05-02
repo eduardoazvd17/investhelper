@@ -57,6 +57,13 @@ abstract class InvestmentsControllerBase with Store {
         investments.addAll(await _service.loadInvestments(user!.id));
         await loadThisMonthOperations();
         filteredOperations.addAll(thisMonthOperations);
+      } else {
+        goals.clear();
+        investments.clear();
+        thisMonthOperations.clear();
+        filteredOperations.clear();
+        allOperations = null;
+        resetOperationsFilters();
       }
     } catch (_) {
       loadUserDataError = AppExceptionType.connectionError;

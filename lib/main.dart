@@ -49,8 +49,8 @@ Future<AppController> _loadDependencies() async {
       service: AuthService(),
     ),
   );
-  GetIt.I.registerLazySingleton(
-    () => InvestmentsController(
+  GetIt.I.registerSingleton(
+    InvestmentsController(
       appController: appController,
       service: InvestmentsService(),
     ),
@@ -63,10 +63,8 @@ class InvestHelperApp extends StatelessWidget {
   const InvestHelperApp({super.key, required this.appController});
 
   String get _initialRoute {
-    final bool userIsLoggedIn = appController.user != null;
-    if (userIsLoggedIn) return InvestmentsPage.routeName;
     final bool showWelcomePage = appController.showWelcomePage;
-    return showWelcomePage ? WelcomePage.routeName : AuthPage.routeName;
+    return showWelcomePage ? WelcomePage.routeName : InvestmentsPage.routeName;
   }
 
   @override
