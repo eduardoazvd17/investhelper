@@ -355,7 +355,11 @@ class _AuthPageState extends State<AuthPage> {
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
       textInputAction: hasNext ? TextInputAction.next : TextInputAction.done,
-      onFieldSubmitted: hasNext ? (_) => _passwordFocus.requestFocus() : null,
+      onFieldSubmitted: hasNext
+          ? (_) => _passwordFocus.requestFocus()
+          : (_currentPageState == AuthPageState.recovery
+              ? (_) => _sendRecoveryEmail
+              : null),
     );
   }
 
@@ -369,8 +373,11 @@ class _AuthPageState extends State<AuthPage> {
       obscureText: true,
       keyboardType: TextInputType.text,
       textInputAction: hasNext ? TextInputAction.next : TextInputAction.done,
-      onFieldSubmitted:
-          hasNext ? (_) => _passwordConfirmationFocus.requestFocus() : null,
+      onFieldSubmitted: hasNext
+          ? (_) => _passwordConfirmationFocus.requestFocus()
+          : (_currentPageState == AuthPageState.login
+              ? (_) => _makeLogin
+              : null),
     );
   }
 
@@ -383,6 +390,7 @@ class _AuthPageState extends State<AuthPage> {
       obscureText: true,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
+      onFieldSubmitted: (_) => _makeRegister,
     );
   }
 
