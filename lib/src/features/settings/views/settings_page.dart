@@ -244,13 +244,19 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _myProfileSectionContent(BuildContext context, UserModel? user) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            if (user != null) ...[
+    if (user == null) {
+      return ButtonTileWidget(
+        text: AppLocalizations.of(context)!.authPageLoginTitle,
+        icon: Icons.exit_to_app,
+        onTap: () => Navigator.of(context).pushNamed(AuthPage.routeName),
+      );
+    } else {
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
@@ -285,17 +291,10 @@ class SettingsPage extends StatelessWidget {
                 color: Theme.of(context).colorScheme.error,
                 onTap: () => _endSession(context),
               ),
-            ] else ...[
-              ButtonTileWidget(
-                text: AppLocalizations.of(context)!.authPageLoginTitle,
-                icon: Icons.exit_to_app,
-                onTap: () =>
-                    Navigator.of(context).pushNamed(AuthPage.routeName),
-              ),
-            ]
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
