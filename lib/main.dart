@@ -44,15 +44,15 @@ Future<AppController> _loadDependencies() async {
   );
   await appController.initialize();
   GetIt.I.registerSingleton(
-    AuthController(
-      appController: appController,
-      service: AuthService(),
-    ),
-  );
-  GetIt.I.registerSingleton(
     InvestmentsController(
       appController: appController,
       service: InvestmentsService(),
+    ),
+  );
+  GetIt.I.registerSingleton(
+    AuthController(
+      appController: appController,
+      service: AuthService(),
     ),
   );
   return appController;
@@ -104,8 +104,10 @@ class InvestHelperApp extends StatelessWidget {
             WelcomePage.routeName: (_) {
               return WelcomePage(appController: appController);
             },
-            AuthPage.routeName: (_) {
-              return AuthPage(controller: GetIt.I.get<AuthController>());
+            InvestmentsPage.routeName: (_) {
+              return InvestmentsPage(
+                controller: GetIt.I.get<InvestmentsController>(),
+              );
             },
             SettingsPage.routeName: (_) {
               return SettingsPage(appController: appController);
@@ -113,10 +115,8 @@ class InvestHelperApp extends StatelessWidget {
             ChangePersonalDataPage.routeName: (_) {
               return ChangePersonalDataPage(appController: appController);
             },
-            InvestmentsPage.routeName: (_) {
-              return InvestmentsPage(
-                controller: GetIt.I.get<InvestmentsController>(),
-              );
+            AuthPage.routeName: (_) {
+              return AuthPage(controller: GetIt.I.get<AuthController>());
             },
             ManageMyGoalsPage.routeName: (_) {
               return ManageMyGoalsPage(

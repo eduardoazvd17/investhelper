@@ -248,7 +248,14 @@ class SettingsPage extends StatelessWidget {
       return ButtonTileWidget(
         text: AppLocalizations.of(context)!.authPageLoginTitle,
         icon: Icons.exit_to_app,
-        onTap: () => Navigator.of(context).pushNamed(AuthPage.routeName),
+        onTap: () {
+          final args = ModalRoute.of(context)?.settings.arguments;
+          if (args != null && args is bool && args) {
+            Navigator.of(context).pop();
+          } else {
+            Navigator.of(context).pushNamed(AuthPage.routeName);
+          }
+        },
       );
     } else {
       return Card(
