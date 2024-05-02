@@ -347,24 +347,26 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Widget get _emailTextField {
-    final bool hasNext = _passwordFocus.canRequestFocus;
     return TextFieldWidget(
       label: AppLocalizations.of(context)!.email,
       hint: AppLocalizations.of(context)!.emailHint,
       focusNode: _emailFocus,
       controller: _emailController,
       keyboardType: TextInputType.emailAddress,
-      textInputAction: hasNext ? TextInputAction.next : TextInputAction.done,
-      onFieldSubmitted: hasNext
-          ? (_) => _passwordFocus.requestFocus()
-          : (_currentPageState == AuthPageState.recovery
-              ? (_) => _sendRecoveryEmail
-              : null),
+      textInputAction: _currentPageState != AuthPageState.recovery
+          ? TextInputAction.next
+          : TextInputAction.done,
+      onFieldSubmitted: (_) {
+        if (_currentPageState == AuthPageState.recovery) {
+          _sendRecoveryEmail();
+        } else if (_passwordFocus.canRequestFocus) {
+          _passwordFocus.requestFocus();
+        }
+      },
     );
   }
 
   Widget get _passwordTextField {
-    final bool hasNext = _passwordConfirmationFocus.canRequestFocus;
     return TextFieldWidget(
       label: AppLocalizations.of(context)!.password,
       hint: AppLocalizations.of(context)!.passwordHint,
@@ -372,12 +374,16 @@ class _AuthPageState extends State<AuthPage> {
       controller: _passwordController,
       obscureText: true,
       keyboardType: TextInputType.text,
-      textInputAction: hasNext ? TextInputAction.next : TextInputAction.done,
-      onFieldSubmitted: hasNext
-          ? (_) => _passwordConfirmationFocus.requestFocus()
-          : (_currentPageState == AuthPageState.login
-              ? (_) => _makeLogin
-              : null),
+      textInputAction: _currentPageState != AuthPageState.login
+          ? TextInputAction.next
+          : TextInputAction.done,
+      onFieldSubmitted: (_) {
+        if (_currentPageState == AuthPageState.login) {
+          _makeLogin();
+        } else if (_passwordConfirmationFocus.canRequestFocus) {
+          _passwordConfirmationFocus.requestFocus();
+        }
+      },
     );
   }
 
@@ -390,7 +396,7 @@ class _AuthPageState extends State<AuthPage> {
       obscureText: true,
       keyboardType: TextInputType.text,
       textInputAction: TextInputAction.done,
-      onFieldSubmitted: (_) => _makeRegister,
+      onFieldSubmitted: (_) => _makeRegister(),
     );
   }
 
