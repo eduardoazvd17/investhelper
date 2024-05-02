@@ -169,11 +169,15 @@ class SettingsPage extends StatelessWidget {
                     .animate()
                     .fade(
                       duration: const Duration(milliseconds: 400),
-                      delay: const Duration(milliseconds: 200),
+                      delay: Duration(
+                        milliseconds: appController.user == null ? 100 : 200,
+                      ),
                     )
                     .slideX(
                       duration: const Duration(milliseconds: 200),
-                      delay: const Duration(milliseconds: 200),
+                      delay: Duration(
+                        milliseconds: appController.user == null ? 100 : 200,
+                      ),
                     ),
                 SectionWidget(
                   title: AppLocalizations.of(context)!.others,
@@ -228,11 +232,15 @@ class SettingsPage extends StatelessWidget {
                     .animate()
                     .fade(
                       duration: const Duration(milliseconds: 400),
-                      delay: const Duration(milliseconds: 300),
+                      delay: Duration(
+                        milliseconds: appController.user == null ? 200 : 300,
+                      ),
                     )
                     .slideX(
                       duration: const Duration(milliseconds: 200),
-                      delay: const Duration(milliseconds: 300),
+                      delay: Duration(
+                        milliseconds: appController.user == null ? 200 : 300,
+                      ),
                     ),
                 const SizedBox(height: 25),
               ],
