@@ -5,7 +5,7 @@ import 'package:lottie/lottie.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../l10n/l10n.dart';
-import '../../auth/views/auth_page.dart';
+import '../../investments/views/investments_page.dart';
 import '../../settings/views/settings_page.dart';
 
 class WelcomePage extends StatefulWidget {
@@ -157,7 +157,8 @@ class _WelcomePageState extends State<WelcomePage> {
         bottomWidget: ElevatedButton(
           onPressed: () {
             widget.appController.disableWelcomePage();
-            Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
+            Navigator.of(context)
+                .pushReplacementNamed(InvestmentsPage.routeName);
           },
           child: Padding(
             padding: const EdgeInsets.all(15),
