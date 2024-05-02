@@ -39,6 +39,10 @@ class DialogWidget extends StatelessWidget {
             DialogWidgetActionType.yesOrNo => [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all(
+                        Theme.of(context).colorScheme.error),
+                  ),
                   child: Text(AppLocalizations.of(context)!.yes),
                 ),
                 TextButton(

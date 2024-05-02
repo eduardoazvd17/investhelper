@@ -73,6 +73,10 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
         ),
         TextButton(
           onPressed: Navigator.of(context).pop,
+          style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all(Theme.of(context).colorScheme.error),
+          ),
           child: Text(AppLocalizations.of(context)!.cancel),
         ),
       ],
@@ -116,6 +120,10 @@ class _ManageMyGoalsPageState extends State<ManageMyGoalsPage> {
         ),
         TextButton(
           onPressed: Navigator.of(context).pop,
+          style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all(Theme.of(context).colorScheme.error),
+          ),
           child: Text(AppLocalizations.of(context)!.cancel),
         ),
       ],

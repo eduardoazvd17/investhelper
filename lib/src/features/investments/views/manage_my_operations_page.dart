@@ -130,6 +130,10 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         ),
         TextButton(
           onPressed: Navigator.of(context).pop,
+          style: ButtonStyle(
+            foregroundColor:
+                MaterialStateProperty.all(Theme.of(context).colorScheme.error),
+          ),
           child: Text(AppLocalizations.of(context)!.cancel),
         ),
       ],
