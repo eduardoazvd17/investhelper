@@ -14,7 +14,6 @@ import '../../../core/widgets/dropdown_button_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../../auth/views/auth_page.dart';
-import '../../investments/views/investments_page.dart';
 import 'change_personal_data_page.dart';
 
 class SettingsPage extends StatelessWidget {
@@ -33,9 +32,7 @@ class SettingsPage extends StatelessWidget {
     if (result != null && result) {
       appController.logout();
       if (!context.mounted) return;
-      Navigator.of(context).popUntil(
-        ModalRoute.withName(InvestmentsPage.routeName),
-      );
+      Navigator.of(context).pop();
     }
   }
 
