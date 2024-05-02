@@ -149,7 +149,10 @@ class _AuthPageState extends State<AuthPage> {
           actions: [
             IconButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(SettingsPage.routeName);
+                Navigator.of(context).pushNamed(
+                  SettingsPage.routeName,
+                  arguments: true,
+                );
               },
               icon: const Icon(CupertinoIcons.settings),
             ).animate().rotate(duration: const Duration(milliseconds: 300)),
