@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../core/controllers/app_controller.dart';
@@ -122,7 +124,10 @@ class _WelcomePageState extends State<WelcomePage> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * .4,
                 child: Center(child: Lottie.asset(lottieAsset)),
-              ),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 400))
+                  .slideY(duration: const Duration(milliseconds: 200)),
               Padding(
                 padding: const EdgeInsets.all(25),
                 child: Text(
@@ -142,11 +147,11 @@ class _WelcomePageState extends State<WelcomePage> {
       pageWidget(
         lottieAsset: 'assets/animations/investments.json',
         contentText: AppLocalizations.of(context)!.welcomeText1,
-      ),
+      ).animate().fade(),
       pageWidget(
         lottieAsset: 'assets/animations/monitoring.json',
         contentText: AppLocalizations.of(context)!.welcomeText2,
-      ),
+      ).animate().fade(),
       pageWidget(
         lottieAsset: 'assets/animations/saving_time.json',
         contentText: AppLocalizations.of(context)!.welcomeText3,
@@ -160,7 +165,7 @@ class _WelcomePageState extends State<WelcomePage> {
             child: Text(AppLocalizations.of(context)!.letsStart),
           ),
         ),
-      ),
+      ).animate().fade(),
     ];
   }
 }
