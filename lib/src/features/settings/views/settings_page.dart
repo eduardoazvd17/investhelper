@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -64,7 +65,10 @@ class SettingsPage extends StatelessWidget {
                           appController.user!,
                         ),
                       ],
-                    );
+                    )
+                        .animate()
+                        .fade(duration: const Duration(milliseconds: 400))
+                        .slideX(duration: const Duration(milliseconds: 200));
                   },
                 ),
                 Observer(
@@ -98,7 +102,16 @@ class SettingsPage extends StatelessWidget {
                           },
                         ),
                       ],
-                    );
+                    )
+                        .animate()
+                        .fade(
+                          duration: const Duration(milliseconds: 400),
+                          delay: const Duration(milliseconds: 200),
+                        )
+                        .slideX(
+                          duration: const Duration(milliseconds: 200),
+                          delay: const Duration(milliseconds: 200),
+                        );
                   },
                 ),
                 SectionWidget(
@@ -152,7 +165,16 @@ class SettingsPage extends StatelessWidget {
                       );
                     }),
                   ],
-                ),
+                )
+                    .animate()
+                    .fade(
+                      duration: const Duration(milliseconds: 400),
+                      delay: const Duration(milliseconds: 400),
+                    )
+                    .slideX(
+                      duration: const Duration(milliseconds: 200),
+                      delay: const Duration(milliseconds: 400),
+                    ),
                 SectionWidget(
                   title: AppLocalizations.of(context)!.others,
                   content: [
@@ -202,7 +224,16 @@ class SettingsPage extends StatelessWidget {
                       },
                     ),
                   ],
-                ),
+                )
+                    .animate()
+                    .fade(
+                      duration: const Duration(milliseconds: 400),
+                      delay: const Duration(milliseconds: 600),
+                    )
+                    .slideX(
+                      duration: const Duration(milliseconds: 200),
+                      delay: const Duration(milliseconds: 600),
+                    ),
                 const SizedBox(height: 25),
               ],
             ),
