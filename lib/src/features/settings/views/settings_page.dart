@@ -106,11 +106,11 @@ class SettingsPage extends StatelessWidget {
                         .animate()
                         .fade(
                           duration: const Duration(milliseconds: 400),
-                          delay: const Duration(milliseconds: 200),
+                          delay: const Duration(milliseconds: 100),
                         )
                         .slideX(
                           duration: const Duration(milliseconds: 200),
-                          delay: const Duration(milliseconds: 200),
+                          delay: const Duration(milliseconds: 100),
                         );
                   },
                 ),
@@ -169,11 +169,11 @@ class SettingsPage extends StatelessWidget {
                     .animate()
                     .fade(
                       duration: const Duration(milliseconds: 400),
-                      delay: const Duration(milliseconds: 400),
+                      delay: const Duration(milliseconds: 200),
                     )
                     .slideX(
                       duration: const Duration(milliseconds: 200),
-                      delay: const Duration(milliseconds: 400),
+                      delay: const Duration(milliseconds: 200),
                     ),
                 SectionWidget(
                   title: AppLocalizations.of(context)!.others,
@@ -228,11 +228,11 @@ class SettingsPage extends StatelessWidget {
                     .animate()
                     .fade(
                       duration: const Duration(milliseconds: 400),
-                      delay: const Duration(milliseconds: 600),
+                      delay: const Duration(milliseconds: 300),
                     )
                     .slideX(
                       duration: const Duration(milliseconds: 200),
-                      delay: const Duration(milliseconds: 600),
+                      delay: const Duration(milliseconds: 300),
                     ),
                 const SizedBox(height: 25),
               ],

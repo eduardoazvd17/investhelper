@@ -12,8 +12,14 @@ class AdviseMessageWidget extends StatelessWidget {
         const Padding(
           padding: EdgeInsets.only(left: 10, right: 20),
           child: Icon(Icons.info_outline),
-        ).animate().slideX().fade(),
-        Expanded(child: Text(message)).animate().slideY().fade()
+        )
+            .animate()
+            .fade(duration: const Duration(milliseconds: 400))
+            .slideX(duration: const Duration(milliseconds: 200)),
+        Expanded(child: Text(message))
+            .animate()
+            .fade(duration: const Duration(milliseconds: 400))
+            .slideY(duration: const Duration(milliseconds: 200))
       ],
     );
   }

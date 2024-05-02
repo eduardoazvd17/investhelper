@@ -17,7 +17,10 @@ class EmptyListWidget extends StatelessWidget {
           child: Lottie.asset(
             'assets/animations/not_found.json',
           ),
-        ).animate().slideY().fade(),
+        )
+            .animate()
+            .fade(duration: const Duration(milliseconds: 400))
+            .slideY(duration: const Duration(milliseconds: 200)),
         Text(
           message,
           textAlign: TextAlign.center,
@@ -25,7 +28,10 @@ class EmptyListWidget extends StatelessWidget {
               .textTheme
               .titleMedium
               ?.copyWith(color: Colors.grey),
-        ).animate().slideX().fade(),
+        )
+            .animate()
+            .fade(duration: const Duration(milliseconds: 400))
+            .slideX(duration: const Duration(milliseconds: 200)),
         const SizedBox(height: animationSize / 2),
       ],
     );

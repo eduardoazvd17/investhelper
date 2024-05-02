@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../core/widgets/date_range_picker_widget.dart';
@@ -25,7 +26,14 @@ class FiltersDrawerWidget extends StatelessWidget {
       icon: Icons.filter_list,
       title: type.getTitle(context),
       children: switch (type) {
-        FiltersDrawerWidgetType.operations => _operationsFilters(context),
+        FiltersDrawerWidgetType.operations => _operationsFilters(context)
+            .animate()
+            .fade(duration: const Duration(milliseconds: 400))
+            .slideX(
+              duration: const Duration(milliseconds: 200),
+              begin: 1,
+              end: 0,
+            ),
       },
     );
   }
