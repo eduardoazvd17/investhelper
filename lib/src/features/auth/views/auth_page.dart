@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../core/exceptions/app_exception.dart';
@@ -152,7 +153,7 @@ class _AuthPageState extends State<AuthPage> {
                 Navigator.of(context).pushNamed(SettingsPage.routeName);
               },
               icon: const Icon(CupertinoIcons.settings),
-            ),
+            ).animate().rotate(duration: const Duration(milliseconds: 300)),
           ],
         ),
         body: SafeArea(
@@ -170,12 +171,18 @@ class _AuthPageState extends State<AuthPage> {
                         height: 250,
                         child: Lottie.asset('assets/animations/auth.json'),
                       ),
-                    ),
+                    )
+                        .animate()
+                        .fade(duration: const Duration(milliseconds: 400))
+                        .slideY(duration: const Duration(milliseconds: 200)),
                     switch (_currentPageState) {
                       AuthPageState.login => _loginStateContent,
                       AuthPageState.register => _registerStateContent,
                       AuthPageState.recovery => _recoveryStateContent,
-                    },
+                    }
+                        .animate()
+                        .fade(duration: const Duration(milliseconds: 300))
+                        .slideX(duration: const Duration(milliseconds: 150)),
                   ],
                 ),
               ),

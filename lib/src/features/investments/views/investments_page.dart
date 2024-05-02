@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
 
@@ -114,7 +115,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
               Navigator.of(context).pushNamed(SettingsPage.routeName);
             },
             icon: const Icon(CupertinoIcons.settings),
-          ),
+          ).animate().rotate(duration: const Duration(milliseconds: 300)),
         ],
       ),
       body: SafeArea(

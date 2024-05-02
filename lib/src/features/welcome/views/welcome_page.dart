@@ -51,7 +51,7 @@ class _WelcomePageState extends State<WelcomePage> {
               Navigator.of(context).pushNamed(SettingsPage.routeName);
             },
             icon: const Icon(CupertinoIcons.settings),
-          ),
+          ).animate().rotate(duration: const Duration(milliseconds: 300)),
         ],
       ),
       body: PageView(controller: _pageViewController, children: _pageViewPages),
