@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:get_it/get_it.dart';
 
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/utils/widget_event_handler.dart';
@@ -11,6 +10,7 @@ import '../../../core/widgets/app_auth_overlay.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../../../l10n/l10n.dart';
+import '../../auth/views/auth_page.dart';
 import '../../settings/views/settings_page.dart';
 import '../controllers/investments_controller.dart';
 import '../widgets/category_listing_widget.dart';
@@ -64,7 +64,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     _overviewScrollController.dispose();
     _detailsScrollController.dispose();
     WidgetsBinding.instance.removeObserver(_widgetEventHandler);
-    GetIt.I.resetLazySingleton(instance: widget.controller);
     super.dispose();
   }
 
@@ -99,11 +98,21 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             Expanded(
               child: Observer(
                 builder: (_) {
-                  return Text(
-                    AppLocalizations.of(context)!.hiUser(
-                      controller.user?.shortName ?? '',
-                    ),
-                  );
+                  if (controller.user == null) {
+                    return TextButton(
+                      onPressed: () =>
+                          Navigator.of(context).pushNamed(AuthPage.routeName),
+                      child: Text(
+                        AppLocalizations.of(context)!.authPageLoginTitle,
+                      ),
+                    );
+                  } else {
+                    return Text(
+                      AppLocalizations.of(context)!
+                          .hiUser(controller.user?.shortName ?? '')
+                          .replaceAll(', .', ''),
+                    );
+                  }
                 },
               ),
             ),
@@ -119,32 +128,36 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         ],
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Observer(
-                builder: (_) {
-                  if (widget.controller.isLoading) {
-                    return const Center(child: LoadingWidget());
-                  }
+        child: AnimatedSize(
+          curve: Curves.ease,
+          duration: const Duration(milliseconds: 300),
+          child: Column(
+            children: [
+              Expanded(
+                child: Observer(
+                  builder: (_) {
+                    if (widget.controller.isLoading) {
+                      return const Center(child: LoadingWidget());
+                    }
 
-                  if (widget.controller.loadUserDataError != null) {
-                    return AppExceptionWidget(
-                      error: widget.controller.loadUserDataError!,
-                      onRetryCallback: widget.controller.loadUserData,
-                    );
-                  }
+                    if (widget.controller.loadUserDataError != null) {
+                      return AppExceptionWidget(
+                        error: widget.controller.loadUserDataError!,
+                        onRetryCallback: widget.controller.loadUserData,
+                      );
+                    }
 
-                  return switch (_currentPage) {
-                    0 => _overviewTabContent,
-                    1 => _detailsTabContent,
-                    int() => const SizedBox(),
-                  };
-                },
+                    return switch (_currentPage) {
+                      0 => _overviewTabContent,
+                      1 => _detailsTabContent,
+                      int() => const SizedBox(),
+                    };
+                  },
+                ),
               ),
-            ),
-            //const BannerAdWidget(),
-          ],
+              //const BannerAdWidget(),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -203,20 +216,34 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 title: AppLocalizations.of(context)!.quickActions,
                 content: [
                   TextButton.icon(
-                    onPressed: () => Navigator.of(context).pushNamed(
-                      ManageMyInvestmentsPage.routeName,
-                      arguments: true,
-                    ),
+                    onPressed: () {
+                      if (controller.user == null) {
+                        Navigator.of(context).pushNamed(AuthPage.routeName);
+                        return;
+                      }
+
+                      Navigator.of(context).pushNamed(
+                        ManageMyInvestmentsPage.routeName,
+                        arguments: true,
+                      );
+                    },
                     icon: const Icon(CupertinoIcons.chart_bar),
                     label: Text(
                       AppLocalizations.of(context)!.addNewInvestment,
                     ),
                   ),
                   TextButton.icon(
-                    onPressed: () => Navigator.of(context).pushNamed(
-                      ManageMyOperationsPage.routeName,
-                      arguments: true,
-                    ),
+                    onPressed: () {
+                      if (controller.user == null) {
+                        Navigator.of(context).pushNamed(AuthPage.routeName);
+                        return;
+                      }
+
+                      Navigator.of(context).pushNamed(
+                        ManageMyOperationsPage.routeName,
+                        arguments: true,
+                      );
+                    },
                     icon: const Icon(CupertinoIcons.arrow_up_arrow_down),
                     label: Text(
                       AppLocalizations.of(context)!.addNewOperation,
@@ -295,8 +322,15 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     },
                   ),
                   TextButton(
-                    onPressed: () => Navigator.of(context)
-                        .pushNamed(ManageMyGoalsPage.routeName),
+                    onPressed: () {
+                      if (controller.user == null) {
+                        Navigator.of(context).pushNamed(AuthPage.routeName);
+                        return;
+                      }
+
+                      Navigator.of(context)
+                          .pushNamed(ManageMyGoalsPage.routeName);
+                    },
                     child: Text(AppLocalizations.of(context)!.editMyGoals),
                   ),
                 ],
@@ -371,8 +405,15 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     );
                   }),
                   TextButton(
-                    onPressed: () => Navigator.of(context)
-                        .pushNamed(ManageMyInvestmentsPage.routeName),
+                    onPressed: () {
+                      if (controller.user == null) {
+                        Navigator.of(context).pushNamed(AuthPage.routeName);
+                        return;
+                      }
+
+                      Navigator.of(context)
+                          .pushNamed(ManageMyInvestmentsPage.routeName);
+                    },
                     child:
                         Text(AppLocalizations.of(context)!.accessMyInvestments),
                   ),
@@ -416,9 +457,16 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     },
                   ),
                   TextButton(
-                    onPressed: () => Navigator.of(context).pushNamed(
-                      ManageMyOperationsPage.routeName,
-                    ),
+                    onPressed: () {
+                      if (controller.user == null) {
+                        Navigator.of(context).pushNamed(AuthPage.routeName);
+                        return;
+                      }
+
+                      Navigator.of(context).pushNamed(
+                        ManageMyOperationsPage.routeName,
+                      );
+                    },
                     child:
                         Text(AppLocalizations.of(context)!.accessMyOperations),
                   ),

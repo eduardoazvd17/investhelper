@@ -8,7 +8,6 @@ import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/text_field_widget.dart';
 import '../../../l10n/l10n.dart';
-import '../../investments/views/investments_page.dart';
 import '../../settings/views/settings_page.dart';
 import '../controllers/auth_controller.dart';
 import '../models/login_user_model.dart';
@@ -79,7 +78,7 @@ class _AuthPageState extends State<AuthPage> {
 
       if (!mounted) return;
       LoadingWidget.hide(context);
-      Navigator.of(context).pushReplacementNamed(InvestmentsPage.routeName);
+      Navigator.of(context).pop();
     } on AppException catch (e) {
       if (!mounted) return;
       LoadingWidget.hide(context);
@@ -102,7 +101,7 @@ class _AuthPageState extends State<AuthPage> {
 
       if (!mounted) return;
       LoadingWidget.hide(context);
-      Navigator.of(context).pushReplacementNamed(InvestmentsPage.routeName);
+      Navigator.of(context).pop();
     } on AppException catch (e) {
       if (!mounted) return;
       LoadingWidget.hide(context);

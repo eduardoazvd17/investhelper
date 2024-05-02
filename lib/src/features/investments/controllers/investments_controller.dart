@@ -26,9 +26,7 @@ abstract class InvestmentsControllerBase with Store {
     required AppController appController,
     required InvestmentsService service,
   })  : _appController = appController,
-        _service = service {
-    loadUserData();
-  }
+        _service = service;
 
   @computed
   UserModel? get user => _appController.user;
@@ -40,7 +38,7 @@ abstract class InvestmentsControllerBase with Store {
   DailyTipDTO? dailyTip;
 
   @observable
-  bool isLoading = true;
+  bool isLoading = false;
 
   @observable
   AppExceptionType? loadUserDataError;
@@ -52,6 +50,14 @@ abstract class InvestmentsControllerBase with Store {
       loadUserDataError = null;
       hideValues = await _service.loadHideValues();
       dailyTip = await _service.loadDailyTip();
+
+      goals.clear();
+      investments.clear();
+      thisMonthOperations.clear();
+      filteredOperations.clear();
+      allOperations = null;
+      resetOperationsFilters();
+
       if (user != null) {
         goals.addAll(await _service.loadGoals(user!.id));
         investments.addAll(await _service.loadInvestments(user!.id));

@@ -44,15 +44,15 @@ Future<AppController> _loadDependencies() async {
   );
   await appController.initialize();
   GetIt.I.registerSingleton(
+    InvestmentsController(
+      appController: appController,
+      service: InvestmentsService(),
+    ),
+  );
+  GetIt.I.registerSingleton(
     AuthController(
       appController: appController,
       service: AuthService(),
-    ),
-  );
-  GetIt.I.registerLazySingleton(
-    () => InvestmentsController(
-      appController: appController,
-      service: InvestmentsService(),
     ),
   );
   return appController;
@@ -63,10 +63,8 @@ class InvestHelperApp extends StatelessWidget {
   const InvestHelperApp({super.key, required this.appController});
 
   String get _initialRoute {
-    final bool userIsLoggedIn = appController.user != null;
-    if (userIsLoggedIn) return InvestmentsPage.routeName;
     final bool showWelcomePage = appController.showWelcomePage;
-    return showWelcomePage ? WelcomePage.routeName : AuthPage.routeName;
+    return showWelcomePage ? WelcomePage.routeName : InvestmentsPage.routeName;
   }
 
   @override
@@ -106,8 +104,10 @@ class InvestHelperApp extends StatelessWidget {
             WelcomePage.routeName: (_) {
               return WelcomePage(appController: appController);
             },
-            AuthPage.routeName: (_) {
-              return AuthPage(controller: GetIt.I.get<AuthController>());
+            InvestmentsPage.routeName: (_) {
+              return InvestmentsPage(
+                controller: GetIt.I.get<InvestmentsController>(),
+              );
             },
             SettingsPage.routeName: (_) {
               return SettingsPage(appController: appController);
@@ -115,10 +115,8 @@ class InvestHelperApp extends StatelessWidget {
             ChangePersonalDataPage.routeName: (_) {
               return ChangePersonalDataPage(appController: appController);
             },
-            InvestmentsPage.routeName: (_) {
-              return InvestmentsPage(
-                controller: GetIt.I.get<InvestmentsController>(),
-              );
+            AuthPage.routeName: (_) {
+              return AuthPage(controller: GetIt.I.get<AuthController>());
             },
             ManageMyGoalsPage.routeName: (_) {
               return ManageMyGoalsPage(

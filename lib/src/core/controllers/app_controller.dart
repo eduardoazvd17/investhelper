@@ -1,6 +1,8 @@
+import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
 
+import '../../features/investments/controllers/investments_controller.dart';
 import '../enums/language_enum.dart';
 import '../enums/theme_enum.dart';
 import '../exceptions/app_exception.dart';
@@ -71,13 +73,17 @@ abstract class AppControllerBase with Store {
   }
 
   @action
-  void login(UserModel user) => this.user = user;
+  void login(UserModel user) {
+    this.user = user;
+    GetIt.I.get<InvestmentsController>().loadUserData();
+  }
 
   @action
   Future<void> logout() async {
     await _service.logout();
     await changeIsBiometricsEnabled(false, force: true);
     user = null;
+    GetIt.I.get<InvestmentsController>().loadUserData();
   }
 
   @observable

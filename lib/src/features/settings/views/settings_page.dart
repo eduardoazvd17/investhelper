@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/controllers/app_controller.dart';
@@ -35,7 +36,6 @@ class SettingsPage extends StatelessWidget {
       Navigator.of(context).popUntil(
         ModalRoute.withName(InvestmentsPage.routeName),
       );
-      Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
     }
   }
 
@@ -53,16 +53,16 @@ class SettingsPage extends StatelessWidget {
               children: [
                 Observer(
                   builder: (_) {
-                    if (appController.user == null) {
-                      return const SizedBox();
-                    }
+                    // if (appController.user == null) {
+                    //   return const SizedBox();
+                    // }
 
                     return SectionWidget(
                       title: AppLocalizations.of(context)!.myProfile,
                       content: [
                         _myProfileSectionContent(
                           context,
-                          appController.user!,
+                          appController.user,
                         ),
                       ],
                     )
@@ -243,49 +243,65 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _myProfileSectionContent(BuildContext context, UserModel user) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    user.name,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Text(
-                    user.email,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(color: Colors.grey),
-                  ),
-                ],
+  Widget _myProfileSectionContent(BuildContext context, UserModel? user) {
+    if (user == null) {
+      return ButtonTileWidget(
+        text: AppLocalizations.of(context)!.authPageLoginTitle,
+        icon: Icons.exit_to_app,
+        onTap: () {
+          final args = ModalRoute.of(context)?.settings.arguments;
+          if (args != null && args is bool && args) {
+            Navigator.of(context).pop();
+          } else {
+            Navigator.of(context).pushNamed(AuthPage.routeName);
+          }
+        },
+      );
+    } else {
+      return Card(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user.name,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    Text(
+                      user.email,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(color: Colors.grey),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            ButtonTileWidget(
-              text: AppLocalizations.of(context)!.changePersonalData,
-              onTap: () => Navigator.of(context).pushNamed(
-                ChangePersonalDataPage.routeName,
+              ButtonTileWidget(
+                text: AppLocalizations.of(context)!.changePersonalData,
+                onTap: () => Navigator.of(context).pushNamed(
+                  ChangePersonalDataPage.routeName,
+                ),
               ),
-            ),
-            ButtonTileWidget(
-              text: AppLocalizations.of(context)!.endSession,
-              icon: Icons.exit_to_app,
-              color: Theme.of(context).colorScheme.error,
-              onTap: () => _endSession(context),
-            ),
-          ],
+              ButtonTileWidget(
+                text: AppLocalizations.of(context)!.endSession,
+                icon: Icons.exit_to_app,
+                color: Theme.of(context).colorScheme.error,
+                onTap: () => _endSession(context),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
