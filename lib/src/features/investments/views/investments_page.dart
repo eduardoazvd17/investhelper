@@ -11,6 +11,7 @@ import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../../auth/views/auth_page.dart';
+import '../../monetization/widgets/banner_ad_widget.dart';
 import '../../settings/views/settings_page.dart';
 import '../controllers/investments_controller.dart';
 import '../widgets/category_listing_widget.dart';
@@ -155,7 +156,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   },
                 ),
               ),
-              //const BannerAdWidget(),
+              const BannerAdWidget(),
             ],
           ),
         ),
