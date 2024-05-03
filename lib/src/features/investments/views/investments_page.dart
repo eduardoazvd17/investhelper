@@ -326,8 +326,14 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                           ),
                           child: ListView(
                             scrollDirection: Axis.horizontal,
-                            children: controller.goals.map((goal) {
-                              return GoalTileWidget(goal: goal);
+                            children: controller.goals.map((e) {
+                              final Duration delay = Duration(
+                                milliseconds: controller.goals.indexOf(e) * 100,
+                              );
+
+                              return GoalTileWidget(goal: e).animate().fade(
+                                  duration: const Duration(milliseconds: 400),
+                                  delay: delay);
                             }).toList(),
                           ),
                         ),
@@ -408,10 +414,17 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: controller.investments.map((e) {
+                            final Duration delay = Duration(
+                              milliseconds:
+                                  controller.investments.indexOf(e) * 100,
+                            );
+
                             return InvestmentTileWidget(
                               investment: e,
                               hideValues: controller.hideValues,
-                            );
+                            ).animate().fade(
+                                duration: const Duration(milliseconds: 400),
+                                delay: delay);
                           }).toList(),
                         ),
                       ),
@@ -455,14 +468,22 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                           ),
                           child: ListView(
                             scrollDirection: Axis.horizontal,
-                            children: controller.thisMonthOperations.map((o) {
+                            children: controller.thisMonthOperations.map((e) {
+                              final Duration delay = Duration(
+                                milliseconds:
+                                    controller.thisMonthOperations.indexOf(e) *
+                                        100,
+                              );
+
                               return OperationTileWidget(
-                                operation: o,
+                                operation: e,
                                 investment: controller.investments.firstWhere(
-                                  (i) => i.id == o.investmentId,
+                                  (i) => i.id == e.investmentId,
                                 ),
                                 hideValues: controller.hideValues,
-                              );
+                              ).animate().fade(
+                                  duration: const Duration(milliseconds: 400),
+                                  delay: delay);
                             }).toList(),
                           ),
                         ),
