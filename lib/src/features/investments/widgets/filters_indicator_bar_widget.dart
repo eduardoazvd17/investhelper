@@ -17,7 +17,7 @@ class FiltersIndicatorBarWidget extends StatelessWidget {
           children: filters.map((filter) {
             return InkWell(
               onTap: onOpenFilters,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12.5),
               child: Card(
                 child: Padding(
                   padding: const EdgeInsets.all(5),

@@ -51,7 +51,7 @@ class _DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
                     Colors.grey,
                 width: 0.6,
               ),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12.5),
             ),
             child: DropdownButton<T>(
               value: _selectedItem,
@@ -59,7 +59,7 @@ class _DropdownButtonWidgetState<T> extends State<DropdownButtonWidget<T>> {
               elevation: 24,
               iconSize: 35,
               itemHeight: MediaQuery.of(context).textScaler.scale(60),
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(12.5),
               underline: const SizedBox(),
               style: Theme.of(context).textTheme.bodyLarge,
               hint: widget.hint != null ? Text(widget.hint!) : null,

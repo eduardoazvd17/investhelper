@@ -409,7 +409,7 @@ class _AuthPageState extends State<AuthPage> {
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(12.5),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

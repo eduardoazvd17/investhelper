@@ -37,7 +37,7 @@ class ModalBottomSheetWidget extends StatefulWidget {
                 child: DecoratedBox(
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(10),
+                      top: Radius.circular(12.5),
                     ),
                     color: Theme.of(context).bottomSheetTheme.backgroundColor,
                   ),
@@ -92,7 +92,7 @@ class _ModalBottomSheetWidgetState extends State<ModalBottomSheetWidget> {
                   width: 80,
                   height: 3,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(12.5),
                     color: Colors.grey,
                   ),
                 ),

@@ -6,7 +6,7 @@ class AppTheme {
   static const _kCenterTitle = true;
   static const _kPrimaryColor = Colors.deepPurple;
   static const _kSecondaryColor = Colors.blueGrey;
-  static const _kBorderRadius = 10.0;
+  static const _kBorderRadius = 12.5;
   static const _kLightBackgroundColor = Colors.white;
   static final _kSecondaryLightBackgroundColor = Colors.grey[100];
   static const _kDarkBackgroundColor = Colors.black;
