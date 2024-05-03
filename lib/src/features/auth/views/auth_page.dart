@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
@@ -40,7 +41,9 @@ class _AuthPageState extends State<AuthPage> {
   void initState() {
     _currentPageState = AuthPageState.login;
     _nameController = TextEditingController();
-    _emailController = TextEditingController();
+    _emailController = TextEditingController(
+      text: kDebugMode ? 'testing@investhelper.com' : null,
+    );
     _passwordController = TextEditingController();
     _passwordConfirmationController = TextEditingController();
     _nameFocus = FocusNode();
