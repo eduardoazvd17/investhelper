@@ -46,13 +46,13 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   @override
   void initState() {
     _widgetEventHandler = WidgetEventHandler(
-      onResumed: () {
-        if (controller.shouldRequestAuth) {
-          AuthOverlay.show(context);
-        }
+      onResumed: () async {
         if (_blurContent) {
           Navigator.of(context).pop();
           _blurContent = false;
+        }
+        if (controller.shouldRequestAuth) {
+          AuthOverlay.show(context);
         }
       },
       onInactive: () {
