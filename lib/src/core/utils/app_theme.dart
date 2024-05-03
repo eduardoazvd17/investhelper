@@ -16,7 +16,7 @@ class AppTheme {
   static ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
         fontFamily: _kFontFamilly,
-        primaryColor: _kPrimaryColor[200],
+        primaryColor: _kPrimaryColor,
         scaffoldBackgroundColor: _kLightBackgroundColor,
         colorScheme: ColorScheme.fromSeed(
           seedColor: _kPrimaryColor,
@@ -100,7 +100,7 @@ class AppTheme {
         primaryColor: _kPrimaryColor[200],
         scaffoldBackgroundColor: _kDarkBackgroundColor,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: _kPrimaryColor,
+          seedColor: _kPrimaryColor[200]!,
           brightness: Brightness.dark,
           surface: Colors.transparent,
           surfaceTint: Colors.transparent,
