@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 import '../enums/category_enum.dart';
 import 'category_indicator_widget.dart';
@@ -23,6 +24,10 @@ class CategoryListingWidget extends StatelessWidget {
           children: [
             Row(
               children: firstRowItems.map((e) {
+                final Duration delay = Duration(
+                  milliseconds: firstRowItems.indexOf(e) * 100,
+                );
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 2.5),
                   child: Card(
@@ -31,11 +36,15 @@ class CategoryListingWidget extends StatelessWidget {
                       child: CategoryIndicatorWidget(category: e),
                     ),
                   ),
-                );
+                ).animate().fade(delay: delay);
               }).toList(),
             ),
             Row(
               children: secondRowItems.map((e) {
+                final Duration delay = Duration(
+                  milliseconds: secondRowItems.indexOf(e) * 100,
+                );
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 2.5),
                   child: Card(
@@ -44,7 +53,8 @@ class CategoryListingWidget extends StatelessWidget {
                       child: CategoryIndicatorWidget(category: e),
                     ),
                   ),
-                );
+                ).animate().fade(
+                    duration: const Duration(milliseconds: 400), delay: delay);
               }).toList(),
             ),
           ],

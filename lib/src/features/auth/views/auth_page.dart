@@ -183,8 +183,8 @@ class _AuthPageState extends State<AuthPage> {
                       AuthPageState.recovery => _recoveryStateContent,
                     }
                         .animate()
-                        .fade(duration: const Duration(milliseconds: 300))
-                        .slideX(duration: const Duration(milliseconds: 150)),
+                        .fade(duration: const Duration(milliseconds: 400))
+                        .slideX(duration: const Duration(milliseconds: 200)),
                   ],
                 ),
               ),
