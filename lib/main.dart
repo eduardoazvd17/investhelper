@@ -63,7 +63,8 @@ class InvestHelperApp extends StatelessWidget {
   const InvestHelperApp({super.key, required this.appController});
 
   String get _initialRoute {
-    final bool showWelcomePage = appController.showWelcomePage;
+    final bool showWelcomePage =
+        appController.showWelcomePage && appController.user == null;
     return showWelcomePage ? WelcomePage.routeName : InvestmentsPage.routeName;
   }
 

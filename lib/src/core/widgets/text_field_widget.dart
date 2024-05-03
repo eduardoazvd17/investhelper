@@ -58,7 +58,7 @@ class TextFieldWidget extends StatelessWidget {
               prefix: prefix,
               border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(
-                  Radius.circular(10),
+                  Radius.circular(12.5),
                 ),
               ),
             ),

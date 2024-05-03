@@ -6,7 +6,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
-import '../../../core/widgets/app_auth_overlay.dart';
+import '../../../core/widgets/auth_overlay.dart';
+import '../../../core/widgets/blur_overlay.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../../../l10n/l10n.dart';
@@ -35,6 +36,7 @@ class InvestmentsPage extends StatefulWidget {
 }
 
 class _InvestmentsPageState extends State<InvestmentsPage> {
+  bool _blurContent = false;
   int _currentPage = 0;
   late final WidgetEventHandler _widgetEventHandler;
   late final ScrollController _overviewScrollController;
@@ -45,9 +47,19 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   @override
   void initState() {
     _widgetEventHandler = WidgetEventHandler(
-      onResume: () {
+      onResumed: () async {
+        if (_blurContent) {
+          Navigator.of(context).pop();
+          _blurContent = false;
+        }
         if (controller.shouldRequestAuth) {
-          AppAuthOverlay.show(context);
+          AuthOverlay.show(context);
+        }
+      },
+      onInactive: () {
+        if (!_blurContent) {
+          _blurContent = true;
+          BlurOverlay.show(context);
         }
       },
     );
@@ -56,7 +68,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     _detailsScrollController = ScrollController();
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _widgetEventHandler.onResume?.call();
+      _widgetEventHandler.onResumed?.call();
     });
   }
 

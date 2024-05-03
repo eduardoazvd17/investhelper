@@ -6,17 +6,18 @@ class AppTheme {
   static const _kCenterTitle = true;
   static const _kPrimaryColor = Colors.deepPurple;
   static const _kSecondaryColor = Colors.blueGrey;
-  static const _kBorderRadius = 10.0;
+  static const _kBorderRadius = 12.5;
   static const _kLightBackgroundColor = Colors.white;
   static final _kSecondaryLightBackgroundColor = Colors.grey[100];
   static const _kDarkBackgroundColor = Colors.black;
   static final _kSecondaryDarkBackgroundColor = Colors.grey[900];
   static final _kFontFamilly = GoogleFonts.roboto().fontFamily;
+  static const _kToolbarHeight = 62.5;
 
   static ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
         fontFamily: _kFontFamilly,
-        primaryColor: _kPrimaryColor[200],
+        primaryColor: _kPrimaryColor,
         scaffoldBackgroundColor: _kLightBackgroundColor,
         colorScheme: ColorScheme.fromSeed(
           seedColor: _kPrimaryColor,
@@ -26,6 +27,7 @@ class AppTheme {
           secondary: _kSecondaryColor,
         ),
         appBarTheme: const AppBarTheme(
+          toolbarHeight: _kToolbarHeight,
           centerTitle: _kCenterTitle,
           backgroundColor: _kLightBackgroundColor,
           systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -100,13 +102,14 @@ class AppTheme {
         primaryColor: _kPrimaryColor[200],
         scaffoldBackgroundColor: _kDarkBackgroundColor,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: _kPrimaryColor,
+          seedColor: _kPrimaryColor[200]!,
           brightness: Brightness.dark,
           surface: Colors.transparent,
           surfaceTint: Colors.transparent,
           secondary: _kSecondaryColor,
         ),
         appBarTheme: const AppBarTheme(
+          toolbarHeight: _kToolbarHeight,
           centerTitle: _kCenterTitle,
           backgroundColor: _kDarkBackgroundColor,
           systemOverlayStyle: SystemUiOverlayStyle.light,

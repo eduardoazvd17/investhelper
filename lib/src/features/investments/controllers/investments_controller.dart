@@ -26,7 +26,9 @@ abstract class InvestmentsControllerBase with Store {
     required AppController appController,
     required InvestmentsService service,
   })  : _appController = appController,
-        _service = service;
+        _service = service {
+    loadUserData();
+  }
 
   @computed
   UserModel? get user => _appController.user;

@@ -30,18 +30,18 @@ class ButtonTileWidget extends StatelessWidget {
             Theme.of(context).primaryColor;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 11),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
       child: InkWell(
         onTap: onTap,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(12.5),
         child: Container(
           decoration: BoxDecoration(
             color: onTap == null ? null : backgroundColor,
             border: showBorder ? Border.all(color: color) : null,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(12.5),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22.5),
             child: Row(
               children: [
                 Expanded(

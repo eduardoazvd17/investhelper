@@ -13,9 +13,9 @@ import '../utils/widget_event_handler.dart';
 import 'button_tile_widget.dart';
 import 'dialog_widget.dart';
 
-class AppAuthOverlay extends StatefulWidget {
+class AuthOverlay extends StatefulWidget {
   final AppController appController;
-  const AppAuthOverlay({super.key, required this.appController});
+  const AuthOverlay({super.key, required this.appController});
 
   static Future<void> show(BuildContext context) async {
     final AppController appController = GetIt.I.get<AppController>();
@@ -28,35 +28,35 @@ class AppAuthOverlay extends StatefulWidget {
       useSafeArea: false,
       barrierColor: Colors.black45,
       barrierDismissible: false,
-      builder: (_) => AppAuthOverlay(appController: appController),
+      builder: (_) => AuthOverlay(appController: appController),
     );
     appController.isRequestAuthOverlayShowing = false;
   }
 
   @override
-  State<AppAuthOverlay> createState() => _AppAuthOverlayState();
+  State<AuthOverlay> createState() => _AuthOverlayState();
 }
 
-class _AppAuthOverlayState extends State<AppAuthOverlay> {
+class _AuthOverlayState extends State<AuthOverlay> {
   late final WidgetEventHandler _widgetEventHandler;
   bool _autoCallAuthenticate = true;
 
   @override
   void initState() {
     _widgetEventHandler = WidgetEventHandler(
-      onResume: () {
+      onResumed: () {
         if (_autoCallAuthenticate) {
           _authenticate();
           setState(() => _autoCallAuthenticate = false);
         }
       },
-      onPause: () => setState(() => _autoCallAuthenticate = true),
+      onPaused: () => setState(() => _autoCallAuthenticate = true),
     );
     WidgetsBinding.instance.addObserver(_widgetEventHandler);
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _autoCallAuthenticate = true;
-      _widgetEventHandler.onResume?.call();
+      _widgetEventHandler.onResumed?.call();
     });
   }
 
