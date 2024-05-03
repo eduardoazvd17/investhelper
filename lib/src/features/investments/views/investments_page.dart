@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '../../../core/enums/subscription_enum.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
@@ -168,7 +169,15 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   },
                 ),
               ),
-              const BannerAdWidget(),
+              Observer(
+                builder: (_) {
+                  if (controller.user?.data.subscription == SubscriptionEnum.freeWithAds) {
+                    return const BannerAdWidget();
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
             ],
           ),
         ),

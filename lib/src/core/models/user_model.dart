@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import '../enums/subscription_enum.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
   final String id;
@@ -31,20 +33,27 @@ class UserModel {
 
 class UserDataModel {
   final DateTime registerDate;
-  final DateTime? subscriptionStart;
-  final DateTime? subscriptionEnd;
+  final SubscriptionEnum subscription;
 
   UserDataModel({
     required this.registerDate,
-    this.subscriptionStart,
-    this.subscriptionEnd,
+    this.subscription = SubscriptionEnum.freeWithAds,
   });
+
+  UserDataModel copyWith({
+    DateTime? registerDate,
+    SubscriptionEnum? subscription,
+  }) {
+    return UserDataModel(
+      registerDate: registerDate ?? this.registerDate,
+      subscription: subscription ?? this.subscription,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'registerDate': registerDate.millisecondsSinceEpoch,
-      'subscriptionStart': subscriptionStart?.millisecondsSinceEpoch,
-      'subscriptionEnd': subscriptionEnd?.millisecondsSinceEpoch,
+      'subscription': subscription.index,
     };
   }
 
@@ -52,12 +61,7 @@ class UserDataModel {
     return UserDataModel(
       registerDate:
           DateTime.fromMillisecondsSinceEpoch(map['registerDate'] as int),
-      subscriptionStart: map['subscriptionStart'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['subscriptionStart'] as int)
-          : null,
-      subscriptionEnd: map['subscriptionEnd'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['subscriptionEnd'] as int)
-          : null,
+      subscription: SubscriptionEnum.values[map['subscription'] as int],
     );
   }
 
@@ -65,15 +69,4 @@ class UserDataModel {
 
   factory UserDataModel.fromJson(String source) =>
       UserDataModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  UserDataModel copyWith({
-    required DateTime? subscriptionStart,
-    required DateTime? subscriptionEnd,
-  }) {
-    return UserDataModel(
-      registerDate: registerDate,
-      subscriptionStart: subscriptionStart,
-      subscriptionEnd: subscriptionEnd,
-    );
-  }
 }
