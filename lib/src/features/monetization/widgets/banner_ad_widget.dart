@@ -73,7 +73,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
       return const SizedBox();
     } else {
       return Container(
-        color: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
+        color: Theme.of(context).primaryColor,
         child: Column(
           children: [
             const Divider(height: 0),
