@@ -41,7 +41,7 @@ class ButtonTileWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(12.5),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 22.5),
             child: Row(
               children: [
                 Expanded(
