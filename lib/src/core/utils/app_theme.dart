@@ -12,6 +12,7 @@ class AppTheme {
   static const _kDarkBackgroundColor = Colors.black;
   static final _kSecondaryDarkBackgroundColor = Colors.grey[900];
   static final _kFontFamilly = GoogleFonts.roboto().fontFamily;
+  static const _kToolbarHeight = 62.5;
 
   static ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
@@ -26,6 +27,7 @@ class AppTheme {
           secondary: _kSecondaryColor,
         ),
         appBarTheme: const AppBarTheme(
+          toolbarHeight: _kToolbarHeight,
           centerTitle: _kCenterTitle,
           backgroundColor: _kLightBackgroundColor,
           systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -107,6 +109,7 @@ class AppTheme {
           secondary: _kSecondaryColor,
         ),
         appBarTheme: const AppBarTheme(
+          toolbarHeight: _kToolbarHeight,
           centerTitle: _kCenterTitle,
           backgroundColor: _kDarkBackgroundColor,
           systemOverlayStyle: SystemUiOverlayStyle.light,
