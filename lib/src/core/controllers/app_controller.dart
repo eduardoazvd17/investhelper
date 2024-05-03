@@ -73,6 +73,17 @@ abstract class AppControllerBase with Store {
   }
 
   @action
+  Future<void> changeUserData(UserDataModel userDataModel) async {
+    try {
+      user = await _service.changeUserName(
+        user!.copyWith(data: userDataModel),
+      );
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
+
+  @action
   void login(UserModel user) {
     this.user = user;
     GetIt.I.get<InvestmentsController>().loadUserData();
