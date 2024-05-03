@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../core/exceptions/app_exception.dart';
@@ -7,6 +8,7 @@ import '../models/register_user_model.dart';
 
 class AuthService {
   FirebaseAuth get _auth => FirebaseAuth.instance;
+  FirebaseFirestore get _firestore => FirebaseFirestore.instance;
 
   Future<UserModel> makeLogin(LoginUserModel loginModel) async {
     try {
@@ -27,6 +29,7 @@ class AuthService {
         id: _auth.currentUser!.uid,
         name: _auth.currentUser!.displayName!,
         email: _auth.currentUser!.email!,
+        data: await getUserData(_auth.currentUser!.uid),
       );
     } on AppException catch (_) {
       rethrow;
@@ -68,6 +71,7 @@ class AuthService {
         id: _auth.currentUser!.uid,
         name: _auth.currentUser!.displayName!,
         email: _auth.currentUser!.email!,
+        data: await getUserData(_auth.currentUser!.uid),
       );
     } on AppException catch (_) {
       rethrow;
@@ -107,6 +111,23 @@ class AuthService {
         throw AppException(AppExceptionType.connectionError);
       }
       throw AppException(AppExceptionType.invalidRecoveryEmail);
+    } catch (error) {
+      throw AppException(AppExceptionType.connectionError, error.toString());
+    }
+  }
+
+  Future<UserDataModel> getUserData(String userId) async {
+    try {
+      final userData = await _firestore.collection('users').doc(userId).get();
+      if (userData.exists && userData.data() != null) {
+        return UserDataModel.fromMap(userData.data()!);
+      } else {
+        final data = UserDataModel(registerDate: DateTime.now());
+        userData.reference.set(data.toMap());
+        return data;
+      }
+    } on AppException catch (_) {
+      rethrow;
     } catch (error) {
       throw AppException(AppExceptionType.connectionError, error.toString());
     }
