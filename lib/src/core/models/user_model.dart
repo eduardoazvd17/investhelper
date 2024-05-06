@@ -34,19 +34,27 @@ class UserModel {
 class UserDataModel {
   final DateTime registerDate;
   final SubscriptionEnum subscription;
+  final DateTime? subscriptionStartDate;
+  final DateTime? subscriptionEndDate;
 
   UserDataModel({
     required this.registerDate,
     this.subscription = SubscriptionEnum.freeWithAds,
+    this.subscriptionStartDate,
+    this.subscriptionEndDate,
   });
 
   UserDataModel copyWith({
-    DateTime? registerDate,
-    SubscriptionEnum? subscription,
+    required SubscriptionEnum? subscription,
+    required DateTime? subscriptionStartDate,
+    required DateTime? subscriptionEndDate,
   }) {
     return UserDataModel(
-      registerDate: registerDate ?? this.registerDate,
+      registerDate: registerDate,
       subscription: subscription ?? this.subscription,
+      subscriptionStartDate:
+          subscriptionStartDate ?? this.subscriptionStartDate,
+      subscriptionEndDate: subscriptionEndDate ?? this.subscriptionEndDate,
     );
   }
 
@@ -54,6 +62,8 @@ class UserDataModel {
     return <String, dynamic>{
       'registerDate': registerDate.millisecondsSinceEpoch,
       'subscription': subscription.index,
+      'subscriptionStartDate': subscriptionStartDate?.millisecondsSinceEpoch,
+      'subscriptionEndDate': subscriptionEndDate?.millisecondsSinceEpoch,
     };
   }
 
@@ -62,6 +72,14 @@ class UserDataModel {
       registerDate:
           DateTime.fromMillisecondsSinceEpoch(map['registerDate'] as int),
       subscription: SubscriptionEnum.values[map['subscription'] as int],
+      subscriptionStartDate: map['subscriptionStartDate'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(
+              map['subscriptionStartDate'] as int)
+          : null,
+      subscriptionEndDate: map['subscriptionEndDate'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(
+              map['subscriptionEndDate'] as int)
+          : null,
     );
   }
 
