@@ -171,7 +171,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
               ),
               Observer(
                 builder: (_) {
-                  if (controller.user?.data.subscription == SubscriptionEnum.freeWithAds) {
+                  if (controller.user?.data.subscription ==
+                      SubscriptionEnum.freeWithAds) {
                     return const BannerAdWidget();
                   } else {
                     return const SizedBox();
@@ -336,13 +337,9 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: controller.goals.map((e) {
-                              final Duration delay = Duration(
-                                milliseconds: controller.goals.indexOf(e) * 100,
-                              );
-
                               return GoalTileWidget(goal: e).animate().fade(
-                                  duration: const Duration(milliseconds: 400),
-                                  delay: delay);
+                                    duration: const Duration(milliseconds: 400),
+                                  );
                             }).toList(),
                           ),
                         ),
@@ -423,17 +420,12 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: controller.investments.map((e) {
-                            final Duration delay = Duration(
-                              milliseconds:
-                                  controller.investments.indexOf(e) * 100,
-                            );
-
                             return InvestmentTileWidget(
                               investment: e,
                               hideValues: controller.hideValues,
                             ).animate().fade(
-                                duration: const Duration(milliseconds: 400),
-                                delay: delay);
+                                  duration: const Duration(milliseconds: 400),
+                                );
                           }).toList(),
                         ),
                       ),
@@ -478,12 +470,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: controller.thisMonthOperations.map((e) {
-                              final Duration delay = Duration(
-                                milliseconds:
-                                    controller.thisMonthOperations.indexOf(e) *
-                                        100,
-                              );
-
                               return OperationTileWidget(
                                 operation: e,
                                 investment: controller.investments.firstWhere(
@@ -491,8 +477,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                                 ),
                                 hideValues: controller.hideValues,
                               ).animate().fade(
-                                  duration: const Duration(milliseconds: 400),
-                                  delay: delay);
+                                    duration: const Duration(milliseconds: 400),
+                                  );
                             }).toList(),
                           ),
                         ),
