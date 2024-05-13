@@ -32,8 +32,7 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
     String? adUnitId;
     if (kDebugMode) {
-      // adUnitId = 'ca-app-pub-3940256099942544/9214589741';
-      adUnitId = 'ca-app-pub-3940256099942544/6300978111';
+      adUnitId = 'ca-app-pub-3940256099942544/9214589741';
     } else if (Platform.isAndroid) {
       adUnitId = 'ca-app-pub-6093298333256656/4449919191';
     } else if (Platform.isIOS) {
@@ -73,26 +72,36 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
 
   @override
   Widget build(BuildContext context) {
+    const double height = 55;
+    final double width = MediaQuery.of(context).size.width;
+
     if (_bannerAd == null) {
       return const SizedBox();
     } else {
-      return Container(
-        color: Theme.of(context).primaryColor,
-        child: Column(
-          children: [
-            const Divider(height: 0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: AdSize.banner.height.toDouble(),
-                  width: AdSize.banner.width.toDouble(),
-                  child: AdWidget(ad: _bannerAd!),
+      return Column(
+        children: [
+          const Divider(height: 0),
+          Stack(
+            children: [
+              const SizedBox(
+                height: height,
+                child: Center(
+                  child: CircularProgressIndicator.adaptive(),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: height,
+                    width: width,
+                    child: AdWidget(ad: _bannerAd!),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       );
     }
   }
