@@ -31,12 +31,15 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
     if (_bannerAd != null) return;
 
     String? adUnitId;
-    if (kDebugMode) {
-      adUnitId = 'ca-app-pub-3940256099942544/9214589741';
-    } else if (Platform.isAndroid) {
+    if (Platform.isAndroid) {
       adUnitId = 'ca-app-pub-6093298333256656/4449919191';
     } else if (Platform.isIOS) {
       adUnitId = 'ca-app-pub-6093298333256656/6762557078';
+    }
+
+    /// Testing mode override ID.
+    if (kDebugMode) {
+      adUnitId = 'ca-app-pub-3940256099942544/9214589741';
     }
 
     if (adUnitId != null) {
