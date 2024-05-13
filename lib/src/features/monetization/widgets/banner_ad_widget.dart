@@ -1,6 +1,7 @@
 import 'dart:developer' as developer;
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -30,10 +31,13 @@ class _BannerAdWidgetState extends State<BannerAdWidget> {
     if (_bannerAd != null) return;
 
     String? adUnitId;
-    if (Platform.isAndroid) {
+    if (kDebugMode) {
+      // adUnitId = 'ca-app-pub-3940256099942544/9214589741';
       adUnitId = 'ca-app-pub-3940256099942544/6300978111';
+    } else if (Platform.isAndroid) {
+      adUnitId = 'ca-app-pub-6093298333256656/4449919191';
     } else if (Platform.isIOS) {
-      adUnitId = 'ca-app-pub-3940256099942544/2934735716';
+      adUnitId = 'ca-app-pub-6093298333256656/6762557078';
     }
 
     if (adUnitId != null) {
