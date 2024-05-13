@@ -305,5 +305,7 @@
   "monthlySubscription": "Mensal",
   "annualSubscription": "Anual",
   "unlimitedSubscription": "Pro (ilimitado)",
-  "change": "Alterar"
+  "change": "Alterar",
+  "functionNotImplementedTitle": "Em breve",
+  "functionNotImplementedMessage": "Esta funcionalidade ainda não foi implementada.\n\nAguarde as próximas versões."
 }

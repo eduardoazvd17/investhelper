@@ -9,6 +9,8 @@ import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
 import '../../../core/widgets/auth_overlay.dart';
 import '../../../core/widgets/blur_overlay.dart';
+import '../../../core/widgets/button_tile_widget.dart';
+import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../../../l10n/l10n.dart';
@@ -505,16 +507,25 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 title: AppLocalizations.of(context)!.categories,
                 content: const [CategoryListingWidget()],
               ),
-              // SectionWidget(
-              //   title: AppLocalizations.of(context)!.productsAndServices,
-              //   content: [
-              //     ButtonTileWidget(
-              //       icon: CupertinoIcons.doc_chart,
-              //       text: AppLocalizations.of(context)!.exportInvestmentReport,
-              //       onTap: null,
-              //     ),
-              //   ],
-              // ),
+              SectionWidget(
+                title: AppLocalizations.of(context)!.productsAndServices,
+                content: [
+                  ButtonTileWidget(
+                    icon: CupertinoIcons.doc_chart,
+                    text: AppLocalizations.of(context)!.exportInvestmentReport,
+                    onTap: () {
+                      DialogWidget.show(
+                        context,
+                        title: AppLocalizations.of(context)!
+                            .functionNotImplementedTitle,
+                        message: AppLocalizations.of(context)!
+                            .functionNotImplementedMessage,
+                        actionType: DialogWidgetActionType.close,
+                      );
+                    },
+                  ),
+                ],
+              ),
               const SizedBox(height: 25),
             ],
           ),

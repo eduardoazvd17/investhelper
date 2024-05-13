@@ -337,7 +337,16 @@ class SettingsPage extends StatelessWidget {
                           ),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            DialogWidget.show(
+                              context,
+                              title: AppLocalizations.of(context)!
+                                  .functionNotImplementedTitle,
+                              message: AppLocalizations.of(context)!
+                                  .functionNotImplementedMessage,
+                              actionType: DialogWidgetActionType.close,
+                            );
+                          },
                           child: Text(AppLocalizations.of(context)!.change),
                         ),
                       ],
