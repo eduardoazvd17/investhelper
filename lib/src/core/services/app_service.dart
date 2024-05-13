@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 
+import '../../features/auth/services/auth_service.dart';
 import '../enums/language_enum.dart';
 import '../enums/theme_enum.dart';
 import '../exceptions/app_exception.dart';
@@ -10,6 +12,7 @@ import '../models/user_model.dart';
 
 class AppService {
   FirebaseAuth get _auth => FirebaseAuth.instance;
+  FirebaseFirestore get _firestore => FirebaseFirestore.instance;
 
   Future<String> getAppID() async {
     final prefs = await SharedPreferences.getInstance();
@@ -78,6 +81,7 @@ class AppService {
           id: _auth.currentUser!.uid,
           name: _auth.currentUser!.displayName!,
           email: _auth.currentUser!.email!,
+          data: await AuthService().getUserData(_auth.currentUser!.uid),
         );
       }
     } catch (_) {}
@@ -93,6 +97,21 @@ class AppService {
       }
 
       await _auth.currentUser!.updateDisplayName(userModel.name);
+      return userModel;
+    } on AppException catch (_) {
+      rethrow;
+    } catch (error) {
+      throw AppException(AppExceptionType.connectionError, error.toString());
+    }
+  }
+
+  Future<UserModel> changeUserData(UserModel userModel) async {
+    try {
+      await _firestore
+          .collection('users')
+          .doc(userModel.id)
+          .set(userModel.data.toMap());
+
       return userModel;
     } on AppException catch (_) {
       rethrow;

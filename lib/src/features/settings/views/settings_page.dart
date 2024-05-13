@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -6,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/enums/language_enum.dart';
+import '../../../core/enums/subscription_enum.dart';
 import '../../../core/enums/theme_enum.dart';
 import '../../../core/models/user_model.dart';
 import '../../../core/widgets/button_tile_widget.dart';
@@ -275,18 +277,79 @@ class SettingsPage extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      user.name,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleMedium,
+                    Row(
+                      children: [
+                        Icon(
+                          CupertinoIcons.person_circle,
+                          size: 45,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              FittedBox(
+                                child: Text(
+                                  user.name,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ),
+                              FittedBox(
+                                child: Text(
+                                  user.email,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(color: Colors.grey),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      user.email,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium
-                          ?.copyWith(color: Colors.grey),
+                    const Divider(height: 30),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              FittedBox(
+                                child: Text(
+                                  AppLocalizations.of(context)!.subscription,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ),
+                              FittedBox(
+                                child: Text(
+                                  user.data.subscription.getTitle(context),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium
+                                      ?.copyWith(color: Colors.grey),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            DialogWidget.show(
+                              context,
+                              title: AppLocalizations.of(context)!
+                                  .functionNotImplementedTitle,
+                              message: AppLocalizations.of(context)!
+                                  .functionNotImplementedMessage,
+                              actionType: DialogWidgetActionType.close,
+                            );
+                          },
+                          child: Text(AppLocalizations.of(context)!.change),
+                        ),
+                      ],
                     ),
                   ],
                 ),

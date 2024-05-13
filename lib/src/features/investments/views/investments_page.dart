@@ -3,15 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '../../../core/enums/subscription_enum.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
 import '../../../core/widgets/auth_overlay.dart';
 import '../../../core/widgets/blur_overlay.dart';
+import '../../../core/widgets/button_tile_widget.dart';
+import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../../auth/views/auth_page.dart';
+import '../../monetization/widgets/banner_ad_widget.dart';
 import '../../settings/views/settings_page.dart';
 import '../controllers/investments_controller.dart';
 import '../widgets/category_listing_widget.dart';
@@ -167,7 +171,16 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   },
                 ),
               ),
-              //const BannerAdWidget(),
+              Observer(
+                builder: (_) {
+                  if (controller.user?.data.subscription ==
+                      SubscriptionEnum.freeWithAds) {
+                    return const BannerAdWidget();
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
             ],
           ),
         ),
@@ -326,13 +339,9 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: controller.goals.map((e) {
-                              final Duration delay = Duration(
-                                milliseconds: controller.goals.indexOf(e) * 100,
-                              );
-
                               return GoalTileWidget(goal: e).animate().fade(
-                                  duration: const Duration(milliseconds: 400),
-                                  delay: delay);
+                                    duration: const Duration(milliseconds: 400),
+                                  );
                             }).toList(),
                           ),
                         ),
@@ -413,17 +422,12 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                         child: ListView(
                           scrollDirection: Axis.horizontal,
                           children: controller.investments.map((e) {
-                            final Duration delay = Duration(
-                              milliseconds:
-                                  controller.investments.indexOf(e) * 100,
-                            );
-
                             return InvestmentTileWidget(
                               investment: e,
                               hideValues: controller.hideValues,
                             ).animate().fade(
-                                duration: const Duration(milliseconds: 400),
-                                delay: delay);
+                                  duration: const Duration(milliseconds: 400),
+                                );
                           }).toList(),
                         ),
                       ),
@@ -468,12 +472,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                           child: ListView(
                             scrollDirection: Axis.horizontal,
                             children: controller.thisMonthOperations.map((e) {
-                              final Duration delay = Duration(
-                                milliseconds:
-                                    controller.thisMonthOperations.indexOf(e) *
-                                        100,
-                              );
-
                               return OperationTileWidget(
                                 operation: e,
                                 investment: controller.investments.firstWhere(
@@ -481,8 +479,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                                 ),
                                 hideValues: controller.hideValues,
                               ).animate().fade(
-                                  duration: const Duration(milliseconds: 400),
-                                  delay: delay);
+                                    duration: const Duration(milliseconds: 400),
+                                  );
                             }).toList(),
                           ),
                         ),
@@ -509,16 +507,25 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 title: AppLocalizations.of(context)!.categories,
                 content: const [CategoryListingWidget()],
               ),
-              // SectionWidget(
-              //   title: AppLocalizations.of(context)!.productsAndServices,
-              //   content: [
-              //     ButtonTileWidget(
-              //       icon: CupertinoIcons.doc_chart,
-              //       text: AppLocalizations.of(context)!.exportInvestmentReport,
-              //       onTap: null,
-              //     ),
-              //   ],
-              // ),
+              SectionWidget(
+                title: AppLocalizations.of(context)!.productsAndServices,
+                content: [
+                  ButtonTileWidget(
+                    icon: CupertinoIcons.doc_chart,
+                    text: AppLocalizations.of(context)!.exportInvestmentReport,
+                    onTap: () {
+                      DialogWidget.show(
+                        context,
+                        title: AppLocalizations.of(context)!
+                            .functionNotImplementedTitle,
+                        message: AppLocalizations.of(context)!
+                            .functionNotImplementedMessage,
+                        actionType: DialogWidgetActionType.close,
+                      );
+                    },
+                  ),
+                ],
+              ),
               const SizedBox(height: 25),
             ],
           ),

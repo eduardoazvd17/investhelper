@@ -291,5 +291,21 @@
     "resetFilters": "Reset filters",
     "pastMonth": "Last month",
     "thisMonth": "This month",
-    "tryAgain": "Try again"
+    "tryAgain": "Try again",
+    "subscription": "Subscription",
+    "subscriptionDisplay": "Subscription: {value}",
+    "@subscriptionDisplay": {
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "freeWithAdsSubscription": "Free (with ads)",
+    "monthlySubscription": "Monthly",
+    "annualSubscription": "Annual",
+    "unlimitedSubscription": "Pro (unlimited)",
+    "change": "Change",
+    "functionNotImplementedTitle": "Coming soon",
+    "functionNotImplementedMessage": "This functionality has not yet been implemented.\n\nPlease wait for the next versions."
 }

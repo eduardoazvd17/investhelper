@@ -291,5 +291,21 @@
   "resetFilters": "Resetar filtros",
   "pastMonth": "Mês passado",
   "thisMonth": "Este mês",
-  "tryAgain": "Tentar novamente"
+  "tryAgain": "Tentar novamente",
+  "subscription": "Assinatura",
+  "subscriptionDisplay": "Assinatura: {value}",
+  "@subscriptionDisplay": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "freeWithAdsSubscription": "Gratuito (com anúncios)",
+  "monthlySubscription": "Mensal",
+  "annualSubscription": "Anual",
+  "unlimitedSubscription": "Pro (ilimitado)",
+  "change": "Alterar",
+  "functionNotImplementedTitle": "Em breve",
+  "functionNotImplementedMessage": "Esta funcionalidade ainda não foi implementada.\n\nAguarde as próximas versões."
 }
