@@ -40,7 +40,7 @@ class DialogWidget extends StatelessWidget {
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
                   style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all(
+                    foregroundColor: WidgetStateProperty.all(
                         Theme.of(context).colorScheme.error),
                   ),
                   child: Text(AppLocalizations.of(context)!.yes),

@@ -136,7 +136,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           onPressed: Navigator.of(context).pop,
           style: ButtonStyle(
             foregroundColor:
-                MaterialStateProperty.all(Theme.of(context).colorScheme.error),
+                WidgetStateProperty.all(Theme.of(context).colorScheme.error),
           ),
           child: Text(AppLocalizations.of(context)!.cancel),
         ),
@@ -234,7 +234,7 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           onPressed: Navigator.of(context).pop,
           style: ButtonStyle(
             foregroundColor:
-                MaterialStateProperty.all(Theme.of(context).colorScheme.error),
+                WidgetStateProperty.all(Theme.of(context).colorScheme.error),
           ),
           child: Text(AppLocalizations.of(context)!.cancel),
         ),

@@ -146,7 +146,7 @@ class _AuthOverlayState extends State<AuthOverlay> {
                             .elevatedButtonTheme
                             .style
                             ?.backgroundColor
-                            ?.resolve(MaterialState.values.toSet()),
+                            ?.resolve(WidgetState.values.toSet()),
                         color: Theme.of(context).scaffoldBackgroundColor,
                         onTap: _authenticate,
                       ),

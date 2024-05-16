@@ -67,7 +67,7 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
           onPressed: Navigator.of(context).pop,
           style: ButtonStyle(
             foregroundColor:
-                MaterialStateProperty.all(Theme.of(context).colorScheme.error),
+                WidgetStateProperty.all(Theme.of(context).colorScheme.error),
           ),
           child: Text(AppLocalizations.of(context)!.cancel),
         ),

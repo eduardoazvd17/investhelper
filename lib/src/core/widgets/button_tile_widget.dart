@@ -26,7 +26,7 @@ class ButtonTileWidget extends StatelessWidget {
                 .elevatedButtonTheme
                 .style
                 ?.backgroundColor
-                ?.resolve(MaterialState.values.toSet()) ??
+                ?.resolve(WidgetState.values.toSet()) ??
             Theme.of(context).primaryColor;
 
     return Padding(
