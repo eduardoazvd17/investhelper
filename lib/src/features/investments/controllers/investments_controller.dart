@@ -4,7 +4,7 @@ import '../../../core/controllers/app_controller.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/models/user_model.dart';
 import '../../../core/utils/date_time_utils.dart';
-import '../enums/operation_type.dart';
+import '../enums/operation_type_enum.dart';
 import '../models/create_goal_model.dart';
 import '../models/create_investment_model.dart';
 import '../models/create_operation_model.dart';

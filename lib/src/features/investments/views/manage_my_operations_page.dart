@@ -14,7 +14,7 @@ import '../../../core/widgets/text_field_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../controllers/investments_controller.dart';
 import '../enums/category_enum.dart';
-import '../enums/operation_type.dart';
+import '../enums/operation_type_enum.dart';
 import '../models/create_operation_model.dart';
 import '../models/investment_model.dart';
 import '../models/operation_model.dart';

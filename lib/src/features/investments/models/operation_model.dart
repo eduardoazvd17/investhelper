@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import '../enums/category_enum.dart';
-import '../enums/operation_type.dart';
+import '../enums/operation_type_enum.dart';
 
 class OperationModel {
   final String id;

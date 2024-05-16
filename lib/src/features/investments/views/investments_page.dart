@@ -18,6 +18,7 @@ import '../../auth/views/auth_page.dart';
 import '../../monetization/widgets/banner_ad_widget.dart';
 import '../../settings/views/settings_page.dart';
 import '../controllers/investments_controller.dart';
+import '../enums/investments_page_sub_tabs_enum.dart';
 import '../widgets/category_listing_widget.dart';
 import '../widgets/daily_tips_widget.dart';
 import '../widgets/diversity_chart_widget.dart';
@@ -40,7 +41,7 @@ class InvestmentsPage extends StatefulWidget {
 
 class _InvestmentsPageState extends State<InvestmentsPage> {
   bool _blurContent = false;
-  int _currentPage = 0;
+  InvestmentsPageSubTabsEnum _currentPage = InvestmentsPageSubTabsEnum.overview;
   late final WidgetEventHandler _widgetEventHandler;
   late final ScrollController _overviewScrollController;
   late final ScrollController _detailsScrollController;
@@ -84,7 +85,10 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   }
 
   void _onChangeCurrentPage(int? index) {
-    setState(() => _currentPage = index ?? 0);
+    setState(() {
+      _currentPage = InvestmentsPageSubTabsEnum.values[index ?? 0];
+    });
+
     if (_overviewScrollController.hasClients) {
       _overviewScrollController.animateTo(
         0.0,
@@ -164,9 +168,10 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     }
 
                     return switch (_currentPage) {
-                      0 => _overviewTabContent,
-                      1 => _detailsTabContent,
-                      int() => const SizedBox(),
+                      InvestmentsPageSubTabsEnum.overview =>
+                        _overviewTabContent,
+                      InvestmentsPageSubTabsEnum.investments =>
+                        _detailsTabContent,
                     };
                   },
                 ),
@@ -186,24 +191,17 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentPage,
+        currentIndex: _currentPage.index,
         onTap: _onChangeCurrentPage,
-        items: [
-          BottomNavigationBarItem(
-            icon: const Padding(
-              padding: EdgeInsets.only(bottom: 2.5),
-              child: Icon(CupertinoIcons.chart_pie),
+        items: InvestmentsPageSubTabsEnum.values.map((e) {
+          return BottomNavigationBarItem(
+            icon: Padding(
+              padding: const EdgeInsets.only(bottom: 2.5),
+              child: e.icon,
             ),
-            label: AppLocalizations.of(context)!.overview,
-          ),
-          BottomNavigationBarItem(
-            icon: const Padding(
-              padding: EdgeInsets.only(bottom: 2.5),
-              child: Icon(CupertinoIcons.chart_bar),
-            ),
-            label: AppLocalizations.of(context)!.investments,
-          ),
-        ],
+            label: e.getTitle(context),
+          );
+        }).toList(),
       ),
     );
   }
@@ -255,7 +253,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     );
   }
 
-  SectionWidget get _overviewSectionWidget {
+  Widget get _overviewSectionWidget {
     return SectionWidget(
       title: AppLocalizations.of(context)!.overview,
       content: [
@@ -275,7 +273,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     );
   }
 
-  SectionWidget get _quickActionsSectionWidget {
+  Widget get _quickActionsSectionWidget {
     return SectionWidget(
       title: AppLocalizations.of(context)!.quickActions,
       content: [
@@ -317,7 +315,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     );
   }
 
-  SectionWidget get _diversityChartSectionWidget {
+  Widget get _diversityChartSectionWidget {
     return SectionWidget(
       title: AppLocalizations.of(context)!.diversity,
       content: [
@@ -359,7 +357,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     );
   }
 
-  SectionWidget get _myGoalsListingSectionWidget {
+  Widget get _myGoalsListingSectionWidget {
     return SectionWidget(
       title: AppLocalizations.of(context)!.myGoals,
       content: [
@@ -405,7 +403,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     );
   }
 
-  Observer get _dailyTipsSectionWidget {
+  Widget get _dailyTipsSectionWidget {
     return Observer(
       warnWhenNoObservables: false,
       builder: (_) {
@@ -418,7 +416,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     );
   }
 
-  SectionWidget get _investmentsListingSectionWidget {
+  Widget get _investmentsListingSectionWidget {
     return SectionWidget(
       title: AppLocalizations.of(context)!.investments,
       actions: [
@@ -474,7 +472,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     );
   }
 
-  SectionWidget get _monthOperationsListingSectionWidget {
+  Widget get _monthOperationsListingSectionWidget {
     return SectionWidget(
       title: AppLocalizations.of(context)!.monthsOperations,
       content: [
@@ -529,14 +527,14 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     );
   }
 
-  SectionWidget get _categoriesListingSectionWidget {
+  Widget get _categoriesListingSectionWidget {
     return SectionWidget(
       title: AppLocalizations.of(context)!.categories,
       content: const [CategoryListingWidget()],
     );
   }
 
-  SectionWidget get _productsAndServicesSectionWidget {
+  Widget get _productsAndServicesSectionWidget {
     return SectionWidget(
       title: AppLocalizations.of(context)!.productsAndServices,
       content: [

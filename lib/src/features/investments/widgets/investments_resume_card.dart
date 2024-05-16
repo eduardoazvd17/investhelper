@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/utils/app_formatter.dart';
 import '../../../l10n/l10n.dart';
-import '../enums/operation_type.dart';
+import '../enums/operation_type_enum.dart';
 
 class InvestmentsResumeCard extends StatelessWidget {
   final double totalInvestments;

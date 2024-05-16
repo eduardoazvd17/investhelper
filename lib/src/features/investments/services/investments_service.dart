@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/exceptions/app_exception.dart';
 import '../enums/category_enum.dart';
-import '../enums/operation_type.dart';
+import '../enums/operation_type_enum.dart';
 import '../models/create_goal_model.dart';
 import '../models/create_investment_model.dart';
 import '../models/create_operation_model.dart';

@@ -8,7 +8,7 @@ import '../../../core/widgets/drawer_widget.dart';
 import '../../../core/widgets/dropdown_button_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../controllers/investments_controller.dart';
-import '../enums/operation_type.dart';
+import '../enums/operation_type_enum.dart';
 import 'category_indicator_widget.dart';
 
 class FiltersDrawerWidget extends StatelessWidget {
