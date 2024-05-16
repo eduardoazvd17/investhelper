@@ -315,5 +315,10 @@
     "accept": "I accept",
     "notAccept": "I do not accept",
     "deleteMyAccountTitle": "Delete my account and data.",
-    "deleteMyAccountMessage": "When you delete your account, if you have a subscription it will be automatically canceled and in addition, all your data entered into the app will be permanently deleted along with your account. This includes investments, operations, goals...\n \nDo you really want to delete your account permanently?\n\nThis action cannot be undone."
+    "deleteMyAccountMessage": "When you delete your account, if you have a subscription it will be automatically canceled and in addition, all your data entered into the app will be permanently deleted along with your account. This includes investments, operations, goals...\n \nDo you really want to delete your account permanently?\n\nThis action cannot be undone.",
+    "changePassword": "Change password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "newPasswordConfirmation": "New password confirmation",
+    "newPasswordHint": "Enter a new password"
 }

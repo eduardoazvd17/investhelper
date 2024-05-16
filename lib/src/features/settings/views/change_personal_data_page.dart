@@ -24,20 +24,39 @@ class ChangePersonalDataPage extends StatefulWidget {
 
 class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
   late final TextEditingController _nameController;
+  late final TextEditingController _currentPasswordController;
+  late final TextEditingController _newPasswordController;
+  late final TextEditingController _newPasswordConfirmationController;
+  late final FocusNode _currentPasswordFocus;
+  late final FocusNode _newPasswordFocus;
+  late final FocusNode _newPasswordConfirmationFocus;
 
   @override
   void initState() {
     _nameController = TextEditingController();
+    _currentPasswordController = TextEditingController();
+    _newPasswordController = TextEditingController();
+    _newPasswordConfirmationController = TextEditingController();
+    _currentPasswordFocus = FocusNode();
+    _newPasswordFocus = FocusNode();
+    _newPasswordConfirmationFocus = FocusNode();
+
     super.initState();
   }
 
   @override
   void dispose() {
     _nameController.dispose();
+    _currentPasswordController.dispose();
+    _newPasswordController.dispose();
+    _newPasswordConfirmationController.dispose();
+    _currentPasswordFocus.dispose();
+    _newPasswordFocus.dispose();
+    _newPasswordConfirmationFocus.dispose();
     super.dispose();
   }
 
-  Future<void> _editName() async {
+  Future<void> _changeUserName() async {
     _nameController.text = widget.appController.user!.name;
 
     await ModalBottomSheetWidget.show(
@@ -77,6 +96,58 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
       ],
       children: [
         _nameTextField,
+      ],
+    );
+  }
+
+  Future<void> _changeUserPassword() async {
+    _currentPasswordController.clear();
+    _newPasswordController.clear();
+    _newPasswordConfirmationController.clear();
+
+    await ModalBottomSheetWidget.show(
+      context,
+      title: AppLocalizations.of(context)!.changePassword,
+      actions: [
+        TextButton(
+          onPressed: () async {
+            try {
+              LoadingWidget.dialog(context);
+
+              await widget.appController.changeUserPassword(
+                _currentPasswordController.text.trim(),
+                _newPasswordController.text.trim(),
+                _newPasswordConfirmationController.text.trim(),
+              );
+
+              if (mounted) {
+                LoadingWidget.hide(context);
+                Navigator.of(context).pop();
+              }
+            } on AppException catch (error) {
+              if (mounted) {
+                LoadingWidget.hide(context);
+                error.show(context);
+              }
+            }
+          },
+          child: Text(AppLocalizations.of(context)!.save),
+        ),
+        TextButton(
+          onPressed: Navigator.of(context).pop,
+          style: ButtonStyle(
+            foregroundColor:
+                WidgetStateProperty.all(Theme.of(context).colorScheme.error),
+          ),
+          child: Text(AppLocalizations.of(context)!.cancel),
+        ),
+      ],
+      children: [
+        _currentPasswordTextField,
+        const SizedBox(height: 10),
+        _newPasswordTextField,
+        const SizedBox(height: 10),
+        _newPasswordConfirmationTextField,
       ],
     );
   }
@@ -125,7 +196,7 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                       title: AppLocalizations.of(context)!.name,
                       actions: [
                         IconButton(
-                          onPressed: _editName,
+                          onPressed: _changeUserName,
                           visualDensity: VisualDensity.compact,
                           icon: const Icon(CupertinoIcons.pen),
                         ),
@@ -150,6 +221,13 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                     const Divider(),
                     SectionWidget(
                       title: AppLocalizations.of(context)!.password,
+                      actions: [
+                        IconButton(
+                          onPressed: _changeUserPassword,
+                          visualDensity: VisualDensity.compact,
+                          icon: const Icon(CupertinoIcons.pen),
+                        ),
+                      ],
                       content: [
                         Text(
                           '••••••••',
@@ -185,6 +263,48 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
       keyboardType: TextInputType.name,
       textCapitalization: TextCapitalization.words,
       textInputAction: TextInputAction.next,
+    );
+  }
+
+  Widget get _currentPasswordTextField {
+    return TextFieldWidget(
+      label: AppLocalizations.of(context)!.currentPassword,
+      hint: AppLocalizations.of(context)!.passwordHint,
+      focusNode: _currentPasswordFocus,
+      controller: _currentPasswordController,
+      obscureText: true,
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.next,
+      onFieldSubmitted: (_) {
+        _newPasswordFocus.requestFocus();
+      },
+    );
+  }
+
+  Widget get _newPasswordTextField {
+    return TextFieldWidget(
+      label: AppLocalizations.of(context)!.newPassword,
+      hint: AppLocalizations.of(context)!.newPasswordHint,
+      focusNode: _newPasswordFocus,
+      controller: _newPasswordController,
+      obscureText: true,
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.next,
+      onFieldSubmitted: (_) {
+        _newPasswordConfirmationFocus.requestFocus();
+      },
+    );
+  }
+
+  Widget get _newPasswordConfirmationTextField {
+    return TextFieldWidget(
+      label: AppLocalizations.of(context)!.newPasswordConfirmation,
+      hint: AppLocalizations.of(context)!.passwordConfirmationHint,
+      focusNode: _newPasswordConfirmationFocus,
+      controller: _newPasswordConfirmationController,
+      obscureText: true,
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.done,
     );
   }
 }

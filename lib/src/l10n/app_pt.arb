@@ -315,5 +315,10 @@
   "accept": "Eu aceito",
   "notAccept": "Eu não aceito",
   "deleteMyAccountTitle": "Apagar minha conta e dados.",
-  "deleteMyAccountMessage": "Ao apagar sua conta, caso você possua uma assinatura ela será automaticamente cancelada e além disso, todos os seus dados inseridos no app serão apagados permanentemente junto com sua conta. Isso inclui investimentos, operações, metas...\n\nDeseja realmente apagar sua conta permanentemente?\n\nEsta ação não poderá ser desfeita."
+  "deleteMyAccountMessage": "Ao apagar sua conta, caso você possua uma assinatura ela será automaticamente cancelada e além disso, todos os seus dados inseridos no app serão apagados permanentemente junto com sua conta. Isso inclui investimentos, operações, metas...\n\nDeseja realmente apagar sua conta permanentemente?\n\nEsta ação não poderá ser desfeita.",
+  "changePassword": "Alterar senha",
+  "currentPassword": "Senha atual",
+  "newPassword": "Nova senha",
+  "newPasswordConfirmation": "Confirmação de nova senha",
+  "newPasswordHint": "Insira uma nova senha"
 }

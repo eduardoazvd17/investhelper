@@ -105,7 +105,10 @@ class AppService {
       final String password =
           (await _secureStorage.read(key: _auth.currentUser!.uid))!;
       await _auth.currentUser?.reauthenticateWithCredential(
-        EmailAuthProvider.credential(email: email, password: password),
+        EmailAuthProvider.credential(
+          email: email,
+          password: password,
+        ),
       );
 
       final WriteBatch batch = _firestore.batch();
@@ -158,7 +161,6 @@ class AppService {
   }
 
   Future<void> changeUserPassword(
-    UserModel userModel,
     String currentPassword,
     String newPassword,
     String newPasswordConfirmation,
@@ -181,7 +183,9 @@ class AppService {
 
       await _auth.currentUser?.reauthenticateWithCredential(
         EmailAuthProvider.credential(
-            email: userModel.email, password: password),
+          email: _auth.currentUser!.email!,
+          password: password,
+        ),
       );
       await _auth.currentUser!.updatePassword(newPassword);
       await _secureStorage.write(

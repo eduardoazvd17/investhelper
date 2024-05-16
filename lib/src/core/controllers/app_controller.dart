@@ -73,6 +73,23 @@ abstract class AppControllerBase with Store {
   }
 
   @action
+  Future<void> changeUserPassword(
+    String currentPassword,
+    String newPassword,
+    String newPasswordConfirmation,
+  ) async {
+    try {
+      await _service.changeUserPassword(
+        currentPassword,
+        newPassword,
+        newPasswordConfirmation,
+      );
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
+
+  @action
   Future<void> changeUserData(UserDataModel userDataModel) async {
     try {
       user = await _service.changeUserName(
