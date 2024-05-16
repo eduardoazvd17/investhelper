@@ -36,7 +36,7 @@ class _AuthPageState extends State<AuthPage> {
   late FocusNode _emailFocus;
   late FocusNode _passwordFocus;
   late FocusNode _passwordConfirmationFocus;
-  bool _hasAcceptedTermsOfUsage = false;
+  bool _hasAcceptedTermsOfUse = false;
 
   @override
   void initState() {
@@ -91,9 +91,9 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Future<void> _makeRegister() async {
-    if (!_hasAcceptedTermsOfUsage) {
-      await _showTermsOfUsage();
-      if (!_hasAcceptedTermsOfUsage || !mounted) return;
+    if (!_hasAcceptedTermsOfUse) {
+      await _showTermsOfUse();
+      if (!_hasAcceptedTermsOfUse || !mounted) return;
     }
 
     try {
@@ -145,16 +145,16 @@ class _AuthPageState extends State<AuthPage> {
     }
   }
 
-  Future<void> _showTermsOfUsage() async {
+  Future<void> _showTermsOfUse() async {
     final bool? result = await DialogWidget.show(
       context,
-      title: AppLocalizations.of(context)!.termsOfUsageTitle,
-      message: AppLocalizations.of(context)!.termsOfUsageMessage,
+      title: AppLocalizations.of(context)!.termsOfUseTitle,
+      message: AppLocalizations.of(context)!.termsOfUseMessage,
       actionType: DialogWidgetActionType.acceptOrNotAccept,
     );
     if (result != null) {
       setState(() {
-        _hasAcceptedTermsOfUsage = result;
+        _hasAcceptedTermsOfUse = result;
       });
     }
   }
@@ -282,7 +282,7 @@ class _AuthPageState extends State<AuthPage> {
               const SizedBox(height: 10),
               _passwordConfirmationTextField,
               const SizedBox(height: 20),
-              _termsOfUsageWidget,
+              _termsOfUseWidget,
               const SizedBox(height: 25),
               ElevatedButton(
                 onPressed: _makeRegister,
@@ -427,20 +427,20 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
-  Widget get _termsOfUsageWidget {
+  Widget get _termsOfUseWidget {
     return ListTile(
-      onTap: _showTermsOfUsage,
+      onTap: _showTermsOfUse,
       title: Text(
-        AppLocalizations.of(context)!.termsOfUsageTitle,
+        AppLocalizations.of(context)!.termsOfUseTitle,
         style: TextStyle(
           decoration:
-              _hasAcceptedTermsOfUsage ? TextDecoration.lineThrough : null,
+              _hasAcceptedTermsOfUse ? TextDecoration.lineThrough : null,
         ),
       ),
       contentPadding: const EdgeInsets.symmetric(horizontal: 7),
       trailing: Icon(
         Icons.done,
-        color: _hasAcceptedTermsOfUsage ? Colors.green : Colors.grey,
+        color: _hasAcceptedTermsOfUse ? Colors.green : Colors.grey,
       ),
     );
   }
