@@ -219,159 +219,11 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SectionWidget(
-                title: AppLocalizations.of(context)!.overview,
-                content: [
-                  Observer(
-                    builder: (_) {
-                      return InvestmentsResumeCard(
-                        totalInvestments: controller.totalInvestments,
-                        thisMonthPurchasesTotal:
-                            controller.thisMonthPurchasesTotal,
-                        thisMonthSalesTotal: controller.thisMonthSalesTotal,
-                        thisMonthProfitTotal: controller.thisMonthProfitTotal,
-                        hideValues: controller.hideValues,
-                        toggleHideValues: controller.toggleHideValues,
-                      );
-                    },
-                  ),
-                ],
-              ),
-              SectionWidget(
-                title: AppLocalizations.of(context)!.quickActions,
-                content: [
-                  TextButton.icon(
-                    onPressed: () {
-                      if (controller.user == null) {
-                        Navigator.of(context).pushNamed(AuthPage.routeName);
-                        return;
-                      }
-
-                      Navigator.of(context).pushNamed(
-                        ManageMyInvestmentsPage.routeName,
-                        arguments: true,
-                      );
-                    },
-                    icon: const Icon(CupertinoIcons.chart_bar),
-                    label: Text(
-                      AppLocalizations.of(context)!.addNewInvestment,
-                    ),
-                  ),
-                  TextButton.icon(
-                    onPressed: () {
-                      if (controller.user == null) {
-                        Navigator.of(context).pushNamed(AuthPage.routeName);
-                        return;
-                      }
-
-                      Navigator.of(context).pushNamed(
-                        ManageMyOperationsPage.routeName,
-                        arguments: true,
-                      );
-                    },
-                    icon: const Icon(CupertinoIcons.arrow_up_arrow_down),
-                    label: Text(
-                      AppLocalizations.of(context)!.addNewOperation,
-                    ),
-                  ),
-                ],
-              ),
-              SectionWidget(
-                title: AppLocalizations.of(context)!.diversity,
-                content: [
-                  Observer(
-                    builder: (_) {
-                      final bool hasData = controller.investments
-                          .where((e) => e.hasData)
-                          .isNotEmpty;
-
-                      return Observer(
-                        builder: (_) {
-                          return SizedBox(
-                            height: hasData ? 160 : null,
-                            child: Visibility(
-                              visible: hasData,
-                              replacement: Padding(
-                                padding: const EdgeInsets.only(bottom: 20),
-                                child: AdviseMessageWidget(
-                                  message: AppLocalizations.of(context)!
-                                      .emptyDiversityGraphText,
-                                ),
-                              ),
-                              child: DiversityChartWidget(
-                                totalInvestments: controller.totalInvestments,
-                                investments: controller.investments,
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                  // TextButton(
-                  //   onPressed: () => Navigator.of(context)
-                  //       .pushNamed(ManageMyInvestmentsPage.routeName),
-                  //   child:
-                  //       Text(AppLocalizations.of(context)!.accessMyInvestments),
-                  // ),
-                ],
-              ),
-              SectionWidget(
-                title: AppLocalizations.of(context)!.myGoals,
-                content: [
-                  Observer(
-                    builder: (_) {
-                      final bool hasData = controller.goals.isNotEmpty;
-
-                      return SizedBox(
-                        height: hasData
-                            ? MediaQuery.of(context).textScaler.scale(150)
-                            : null,
-                        child: Visibility(
-                          visible: hasData,
-                          replacement: Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            child: AdviseMessageWidget(
-                              message: AppLocalizations.of(context)!
-                                  .emptyMyGoalsText,
-                            ),
-                          ),
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: controller.goals.map((e) {
-                              return GoalTileWidget(goal: e).animate().fade(
-                                    duration: const Duration(milliseconds: 400),
-                                  );
-                            }).toList(),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (controller.user == null) {
-                        Navigator.of(context).pushNamed(AuthPage.routeName);
-                        return;
-                      }
-
-                      Navigator.of(context)
-                          .pushNamed(ManageMyGoalsPage.routeName);
-                    },
-                    child: Text(AppLocalizations.of(context)!.editMyGoals),
-                  ),
-                ],
-              ),
-              Observer(
-                warnWhenNoObservables: false,
-                builder: (_) {
-                  if (controller.dailyTip == null) return const SizedBox();
-                  return SectionWidget(
-                    title: AppLocalizations.of(context)!.tips,
-                    content: [DailyTipsWidget(dailyTip: controller.dailyTip!)],
-                  );
-                },
-              ),
+              _overviewSectionWidget,
+              _quickActionsSectionWidget,
+              _diversityChartSectionWidget,
+              _myGoalsListingSectionWidget,
+              _dailyTipsSectionWidget,
               const SizedBox(height: 25),
             ],
           ),
@@ -391,146 +243,317 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SectionWidget(
-                title: AppLocalizations.of(context)!.investments,
-                actions: [
-                  IconButton(
-                    onPressed: controller.toggleHideValues,
-                    visualDensity: VisualDensity.compact,
-                    icon: controller.hideValues
-                        ? const Icon(CupertinoIcons.eye_slash)
-                        : const Icon(CupertinoIcons.eye),
-                  ),
-                ],
-                content: [
-                  Observer(builder: (_) {
-                    final bool hasData = controller.investments.isNotEmpty;
-
-                    return SizedBox(
-                      height: hasData
-                          ? MediaQuery.of(context).textScaler.scale(190)
-                          : null,
-                      child: Visibility(
-                        visible: hasData,
-                        replacement: Padding(
-                          padding: const EdgeInsets.only(bottom: 20),
-                          child: AdviseMessageWidget(
-                            message: AppLocalizations.of(context)!
-                                .emptyInvestmentsText,
-                          ),
-                        ),
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          children: controller.investments.map((e) {
-                            return InvestmentTileWidget(
-                              investment: e,
-                              hideValues: controller.hideValues,
-                            ).animate().fade(
-                                  duration: const Duration(milliseconds: 400),
-                                );
-                          }).toList(),
-                        ),
-                      ),
-                    );
-                  }),
-                  TextButton(
-                    onPressed: () {
-                      if (controller.user == null) {
-                        Navigator.of(context).pushNamed(AuthPage.routeName);
-                        return;
-                      }
-
-                      Navigator.of(context)
-                          .pushNamed(ManageMyInvestmentsPage.routeName);
-                    },
-                    child:
-                        Text(AppLocalizations.of(context)!.accessMyInvestments),
-                  ),
-                ],
-              ),
-              SectionWidget(
-                title: AppLocalizations.of(context)!.monthsOperations,
-                content: [
-                  Observer(
-                    builder: (_) {
-                      final bool hasData =
-                          controller.thisMonthOperations.isNotEmpty;
-
-                      return SizedBox(
-                        height: hasData
-                            ? MediaQuery.of(context).textScaler.scale(237)
-                            : null,
-                        child: Visibility(
-                          visible: hasData,
-                          replacement: Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            child: AdviseMessageWidget(
-                              message: AppLocalizations.of(context)!
-                                  .emptyThisMonthOperations,
-                            ),
-                          ),
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: controller.thisMonthOperations.map((e) {
-                              return OperationTileWidget(
-                                operation: e,
-                                investment: controller.investments.firstWhere(
-                                  (i) => i.id == e.investmentId,
-                                ),
-                                hideValues: controller.hideValues,
-                              ).animate().fade(
-                                    duration: const Duration(milliseconds: 400),
-                                  );
-                            }).toList(),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (controller.user == null) {
-                        Navigator.of(context).pushNamed(AuthPage.routeName);
-                        return;
-                      }
-
-                      Navigator.of(context).pushNamed(
-                        ManageMyOperationsPage.routeName,
-                      );
-                    },
-                    child:
-                        Text(AppLocalizations.of(context)!.accessMyOperations),
-                  ),
-                ],
-              ),
-              SectionWidget(
-                title: AppLocalizations.of(context)!.categories,
-                content: const [CategoryListingWidget()],
-              ),
-              SectionWidget(
-                title: AppLocalizations.of(context)!.productsAndServices,
-                content: [
-                  ButtonTileWidget(
-                    icon: CupertinoIcons.doc_chart,
-                    text: AppLocalizations.of(context)!.exportInvestmentReport,
-                    onTap: () {
-                      DialogWidget.show(
-                        context,
-                        title: AppLocalizations.of(context)!
-                            .functionNotImplementedTitle,
-                        message: AppLocalizations.of(context)!
-                            .functionNotImplementedMessage,
-                        actionType: DialogWidgetActionType.close,
-                      );
-                    },
-                  ),
-                ],
-              ),
+              _investmentsListingSectionWidget,
+              _monthOperationsListingSectionWidget,
+              _categoriesListingSectionWidget,
+              _productsAndServicesSectionWidget,
               const SizedBox(height: 25),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  SectionWidget get _overviewSectionWidget {
+    return SectionWidget(
+      title: AppLocalizations.of(context)!.overview,
+      content: [
+        Observer(
+          builder: (_) {
+            return InvestmentsResumeCard(
+              totalInvestments: controller.totalInvestments,
+              thisMonthPurchasesTotal: controller.thisMonthPurchasesTotal,
+              thisMonthSalesTotal: controller.thisMonthSalesTotal,
+              thisMonthProfitTotal: controller.thisMonthProfitTotal,
+              hideValues: controller.hideValues,
+              toggleHideValues: controller.toggleHideValues,
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  SectionWidget get _quickActionsSectionWidget {
+    return SectionWidget(
+      title: AppLocalizations.of(context)!.quickActions,
+      content: [
+        TextButton.icon(
+          onPressed: () {
+            if (controller.user == null) {
+              Navigator.of(context).pushNamed(AuthPage.routeName);
+              return;
+            }
+
+            Navigator.of(context).pushNamed(
+              ManageMyInvestmentsPage.routeName,
+              arguments: true,
+            );
+          },
+          icon: const Icon(CupertinoIcons.chart_bar),
+          label: Text(
+            AppLocalizations.of(context)!.addNewInvestment,
+          ),
+        ),
+        TextButton.icon(
+          onPressed: () {
+            if (controller.user == null) {
+              Navigator.of(context).pushNamed(AuthPage.routeName);
+              return;
+            }
+
+            Navigator.of(context).pushNamed(
+              ManageMyOperationsPage.routeName,
+              arguments: true,
+            );
+          },
+          icon: const Icon(CupertinoIcons.arrow_up_arrow_down),
+          label: Text(
+            AppLocalizations.of(context)!.addNewOperation,
+          ),
+        ),
+      ],
+    );
+  }
+
+  SectionWidget get _diversityChartSectionWidget {
+    return SectionWidget(
+      title: AppLocalizations.of(context)!.diversity,
+      content: [
+        Observer(
+          builder: (_) {
+            final bool hasData =
+                controller.investments.where((e) => e.hasData).isNotEmpty;
+
+            return Observer(
+              builder: (_) {
+                return SizedBox(
+                  height: hasData ? 160 : null,
+                  child: Visibility(
+                    visible: hasData,
+                    replacement: Padding(
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: AdviseMessageWidget(
+                        message: AppLocalizations.of(context)!
+                            .emptyDiversityGraphText,
+                      ),
+                    ),
+                    child: DiversityChartWidget(
+                      totalInvestments: controller.totalInvestments,
+                      investments: controller.investments,
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+        // TextButton(
+        //   onPressed: () => Navigator.of(context)
+        //       .pushNamed(ManageMyInvestmentsPage.routeName),
+        //   child:
+        //       Text(AppLocalizations.of(context)!.accessMyInvestments),
+        // ),
+      ],
+    );
+  }
+
+  SectionWidget get _myGoalsListingSectionWidget {
+    return SectionWidget(
+      title: AppLocalizations.of(context)!.myGoals,
+      content: [
+        Observer(
+          builder: (_) {
+            final bool hasData = controller.goals.isNotEmpty;
+
+            return SizedBox(
+              height:
+                  hasData ? MediaQuery.of(context).textScaler.scale(150) : null,
+              child: Visibility(
+                visible: hasData,
+                replacement: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: AdviseMessageWidget(
+                    message: AppLocalizations.of(context)!.emptyMyGoalsText,
+                  ),
+                ),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: controller.goals.map((e) {
+                    return GoalTileWidget(goal: e).animate().fade(
+                          duration: const Duration(milliseconds: 400),
+                        );
+                  }).toList(),
+                ),
+              ),
+            );
+          },
+        ),
+        TextButton(
+          onPressed: () {
+            if (controller.user == null) {
+              Navigator.of(context).pushNamed(AuthPage.routeName);
+              return;
+            }
+
+            Navigator.of(context).pushNamed(ManageMyGoalsPage.routeName);
+          },
+          child: Text(AppLocalizations.of(context)!.editMyGoals),
+        ),
+      ],
+    );
+  }
+
+  Observer get _dailyTipsSectionWidget {
+    return Observer(
+      warnWhenNoObservables: false,
+      builder: (_) {
+        if (controller.dailyTip == null) return const SizedBox();
+        return SectionWidget(
+          title: AppLocalizations.of(context)!.tips,
+          content: [DailyTipsWidget(dailyTip: controller.dailyTip!)],
+        );
+      },
+    );
+  }
+
+  SectionWidget get _investmentsListingSectionWidget {
+    return SectionWidget(
+      title: AppLocalizations.of(context)!.investments,
+      actions: [
+        IconButton(
+          onPressed: controller.toggleHideValues,
+          visualDensity: VisualDensity.compact,
+          icon: controller.hideValues
+              ? const Icon(CupertinoIcons.eye_slash)
+              : const Icon(CupertinoIcons.eye),
+        ),
+      ],
+      content: [
+        Observer(builder: (_) {
+          final bool hasData = controller.investments.isNotEmpty;
+
+          return SizedBox(
+            height:
+                hasData ? MediaQuery.of(context).textScaler.scale(190) : null,
+            child: Visibility(
+              visible: hasData,
+              replacement: Padding(
+                padding: const EdgeInsets.only(bottom: 20),
+                child: AdviseMessageWidget(
+                  message: AppLocalizations.of(context)!.emptyInvestmentsText,
+                ),
+              ),
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: controller.investments.map((e) {
+                  return InvestmentTileWidget(
+                    investment: e,
+                    hideValues: controller.hideValues,
+                  ).animate().fade(
+                        duration: const Duration(milliseconds: 400),
+                      );
+                }).toList(),
+              ),
+            ),
+          );
+        }),
+        TextButton(
+          onPressed: () {
+            if (controller.user == null) {
+              Navigator.of(context).pushNamed(AuthPage.routeName);
+              return;
+            }
+
+            Navigator.of(context).pushNamed(ManageMyInvestmentsPage.routeName);
+          },
+          child: Text(AppLocalizations.of(context)!.accessMyInvestments),
+        ),
+      ],
+    );
+  }
+
+  SectionWidget get _monthOperationsListingSectionWidget {
+    return SectionWidget(
+      title: AppLocalizations.of(context)!.monthsOperations,
+      content: [
+        Observer(
+          builder: (_) {
+            final bool hasData = controller.thisMonthOperations.isNotEmpty;
+
+            return SizedBox(
+              height:
+                  hasData ? MediaQuery.of(context).textScaler.scale(237) : null,
+              child: Visibility(
+                visible: hasData,
+                replacement: Padding(
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: AdviseMessageWidget(
+                    message:
+                        AppLocalizations.of(context)!.emptyThisMonthOperations,
+                  ),
+                ),
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: controller.thisMonthOperations.map((e) {
+                    return OperationTileWidget(
+                      operation: e,
+                      investment: controller.investments.firstWhere(
+                        (i) => i.id == e.investmentId,
+                      ),
+                      hideValues: controller.hideValues,
+                    ).animate().fade(
+                          duration: const Duration(milliseconds: 400),
+                        );
+                  }).toList(),
+                ),
+              ),
+            );
+          },
+        ),
+        TextButton(
+          onPressed: () {
+            if (controller.user == null) {
+              Navigator.of(context).pushNamed(AuthPage.routeName);
+              return;
+            }
+
+            Navigator.of(context).pushNamed(
+              ManageMyOperationsPage.routeName,
+            );
+          },
+          child: Text(AppLocalizations.of(context)!.accessMyOperations),
+        ),
+      ],
+    );
+  }
+
+  SectionWidget get _categoriesListingSectionWidget {
+    return SectionWidget(
+      title: AppLocalizations.of(context)!.categories,
+      content: const [CategoryListingWidget()],
+    );
+  }
+
+  SectionWidget get _productsAndServicesSectionWidget {
+    return SectionWidget(
+      title: AppLocalizations.of(context)!.productsAndServices,
+      content: [
+        ButtonTileWidget(
+          icon: CupertinoIcons.doc_chart,
+          text: AppLocalizations.of(context)!.exportInvestmentReport,
+          onTap: () {
+            DialogWidget.show(
+              context,
+              title: AppLocalizations.of(context)!.functionNotImplementedTitle,
+              message:
+                  AppLocalizations.of(context)!.functionNotImplementedMessage,
+              actionType: DialogWidgetActionType.close,
+            );
+          },
+        ),
+      ],
     );
   }
 }
