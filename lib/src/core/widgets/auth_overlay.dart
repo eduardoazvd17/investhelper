@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../features/auth/views/auth_page.dart';
 import '../../features/investments/views/investments_page.dart';
 import '../../l10n/l10n.dart';
 import '../controllers/app_controller.dart';
@@ -86,9 +85,9 @@ class _AuthOverlayState extends State<AuthOverlay> {
     if (result != null && result) {
       widget.appController.logout();
       if (!context.mounted) return;
-      Navigator.of(context)
-          .popUntil(ModalRoute.withName(InvestmentsPage.routeName));
-      Navigator.of(context).pushReplacementNamed(AuthPage.routeName);
+      Navigator.of(context).popUntil(
+        ModalRoute.withName(InvestmentsPage.routeName),
+      );
     }
   }
 
