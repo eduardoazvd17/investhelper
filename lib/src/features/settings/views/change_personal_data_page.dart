@@ -11,6 +11,7 @@ import '../../../core/widgets/modal_bottom_sheet_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../../../core/widgets/text_field_widget.dart';
 import '../../../l10n/l10n.dart';
+import '../../investments/views/investments_page.dart';
 
 class ChangePersonalDataPage extends StatefulWidget {
   static const String routeName = "/changePersonalData";
@@ -88,8 +89,21 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
       actionType: DialogWidgetActionType.yesOrNo,
     );
 
-    if (result != null && result) {
-      widget.appController.deleteMyAccount();
+    if (result != null && result && mounted) {
+      Navigator.of(context).popUntil(
+        ModalRoute.withName(InvestmentsPage.routeName),
+      );
+
+      try {
+        LoadingWidget.dialog(context);
+        await widget.appController.deleteMyAccount();
+        if (mounted) LoadingWidget.hide(context);
+      } on AppException catch (error) {
+        if (mounted) {
+          LoadingWidget.hide(context);
+          error.show(context);
+        }
+      }
     }
   }
 

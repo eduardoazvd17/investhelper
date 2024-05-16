@@ -100,7 +100,9 @@ abstract class AppControllerBase with Store {
   @action
   Future<void> deleteMyAccount() async {
     await _service.deleteMyAccount();
-    await logout();
+    await changeIsBiometricsEnabled(false, force: true);
+    user = null;
+    GetIt.I.get<InvestmentsController>().loadUserData();
   }
 
   @observable
