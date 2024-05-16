@@ -100,21 +100,19 @@ class AppService {
 
   Future<void> deleteMyAccount() async {
     try {
-      final String id = _auth.currentUser!.uid;
-      final String email = _auth.currentUser!.email!;
-      final String password =
-          (await _secureStorage.read(key: _auth.currentUser!.uid))!;
       await _auth.currentUser?.reauthenticateWithCredential(
         EmailAuthProvider.credential(
-          email: email,
-          password: password,
+          email: _auth.currentUser!.email!,
+          password: (await _secureStorage.read(key: _auth.currentUser!.uid))!,
         ),
       );
 
+      final String userId = _auth.currentUser!.uid;
       final WriteBatch batch = _firestore.batch();
+
       final goals = await _firestore
           .collection('goals')
-          .where('userId', isEqualTo: id)
+          .where('userId', isEqualTo: userId)
           .get();
       for (final goal in goals.docs) {
         batch.delete(goal.reference);
@@ -122,7 +120,7 @@ class AppService {
 
       final investments = await _firestore
           .collection('investments')
-          .where('userId', isEqualTo: id)
+          .where('userId', isEqualTo: userId)
           .get();
       for (final investment in investments.docs) {
         batch.delete(investment.reference);
@@ -130,14 +128,15 @@ class AppService {
 
       final operations = await _firestore
           .collection('operations')
-          .where('userId', isEqualTo: id)
+          .where('userId', isEqualTo: userId)
           .get();
       for (final operation in operations.docs) {
         batch.delete(operation.reference);
       }
+      batch.delete(_firestore.collection('users').doc(userId));
 
-      batch.delete(_firestore.collection('users').doc(id));
       await batch.commit();
+      await _auth.currentUser!.delete();
     } on AppException catch (_) {
       rethrow;
     } catch (error) {

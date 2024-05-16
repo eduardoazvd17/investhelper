@@ -161,14 +161,15 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
     );
 
     if (result != null && result && mounted) {
-      Navigator.of(context).popUntil(
-        ModalRoute.withName(InvestmentsPage.routeName),
-      );
-
       try {
         LoadingWidget.dialog(context);
         await widget.appController.deleteMyAccount();
-        if (mounted) LoadingWidget.hide(context);
+        if (mounted) {
+          LoadingWidget.hide(context);
+          Navigator.of(context).popUntil(
+            ModalRoute.withName(InvestmentsPage.routeName),
+          );
+        }
       } on AppException catch (error) {
         if (mounted) {
           LoadingWidget.hide(context);
@@ -184,73 +185,81 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.changePersonalData),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Observer(
-              builder: (context) {
-                return Column(
-                  children: [
-                    SectionWidget(
-                      title: AppLocalizations.of(context)!.name,
-                      actions: [
-                        IconButton(
-                          onPressed: _changeUserName,
-                          visualDensity: VisualDensity.compact,
-                          icon: const Icon(CupertinoIcons.pen),
+      body: Observer(
+        builder: (_) {
+          if (widget.appController.user == null) {
+            return const SizedBox();
+          }
+
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Observer(
+                  builder: (context) {
+                    return Column(
+                      children: [
+                        SectionWidget(
+                          title: AppLocalizations.of(context)!.name,
+                          actions: [
+                            IconButton(
+                              onPressed: _changeUserName,
+                              visualDensity: VisualDensity.compact,
+                              icon: const Icon(CupertinoIcons.pen),
+                            ),
+                          ],
+                          content: [
+                            Text(
+                              widget.appController.user!.name,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
+                        ),
+                        const Divider(),
+                        SectionWidget(
+                          title: AppLocalizations.of(context)!.email,
+                          content: [
+                            Text(
+                              widget.appController.user!.email,
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
+                        ),
+                        const Divider(),
+                        SectionWidget(
+                          title: AppLocalizations.of(context)!.password,
+                          actions: [
+                            IconButton(
+                              onPressed: _changeUserPassword,
+                              visualDensity: VisualDensity.compact,
+                              icon: const Icon(CupertinoIcons.pen),
+                            ),
+                          ],
+                          content: [
+                            Text(
+                              '••••••••',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
+                        ),
+                        const Divider(),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: ButtonTileWidget(
+                            text: AppLocalizations.of(context)!
+                                .deleteMyAccountTitle,
+                            color: Theme.of(context).colorScheme.error,
+                            onTap: _deleteMyAccount,
+                          ),
                         ),
                       ],
-                      content: [
-                        Text(
-                          widget.appController.user!.name,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ],
-                    ),
-                    const Divider(),
-                    SectionWidget(
-                      title: AppLocalizations.of(context)!.email,
-                      content: [
-                        Text(
-                          widget.appController.user!.email,
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ],
-                    ),
-                    const Divider(),
-                    SectionWidget(
-                      title: AppLocalizations.of(context)!.password,
-                      actions: [
-                        IconButton(
-                          onPressed: _changeUserPassword,
-                          visualDensity: VisualDensity.compact,
-                          icon: const Icon(CupertinoIcons.pen),
-                        ),
-                      ],
-                      content: [
-                        Text(
-                          '••••••••',
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
-                      ],
-                    ),
-                    const Divider(),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: ButtonTileWidget(
-                        text:
-                            AppLocalizations.of(context)!.deleteMyAccountTitle,
-                        color: Theme.of(context).colorScheme.error,
-                        onTap: _deleteMyAccount,
-                      ),
-                    ),
-                  ],
-                );
-              },
+                    );
+                  },
+                ),
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }
