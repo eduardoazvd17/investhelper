@@ -307,5 +307,9 @@
   "unlimitedSubscription": "Pro (ilimitado)",
   "change": "Alterar",
   "functionNotImplementedTitle": "Em breve",
-  "functionNotImplementedMessage": "Esta funcionalidade ainda não foi implementada.\n\nAguarde as próximas versões."
+  "functionNotImplementedMessage": "Esta funcionalidade ainda não foi implementada.\n\nAguarde as próximas versões.",
+  "termsOfUsageTitle": "Termos de uso",
+  "termsOfUsageMessage": "Bem-vindo ao InvestHelper!\n\nAo utilizar nosso aplicativo, você concorda com os seguintes termos e condições:\n\n1. Propósito do Aplicativo: O InvestHelper é uma ferramenta projetada para auxiliar no controle dos seus investimentos. Não fornecemos conselhos ou recomendações de investimento. O aplicativo destina-se apenas a fins informativos e de registro pessoal.\n\n2. Responsabilidade do Usuário: Você é o único responsável pela precisão e integridade dos dados inseridos no InvestHelper. Não nos responsabilizamos por quaisquer erros ou informações incorretas fornecidas pelo usuário.\n\n3. Riscos de Investimento: É importante entender que investimentos financeiros estão sujeitos a riscos. O InvestHelper não garante resultados financeiros específicos e não oferece garantias de rentabilidade. Recomendamos que você busque orientação financeira profissional antes de tomar decisões de investimento.\n\n4. Limitação de Responsabilidade: O InvestHelper não se responsabiliza por quaisquer danos diretos, indiretos, incidentais, consequenciais ou especiais resultantes do uso ou incapacidade de usar o aplicativo, incluindo, mas não se limitando a, perda de lucros, dados ou oportunidades de investimento.\n\n5. Atualizações dos Termos de Uso: Podemos revisar e atualizar estes termos de uso periodicamente. Ao continuar a utilizar o InvestHelper após quaisquer alterações, você concorda em ficar vinculado à versão mais recente dos termos de uso.\n\nAo clicar em \"Eu aceito\" ou continuar a utilizar o aplicativo, você concorda com estes termos de uso. Se você não concorda com estes termos, por favor, não use o InvestHelper.",
+  "accept": "Eu aceito",
+  "notAccept": "Eu não aceito"
 }

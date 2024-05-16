@@ -197,6 +197,24 @@ class SettingsPage extends StatelessWidget {
     return SectionWidget(
       title: AppLocalizations.of(context)!.others,
       content: [
+        Observer(
+          builder: (_) {
+            if (appController.user == null) return const SizedBox();
+
+            return ButtonTileWidget(
+              text: AppLocalizations.of(context)!.termsOfUsageTitle,
+              icon: CupertinoIcons.doc,
+              onTap: () {
+                DialogWidget.show(
+                  context,
+                  title: AppLocalizations.of(context)!.termsOfUsageTitle,
+                  message: AppLocalizations.of(context)!.termsOfUsageMessage,
+                  actionType: DialogWidgetActionType.close,
+                );
+              },
+            );
+          },
+        ),
         ButtonTileWidget(
           text: AppLocalizations.of(context)!.aboutThisApp,
           icon: Icons.info_outline,

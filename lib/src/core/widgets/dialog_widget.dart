@@ -50,6 +50,20 @@ class DialogWidget extends StatelessWidget {
                   child: Text(AppLocalizations.of(context)!.no),
                 ),
               ],
+            DialogWidgetActionType.acceptOrNotAccept => [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: Text(AppLocalizations.of(context)!.accept),
+                ),
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  style: ButtonStyle(
+                    foregroundColor: WidgetStateProperty.all(
+                        Theme.of(context).colorScheme.error),
+                  ),
+                  child: Text(AppLocalizations.of(context)!.notAccept),
+                ),
+              ],
           },
         );
       },
@@ -60,17 +74,19 @@ class DialogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: Text(title),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(message),
-          if (messageWidget != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 20),
-              child: messageWidget!,
-            ),
-        ],
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(message),
+            if (messageWidget != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 20),
+                child: messageWidget!,
+              ),
+          ],
+        ),
       ),
       actions: actions ??
           [
@@ -86,4 +102,5 @@ class DialogWidget extends StatelessWidget {
 enum DialogWidgetActionType {
   close,
   yesOrNo,
+  acceptOrNotAccept,
 }
