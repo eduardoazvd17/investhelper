@@ -2,7 +2,7 @@ name: investhelper
 description: "A new Flutter project."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.3.1 <4.0.0'
+  sdk: ">=3.3.1 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -31,28 +31,27 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
   flutter_localizations:
     sdk: flutter
   intl: any
-  lottie: ^3.1.0
-  fl_chart: ^0.67.0
-  firebase_core: ^2.29.0
-  firebase_auth: ^4.19.1
-  cloud_firestore: ^4.16.1
-  firebase_analytics: ^10.10.1
-  shared_preferences: ^2.2.2
+  lottie: ^3.1.1
+  fl_chart: ^0.68.0
+  firebase_core: ^2.31.0
+  firebase_auth: ^4.19.5
+  cloud_firestore: ^4.17.3
+  firebase_analytics: ^10.10.5
+  shared_preferences: ^2.2.3
   mobx: ^2.3.3+2
   flutter_mobx: ^2.2.1+1
-  get_it: ^7.6.8
+  get_it: ^7.7.0
   uuid: ^4.4.0
   local_auth: ^2.2.0
   flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.4.0
-  package_info_plus: ^7.0.0
+  package_info_plus: ^8.0.0
   google_fonts: ^6.2.1
   flutter_animate: ^4.5.0
   url_launcher: ^6.2.6
@@ -80,7 +79,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   generate: true
-  
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -136,7 +135,7 @@ flutter_native_splash:
   color: "#ffffff"
   color_dark: "#000000"
   android_12:
-      image: "assets/app_icon/android.png"
-      image_dark: "assets/app_icon/android.png"
-      icon_background_color: "#ffffff"
-      icon_background_color_dark: "#000000"
+    image: "assets/app_icon/android.png"
+    image_dark: "assets/app_icon/android.png"
+    icon_background_color: "#ffffff"
+    icon_background_color_dark: "#000000"
