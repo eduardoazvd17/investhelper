@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/models/user_model.dart';
@@ -9,6 +10,7 @@ import '../models/register_user_model.dart';
 class AuthService {
   FirebaseAuth get _auth => FirebaseAuth.instance;
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;
+  FlutterSecureStorage get _secureStorage => const FlutterSecureStorage();
 
   Future<UserModel> makeLogin(LoginUserModel loginModel) async {
     try {
@@ -23,6 +25,11 @@ class AuthService {
       await _auth.signInWithEmailAndPassword(
         email: loginModel.email,
         password: loginModel.password,
+      );
+
+      await _secureStorage.write(
+        key: _auth.currentUser!.uid,
+        value: loginModel.password,
       );
 
       return UserModel(
@@ -66,6 +73,10 @@ class AuthService {
         password: registerModel.password,
       );
       await userCredential.user!.updateDisplayName(registerModel.name);
+      await _secureStorage.write(
+        key: _auth.currentUser!.uid,
+        value: registerModel.password,
+      );
 
       return UserModel(
         id: _auth.currentUser!.uid,

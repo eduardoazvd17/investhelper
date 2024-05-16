@@ -97,6 +97,12 @@ abstract class AppControllerBase with Store {
     GetIt.I.get<InvestmentsController>().loadUserData();
   }
 
+  @action
+  Future<void> deleteMyAccount() async {
+    await _service.deleteMyAccount();
+    await logout();
+  }
+
   @observable
   bool canEnableBiometrics = false;
 

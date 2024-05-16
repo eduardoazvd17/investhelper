@@ -4,6 +4,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/exceptions/app_exception.dart';
+import '../../../core/widgets/button_tile_widget.dart';
+import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/modal_bottom_sheet_widget.dart';
 import '../../../core/widgets/section_widget.dart';
@@ -78,6 +80,19 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
     );
   }
 
+  Future<void> _deleteMyAccount() async {
+    final result = await DialogWidget.show(
+      context,
+      title: AppLocalizations.of(context)!.deleteMyAccountTitle,
+      message: AppLocalizations.of(context)!.deleteMyAccountMessage,
+      actionType: DialogWidgetActionType.yesOrNo,
+    );
+
+    if (result != null && result) {
+      widget.appController.deleteMyAccount();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,6 +144,15 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                       ],
                     ),
                     const Divider(),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: ButtonTileWidget(
+                        text:
+                            AppLocalizations.of(context)!.deleteMyAccountTitle,
+                        color: Theme.of(context).colorScheme.error,
+                        onTap: _deleteMyAccount,
+                      ),
+                    ),
                   ],
                 );
               },
