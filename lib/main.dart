@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_web_frame/flutter_web_frame.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -38,7 +40,7 @@ Future<void> main() async {
 
 Future<AppController> _loadDependencies() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  await MobileAds.instance.initialize();
+  if (!kIsWeb) await MobileAds.instance.initialize();
   final appController = GetIt.I.registerSingleton(
     AppController(service: AppService()),
   );
@@ -72,7 +74,7 @@ class InvestHelperApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        return MaterialApp(
+        final app = MaterialApp(
           title: 'InvestHelper',
           builder: (context, child) => LifecycleHandler(
             appController: appController,
@@ -86,15 +88,34 @@ class InvestHelperApp extends StatelessWidget {
               child: child ?? const SizedBox(),
             ),
           ),
-          theme: AppTheme.lightTheme,
-          darkTheme: AppTheme.darkTheme,
+          theme: kIsWeb
+              ? AppTheme.lightTheme.copyWith(
+                  pageTransitionsTheme: PageTransitionsTheme(
+                    builders: {
+                      for (final platform in TargetPlatform.values)
+                        platform: const FadeUpwardsPageTransitionsBuilder(),
+                    },
+                  ),
+                )
+              : AppTheme.lightTheme,
+          darkTheme: kIsWeb
+              ? AppTheme.darkTheme.copyWith(
+                  pageTransitionsTheme: PageTransitionsTheme(
+                    builders: {
+                      for (final platform in TargetPlatform.values)
+                        platform: const FadeUpwardsPageTransitionsBuilder(),
+                    },
+                  ),
+                )
+              : AppTheme.darkTheme,
           themeMode: appController.theme.themeMode,
           locale: appController.language.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           localeResolutionCallback: (locale, supportedLocales) {
             final languageCode = locale?.languageCode ?? 'en';
-            final countryCode = Platform.localeName.split('_')[1];
+            final countryCode =
+                kIsWeb ? null : Platform.localeName.split('_')[1];
             return supportedLocales.firstWhere(
               (e) => e.languageCode == languageCode,
               orElse: () => Locale('en', countryCode),
@@ -136,6 +157,16 @@ class InvestHelperApp extends StatelessWidget {
             },
           },
         );
+
+        if (kIsWeb) {
+          return FlutterWebFrame(
+            builder: (_) => app,
+            maximumSize: Size(768, MediaQuery.of(context).size.height),
+            backgroundColor: Colors.grey,
+          );
+        } else {
+          return app;
+        }
       },
     );
   }

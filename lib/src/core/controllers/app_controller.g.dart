@@ -171,9 +171,9 @@ mixin _$AppController on AppControllerBase, Store {
       context: context);
 
   @override
-  Future<void> _biometricsSecurityCheck() {
+  Future<void> biometricsSecurityCheck() {
     return _$_biometricsSecurityCheckAsyncAction
-        .run(() => super._biometricsSecurityCheck());
+        .run(() => super.biometricsSecurityCheck());
   }
 
   late final _$changeUserNameAsyncAction =

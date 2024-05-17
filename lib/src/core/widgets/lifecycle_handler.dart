@@ -32,6 +32,9 @@ class _LifecycleHandlerState extends State<LifecycleHandler>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     _showAuthOverlay(state);
+    if (state == AppLifecycleState.resumed) {
+      widget.appController.biometricsSecurityCheck();
+    }
     super.didChangeAppLifecycleState(state);
   }
 

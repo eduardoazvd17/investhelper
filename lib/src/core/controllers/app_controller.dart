@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
@@ -26,11 +27,19 @@ abstract class AppControllerBase with Store {
     language = await _service.loadLanguage();
     appVersion = await _service.getAppVersion();
     user = await _service.getCurrentUser();
-    await _biometricsSecurityCheck();
+    await biometricsSecurityCheck();
   }
 
   @action
-  Future<void> _biometricsSecurityCheck() async {
+  Future<void> biometricsSecurityCheck() async {
+    if (kIsWeb) {
+      canEnableBiometrics = false;
+      isBiometricsEnabled = false;
+      shouldRequestAuth = false;
+      isRequestAuthOverlayShowing = false;
+      return;
+    }
+
     canEnableBiometrics = await _localAuth.isDeviceSupported() &&
         await _localAuth.canCheckBiometrics;
 
@@ -43,7 +52,6 @@ abstract class AppControllerBase with Store {
     isBiometricsEnabled =
         canEnableBiometrics && await _service.loadIsBiometricsEnabled();
     shouldRequestAuth = isBiometricsEnabled;
-    isRequestAuthOverlayShowing = false;
   }
 
   @observable
