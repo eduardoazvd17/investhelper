@@ -14,7 +14,6 @@ import 'src/core/enums/language_enum.dart';
 import 'src/core/enums/theme_enum.dart';
 import 'src/core/services/app_service.dart';
 import 'src/core/utils/app_theme.dart';
-import 'src/core/widgets/lifecycle_handler.dart';
 import 'src/features/auth/controllers/auth_controller.dart';
 import 'src/features/auth/services/auth_service.dart';
 import 'src/features/auth/views/auth_page.dart';
@@ -76,17 +75,14 @@ class InvestHelperApp extends StatelessWidget {
         final app = MaterialApp(
           title: 'InvestHelper',
           debugShowCheckedModeBanner: false,
-          builder: (context, child) => LifecycleHandler(
-            appController: appController,
-            child: MediaQuery(
-              data: MediaQuery.of(context).copyWith(
-                textScaler: MediaQuery.of(context).textScaler.clamp(
-                      minScaleFactor: 0.8,
-                      maxScaleFactor: 1.2,
-                    ),
-              ),
-              child: child ?? const SizedBox(),
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaler: MediaQuery.of(context).textScaler.clamp(
+                    minScaleFactor: 0.8,
+                    maxScaleFactor: 1.2,
+                  ),
             ),
+            child: child ?? const SizedBox(),
           ),
           theme: kIsWeb
               ? AppTheme.lightTheme.copyWith(

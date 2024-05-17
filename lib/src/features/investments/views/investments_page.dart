@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
+import '../../../core/controllers/app_controller.dart';
 import '../../../core/enums/subscription_enum.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/utils/widget_event_handler.dart';
@@ -41,30 +42,45 @@ class InvestmentsPage extends StatefulWidget {
 }
 
 class _InvestmentsPageState extends State<InvestmentsPage> {
-  bool _blurContent = false;
   InvestmentsPageSubTabsEnum _currentPage = InvestmentsPageSubTabsEnum.overview;
   late final WidgetEventHandler _widgetEventHandler;
   late final ScrollController _overviewScrollController;
   late final ScrollController _detailsScrollController;
 
   InvestmentsController get controller => widget.controller;
+  AppController get appController => controller.appController;
 
   @override
   void initState() {
     _widgetEventHandler = WidgetEventHandler(
       onResumed: () async {
-        if (_blurContent && !kIsWeb) {
+        if (kIsWeb) return;
+        if (appController.isBlurOverlayShowing) {
           Navigator.of(context).pop();
-          _blurContent = false;
+          appController.isBlurOverlayShowing = false;
         }
-        if (controller.shouldRequestAuth) {
+        if (appController.shouldRequestAuth &&
+            !appController.isRequestAuthOverlayShowing &&
+            !appController.disableAuthOverlay) {
+          appController.shouldRequestAuth = false;
+          appController.isRequestAuthOverlayShowing = true;
           AuthOverlay.show(context);
         }
       },
       onInactive: () {
-        if (!_blurContent && !kIsWeb) {
-          _blurContent = true;
+        if (kIsWeb) return;
+        if (!appController.isBlurOverlayShowing &&
+            !appController.disableBlurOverlay) {
+          appController.isBlurOverlayShowing = true;
           BlurOverlay.show(context);
+        }
+      },
+      onPaused: () {
+        if (kIsWeb) return;
+        if (appController.isBiometricsEnabled &&
+            !appController.isRequestAuthOverlayShowing &&
+            !appController.disableAuthOverlay) {
+          appController.shouldRequestAuth = true;
         }
       },
     );

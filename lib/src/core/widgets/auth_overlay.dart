@@ -18,10 +18,6 @@ class AuthOverlay extends StatefulWidget {
 
   static Future<void> show(BuildContext context) async {
     final AppController appController = GetIt.I.get<AppController>();
-    if (appController.isRequestAuthOverlayShowing) return;
-
-    appController.shouldRequestAuth = false;
-    appController.isRequestAuthOverlayShowing = true;
     await showDialog(
       context: context,
       useSafeArea: false,
@@ -29,7 +25,6 @@ class AuthOverlay extends StatefulWidget {
       barrierDismissible: false,
       builder: (_) => AuthOverlay(appController: appController),
     );
-    appController.isRequestAuthOverlayShowing = false;
   }
 
   @override

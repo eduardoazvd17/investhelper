@@ -9,6 +9,26 @@ part of 'app_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AppController on AppControllerBase, Store {
+  late final _$appVersionAtom =
+      Atom(name: 'AppControllerBase.appVersion', context: context);
+
+  @override
+  String get appVersion {
+    _$appVersionAtom.reportRead();
+    return super.appVersion;
+  }
+
+  bool _appVersionIsInitialized = false;
+
+  @override
+  set appVersion(String value) {
+    _$appVersionAtom.reportWrite(
+        value, _appVersionIsInitialized ? super.appVersion : null, () {
+      super.appVersion = value;
+      _appVersionIsInitialized = true;
+    });
+  }
+
   late final _$showWelcomePageAtom =
       Atom(name: 'AppControllerBase.showWelcomePage', context: context);
 
@@ -106,6 +126,55 @@ mixin _$AppController on AppControllerBase, Store {
     });
   }
 
+  late final _$disableAuthOverlayAtom =
+      Atom(name: 'AppControllerBase.disableAuthOverlay', context: context);
+
+  @override
+  bool get disableAuthOverlay {
+    _$disableAuthOverlayAtom.reportRead();
+    return super.disableAuthOverlay;
+  }
+
+  @override
+  set disableAuthOverlay(bool value) {
+    _$disableAuthOverlayAtom.reportWrite(value, super.disableAuthOverlay, () {
+      super.disableAuthOverlay = value;
+    });
+  }
+
+  late final _$disableBlurOverlayAtom =
+      Atom(name: 'AppControllerBase.disableBlurOverlay', context: context);
+
+  @override
+  bool get disableBlurOverlay {
+    _$disableBlurOverlayAtom.reportRead();
+    return super.disableBlurOverlay;
+  }
+
+  @override
+  set disableBlurOverlay(bool value) {
+    _$disableBlurOverlayAtom.reportWrite(value, super.disableBlurOverlay, () {
+      super.disableBlurOverlay = value;
+    });
+  }
+
+  late final _$isBlurOverlayShowingAtom =
+      Atom(name: 'AppControllerBase.isBlurOverlayShowing', context: context);
+
+  @override
+  bool get isBlurOverlayShowing {
+    _$isBlurOverlayShowingAtom.reportRead();
+    return super.isBlurOverlayShowing;
+  }
+
+  @override
+  set isBlurOverlayShowing(bool value) {
+    _$isBlurOverlayShowingAtom.reportWrite(value, super.isBlurOverlayShowing,
+        () {
+      super.isBlurOverlayShowing = value;
+    });
+  }
+
   late final _$themeAtom =
       Atom(name: 'AppControllerBase.theme', context: context);
 
@@ -138,26 +207,6 @@ mixin _$AppController on AppControllerBase, Store {
     });
   }
 
-  late final _$appVersionAtom =
-      Atom(name: 'AppControllerBase.appVersion', context: context);
-
-  @override
-  String get appVersion {
-    _$appVersionAtom.reportRead();
-    return super.appVersion;
-  }
-
-  bool _appVersionIsInitialized = false;
-
-  @override
-  set appVersion(String value) {
-    _$appVersionAtom.reportWrite(
-        value, _appVersionIsInitialized ? super.appVersion : null, () {
-      super.appVersion = value;
-      _appVersionIsInitialized = true;
-    });
-  }
-
   late final _$initializeAsyncAction =
       AsyncAction('AppControllerBase.initialize', context: context);
 
@@ -166,13 +215,13 @@ mixin _$AppController on AppControllerBase, Store {
     return _$initializeAsyncAction.run(() => super.initialize());
   }
 
-  late final _$_biometricsSecurityCheckAsyncAction = AsyncAction(
-      'AppControllerBase._biometricsSecurityCheck',
+  late final _$biometricsSecurityCheckAsyncAction = AsyncAction(
+      'AppControllerBase.biometricsSecurityCheck',
       context: context);
 
   @override
   Future<void> biometricsSecurityCheck() {
-    return _$_biometricsSecurityCheckAsyncAction
+    return _$biometricsSecurityCheckAsyncAction
         .run(() => super.biometricsSecurityCheck());
   }
 
@@ -184,12 +233,40 @@ mixin _$AppController on AppControllerBase, Store {
     return _$changeUserNameAsyncAction.run(() => super.changeUserName(name));
   }
 
+  late final _$changeUserPasswordAsyncAction =
+      AsyncAction('AppControllerBase.changeUserPassword', context: context);
+
+  @override
+  Future<void> changeUserPassword(String currentPassword, String newPassword,
+      String newPasswordConfirmation) {
+    return _$changeUserPasswordAsyncAction.run(() => super.changeUserPassword(
+        currentPassword, newPassword, newPasswordConfirmation));
+  }
+
+  late final _$changeUserDataAsyncAction =
+      AsyncAction('AppControllerBase.changeUserData', context: context);
+
+  @override
+  Future<void> changeUserData(UserDataModel userDataModel) {
+    return _$changeUserDataAsyncAction
+        .run(() => super.changeUserData(userDataModel));
+  }
+
   late final _$logoutAsyncAction =
       AsyncAction('AppControllerBase.logout', context: context);
 
   @override
   Future<void> logout() {
     return _$logoutAsyncAction.run(() => super.logout());
+  }
+
+  late final _$deleteMyAccountAsyncAction =
+      AsyncAction('AppControllerBase.deleteMyAccount', context: context);
+
+  @override
+  Future<void> deleteMyAccount(String currentPassword) {
+    return _$deleteMyAccountAsyncAction
+        .run(() => super.deleteMyAccount(currentPassword));
   }
 
   late final _$changeIsBiometricsEnabledAsyncAction = AsyncAction(
@@ -252,15 +329,18 @@ mixin _$AppController on AppControllerBase, Store {
   @override
   String toString() {
     return '''
+appVersion: ${appVersion},
 showWelcomePage: ${showWelcomePage},
 user: ${user},
 canEnableBiometrics: ${canEnableBiometrics},
 isBiometricsEnabled: ${isBiometricsEnabled},
 shouldRequestAuth: ${shouldRequestAuth},
 isRequestAuthOverlayShowing: ${isRequestAuthOverlayShowing},
+disableAuthOverlay: ${disableAuthOverlay},
+disableBlurOverlay: ${disableBlurOverlay},
+isBlurOverlayShowing: ${isBlurOverlayShowing},
 theme: ${theme},
-language: ${language},
-appVersion: ${appVersion}
+language: ${language}
     ''';
   }
 }

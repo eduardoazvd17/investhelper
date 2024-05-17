@@ -141,10 +141,22 @@ abstract class AppControllerBase with Store {
   @observable
   bool isRequestAuthOverlayShowing = false;
 
+  @observable
+  bool disableAuthOverlay = false;
+
+  @observable
+  bool disableBlurOverlay = false;
+
+  @observable
+  bool isBlurOverlayShowing = false;
+
   Future<bool> requestAuth([String? message]) async {
-    return await _localAuth.authenticate(
+    disableAuthOverlay = true;
+    final result = await _localAuth.authenticate(
       localizedReason: message ?? 'Please authenticate to continue',
     );
+    disableAuthOverlay = false;
+    return result;
   }
 
   @action

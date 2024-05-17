@@ -16,13 +16,6 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
       (_$userComputed ??= Computed<UserModel?>(() => super.user,
               name: 'InvestmentsControllerBase.user'))
           .value;
-  Computed<bool>? _$shouldRequestAuthComputed;
-
-  @override
-  bool get shouldRequestAuth => (_$shouldRequestAuthComputed ??= Computed<bool>(
-          () => super.shouldRequestAuth,
-          name: 'InvestmentsControllerBase.shouldRequestAuth'))
-      .value;
   Computed<double>? _$totalInvestmentsComputed;
 
   @override
@@ -52,6 +45,22 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
               name: 'InvestmentsControllerBase.thisMonthProfitTotal'))
       .value;
 
+  late final _$dailyTipAtom =
+      Atom(name: 'InvestmentsControllerBase.dailyTip', context: context);
+
+  @override
+  DailyTipDTO? get dailyTip {
+    _$dailyTipAtom.reportRead();
+    return super.dailyTip;
+  }
+
+  @override
+  set dailyTip(DailyTipDTO? value) {
+    _$dailyTipAtom.reportWrite(value, super.dailyTip, () {
+      super.dailyTip = value;
+    });
+  }
+
   late final _$isLoadingAtom =
       Atom(name: 'InvestmentsControllerBase.isLoading', context: context);
 
@@ -68,6 +77,22 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
     });
   }
 
+  late final _$loadUserDataErrorAtom = Atom(
+      name: 'InvestmentsControllerBase.loadUserDataError', context: context);
+
+  @override
+  AppExceptionType? get loadUserDataError {
+    _$loadUserDataErrorAtom.reportRead();
+    return super.loadUserDataError;
+  }
+
+  @override
+  set loadUserDataError(AppExceptionType? value) {
+    _$loadUserDataErrorAtom.reportWrite(value, super.loadUserDataError, () {
+      super.loadUserDataError = value;
+    });
+  }
+
   late final _$hideValuesAtom =
       Atom(name: 'InvestmentsControllerBase.hideValues', context: context);
 
@@ -81,22 +106,6 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
   set hideValues(bool value) {
     _$hideValuesAtom.reportWrite(value, super.hideValues, () {
       super.hideValues = value;
-    });
-  }
-
-  late final _$dailyTipAtom =
-      Atom(name: 'InvestmentsControllerBase.dailyTip', context: context);
-
-  @override
-  DailyTipDTO? get dailyTip {
-    _$dailyTipAtom.reportRead();
-    return super.dailyTip;
-  }
-
-  @override
-  set dailyTip(DailyTipDTO? value) {
-    _$dailyTipAtom.reportWrite(value, super.dailyTip, () {
-      super.dailyTip = value;
     });
   }
 
@@ -132,18 +141,34 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
     });
   }
 
-  late final _$operationsWithFilterAtom = Atom(
-      name: 'InvestmentsControllerBase.operationsWithFilter', context: context);
+  late final _$allOperationsAtom =
+      Atom(name: 'InvestmentsControllerBase.allOperations', context: context);
+
+  @override
+  ObservableList<OperationModel>? get allOperations {
+    _$allOperationsAtom.reportRead();
+    return super.allOperations;
+  }
+
+  @override
+  set allOperations(ObservableList<OperationModel>? value) {
+    _$allOperationsAtom.reportWrite(value, super.allOperations, () {
+      super.allOperations = value;
+    });
+  }
+
+  late final _$filteredOperationsAtom = Atom(
+      name: 'InvestmentsControllerBase.filteredOperations', context: context);
 
   @override
   ObservableList<OperationModel> get filteredOperations {
-    _$operationsWithFilterAtom.reportRead();
+    _$filteredOperationsAtom.reportRead();
     return super.filteredOperations;
   }
 
   @override
   set filteredOperations(ObservableList<OperationModel> value) {
-    _$operationsWithFilterAtom.reportWrite(value, super.filteredOperations, () {
+    _$filteredOperationsAtom.reportWrite(value, super.filteredOperations, () {
       super.filteredOperations = value;
     });
   }
@@ -337,6 +362,16 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
         .run(() => super.deleteOperation(operationModel, investmentModel));
   }
 
+  late final _$loadThisMonthOperationsAsyncAction = AsyncAction(
+      'InvestmentsControllerBase.loadThisMonthOperations',
+      context: context);
+
+  @override
+  Future<void> loadThisMonthOperations() {
+    return _$loadThisMonthOperationsAsyncAction
+        .run(() => super.loadThisMonthOperations());
+  }
+
   late final _$InvestmentsControllerBaseActionController =
       ActionController(name: 'InvestmentsControllerBase', context: context);
 
@@ -365,12 +400,14 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
   @override
   String toString() {
     return '''
-isLoading: ${isLoading},
-hideValues: ${hideValues},
 dailyTip: ${dailyTip},
+isLoading: ${isLoading},
+loadUserDataError: ${loadUserDataError},
+hideValues: ${hideValues},
 goals: ${goals},
 investments: ${investments},
-operationsWithFilter: ${filteredOperations},
+allOperations: ${allOperations},
+filteredOperations: ${filteredOperations},
 investmentIdFilter: ${investmentIdFilter},
 operationTypeFilter: ${operationTypeFilter},
 startDateFilter: ${startDateFilter},
@@ -378,7 +415,6 @@ endDateFilter: ${endDateFilter},
 descendingFilter: ${descendingFilter},
 thisMonthOperations: ${thisMonthOperations},
 user: ${user},
-shouldRequestAuth: ${shouldRequestAuth},
 totalInvestments: ${totalInvestments},
 thisMonthPurchasesTotal: ${thisMonthPurchasesTotal},
 thisMonthSalesTotal: ${thisMonthSalesTotal},

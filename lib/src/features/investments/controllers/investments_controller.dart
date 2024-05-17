@@ -20,21 +20,17 @@ class InvestmentsController = InvestmentsControllerBase
     with _$InvestmentsController;
 
 abstract class InvestmentsControllerBase with Store {
-  final AppController _appController;
+  final AppController appController;
   final InvestmentsService _service;
   InvestmentsControllerBase({
-    required AppController appController,
+    required this.appController,
     required InvestmentsService service,
-  })  : _appController = appController,
-        _service = service {
+  }) : _service = service {
     loadUserData();
   }
 
   @computed
-  UserModel? get user => _appController.user;
-
-  @computed
-  bool get shouldRequestAuth => _appController.shouldRequestAuth;
+  UserModel? get user => appController.user;
 
   @observable
   DailyTipDTO? dailyTip;
