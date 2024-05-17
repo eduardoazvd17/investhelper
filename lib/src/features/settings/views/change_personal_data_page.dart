@@ -222,10 +222,11 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                         SectionWidget(
                           title: AppLocalizations.of(context)!.name,
                           actions: [
-                            IconButton(
+                            TextButton.icon(
                               onPressed: _changeUserName,
-                              visualDensity: VisualDensity.compact,
                               icon: const Icon(CupertinoIcons.pen),
+                              label: Text(
+                                  AppLocalizations.of(context)!.changeName),
                             ),
                           ],
                           content: [
@@ -249,10 +250,11 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                         SectionWidget(
                           title: AppLocalizations.of(context)!.password,
                           actions: [
-                            IconButton(
+                            TextButton.icon(
                               onPressed: _changeUserPassword,
-                              visualDensity: VisualDensity.compact,
-                              icon: const Icon(CupertinoIcons.pen),
+                              icon: const Icon(CupertinoIcons.lock),
+                              label: Text(
+                                  AppLocalizations.of(context)!.changePassword),
                             ),
                           ],
                           content: [
@@ -264,12 +266,18 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                         ),
                         const Divider(),
                         Padding(
-                          padding: const EdgeInsets.only(top: 20),
-                          child: ButtonTileWidget(
-                            text: AppLocalizations.of(context)!
-                                .deleteMyAccountTitle,
-                            color: Theme.of(context).colorScheme.error,
-                            onTap: _deleteMyAccount,
+                          padding: const EdgeInsets.only(top: 50),
+                          child: SectionWidget(
+                            title: AppLocalizations.of(context)!.security,
+                            content: [
+                              ButtonTileWidget(
+                                text: AppLocalizations.of(context)!
+                                    .deleteMyAccountTitle,
+                                icon: Icons.close,
+                                color: Theme.of(context).colorScheme.error,
+                                onTap: _deleteMyAccount,
+                              ),
+                            ],
                           ),
                         ),
                       ],

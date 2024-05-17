@@ -104,7 +104,10 @@ class _ModalBottomSheetWidgetState extends State<ModalBottomSheetWidget> {
             child: Text(
               widget.title,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.titleMedium,
+              style: Theme.of(context)
+                  .textTheme
+                  .titleMedium
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
           ),
           const Divider(),
