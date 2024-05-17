@@ -198,6 +198,7 @@ class AppService {
         ),
       );
       await _auth.currentUser!.updatePassword(newPassword);
+
       await _secureStorage.write(
         key: _auth.currentUser!.uid,
         value: newPassword,

@@ -27,14 +27,16 @@ class AuthService {
         password: loginModel.password,
       );
 
-      await _secureStorage.write(
-        key: 'userId',
-        value: _auth.currentUser!.uid,
-      );
-      await _secureStorage.write(
-        key: _auth.currentUser!.uid,
-        value: loginModel.password,
-      );
+      try {
+        await _secureStorage.write(
+          key: 'userId',
+          value: _auth.currentUser!.uid,
+        );
+        await _secureStorage.write(
+          key: _auth.currentUser!.uid,
+          value: loginModel.password,
+        );
+      } catch (_) {}
 
       return UserModel(
         id: _auth.currentUser!.uid,
@@ -77,14 +79,17 @@ class AuthService {
         password: registerModel.password,
       );
       await userCredential.user!.updateDisplayName(registerModel.name);
-      await _secureStorage.write(
-        key: 'userId',
-        value: _auth.currentUser!.uid,
-      );
-      await _secureStorage.write(
-        key: _auth.currentUser!.uid,
-        value: registerModel.password,
-      );
+
+      try {
+        await _secureStorage.write(
+          key: 'userId',
+          value: _auth.currentUser!.uid,
+        );
+        await _secureStorage.write(
+          key: _auth.currentUser!.uid,
+          value: registerModel.password,
+        );
+      } catch (_) {}
 
       return UserModel(
         id: _auth.currentUser!.uid,
