@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
@@ -227,7 +228,15 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                               icon: const Icon(CupertinoIcons.pen),
                               label: Text(
                                   AppLocalizations.of(context)!.changeName),
-                            ),
+                            )
+                                .animate()
+                                .fade(
+                                    duration: const Duration(milliseconds: 400))
+                                .slideX(
+                                  end: 0,
+                                  begin: 1,
+                                  duration: const Duration(milliseconds: 200),
+                                ),
                           ],
                           content: [
                             Text(
@@ -255,7 +264,15 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                               icon: const Icon(CupertinoIcons.lock),
                               label: Text(
                                   AppLocalizations.of(context)!.changePassword),
-                            ),
+                            )
+                                .animate()
+                                .fade(
+                                    duration: const Duration(milliseconds: 400))
+                                .slideX(
+                                  end: 0,
+                                  begin: 1,
+                                  duration: const Duration(milliseconds: 200),
+                                ),
                           ],
                           content: [
                             Text(
@@ -276,7 +293,16 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                                 icon: Icons.close,
                                 color: Theme.of(context).colorScheme.error,
                                 onTap: _deleteMyAccount,
-                              ),
+                              )
+                                  .animate()
+                                  .fade(
+                                      duration:
+                                          const Duration(milliseconds: 400))
+                                  .slideX(
+                                    end: 0,
+                                    begin: 1,
+                                    duration: const Duration(milliseconds: 200),
+                                  ),
                             ],
                           ),
                         ),
