@@ -122,8 +122,8 @@ abstract class AppControllerBase with Store {
   }
 
   @action
-  Future<void> deleteMyAccount() async {
-    await _service.deleteMyAccount();
+  Future<void> deleteMyAccount(String currentPassword) async {
+    await _service.deleteMyAccount(currentPassword);
     await changeIsBiometricsEnabled(false, force: true);
     user = null;
     GetIt.I.get<InvestmentsController>().loadUserData();

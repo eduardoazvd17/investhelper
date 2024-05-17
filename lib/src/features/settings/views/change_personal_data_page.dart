@@ -30,7 +30,6 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
   late final FocusNode _currentPasswordFocus;
   late final FocusNode _newPasswordFocus;
   late final FocusNode _newPasswordConfirmationFocus;
-  bool _enableDeleteMyAccountButton = false;
 
   @override
   void initState() {
@@ -154,42 +153,51 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
   }
 
   Future<void> _deleteMyAccount() async {
-    if (!_enableDeleteMyAccountButton) {
-      setState(() {
-        _enableDeleteMyAccountButton = true;
-      });
-      Future.delayed(const Duration(seconds: 5)).then((_) {
-        setState(() {
-          _enableDeleteMyAccountButton = false;
-        });
-      });
-      return;
-    }
+    _currentPasswordController.clear();
 
-    final result = await DialogWidget.show(
+    await ModalBottomSheetWidget.show(
       context,
       title: AppLocalizations.of(context)!.deleteMyAccountTitle,
-      message: AppLocalizations.of(context)!.deleteMyAccountMessage,
-      actionType: DialogWidgetActionType.yesOrNo,
+      actions: [
+        TextButton(
+          onPressed: () async {
+            try {
+              LoadingWidget.dialog(context);
+              await widget.appController.deleteMyAccount(
+                _currentPasswordController.text.trim(),
+              );
+              if (mounted) {
+                LoadingWidget.hide(context);
+                Navigator.of(context).popUntil(
+                  ModalRoute.withName(InvestmentsPage.routeName),
+                );
+              }
+            } on AppException catch (error) {
+              if (mounted) {
+                LoadingWidget.hide(context);
+                error.show(context);
+              }
+            }
+          },
+          style: ButtonStyle(
+            foregroundColor: WidgetStateProperty.all(
+              Theme.of(context).colorScheme.error,
+            ),
+          ),
+          child: Text(AppLocalizations.of(context)!.yes),
+        ),
+        TextButton(
+          onPressed: Navigator.of(context).pop,
+          child: Text(AppLocalizations.of(context)!.no),
+        ),
+      ],
+      children: [
+        Text(AppLocalizations.of(context)!.deleteMyAccountMessage),
+        const SizedBox(height: 10),
+        const Divider(),
+        _currentPasswordTextField,
+      ],
     );
-
-    if (result != null && result && mounted) {
-      try {
-        LoadingWidget.dialog(context);
-        await widget.appController.deleteMyAccount();
-        if (mounted) {
-          LoadingWidget.hide(context);
-          Navigator.of(context).popUntil(
-            ModalRoute.withName(InvestmentsPage.routeName),
-          );
-        }
-      } on AppException catch (error) {
-        if (mounted) {
-          LoadingWidget.hide(context);
-          error.show(context);
-        }
-      }
-    }
   }
 
   @override
@@ -262,7 +270,6 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                             text: AppLocalizations.of(context)!
                                 .deleteMyAccountTitle,
                             color: Theme.of(context).colorScheme.error,
-                            disabled: !_enableDeleteMyAccountButton,
                             onTap: _deleteMyAccount,
                           ),
                         ),

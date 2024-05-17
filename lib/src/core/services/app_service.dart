@@ -98,12 +98,18 @@ class AppService {
     } catch (_) {}
   }
 
-  Future<void> deleteMyAccount() async {
+  Future<void> deleteMyAccount(String currentPassword) async {
     try {
+      final String password =
+          (await _secureStorage.read(key: _auth.currentUser!.uid))!;
+      if (currentPassword != password) {
+        throw AppException(AppExceptionType.incorrectPassword);
+      }
+
       await _auth.currentUser?.reauthenticateWithCredential(
         EmailAuthProvider.credential(
           email: _auth.currentUser!.email!,
-          password: (await _secureStorage.read(key: _auth.currentUser!.uid))!,
+          password: password,
         ),
       );
 
