@@ -36,7 +36,6 @@ abstract class AppControllerBase with Store {
       canEnableBiometrics = false;
       isBiometricsEnabled = false;
       shouldRequestAuth = false;
-      isRequestAuthOverlayShowing = false;
       return;
     }
 
