@@ -85,6 +85,10 @@ class AppService {
           email: _auth.currentUser!.email!,
           data: await AuthService().getUserData(_auth.currentUser!.uid),
         );
+      } else if (await _secureStorage.containsKey(key: 'userId')) {
+        final userId = await _secureStorage.read(key: 'userId');
+        if (userId != null) await _secureStorage.delete(key: userId);
+        await _secureStorage.delete(key: 'userId');
       }
     } catch (_) {}
     return null;
@@ -94,14 +98,15 @@ class AppService {
     try {
       final String userId = _auth.currentUser!.uid;
       await _auth.signOut();
+      await _secureStorage.delete(key: 'userId');
       await _secureStorage.delete(key: userId);
     } catch (_) {}
   }
 
   Future<void> deleteMyAccount(String currentPassword) async {
     try {
-      final String password =
-          (await _secureStorage.read(key: _auth.currentUser!.uid))!;
+      final String userId = _auth.currentUser!.uid;
+      final String password = (await _secureStorage.read(key: userId))!;
       if (currentPassword != password) {
         throw AppException(AppExceptionType.incorrectPassword);
       }
@@ -112,8 +117,6 @@ class AppService {
           password: password,
         ),
       );
-
-      final String userId = _auth.currentUser!.uid;
       final WriteBatch batch = _firestore.batch();
 
       final goals = await _firestore
@@ -143,6 +146,8 @@ class AppService {
 
       await batch.commit();
       await _auth.currentUser!.delete();
+      await _secureStorage.delete(key: 'userId');
+      await _secureStorage.delete(key: userId);
     } on AppException catch (_) {
       rethrow;
     } catch (error) {

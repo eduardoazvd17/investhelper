@@ -28,6 +28,10 @@ class AuthService {
       );
 
       await _secureStorage.write(
+        key: 'userId',
+        value: _auth.currentUser!.uid,
+      );
+      await _secureStorage.write(
         key: _auth.currentUser!.uid,
         value: loginModel.password,
       );
@@ -73,6 +77,10 @@ class AuthService {
         password: registerModel.password,
       );
       await userCredential.user!.updateDisplayName(registerModel.name);
+      await _secureStorage.write(
+        key: 'userId',
+        value: _auth.currentUser!.uid,
+      );
       await _secureStorage.write(
         key: _auth.currentUser!.uid,
         value: registerModel.password,
