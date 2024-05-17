@@ -5,7 +5,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/widgets/button_tile_widget.dart';
-import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/modal_bottom_sheet_widget.dart';
 import '../../../core/widgets/section_widget.dart';
