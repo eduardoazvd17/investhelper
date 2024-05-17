@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -52,7 +53,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   void initState() {
     _widgetEventHandler = WidgetEventHandler(
       onResumed: () async {
-        if (_blurContent) {
+        if (_blurContent && !kIsWeb) {
           Navigator.of(context).pop();
           _blurContent = false;
         }
@@ -61,7 +62,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         }
       },
       onInactive: () {
-        if (!_blurContent) {
+        if (!_blurContent && !kIsWeb) {
           _blurContent = true;
           BlurOverlay.show(context);
         }

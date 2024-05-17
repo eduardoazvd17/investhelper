@@ -115,8 +115,9 @@ class InvestHelperApp extends StatelessWidget {
           supportedLocales: AppLocalizations.supportedLocales,
           localeResolutionCallback: (locale, supportedLocales) {
             final languageCode = locale?.languageCode ?? 'en';
-            final countryCode =
-                kIsWeb ? null : Platform.localeName.split('_')[1];
+            final countryCode = kIsWeb
+                ? WidgetsBinding.instance.platformDispatcher.locale.countryCode
+                : Platform.localeName.split('_')[1];
             return supportedLocales.firstWhere(
               (e) => e.languageCode == languageCode,
               orElse: () => Locale('en', countryCode),
