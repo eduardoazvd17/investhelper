@@ -19,7 +19,32 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="description" content="Application designed to make managing your investments easier.">
+  <script>
+    function setMetaDescription() {
+      var lang = navigator.language || navigator.userLanguage;
+      var description;
+      switch (lang) {
+        case 'pt':
+          description = "Aplicativo projetado para facilitar o gerenciamento dos seus investimentos.";
+          break;
+        default:
+          description = "Application designed to make managing your investments easier.";
+          break;
+      }
+      var meta = document.querySelector('meta[name="description"]');
+      if (meta) {
+        meta.content = description;
+      } else {
+        meta = document.createElement('meta');
+        meta.name = "description";
+        meta.content = description;
+        document.getElementsByTagName('head')[0].appendChild(meta);
+      }
+    }
+
+    setMetaDescription();
+  </script>
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -30,7 +55,7 @@
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png">
 
-  <title>investhelper</title>
+  <title>InvestHelper</title>
   <link rel="manifest" href="manifest.json">
   <style id="splash-screen-style">
     html {
