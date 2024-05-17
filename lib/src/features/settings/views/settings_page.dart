@@ -382,9 +382,18 @@ class SettingsPage extends StatelessWidget {
               ),
               ButtonTileWidget(
                 text: AppLocalizations.of(context)!.changePersonalData,
-                onTap: () => Navigator.of(context).pushNamed(
-                  ChangePersonalDataPage.routeName,
-                ),
+                onTap: () async {
+                  if (appController.isBiometricsEnabled) {
+                    final bool result = await appController.requestAuth();
+                    if (!result) return;
+                    await Future.delayed(const Duration(milliseconds: 1500));
+                  }
+
+                  if (!context.mounted) return;
+                  Navigator.of(context).pushNamed(
+                    ChangePersonalDataPage.routeName,
+                  );
+                },
               ),
               ButtonTileWidget(
                 text: AppLocalizations.of(context)!.endSession,
