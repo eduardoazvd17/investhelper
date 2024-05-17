@@ -152,14 +152,21 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .averagePriceVariationDisplay(
-                                      (widget.operation.averagePriceVariation
-                                                  .isNegative
-                                              ? ''
-                                              : '+') +
-                                          AppFormatter.currency(
-                                            widget.operation
-                                                .averagePriceVariation,
-                                          ),
+                                      widget.operation.averagePriceVariation
+                                                  .abs() <
+                                              0.01
+                                          ? AppLocalizations.of(context)!
+                                              .noVariation
+                                          : ((widget
+                                                      .operation
+                                                      .averagePriceVariation
+                                                      .isNegative
+                                                  ? ''
+                                                  : '+') +
+                                              AppFormatter.currency(
+                                                widget.operation
+                                                    .averagePriceVariation,
+                                              )),
                                     ),
                                   ),
                                 ),
