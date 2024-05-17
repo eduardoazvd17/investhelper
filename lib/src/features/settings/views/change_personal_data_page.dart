@@ -30,6 +30,7 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
   late final FocusNode _currentPasswordFocus;
   late final FocusNode _newPasswordFocus;
   late final FocusNode _newPasswordConfirmationFocus;
+  bool _enableDeleteMyAccountButton = false;
 
   @override
   void initState() {
@@ -153,6 +154,18 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
   }
 
   Future<void> _deleteMyAccount() async {
+    if (!_enableDeleteMyAccountButton) {
+      setState(() {
+        _enableDeleteMyAccountButton = true;
+      });
+      Future.delayed(const Duration(seconds: 5)).then((_) {
+        setState(() {
+          _enableDeleteMyAccountButton = false;
+        });
+      });
+      return;
+    }
+
     final result = await DialogWidget.show(
       context,
       title: AppLocalizations.of(context)!.deleteMyAccountTitle,
@@ -249,6 +262,7 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                             text: AppLocalizations.of(context)!
                                 .deleteMyAccountTitle,
                             color: Theme.of(context).colorScheme.error,
+                            disabled: !_enableDeleteMyAccountButton,
                             onTap: _deleteMyAccount,
                           ),
                         ),

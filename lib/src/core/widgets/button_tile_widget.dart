@@ -7,6 +7,7 @@ class ButtonTileWidget extends StatelessWidget {
   final bool showBorder;
   final Color? backgroundColor;
   final IconData? icon;
+  final bool disabled;
   const ButtonTileWidget({
     super.key,
     required this.text,
@@ -15,11 +16,12 @@ class ButtonTileWidget extends StatelessWidget {
     this.showBorder = true,
     this.backgroundColor,
     this.icon,
+    this.disabled = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final Color color = onTap == null
+    final Color color = onTap == null || disabled
         ? Colors.grey
         : this.color ??
             Theme.of(context)
