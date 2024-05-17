@@ -76,6 +76,7 @@ class InvestHelperApp extends StatelessWidget {
       builder: (context) {
         final app = MaterialApp(
           title: 'InvestHelper',
+          debugShowCheckedModeBanner: false,
           builder: (context, child) => LifecycleHandler(
             appController: appController,
             child: MediaQuery(
