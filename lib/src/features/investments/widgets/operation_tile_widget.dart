@@ -155,8 +155,7 @@ class _OperationTileWidgetState extends State<OperationTileWidget> {
                                       widget.operation.averagePriceVariation
                                                   .abs() <
                                               0.01
-                                          ? AppLocalizations.of(context)!
-                                              .noVariation
+                                          ? AppFormatter.currency(0)
                                           : ((widget
                                                       .operation
                                                       .averagePriceVariation
