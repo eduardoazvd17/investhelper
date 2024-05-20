@@ -321,6 +321,5 @@
   "newPassword": "Nova senha",
   "newPasswordConfirmation": "Confirmação de nova senha",
   "newPasswordHint": "Insira uma nova senha",
-  "security": "Segurança",
-  "noVariation": "Sem variação"
+  "security": "Segurança"
 }

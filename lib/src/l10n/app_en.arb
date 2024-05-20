@@ -321,6 +321,5 @@
     "newPassword": "New password",
     "newPasswordConfirmation": "New password confirmation",
     "newPasswordHint": "Enter a new password",
-    "security": "Security",
-    "noVariation": "No variation"
+    "security": "Security"
 }
