@@ -33,9 +33,12 @@ class WebFrameWidget extends StatelessWidget {
             return Column(
               children: [
                 if (constraints.maxWidth > 500)
-                  Image.asset(
-                    'assets/images/logo.png',
-                    height: constraints.maxHeight * .1,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      height: constraints.maxHeight * .1,
+                    ),
                   ),
                 Expanded(
                   child: Center(
