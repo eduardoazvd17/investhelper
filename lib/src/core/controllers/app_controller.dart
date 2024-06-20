@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
@@ -150,6 +151,7 @@ abstract class AppControllerBase with Store {
   @observable
   bool isBlurOverlayShowing = false;
 
+  @action
   Future<bool> requestAuth([String? message]) async {
     disableAuthOverlay = true;
     final bool result = await _localAuth.authenticate(
