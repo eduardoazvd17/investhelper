@@ -269,6 +269,14 @@ mixin _$AppController on AppControllerBase, Store {
         .run(() => super.deleteMyAccount(currentPassword));
   }
 
+  late final _$requestAuthAsyncAction =
+      AsyncAction('AppControllerBase.requestAuth', context: context);
+
+  @override
+  Future<bool> requestAuth([String? message]) {
+    return _$requestAuthAsyncAction.run(() => super.requestAuth(message));
+  }
+
   late final _$changeIsBiometricsEnabledAsyncAction = AsyncAction(
       'AppControllerBase.changeIsBiometricsEnabled',
       context: context);
