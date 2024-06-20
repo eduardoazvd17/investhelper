@@ -13,6 +13,7 @@ import 'src/core/enums/language_enum.dart';
 import 'src/core/enums/theme_enum.dart';
 import 'src/core/services/app_service.dart';
 import 'src/core/utils/app_theme.dart';
+import 'src/core/utils/custom_scroll_behavior.dart';
 import 'src/core/widgets/web_frame_widget.dart';
 import 'src/features/auth/controllers/auth_controller.dart';
 import 'src/features/auth/services/auth_service.dart';
@@ -75,6 +76,7 @@ class InvestHelperApp extends StatelessWidget {
         final app = MaterialApp(
           title: 'InvestHelper',
           debugShowCheckedModeBanner: false,
+          scrollBehavior: CustomScrollBehavior(),
           builder: (context, child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(
               textScaler: MediaQuery.of(context).textScaler.clamp(
