@@ -34,7 +34,7 @@ class WebFrameWidget extends StatelessWidget {
               children: [
                 if (constraints.maxWidth > 500)
                   Image.asset(
-                    'assets/images/desktop_icon.png',
+                    'assets/images/logo.png',
                     height: constraints.maxHeight * .1,
                   ),
                 Expanded(
