@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_web_frame/flutter_web_frame.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -14,6 +13,7 @@ import 'src/core/enums/language_enum.dart';
 import 'src/core/enums/theme_enum.dart';
 import 'src/core/services/app_service.dart';
 import 'src/core/utils/app_theme.dart';
+import 'src/core/widgets/web_frame_widget.dart';
 import 'src/features/auth/controllers/auth_controller.dart';
 import 'src/features/auth/services/auth_service.dart';
 import 'src/features/auth/views/auth_page.dart';
@@ -155,15 +155,12 @@ class InvestHelperApp extends StatelessWidget {
           },
         );
 
-        if (kIsWeb) {
-          return FlutterWebFrame(
-            builder: (_) => app,
-            maximumSize: Size(768, MediaQuery.of(context).size.height),
-            backgroundColor: Colors.grey,
-          );
-        } else {
-          return app;
-        }
+        return kIsWeb
+            ? WebFrameWidget(
+                themeMode: appController.theme.themeMode,
+                child: app,
+              )
+            : app;
       },
     );
   }

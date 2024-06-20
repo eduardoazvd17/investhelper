@@ -8,24 +8,27 @@ class AppTheme {
   static const _kSecondaryColor = Colors.blueGrey;
   static const _kBorderRadius = 12.5;
   static const _kLightBackgroundColor = Colors.white;
-  static final _kSecondaryLightBackgroundColor = Colors.grey[100];
+  static final kSecondaryLightBackgroundColor = Colors.grey[100];
   static const _kDarkBackgroundColor = Colors.black;
-  static final _kSecondaryDarkBackgroundColor = Colors.grey[900];
+  static final kSecondaryDarkBackgroundColor = Colors.grey[900];
   static final _kFontFamilly = GoogleFonts.roboto().fontFamily;
   static const _kToolbarHeight = 62.5;
+  static final kShadowColor = Colors.grey.withOpacity(0.3);
 
   static ThemeData get lightTheme => ThemeData(
         useMaterial3: true,
         fontFamily: _kFontFamilly,
         primaryColor: _kPrimaryColor,
         scaffoldBackgroundColor: _kLightBackgroundColor,
+        shadowColor: kShadowColor,
+        hoverColor: kShadowColor,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: _kPrimaryColor,
-          brightness: Brightness.light,
-          surface: _kLightBackgroundColor,
-          surfaceTint: _kLightBackgroundColor,
-          secondary: _kSecondaryColor,
-        ),
+            seedColor: _kPrimaryColor,
+            brightness: Brightness.light,
+            surface: _kLightBackgroundColor,
+            surfaceTint: _kLightBackgroundColor,
+            secondary: _kSecondaryColor,
+            shadow: kShadowColor),
         appBarTheme: const AppBarTheme(
           toolbarHeight: _kToolbarHeight,
           centerTitle: _kCenterTitle,
@@ -49,7 +52,7 @@ class AppTheme {
           ),
         ),
         cardTheme: CardTheme(
-          color: _kSecondaryLightBackgroundColor,
+          color: kSecondaryLightBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
@@ -66,7 +69,7 @@ class AppTheme {
           ),
         ),
         bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: _kSecondaryLightBackgroundColor,
+          backgroundColor: kSecondaryLightBackgroundColor,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(_kBorderRadius),
@@ -76,20 +79,20 @@ class AppTheme {
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
           selectedItemColor: _kPrimaryColor,
-          backgroundColor: _kSecondaryLightBackgroundColor,
+          backgroundColor: kSecondaryLightBackgroundColor,
         ),
         floatingActionButtonTheme: const FloatingActionButtonThemeData(
           foregroundColor: Colors.white,
           backgroundColor: _kPrimaryColor,
         ),
         datePickerTheme: DatePickerThemeData(
-          backgroundColor: _kSecondaryLightBackgroundColor,
+          backgroundColor: kSecondaryLightBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
         ),
         drawerTheme: DrawerThemeData(
-          backgroundColor: _kSecondaryLightBackgroundColor,
+          backgroundColor: kSecondaryLightBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
@@ -101,12 +104,15 @@ class AppTheme {
         fontFamily: _kFontFamilly,
         primaryColor: _kPrimaryColor[200],
         scaffoldBackgroundColor: _kDarkBackgroundColor,
+        shadowColor: kShadowColor,
+        hoverColor: kShadowColor,
         colorScheme: ColorScheme.fromSeed(
           seedColor: _kPrimaryColor[200]!,
           brightness: Brightness.dark,
           surface: Colors.transparent,
           surfaceTint: Colors.transparent,
           secondary: _kSecondaryColor,
+          shadow: kShadowColor,
         ),
         appBarTheme: const AppBarTheme(
           toolbarHeight: _kToolbarHeight,
@@ -131,7 +137,7 @@ class AppTheme {
           ),
         ),
         cardTheme: CardTheme(
-          color: _kSecondaryDarkBackgroundColor,
+          color: kSecondaryDarkBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
@@ -148,7 +154,7 @@ class AppTheme {
           ),
         ),
         bottomSheetTheme: BottomSheetThemeData(
-          backgroundColor: _kSecondaryDarkBackgroundColor,
+          backgroundColor: kSecondaryDarkBackgroundColor,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
               top: Radius.circular(_kBorderRadius),
@@ -158,20 +164,20 @@ class AppTheme {
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           landscapeLayout: BottomNavigationBarLandscapeLayout.linear,
           selectedItemColor: _kPrimaryColor[200],
-          backgroundColor: _kSecondaryDarkBackgroundColor,
+          backgroundColor: kSecondaryDarkBackgroundColor,
         ),
         floatingActionButtonTheme: FloatingActionButtonThemeData(
           foregroundColor: Colors.black,
           backgroundColor: _kPrimaryColor[200],
         ),
         datePickerTheme: DatePickerThemeData(
-          backgroundColor: _kSecondaryDarkBackgroundColor,
+          backgroundColor: kSecondaryDarkBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
         ),
         drawerTheme: DrawerThemeData(
-          backgroundColor: _kSecondaryDarkBackgroundColor,
+          backgroundColor: kSecondaryDarkBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
