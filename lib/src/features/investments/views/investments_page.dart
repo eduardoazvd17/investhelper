@@ -188,7 +188,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                       InvestmentsPageSubTabsEnum.overview =>
                         _overviewTabContent,
                       InvestmentsPageSubTabsEnum.investments =>
-                        _detailsTabContent,
+                        _investmentsTabContent,
                     };
                   },
                 ),
@@ -247,7 +247,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
     );
   }
 
-  Widget get _detailsTabContent {
+  Widget get _investmentsTabContent {
     return Scrollbar(
       controller: _detailsScrollController,
       thumbVisibility: true,
@@ -396,11 +396,11 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: controller.goals.map((e) {
-                    return GoalTileWidget(goal: e).animate().fade(
-                          duration: const Duration(milliseconds: 400),
-                        );
+                    return GoalTileWidget(goal: e);
                   }).toList(),
-                ),
+                ).animate().fade(
+                      duration: const Duration(milliseconds: 400),
+                    ),
               ),
             );
           },
@@ -466,11 +466,11 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                   return InvestmentTileWidget(
                     investment: e,
                     hideValues: controller.hideValues,
-                  ).animate().fade(
-                        duration: const Duration(milliseconds: 400),
-                      );
+                  );
                 }).toList(),
-              ),
+              ).animate().fade(
+                    duration: const Duration(milliseconds: 400),
+                  ),
             ),
           );
         }),
@@ -518,11 +518,11 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                         (i) => i.id == e.investmentId,
                       ),
                       hideValues: controller.hideValues,
-                    ).animate().fade(
-                          duration: const Duration(milliseconds: 400),
-                        );
+                    );
                   }).toList(),
-                ),
+                ).animate().fade(
+                      duration: const Duration(milliseconds: 400),
+                    ),
               ),
             );
           },
