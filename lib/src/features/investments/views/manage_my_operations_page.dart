@@ -497,13 +497,20 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               _selectedInvestment.value?.custodialPosition ?? 0;
           final int intValue =
               int.tryParse(AppFormatter.textFieldInteger(value)) ?? 0;
+
+          final String newValue;
           if (intValue > position &&
               _selectedOperationType == OperationTypeEnum.sale) {
-            _quantityController.text =
-                AppFormatter.textFieldInteger(position.toString());
+            newValue = AppFormatter.textFieldInteger(position.toString());
           } else {
-            _quantityController.text = AppFormatter.textFieldInteger(value);
+            newValue = AppFormatter.textFieldInteger(value);
           }
+
+          final offset = _quantityController.selection.baseOffset;
+          _quantityController.value = TextEditingValue(
+            text: newValue,
+            selection: TextSelection.collapsed(offset: offset),
+          );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
         textInputAction: TextInputAction.done,
@@ -518,7 +525,12 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         hint: '0.00',
         controller: _unitPriceController,
         onChanged: (value) {
-          _unitPriceController.text = AppFormatter.textFieldCurrency(value);
+          final newValue = AppFormatter.textFieldCurrency(value);
+          final offset = _unitPriceController.selection.baseOffset;
+          _unitPriceController.value = TextEditingValue(
+            text: newValue,
+            selection: TextSelection.collapsed(offset: offset),
+          );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textInputAction: TextInputAction.done,
@@ -533,7 +545,12 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         hint: '0.00',
         controller: _totalPriceController,
         onChanged: (value) {
-          _totalPriceController.text = AppFormatter.textFieldCurrency(value);
+          final newValue = AppFormatter.textFieldCurrency(value);
+          final offset = _totalPriceController.selection.baseOffset;
+          _totalPriceController.value = TextEditingValue(
+            text: newValue,
+            selection: TextSelection.collapsed(offset: offset),
+          );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textInputAction: TextInputAction.done,
@@ -552,13 +569,20 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
               _selectedInvestment.value?.cryptoPosition ?? 0;
           final double doubleValue =
               double.tryParse(AppFormatter.cryptoFloat(value)) ?? 0;
+          final String newValue;
+
           if (doubleValue > cryptoPosition &&
               _selectedOperationType == OperationTypeEnum.sale) {
-            _cryptoQuantityController.text =
-                AppFormatter.cryptoFloat(cryptoPosition.toString());
+            newValue = AppFormatter.cryptoFloat(cryptoPosition.toString());
           } else {
-            _cryptoQuantityController.text = AppFormatter.cryptoFloat(value);
+            newValue = AppFormatter.cryptoFloat(value);
           }
+
+          final offset = _cryptoQuantityController.selection.baseOffset;
+          _cryptoQuantityController.value = TextEditingValue(
+            text: newValue,
+            selection: TextSelection.collapsed(offset: offset),
+          );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textInputAction: TextInputAction.done,

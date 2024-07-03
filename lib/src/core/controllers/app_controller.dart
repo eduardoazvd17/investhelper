@@ -153,9 +153,14 @@ abstract class AppControllerBase with Store {
   @action
   Future<bool> requestAuth([String? message]) async {
     disableAuthOverlay = true;
-    final bool result = await _localAuth.authenticate(
-      localizedReason: message ?? 'Please authenticate to continue',
-    );
+    late bool result;
+    try {
+      result = await _localAuth.authenticate(
+        localizedReason: message ?? 'Please authenticate to continue',
+      );
+    } catch (_) {
+      result = false;
+    }
     disableAuthOverlay = false;
     return result;
   }

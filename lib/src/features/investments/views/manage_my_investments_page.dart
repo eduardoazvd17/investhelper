@@ -327,7 +327,12 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         hint: AppLocalizations.of(context)!.investmentNameHint,
         controller: _nameController,
         onChanged: (value) {
-          _nameController.text = AppFormatter.ticker(value);
+          final newValue = AppFormatter.ticker(value);
+          final offset = _nameController.selection.baseOffset;
+          _nameController.value = TextEditingValue(
+            text: newValue,
+            selection: TextSelection.collapsed(offset: offset),
+          );
         },
         keyboardType: TextInputType.text,
         textCapitalization: TextCapitalization.words,
@@ -363,8 +368,12 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         hint: '0',
         controller: _custodialPositionController,
         onChanged: (value) {
-          _custodialPositionController.text =
-              AppFormatter.textFieldInteger(value);
+          final newValue = AppFormatter.textFieldInteger(value);
+          final offset = _custodialPositionController.selection.baseOffset;
+          _custodialPositionController.value = TextEditingValue(
+            text: newValue,
+            selection: TextSelection.collapsed(offset: offset),
+          );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
         textInputAction: TextInputAction.done,
@@ -379,7 +388,12 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         hint: '0.00',
         controller: _averagePriceController,
         onChanged: (value) {
-          _averagePriceController.text = AppFormatter.textFieldCurrency(value);
+          final newValue = AppFormatter.textFieldCurrency(value);
+          final offset = _averagePriceController.selection.baseOffset;
+          _averagePriceController.value = TextEditingValue(
+            text: newValue,
+            selection: TextSelection.collapsed(offset: offset),
+          );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textInputAction: TextInputAction.done,
@@ -394,8 +408,12 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         hint: '0.00',
         controller: _amountInvestedController,
         onChanged: (value) {
-          _amountInvestedController.text =
-              AppFormatter.textFieldCurrency(value);
+          final newValue = AppFormatter.textFieldCurrency(value);
+          final offset = _amountInvestedController.selection.baseOffset;
+          _amountInvestedController.value = TextEditingValue(
+            text: newValue,
+            selection: TextSelection.collapsed(offset: offset),
+          );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textInputAction: TextInputAction.done,
@@ -410,7 +428,12 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
         hint: '0',
         controller: _cryptoPositionController,
         onChanged: (value) {
-          _cryptoPositionController.text = AppFormatter.cryptoFloat(value);
+          final newValue = AppFormatter.cryptoFloat(value);
+          final offset = _cryptoPositionController.selection.baseOffset;
+          _cryptoPositionController.value = TextEditingValue(
+            text: newValue,
+            selection: TextSelection.collapsed(offset: offset),
+          );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         textInputAction: TextInputAction.done,
