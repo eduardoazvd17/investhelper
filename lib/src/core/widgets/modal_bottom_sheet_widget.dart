@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ModalBottomSheetWidget extends StatefulWidget {
@@ -23,15 +26,21 @@ class ModalBottomSheetWidget extends StatefulWidget {
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (_) {
+        final double paddingTop;
+        if (kIsWeb) {
+          paddingTop = kToolbarHeight;
+        } else if (Platform.isAndroid) {
+          paddingTop = kToolbarHeight + 31.5;
+        } else {
+          paddingTop = kToolbarHeight + 62.5;
+        }
+
         return GestureDetector(
           onTap: () => Navigator.of(context).pop(),
           child: DecoratedBox(
             decoration: const BoxDecoration(color: Colors.transparent),
             child: Padding(
-              padding: EdgeInsets.only(
-                top: MediaQuery.of(context).viewPadding.top,
-                bottom: MediaQuery.of(context).viewInsets.bottom,
-              ),
+              padding: EdgeInsets.only(top: paddingTop),
               child: GestureDetector(
                 onTap: _hideKeyboard,
                 child: DecoratedBox(
@@ -78,81 +87,94 @@ class _ModalBottomSheetWidgetState extends State<ModalBottomSheetWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: ListView(
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 5),
-                child: Container(
-                  width: 80,
-                  height: 3,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12.5),
-                    color: Colors.grey,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-            child: Text(
-              widget.title,
-              textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(fontWeight: FontWeight.bold),
-            ),
-          ),
-          const Divider(),
-          AnimatedSize(
-            curve: Curves.ease,
-            duration: const Duration(milliseconds: 300),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height -
-                    MediaQuery.of(context).viewInsets.bottom -
-                    MediaQuery.of(context).viewPadding.top -
-                    MediaQuery.of(context).padding.bottom -
-                    199,
-              ),
+    return Scaffold(
+      backgroundColor: Theme.of(context).cardTheme.color,
+      body: AnimatedSize(
+        alignment: Alignment.topCenter,
+        duration: const Duration(milliseconds: 300),
+        child: Column(
+          children: [
+            _getHeaderWidget,
+            Expanded(
               child: Scrollbar(
                 thumbVisibility: true,
                 controller: _scrollController,
-                child: SingleChildScrollView(
+                child: ListView(
+                  shrinkWrap: true,
                   controller: _scrollController,
                   physics: const AlwaysScrollableScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 10,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 10,
+                      ),
+                      child: Column(children: widget.children),
                     ),
-                    child: Column(children: widget.children),
-                  ),
+                  ],
                 ),
               ),
             ),
-          ),
-          if (widget.actions != null && widget.actions!.isNotEmpty) ...[
-            const Divider(),
+          ],
+        ),
+      ),
+      bottomNavigationBar: _getActionsWidget,
+    );
+  }
+
+  Widget get _getHeaderWidget {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 10,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: widget.actions!,
+              padding: const EdgeInsets.only(top: 10, bottom: 5),
+              child: Container(
+                width: 80,
+                height: 3,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(14),
+                  color: Colors.grey,
+                ),
               ),
             ),
-            const SizedBox(height: 10),
           ],
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+          child: Text(
+            widget.title,
+            textAlign: TextAlign.center,
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium
+                ?.copyWith(fontWeight: FontWeight.bold),
+          ),
+        ),
+        const Padding(
+          padding: EdgeInsets.only(top: 10),
+          child: Divider(height: 0),
+        ),
+      ],
+    );
+  }
+
+  Widget? get _getActionsWidget {
+    if (widget.actions == null || widget.actions!.isEmpty) return null;
+    return SafeArea(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Divider(height: 0),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: widget.actions!,
+            ),
+          ),
         ],
       ),
     );
