@@ -69,16 +69,20 @@ class UserDataModel {
 
   factory UserDataModel.fromMap(Map<String, dynamic> map) {
     return UserDataModel(
-      registerDate:
-          DateTime.fromMillisecondsSinceEpoch(map['registerDate'] as int),
-      subscription: SubscriptionEnum.values[map['subscription'] as int],
+      registerDate: DateTime.fromMillisecondsSinceEpoch(
+        int.parse(map['registerDate'].toStringAsFixed(0)),
+      ),
+      subscription: SubscriptionEnum
+          .values[int.parse(map['subscription'].toStringAsFixed(0))],
       subscriptionStartDate: map['subscriptionStartDate'] != null
           ? DateTime.fromMillisecondsSinceEpoch(
-              map['subscriptionStartDate'] as int)
+              int.parse(map['subscriptionStartDate'].toStringAsFixed(0)),
+            )
           : null,
       subscriptionEndDate: map['subscriptionEndDate'] != null
           ? DateTime.fromMillisecondsSinceEpoch(
-              map['subscriptionEndDate'] as int)
+              int.parse(map['subscriptionEndDate'].toStringAsFixed(0)),
+            )
           : null,
     );
   }

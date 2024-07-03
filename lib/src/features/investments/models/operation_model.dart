@@ -127,17 +127,24 @@ class OperationModel {
       id: map['id'] as String,
       userId: map['userId'] as String,
       investmentId: map['investmentId'] as String,
-      type: OperationTypeEnum.values[map['type'] as int],
-      date: DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
-      quantity: map['quantity'] as int,
-      unitPrice: map['unitPrice'] as double,
-      totalPrice: map['totalPrice'] as double,
-      lastCustodialPosition: map['lastCustodialPosition'] as int,
-      lastAveragePrice: map['lastAveragePrice'] as double,
-      category: CategoryEnum.values[map['category'] as int],
-      cryptoQuantity: map['cryptoQuantity'] as double,
-      lastCryptoPosition: map['lastCryptoPosition'] as double,
-      lastAmountInvested: map['lastAmountInvested'] as double,
+      type: OperationTypeEnum.values[int.parse(map['type'].toStringAsFixed(0))],
+      date: DateTime.fromMillisecondsSinceEpoch(
+        int.parse(map['date'].toStringAsFixed(0)),
+      ),
+      quantity: int.parse(map['quantity'].toStringAsFixed(0)),
+      unitPrice: double.parse(map['unitPrice'].toStringAsFixed(2)),
+      totalPrice: double.parse(map['totalPrice'].toStringAsFixed(2)),
+      lastCustodialPosition:
+          int.parse(map['lastCustodialPosition'].toStringAsFixed(0)),
+      lastAveragePrice:
+          double.parse(map['lastAveragePrice'].toStringAsFixed(2)),
+      category:
+          CategoryEnum.values[int.parse(map['category'].toStringAsFixed(0))],
+      cryptoQuantity: double.parse(map['cryptoQuantity'].toStringAsFixed(2)),
+      lastCryptoPosition:
+          double.parse(map['lastCryptoPosition'].toStringAsFixed(2)),
+      lastAmountInvested:
+          double.parse(map['lastAmountInvested'].toStringAsFixed(2)),
     );
   }
 }

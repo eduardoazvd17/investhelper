@@ -100,16 +100,19 @@ class InvestmentModel {
       id: map['id'] as String,
       userId: map['userId'] as String,
       name: map['name'] as String,
-      category: CategoryEnum.values[map['category'] as int],
-      custodialPosition: map['custodialPosition'] as int,
-      averagePrice: map['averagePrice'] as double,
-      amountInvested: map['amountInvested'] as double,
-      creationDate:
-          DateTime.fromMillisecondsSinceEpoch(map['creationDate'] as int),
+      category:
+          CategoryEnum.values[int.parse(map['category'].toStringAsFixed(0))],
+      custodialPosition: int.parse(map['custodialPosition'].toStringAsFixed(0)),
+      averagePrice: double.parse(map['averagePrice'].toStringAsFixed(2)),
+      amountInvested: double.parse(map['amountInvested'].toStringAsFixed(2)),
+      creationDate: DateTime.fromMillisecondsSinceEpoch(
+        int.parse(map['creationDate'].toStringAsFixed(0)),
+      ),
       lastOperationDate: map['lastOperationDate'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['lastOperationDate'] as int)
+          ? DateTime.fromMillisecondsSinceEpoch(
+              int.parse(map['lastOperationDate'].toStringAsFixed(0)))
           : null,
-      cryptoPosition: map['cryptoPosition'] as double,
+      cryptoPosition: double.parse(map['cryptoPosition'].toStringAsFixed(2)),
     );
   }
 }
