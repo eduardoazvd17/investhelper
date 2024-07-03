@@ -64,7 +64,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
             !appController.disableAuthOverlay) {
           appController.shouldRequestAuth = false;
           appController.isRequestAuthOverlayShowing = true;
-          AuthOverlay.show(context);
+          await AuthOverlay.show(context);
+          appController.isRequestAuthOverlayShowing = false;
         }
       },
       onInactive: () {
