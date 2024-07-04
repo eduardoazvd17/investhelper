@@ -37,6 +37,11 @@ class _AuthOverlayState extends State<AuthOverlay> {
 
   @override
   void initState() {
+    widget.appController.biometricsSecurityCheck().then((_) {
+      if (widget.appController.user == null) {
+        _endSession(force: true);
+      }
+    });
     _widgetEventHandler = WidgetEventHandler(
       onResumed: () {
         if (_autoCallAuthenticate) {
@@ -69,17 +74,22 @@ class _AuthOverlayState extends State<AuthOverlay> {
     if (result && mounted) Navigator.of(context).pop();
   }
 
-  Future<void> _endSession(BuildContext context) async {
-    final result = await DialogWidget.show(
-      context,
-      title: AppLocalizations.of(context)!.endSession,
-      message: AppLocalizations.of(context)!.endSessionMessage,
-      actionType: DialogWidgetActionType.yesOrNo,
-    );
+  Future<void> _endSession({bool force = false}) async {
+    final bool? result;
+    if (force) {
+      result = true;
+    } else {
+      result = await DialogWidget.show(
+        context,
+        title: AppLocalizations.of(context)!.endSession,
+        message: AppLocalizations.of(context)!.endSessionMessage,
+        actionType: DialogWidgetActionType.yesOrNo,
+      );
+    }
 
     if (result != null && result) {
       widget.appController.logout();
-      if (!context.mounted) return;
+      if (!mounted) return;
       Navigator.of(context).popUntil(
         ModalRoute.withName(InvestmentsPage.routeName),
       );
@@ -150,7 +160,7 @@ class _AuthOverlayState extends State<AuthOverlay> {
                         showBorder: false,
                         backgroundColor: Theme.of(context).colorScheme.error,
                         color: Theme.of(context).scaffoldBackgroundColor,
-                        onTap: () => _endSession(context),
+                        onTap: _endSession,
                       ),
                     ],
                   ),
