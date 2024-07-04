@@ -39,23 +39,25 @@ class ModalBottomSheetWidget extends StatefulWidget {
           onTap: () => Navigator.of(context).pop(),
           child: DecoratedBox(
             decoration: const BoxDecoration(color: Colors.transparent),
-            child: Padding(
-              padding: EdgeInsets.only(top: paddingTop),
-              child: GestureDetector(
-                onTap: _hideKeyboard,
-                child: DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(12.5),
+            child: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(top: paddingTop),
+                child: GestureDetector(
+                  onTap: _hideKeyboard,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(12.5),
+                      ),
+                      color: Theme.of(context).bottomSheetTheme.backgroundColor,
                     ),
-                    color: Theme.of(context).bottomSheetTheme.backgroundColor,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12.5),
-                    child: ModalBottomSheetWidget(
-                      title: title,
-                      actions: actions,
-                      children: children,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12.5),
+                      child: ModalBottomSheetWidget(
+                        title: title,
+                        actions: actions,
+                        children: children,
+                      ),
                     ),
                   ),
                 ),
