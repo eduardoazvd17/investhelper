@@ -50,10 +50,13 @@ class ModalBottomSheetWidget extends StatefulWidget {
                     ),
                     color: Theme.of(context).bottomSheetTheme.backgroundColor,
                   ),
-                  child: ModalBottomSheetWidget(
-                    title: title,
-                    actions: actions,
-                    children: children,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12.5),
+                    child: ModalBottomSheetWidget(
+                      title: title,
+                      actions: actions,
+                      children: children,
+                    ),
                   ),
                 ),
               ),
