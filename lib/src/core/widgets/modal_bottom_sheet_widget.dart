@@ -40,6 +40,7 @@ class ModalBottomSheetWidget extends StatefulWidget {
           child: DecoratedBox(
             decoration: const BoxDecoration(color: Colors.transparent),
             child: SafeArea(
+              bottom: false,
               child: Padding(
                 padding: EdgeInsets.only(top: paddingTop),
                 child: GestureDetector(
