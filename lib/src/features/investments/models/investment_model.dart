@@ -112,7 +112,7 @@ class InvestmentModel {
           ? DateTime.fromMillisecondsSinceEpoch(
               int.parse(map['lastOperationDate'].toStringAsFixed(0)))
           : null,
-      cryptoPosition: double.parse(map['cryptoPosition'].toStringAsFixed(2)),
+      cryptoPosition: double.parse(map['cryptoPosition'].toStringAsFixed(8)),
     );
   }
 }

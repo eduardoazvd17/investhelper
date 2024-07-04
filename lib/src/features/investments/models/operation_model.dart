@@ -140,9 +140,9 @@ class OperationModel {
           double.parse(map['lastAveragePrice'].toStringAsFixed(2)),
       category:
           CategoryEnum.values[int.parse(map['category'].toStringAsFixed(0))],
-      cryptoQuantity: double.parse(map['cryptoQuantity'].toStringAsFixed(2)),
+      cryptoQuantity: double.parse(map['cryptoQuantity'].toStringAsFixed(8)),
       lastCryptoPosition:
-          double.parse(map['lastCryptoPosition'].toStringAsFixed(2)),
+          double.parse(map['lastCryptoPosition'].toStringAsFixed(8)),
       lastAmountInvested:
           double.parse(map['lastAmountInvested'].toStringAsFixed(2)),
     );
