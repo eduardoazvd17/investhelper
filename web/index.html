@@ -42,8 +42,11 @@
         document.getElementsByTagName('head')[0].appendChild(meta);
       }
     }
-
     setMetaDescription();
+  </script>
+  <script src="https://unpkg.com/canvaskit-wasm@0.25.1/bin/canvaskit.js"></script>
+  <script>
+    window.flutterWebRenderer = "canvaskit";
   </script>
 
   <!-- iOS meta tags & icons -->
