@@ -331,7 +331,9 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           final offset = _nameController.selection.baseOffset;
           _nameController.value = TextEditingValue(
             text: newValue,
-            selection: TextSelection.collapsed(offset: offset),
+            selection: TextSelection.collapsed(
+              offset: min(offset, newValue.characters.length),
+            ),
           );
         },
         keyboardType: TextInputType.text,
@@ -372,7 +374,9 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           final offset = _custodialPositionController.selection.baseOffset;
           _custodialPositionController.value = TextEditingValue(
             text: newValue,
-            selection: TextSelection.collapsed(offset: offset),
+            selection: TextSelection.collapsed(
+              offset: min(offset, newValue.characters.length),
+            ),
           );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
@@ -392,7 +396,9 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           final offset = _averagePriceController.selection.baseOffset;
           _averagePriceController.value = TextEditingValue(
             text: newValue,
-            selection: TextSelection.collapsed(offset: offset),
+            selection: TextSelection.collapsed(
+              offset: min(offset, newValue.characters.length),
+            ),
           );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -412,7 +418,9 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           final offset = _amountInvestedController.selection.baseOffset;
           _amountInvestedController.value = TextEditingValue(
             text: newValue,
-            selection: TextSelection.collapsed(offset: offset),
+            selection: TextSelection.collapsed(
+              offset: min(offset, newValue.characters.length),
+            ),
           );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -432,7 +440,9 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
           final offset = _cryptoPositionController.selection.baseOffset;
           _cryptoPositionController.value = TextEditingValue(
             text: newValue,
-            selection: TextSelection.collapsed(offset: offset),
+            selection: TextSelection.collapsed(
+              offset: min(offset, newValue.characters.length),
+            ),
           );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),

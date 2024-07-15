@@ -509,7 +509,9 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           final offset = _quantityController.selection.baseOffset;
           _quantityController.value = TextEditingValue(
             text: newValue,
-            selection: TextSelection.collapsed(offset: offset),
+            selection: TextSelection.collapsed(
+              offset: min(offset, newValue.characters.length),
+            ),
           );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: false),
@@ -529,7 +531,9 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           final offset = _unitPriceController.selection.baseOffset;
           _unitPriceController.value = TextEditingValue(
             text: newValue,
-            selection: TextSelection.collapsed(offset: offset),
+            selection: TextSelection.collapsed(
+              offset: min(offset, newValue.characters.length),
+            ),
           );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -549,7 +553,9 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           final offset = _totalPriceController.selection.baseOffset;
           _totalPriceController.value = TextEditingValue(
             text: newValue,
-            selection: TextSelection.collapsed(offset: offset),
+            selection: TextSelection.collapsed(
+              offset: min(offset, newValue.characters.length),
+            ),
           );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -581,7 +587,9 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
           final offset = _cryptoQuantityController.selection.baseOffset;
           _cryptoQuantityController.value = TextEditingValue(
             text: newValue,
-            selection: TextSelection.collapsed(offset: offset),
+            selection: TextSelection.collapsed(
+              offset: min(offset, newValue.characters.length),
+            ),
           );
         },
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
