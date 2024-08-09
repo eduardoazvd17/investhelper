@@ -46,8 +46,8 @@ class AuthService {
       );
     } on AppException catch (_) {
       rethrow;
-    } on FirebaseAuthException catch (_) {
-      if (_.code == "network-request-failed") {
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "network-request-failed") {
         throw AppException(AppExceptionType.connectionError);
       }
       throw AppException(AppExceptionType.incorrectUserOrPassword);
@@ -99,8 +99,8 @@ class AuthService {
       );
     } on AppException catch (_) {
       rethrow;
-    } on FirebaseAuthException catch (_) {
-      switch (_.code) {
+    } on FirebaseAuthException catch (e) {
+      switch (e.code) {
         case 'email-already-in-use':
           throw AppException(AppExceptionType.userAlreadyExists);
         case 'invalid-email':
@@ -130,8 +130,8 @@ class AuthService {
       await _auth.sendPasswordResetEmail(email: email);
     } on AppException catch (_) {
       rethrow;
-    } on FirebaseAuthException catch (_) {
-      if (_.code == "network-request-failed") {
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "network-request-failed") {
         throw AppException(AppExceptionType.connectionError);
       }
       throw AppException(AppExceptionType.invalidRecoveryEmail);

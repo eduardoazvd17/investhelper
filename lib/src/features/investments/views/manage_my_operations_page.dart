@@ -257,7 +257,7 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
       onEndDrawerChanged: (isOpenning) {
         if (!isOpenning) {
           widget.controller.onChangeOperationsFilters().catchError((error) {
-            if (error is AppException) error.show(context);
+            if (error is AppException && context.mounted) error.show(context);
           });
         }
       },
