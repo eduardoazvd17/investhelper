@@ -25,8 +25,8 @@ class AppTheme {
         colorScheme: ColorScheme.fromSeed(
             seedColor: _kPrimaryColor,
             brightness: Brightness.light,
-            surface: _kLightBackgroundColor,
-            surfaceTint: _kLightBackgroundColor,
+            surface: kSecondaryLightBackgroundColor,
+            surfaceTint: kSecondaryLightBackgroundColor,
             secondary: _kSecondaryColor,
             shadow: kShadowColor),
         appBarTheme: const AppBarTheme(
@@ -58,6 +58,7 @@ class AppTheme {
           ),
         ),
         dialogTheme: DialogTheme(
+          backgroundColor: kSecondaryLightBackgroundColor,
           actionsPadding: const EdgeInsets.only(
             bottom: 25,
             left: 25,
@@ -109,8 +110,8 @@ class AppTheme {
         colorScheme: ColorScheme.fromSeed(
           seedColor: _kPrimaryColor[200]!,
           brightness: Brightness.dark,
-          surface: Colors.transparent,
-          surfaceTint: Colors.transparent,
+          surface: kSecondaryDarkBackgroundColor,
+          surfaceTint: kSecondaryDarkBackgroundColor,
           secondary: _kSecondaryColor,
           shadow: kShadowColor,
         ),
@@ -143,6 +144,7 @@ class AppTheme {
           ),
         ),
         dialogTheme: DialogTheme(
+          backgroundColor: kSecondaryDarkBackgroundColor,
           actionsPadding: const EdgeInsets.only(
             bottom: 25,
             left: 25,
