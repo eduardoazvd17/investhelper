@@ -654,4 +654,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get security => 'Segurança';
+
+  @override
+  String get continueWithGoogle => 'Continuar com Google';
 }

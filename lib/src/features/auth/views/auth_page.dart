@@ -226,12 +226,47 @@ class _AuthPageState extends State<AuthPage> {
           subTitle: AppLocalizations.of(context)!.authPageLoginSubtitle,
         ),
         Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+          child: ElevatedButton.icon(
+            onPressed: () {},
+            icon: Image.asset(
+              'assets/images/google_icon.png',
+              height: 24,
+              width: 24,
+            ),
+            label: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(AppLocalizations.of(context)!.continueWithGoogle),
+            ),
+            style: ElevatedButton.styleFrom(
+              padding: const EdgeInsets.all(15),
+              minimumSize: const Size(double.infinity, 0),
+              foregroundColor: Colors.black,
+              backgroundColor: Colors.grey.shade200,
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        const Divider(height: 0, color: Colors.grey),
+        Padding(
           padding: const EdgeInsets.symmetric(vertical: 25),
           child: Column(
             children: [
               _emailTextField,
               const SizedBox(height: 10),
               _passwordTextField,
+              Align(
+                alignment: Alignment.centerRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: TextButton(
+                    onPressed: () => setState(() {
+                      _currentPageState = AuthPageState.recovery;
+                    }),
+                    child: Text(AppLocalizations.of(context)!.forgotMyPassword),
+                  ),
+                ),
+              ),
               const SizedBox(height: 25),
               ElevatedButton(
                 onPressed: _makeLogin,
@@ -241,13 +276,6 @@ class _AuthPageState extends State<AuthPage> {
                     AppLocalizations.of(context)!.makeLogin,
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              TextButton(
-                onPressed: () => setState(() {
-                  _currentPageState = AuthPageState.recovery;
-                }),
-                child: Text(AppLocalizations.of(context)!.forgotMyPassword),
               ),
             ],
           ),
