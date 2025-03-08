@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/models/user_model.dart';
@@ -11,6 +12,44 @@ class AuthService {
   FirebaseAuth get _auth => FirebaseAuth.instance;
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;
   FlutterSecureStorage get _secureStorage => const FlutterSecureStorage();
+
+  Future<UserModel> makeLoginWithGoogle() async {
+    try {
+      final googleAccount = await GoogleSignIn().signIn();
+      final googleAuth = await googleAccount?.authentication;
+      if (googleAuth == null) throw Exception('popup_closed');
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      await _auth.signInWithCredential(credential);
+
+      try {
+        await _secureStorage.write(
+          key: 'userId',
+          value: _auth.currentUser!.uid,
+        );
+        await _secureStorage.delete(key: _auth.currentUser!.uid);
+      } catch (_) {}
+
+      return UserModel(
+        id: _auth.currentUser!.uid,
+        name: _auth.currentUser!.displayName!,
+        email: _auth.currentUser!.email!,
+        data: await getUserData(_auth.currentUser!.uid),
+      );
+    } on AppException catch (_) {
+      rethrow;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "network-request-failed") {
+        throw AppException(AppExceptionType.connectionError);
+      }
+      throw AppException();
+    } catch (error) {
+      throw AppException(AppExceptionType.connectionError, error.toString());
+    }
+  }
 
   Future<UserModel> makeLogin(LoginUserModel loginModel) async {
     try {

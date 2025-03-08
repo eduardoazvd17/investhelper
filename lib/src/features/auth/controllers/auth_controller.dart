@@ -20,6 +20,18 @@ abstract class AuthControllerBase with Store {
   })  : _appController = appController,
         _service = service;
 
+  @computed
+  UserModel? get user => _appController.user;
+
+  Future<void> makeLoginWithGoogle() async {
+    try {
+      final UserModel user = await _service.makeLoginWithGoogle();
+      _appController.login(user);
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
+
   Future<void> makeLogin(LoginUserModel loginModel) async {
     try {
       final UserModel user = await _service.makeLogin(loginModel);

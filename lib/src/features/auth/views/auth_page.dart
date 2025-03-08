@@ -69,20 +69,26 @@ class _AuthPageState extends State<AuthPage> {
 
   static void _hideKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 
-  Future<void> _makeLogin() async {
+  Future<void> _makeLogin(bool withGoogle) async {
     try {
       LoadingWidget.dialog(context);
 
-      await widget.controller.makeLogin(
-        LoginUserModel(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-        ),
-      );
+      if (withGoogle) {
+        await widget.controller.makeLoginWithGoogle();
+      } else {
+        await widget.controller.makeLogin(
+          LoginUserModel(
+            email: _emailController.text.trim(),
+            password: _passwordController.text.trim(),
+          ),
+        );
+      }
 
       if (!mounted) return;
       LoadingWidget.hide(context);
-      Navigator.of(context).pop();
+      if (widget.controller.user != null) {
+        Navigator.of(context).pop();
+      }
     } on AppException catch (e) {
       if (!mounted) return;
       LoadingWidget.hide(context);
@@ -110,7 +116,9 @@ class _AuthPageState extends State<AuthPage> {
 
       if (!mounted) return;
       LoadingWidget.hide(context);
-      Navigator.of(context).pop();
+      if (widget.controller.user != null) {
+        Navigator.of(context).pop();
+      }
     } on AppException catch (e) {
       if (!mounted) return;
       LoadingWidget.hide(context);
@@ -228,7 +236,7 @@ class _AuthPageState extends State<AuthPage> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
           child: ElevatedButton.icon(
-            onPressed: () {},
+            onPressed: () => _makeLogin(true),
             icon: Image.asset(
               'assets/images/google_icon.png',
               height: 24,
@@ -269,7 +277,7 @@ class _AuthPageState extends State<AuthPage> {
               ),
               const SizedBox(height: 25),
               ElevatedButton(
-                onPressed: _makeLogin,
+                onPressed: () => _makeLogin(false),
                 child: Padding(
                   padding: const EdgeInsets.all(15),
                   child: Text(
@@ -434,7 +442,7 @@ class _AuthPageState extends State<AuthPage> {
           : TextInputAction.done,
       onFieldSubmitted: (_) {
         if (_currentPageState == AuthPageState.login) {
-          _makeLogin();
+          _makeLogin(false);
         } else if (_passwordConfirmationFocus.canRequestFocus) {
           _passwordConfirmationFocus.requestFocus();
         }
