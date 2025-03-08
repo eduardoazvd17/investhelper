@@ -705,4 +705,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasePendingErrorMessage => 'Your purchase is being processed. Please wait for the confirmation.';
+
+  @override
+  String get success => 'Success';
+
+  @override
+  String get planUpdated => 'Your subscription plan has been updated successfully.';
 }

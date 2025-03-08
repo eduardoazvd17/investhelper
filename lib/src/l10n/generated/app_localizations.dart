@@ -1426,6 +1426,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your purchase is being processed. Please wait for the confirmation.'**
   String get purchasePendingErrorMessage;
+
+  /// No description provided for @success.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get success;
+
+  /// No description provided for @planUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Your subscription plan has been updated successfully.'**
+  String get planUpdated;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

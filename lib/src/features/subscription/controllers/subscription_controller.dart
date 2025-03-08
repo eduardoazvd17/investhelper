@@ -6,6 +6,7 @@ import 'package:mobx/mobx.dart';
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/enums/subscription_enum.dart';
 import '../../../core/exceptions/app_exception.dart';
+import '../../../core/models/user_model.dart';
 
 part 'subscription_controller.g.dart';
 
@@ -25,6 +26,9 @@ abstract class SubscriptionControllerBase with Store {
   SubscriptionControllerBase({
     required AppController appController,
   }) : _appController = appController;
+
+  @computed
+  UserModel? get user => _appController.user;
 
   @action
   Future<void> initSubscriptions() async {
