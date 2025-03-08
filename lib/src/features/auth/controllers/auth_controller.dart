@@ -24,12 +24,14 @@ abstract class AuthControllerBase with Store {
   UserModel? get user => _appController.user;
 
   Future<void> makeLoginWithGoogle() async {
+    _appController.disableBlurOverlay = true;
     try {
       final UserModel user = await _service.makeLoginWithGoogle();
       _appController.login(user);
     } on AppException catch (_) {
       rethrow;
     }
+    _appController.disableBlurOverlay = false;
   }
 
   Future<void> makeLogin(LoginUserModel loginModel) async {
