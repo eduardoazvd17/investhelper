@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../l10n/l10n.dart';
 
 enum SubscriptionEnum {
-  freeWithAds,
+  free,
   monthly,
   annual,
   unlimited,
@@ -12,7 +12,7 @@ enum SubscriptionEnum {
 extension SubscriptionEnumExtension on SubscriptionEnum {
   String getTitle(BuildContext context) {
     return switch (this) {
-      SubscriptionEnum.freeWithAds =>
+      SubscriptionEnum.free =>
         AppLocalizations.of(context)!.freeWithAdsSubscription,
       SubscriptionEnum.monthly =>
         AppLocalizations.of(context)!.monthlySubscription,

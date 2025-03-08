@@ -5,7 +5,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
-import '../../../core/enums/subscription_enum.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/utils/widget_event_handler.dart';
 import '../../../core/widgets/advise_message_widget.dart';
@@ -17,7 +16,6 @@ import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/section_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../../auth/views/auth_page.dart';
-import '../../monetization/widgets/banner_ad_widget.dart';
 import '../../settings/views/settings_page.dart';
 import '../controllers/investments_controller.dart';
 import '../enums/investments_page_sub_tabs_enum.dart';
@@ -193,16 +191,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
                     };
                   },
                 ),
-              ),
-              Observer(
-                builder: (_) {
-                  if (controller.user?.data.subscription ==
-                      SubscriptionEnum.freeWithAds) {
-                    return const BannerAdWidget();
-                  } else {
-                    return const SizedBox();
-                  }
-                },
               ),
             ],
           ),

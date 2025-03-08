@@ -39,7 +39,7 @@ class UserDataModel {
 
   UserDataModel({
     required this.registerDate,
-    this.subscription = SubscriptionEnum.freeWithAds,
+    this.subscription = SubscriptionEnum.free,
     this.subscriptionStartDate,
     this.subscriptionEndDate,
   });
