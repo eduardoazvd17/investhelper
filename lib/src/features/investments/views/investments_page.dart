@@ -17,6 +17,7 @@ import '../../../core/widgets/section_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../../auth/views/auth_page.dart';
 import '../../settings/views/settings_page.dart';
+import '../../subscription/views/subscription_page.dart';
 import '../controllers/investments_controller.dart';
 import '../enums/investments_page_sub_tabs_enum.dart';
 import '../widgets/category_listing_widget.dart';
@@ -119,6 +120,23 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         curve: Curves.ease,
       );
     }
+  }
+
+  void _handleAddNewInvestment() {
+    if (controller.user == null) {
+      Navigator.of(context).pushNamed(AuthPage.routeName);
+      return;
+    }
+
+    if (!controller.canAddMoreInvestments) {
+      Navigator.of(context).pushNamed(SubscriptionPage.routeName);
+      return;
+    }
+
+    Navigator.of(context).pushNamed(
+      ManageMyInvestmentsPage.routeName,
+      arguments: true,
+    );
   }
 
   @override
@@ -284,17 +302,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
       title: AppLocalizations.of(context)!.quickActions,
       content: [
         TextButton.icon(
-          onPressed: () {
-            if (controller.user == null) {
-              Navigator.of(context).pushNamed(AuthPage.routeName);
-              return;
-            }
-
-            Navigator.of(context).pushNamed(
-              ManageMyInvestmentsPage.routeName,
-              arguments: true,
-            );
-          },
+          onPressed: _handleAddNewInvestment,
           icon: const Icon(CupertinoIcons.chart_bar),
           label: Text(
             AppLocalizations.of(context)!.addNewInvestment,

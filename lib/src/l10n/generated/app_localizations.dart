@@ -1330,6 +1330,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue with Google'**
   String get continueWithGoogle;
+
+  /// No description provided for @chooseYourPlan.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your plan'**
+  String get chooseYourPlan;
+
+  /// No description provided for @freeSubscriptionFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to 3 investments\nBasic features\nWith ads'**
+  String get freeSubscriptionFeatures;
+
+  /// No description provided for @monthlySubscriptionFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited investments\nAll features\nNo ads\nPriority support'**
+  String get monthlySubscriptionFeatures;
+
+  /// No description provided for @annualSubscriptionFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited investments\nAll features\nNo ads\nPriority support\n2 months free'**
+  String get annualSubscriptionFeatures;
+
+  /// No description provided for @storeNotAvailableErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Store not available'**
+  String get storeNotAvailableErrorTitle;
+
+  /// No description provided for @storeNotAvailableErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The app store is not available at the moment. Please try again later.'**
+  String get storeNotAvailableErrorMessage;
+
+  /// No description provided for @productNotFoundErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Product not found'**
+  String get productNotFoundErrorTitle;
+
+  /// No description provided for @productNotFoundErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'The subscription product was not found. Please try again later.'**
+  String get productNotFoundErrorMessage;
+
+  /// No description provided for @purchaseErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase error'**
+  String get purchaseErrorTitle;
+
+  /// No description provided for @purchaseErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred while processing your purchase. Please try again later.'**
+  String get purchaseErrorMessage;
+
+  /// No description provided for @subscriptionLimitReachedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription limit reached'**
+  String get subscriptionLimitReachedTitle;
+
+  /// No description provided for @subscriptionLimitReachedMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You have reached the maximum number of investments for the free plan. Please upgrade to continue adding investments.'**
+  String get subscriptionLimitReachedMessage;
+
+  /// No description provided for @iosSubscriptionDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.'**
+  String get iosSubscriptionDisclaimer;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @purchasePendingErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase in progress'**
+  String get purchasePendingErrorTitle;
+
+  /// No description provided for @purchasePendingErrorMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your purchase is being processed. Please wait for the confirmation.'**
+  String get purchasePendingErrorMessage;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

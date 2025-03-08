@@ -322,5 +322,21 @@
   "newPasswordConfirmation": "Confirmação de nova senha",
   "newPasswordHint": "Insira uma nova senha",
   "security": "Segurança",
-  "continueWithGoogle": "Continuar com Google"
+  "continueWithGoogle": "Continuar com Google",
+  "error": "Erro",
+  "chooseYourPlan": "Escolha seu plano",
+  "freeSubscriptionFeatures": "Até 3 investimentos\nRecursos básicos\nCom anúncios",
+  "monthlySubscriptionFeatures": "Investimentos ilimitados\nTodos os recursos\nSem anúncios\nSuporte prioritário",
+  "annualSubscriptionFeatures": "Investimentos ilimitados\nTodos os recursos\nSem anúncios\nSuporte prioritário\n2 meses grátis",
+  "storeNotAvailableErrorTitle": "Loja indisponível",
+  "storeNotAvailableErrorMessage": "A loja de aplicativos está indisponível no momento. Por favor, tente novamente mais tarde.",
+  "productNotFoundErrorTitle": "Produto não encontrado",
+  "productNotFoundErrorMessage": "O produto da assinatura não foi encontrado. Por favor, tente novamente mais tarde.",
+  "purchaseErrorTitle": "Erro na compra",
+  "purchaseErrorMessage": "Ocorreu um erro ao processar sua compra. Por favor, tente novamente mais tarde.",
+  "subscriptionLimitReachedTitle": "Limite de assinatura atingido",
+  "subscriptionLimitReachedMessage": "Você atingiu o número máximo de investimentos para o plano gratuito. Por favor, faça um upgrade para continuar adicionando investimentos.",
+  "iosSubscriptionDisclaimer": "O pagamento será cobrado na sua conta do Apple ID na confirmação da compra. A assinatura é renovada automaticamente, a menos que seja cancelada pelo menos 24 horas antes do final do período atual. Sua conta será cobrada pela renovação dentro de 24 horas antes do final do período atual. Você pode gerenciar e cancelar suas assinaturas indo para as configurações da sua conta na App Store após a compra.",
+  "purchasePendingErrorTitle": "Compra em andamento",
+  "purchasePendingErrorMessage": "Sua compra está sendo processada. Por favor, aguarde a confirmação."
 }

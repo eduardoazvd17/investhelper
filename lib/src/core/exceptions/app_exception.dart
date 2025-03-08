@@ -82,6 +82,11 @@ enum AppExceptionType {
   connectionError,
   invalidValue,
   incorrectPassword,
+  storeNotAvailable,
+  productNotFound,
+  purchaseError,
+  purchasePending,
+  subscriptionLimitReached,
 }
 
 extension AppExceptionTypeExtension on AppExceptionType {
@@ -109,6 +114,16 @@ extension AppExceptionTypeExtension on AppExceptionType {
         AppLocalizations.of(context)!.invalidValueErrorTitle,
       AppExceptionType.incorrectPassword =>
         AppLocalizations.of(context)!.incorrectPasswordErrorTitle,
+      AppExceptionType.storeNotAvailable =>
+        AppLocalizations.of(context)!.storeNotAvailableErrorTitle,
+      AppExceptionType.productNotFound =>
+        AppLocalizations.of(context)!.productNotFoundErrorTitle,
+      AppExceptionType.purchaseError =>
+        AppLocalizations.of(context)!.purchaseErrorTitle,
+      AppExceptionType.purchasePending =>
+        AppLocalizations.of(context)!.purchasePendingErrorTitle,
+      AppExceptionType.subscriptionLimitReached =>
+        AppLocalizations.of(context)!.subscriptionLimitReachedTitle,
     };
   }
 
@@ -136,6 +151,16 @@ extension AppExceptionTypeExtension on AppExceptionType {
         AppLocalizations.of(context)!.invalidValueErrorMessage,
       AppExceptionType.incorrectPassword =>
         AppLocalizations.of(context)!.incorrectPasswordErrorMessage,
+      AppExceptionType.storeNotAvailable =>
+        AppLocalizations.of(context)!.storeNotAvailableErrorMessage,
+      AppExceptionType.productNotFound =>
+        AppLocalizations.of(context)!.productNotFoundErrorMessage,
+      AppExceptionType.purchaseError =>
+        AppLocalizations.of(context)!.purchaseErrorMessage,
+      AppExceptionType.purchasePending =>
+        AppLocalizations.of(context)!.purchasePendingErrorMessage,
+      AppExceptionType.subscriptionLimitReached =>
+        AppLocalizations.of(context)!.subscriptionLimitReachedMessage,
     };
   }
 }

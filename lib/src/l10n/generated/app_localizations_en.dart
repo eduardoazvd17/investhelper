@@ -657,4 +657,52 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get continueWithGoogle => 'Continue with Google';
+
+  @override
+  String get chooseYourPlan => 'Choose your plan';
+
+  @override
+  String get freeSubscriptionFeatures => 'Up to 3 investments\nBasic features\nWith ads';
+
+  @override
+  String get monthlySubscriptionFeatures => 'Unlimited investments\nAll features\nNo ads\nPriority support';
+
+  @override
+  String get annualSubscriptionFeatures => 'Unlimited investments\nAll features\nNo ads\nPriority support\n2 months free';
+
+  @override
+  String get storeNotAvailableErrorTitle => 'Store not available';
+
+  @override
+  String get storeNotAvailableErrorMessage => 'The app store is not available at the moment. Please try again later.';
+
+  @override
+  String get productNotFoundErrorTitle => 'Product not found';
+
+  @override
+  String get productNotFoundErrorMessage => 'The subscription product was not found. Please try again later.';
+
+  @override
+  String get purchaseErrorTitle => 'Purchase error';
+
+  @override
+  String get purchaseErrorMessage => 'An error occurred while processing your purchase. Please try again later.';
+
+  @override
+  String get subscriptionLimitReachedTitle => 'Subscription limit reached';
+
+  @override
+  String get subscriptionLimitReachedMessage => 'You have reached the maximum number of investments for the free plan. Please upgrade to continue adding investments.';
+
+  @override
+  String get iosSubscriptionDisclaimer => 'Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.';
+
+  @override
+  String get error => 'Error';
+
+  @override
+  String get purchasePendingErrorTitle => 'Purchase in progress';
+
+  @override
+  String get purchasePendingErrorMessage => 'Your purchase is being processed. Please wait for the confirmation.';
 }

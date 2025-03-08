@@ -23,6 +23,13 @@ mixin _$InvestmentsController on InvestmentsControllerBase, Store {
           Computed<double>(() => super.totalInvestments,
               name: 'InvestmentsControllerBase.totalInvestments'))
       .value;
+  Computed<bool>? _$canAddMoreInvestmentsComputed;
+
+  @override
+  bool get canAddMoreInvestments => (_$canAddMoreInvestmentsComputed ??=
+          Computed<bool>(() => super.canAddMoreInvestments,
+              name: 'InvestmentsControllerBase.canAddMoreInvestments'))
+      .value;
   Computed<double>? _$thisMonthPurchasesTotalComputed;
 
   @override
@@ -416,6 +423,7 @@ descendingFilter: ${descendingFilter},
 thisMonthOperations: ${thisMonthOperations},
 user: ${user},
 totalInvestments: ${totalInvestments},
+canAddMoreInvestments: ${canAddMoreInvestments},
 thisMonthPurchasesTotal: ${thisMonthPurchasesTotal},
 thisMonthSalesTotal: ${thisMonthSalesTotal},
 thisMonthProfitTotal: ${thisMonthProfitTotal}

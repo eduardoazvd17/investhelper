@@ -322,5 +322,21 @@
     "newPasswordConfirmation": "New password confirmation",
     "newPasswordHint": "Enter a new password",
     "security": "Security",
-    "continueWithGoogle": "Continue with Google"
+    "continueWithGoogle": "Continue with Google",
+    "chooseYourPlan": "Choose your plan",
+    "freeSubscriptionFeatures": "Up to 3 investments\nBasic features\nWith ads",
+    "monthlySubscriptionFeatures": "Unlimited investments\nAll features\nNo ads\nPriority support",
+    "annualSubscriptionFeatures": "Unlimited investments\nAll features\nNo ads\nPriority support\n2 months free",
+    "storeNotAvailableErrorTitle": "Store not available",
+    "storeNotAvailableErrorMessage": "The app store is not available at the moment. Please try again later.",
+    "productNotFoundErrorTitle": "Product not found",
+    "productNotFoundErrorMessage": "The subscription product was not found. Please try again later.",
+    "purchaseErrorTitle": "Purchase error",
+    "purchaseErrorMessage": "An error occurred while processing your purchase. Please try again later.",
+    "subscriptionLimitReachedTitle": "Subscription limit reached",
+    "subscriptionLimitReachedMessage": "You have reached the maximum number of investments for the free plan. Please upgrade to continue adding investments.",
+    "iosSubscriptionDisclaimer": "Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.",
+    "error": "Error",
+    "purchasePendingErrorTitle": "Purchase in progress",
+    "purchasePendingErrorMessage": "Your purchase is being processed. Please wait for the confirmation."
 }

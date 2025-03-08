@@ -26,6 +26,8 @@ import 'src/features/investments/views/manage_my_operations_page.dart';
 import 'src/features/settings/views/change_personal_data_page.dart';
 import 'src/features/settings/views/settings_page.dart';
 import 'src/features/splash_screen/views/splash_screen.dart';
+import 'src/features/subscription/controllers/subscription_controller.dart';
+import 'src/features/subscription/views/subscription_page.dart';
 import 'src/features/welcome/views/welcome_page.dart';
 import 'src/l10n/l10n.dart';
 
@@ -52,6 +54,11 @@ Future<AppController> _loadDependencies() async {
     AuthController(
       appController: appController,
       service: AuthService(),
+    ),
+  );
+  GetIt.I.registerSingleton(
+    () => SubscriptionController(
+      appController: appController,
     ),
   );
   return appController;
@@ -150,6 +157,13 @@ class InvestHelperApp extends StatelessWidget {
             ManageMyOperationsPage.routeName: (_) {
               return ManageMyOperationsPage(
                 controller: GetIt.I.get<InvestmentsController>(),
+              );
+            },
+            SubscriptionPage.routeName: (_) {
+              return SubscriptionPage(
+                controller: GetIt.I.get<SubscriptionController>(),
+                showCloseButton:
+                    ModalRoute.of(context)?.settings.arguments as bool? ?? true,
               );
             },
           },

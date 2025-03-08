@@ -99,7 +99,7 @@ abstract class AppControllerBase with Store {
   @action
   Future<void> changeUserData(UserDataModel userDataModel) async {
     try {
-      user = await _service.changeUserName(
+      user = await _service.changeUserData(
         user!.copyWith(data: userDataModel),
       );
     } on AppException catch (_) {

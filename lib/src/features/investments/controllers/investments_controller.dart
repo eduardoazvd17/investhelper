@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
+import '../../../core/enums/subscription_enum.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/models/user_model.dart';
 import '../../../core/utils/date_time_utils.dart';
@@ -127,11 +128,22 @@ abstract class InvestmentsControllerBase with Store {
     return 0.0;
   }
 
+  @computed
+  bool get canAddMoreInvestments {
+    if (user == null) return false;
+    if (user!.data.subscription != SubscriptionEnum.free) return true;
+    return investments.length < 3;
+  }
+
   @action
   Future<void> addNewInvestment(
     CreateInvestmentModel createInvestmentModel,
   ) async {
     try {
+      if (!canAddMoreInvestments) {
+        throw AppException(AppExceptionType.subscriptionLimitReached);
+      }
+
       final InvestmentModel newInvestment =
           await _service.addNewInvestment(createInvestmentModel);
       investments.add(newInvestment);

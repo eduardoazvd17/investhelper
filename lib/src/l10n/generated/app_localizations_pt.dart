@@ -657,4 +657,52 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get continueWithGoogle => 'Continuar com Google';
+
+  @override
+  String get chooseYourPlan => 'Escolha seu plano';
+
+  @override
+  String get freeSubscriptionFeatures => 'Até 3 investimentos\nRecursos básicos\nCom anúncios';
+
+  @override
+  String get monthlySubscriptionFeatures => 'Investimentos ilimitados\nTodos os recursos\nSem anúncios\nSuporte prioritário';
+
+  @override
+  String get annualSubscriptionFeatures => 'Investimentos ilimitados\nTodos os recursos\nSem anúncios\nSuporte prioritário\n2 meses grátis';
+
+  @override
+  String get storeNotAvailableErrorTitle => 'Loja indisponível';
+
+  @override
+  String get storeNotAvailableErrorMessage => 'A loja de aplicativos está indisponível no momento. Por favor, tente novamente mais tarde.';
+
+  @override
+  String get productNotFoundErrorTitle => 'Produto não encontrado';
+
+  @override
+  String get productNotFoundErrorMessage => 'O produto da assinatura não foi encontrado. Por favor, tente novamente mais tarde.';
+
+  @override
+  String get purchaseErrorTitle => 'Erro na compra';
+
+  @override
+  String get purchaseErrorMessage => 'Ocorreu um erro ao processar sua compra. Por favor, tente novamente mais tarde.';
+
+  @override
+  String get subscriptionLimitReachedTitle => 'Limite de assinatura atingido';
+
+  @override
+  String get subscriptionLimitReachedMessage => 'Você atingiu o número máximo de investimentos para o plano gratuito. Por favor, faça um upgrade para continuar adicionando investimentos.';
+
+  @override
+  String get iosSubscriptionDisclaimer => 'O pagamento será cobrado na sua conta do Apple ID na confirmação da compra. A assinatura é renovada automaticamente, a menos que seja cancelada pelo menos 24 horas antes do final do período atual. Sua conta será cobrada pela renovação dentro de 24 horas antes do final do período atual. Você pode gerenciar e cancelar suas assinaturas indo para as configurações da sua conta na App Store após a compra.';
+
+  @override
+  String get error => 'Erro';
+
+  @override
+  String get purchasePendingErrorTitle => 'Compra em andamento';
+
+  @override
+  String get purchasePendingErrorMessage => 'Sua compra está sendo processada. Por favor, aguarde a confirmação.';
 }
