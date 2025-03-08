@@ -57,7 +57,7 @@ Future<AppController> _loadDependencies() async {
     ),
   );
   GetIt.I.registerSingleton(
-    () => SubscriptionController(
+    SubscriptionController(
       appController: appController,
     ),
   );
