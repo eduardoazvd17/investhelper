@@ -162,8 +162,6 @@ class InvestHelperApp extends StatelessWidget {
             SubscriptionPage.routeName: (_) {
               return SubscriptionPage(
                 controller: GetIt.I.get<SubscriptionController>(),
-                showCloseButton:
-                    ModalRoute.of(context)?.settings.arguments as bool? ?? true,
               );
             },
           },

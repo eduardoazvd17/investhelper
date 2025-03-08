@@ -38,4 +38,6 @@ abstract class DateTimeUtils {
   static isSameMonth(DateTime a, DateTime b) {
     return a.year == b.year && a.month == b.month;
   }
+
+  static isToday(DateTime date) => isSameDay(date, DateTime.now());
 }

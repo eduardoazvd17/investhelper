@@ -13,13 +13,8 @@ import '../controllers/subscription_controller.dart';
 class SubscriptionPage extends StatefulWidget {
   static const String routeName = "/subscription";
   final SubscriptionController controller;
-  final bool showCloseButton;
 
-  const SubscriptionPage({
-    super.key,
-    required this.controller,
-    this.showCloseButton = true,
-  });
+  const SubscriptionPage({super.key, required this.controller});
 
   @override
   State<SubscriptionPage> createState() => _SubscriptionPageState();
@@ -77,7 +72,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.subscription),
-        automaticallyImplyLeading: widget.showCloseButton,
       ),
       body: SafeArea(
         child: Padding(

@@ -12,6 +12,7 @@ import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/modal_bottom_sheet_widget.dart';
 import '../../../core/widgets/text_field_widget.dart';
 import '../../../l10n/l10n.dart';
+import '../../subscription/views/subscription_page.dart';
 import '../controllers/investments_controller.dart';
 import '../enums/category_enum.dart';
 import '../models/create_investment_model.dart';
@@ -66,6 +67,11 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   }
 
   Future<void> _addNewInvestment() async {
+    if (!widget.controller.canAddMoreInvestments) {
+      Navigator.of(context).pushNamed(SubscriptionPage.routeName);
+      return;
+    }
+
     onAddNewInvestment() async {
       try {
         LoadingWidget.dialog(context);

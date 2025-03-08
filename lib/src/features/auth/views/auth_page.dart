@@ -5,11 +5,13 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../core/exceptions/app_exception.dart';
+import '../../../core/utils/date_time_utils.dart';
 import '../../../core/widgets/dialog_widget.dart';
 import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/text_field_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../../settings/views/settings_page.dart';
+import '../../subscription/views/subscription_page.dart';
 import '../controllers/auth_controller.dart';
 import '../models/login_user_model.dart';
 import '../models/register_user_model.dart';
@@ -87,6 +89,11 @@ class _AuthPageState extends State<AuthPage> {
       if (!mounted) return;
       LoadingWidget.hide(context);
       if (widget.controller.user != null) {
+        if (DateTimeUtils.isToday(widget.controller.user!.data.registerDate)) {
+          await Navigator.of(context).pushNamed(SubscriptionPage.routeName);
+        }
+
+        if (!mounted) return;
         Navigator.of(context).pop();
       }
     } on AppException catch (e) {
@@ -117,6 +124,11 @@ class _AuthPageState extends State<AuthPage> {
       if (!mounted) return;
       LoadingWidget.hide(context);
       if (widget.controller.user != null) {
+        if (DateTimeUtils.isToday(widget.controller.user!.data.registerDate)) {
+          await Navigator.of(context).pushNamed(SubscriptionPage.routeName);
+        }
+
+        if (!mounted) return;
         Navigator.of(context).pop();
       }
     } on AppException catch (e) {
