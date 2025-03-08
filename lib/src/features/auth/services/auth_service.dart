@@ -46,8 +46,9 @@ class AuthService {
         throw AppException(AppExceptionType.connectionError);
       }
       throw AppException();
-    } catch (error) {
-      throw AppException(AppExceptionType.connectionError, error.toString());
+    } catch (e) {
+      if (e.toString().contains('popup_closed')) rethrow;
+      throw AppException(AppExceptionType.connectionError, e.toString());
     }
   }
 
