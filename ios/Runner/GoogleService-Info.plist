@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>784219103655-p2dudbr3g6lq30pnqv6gjqcct6ra8qjl.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.784219103655-p2dudbr3g6lq30pnqv6gjqcct6ra8qjl</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>784219103655-fo6q1sn1e1999s04dsj08a230e9l0333.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDzzrnwuc5tdQ9ErQ7nIslWe56oRTgR1E8</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +19,7 @@
 	<key>PROJECT_ID</key>
 	<string>investhelper-2024</string>
 	<key>STORAGE_BUCKET</key>
-	<string>investhelper-2024.appspot.com</string>
+	<string>investhelper-2024.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:784219103655:ios:b32c093ea592b856961682</string>
+	<string>1:784219103655:ios:14e04dda8a5b4e39961682</string>
 </dict>
 </plist>

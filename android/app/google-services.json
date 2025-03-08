@@ -2,7 +2,7 @@
   "project_info": {
     "project_number": "784219103655",
     "project_id": "investhelper-2024",
-    "storage_bucket": "investhelper-2024.appspot.com"
+    "storage_bucket": "investhelper-2024.firebasestorage.app"
   },
   "client": [
     {
@@ -12,7 +12,28 @@
           "package_name": "com.eduardoazevedo.investhelper"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "784219103655-fo6q1sn1e1999s04dsj08a230e9l0333.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eduardoazevedo.investhelper",
+            "certificate_hash": "9421dcfa6e897c890126c9be4714004e79f244a3"
+          }
+        },
+        {
+          "client_id": "784219103655-nsj2cup0n9iu1t2tve4s2ks13rvq48l0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eduardoazevedo.investhelper",
+            "certificate_hash": "a43a004fe5aff047d7fd187ada0a1d3d9e2b2834"
+          }
+        },
+        {
+          "client_id": "784219103655-9rq4indg3gaufqv4ftc76pc5hknr7t0c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBZeddvTavt-peVT9VLfGm_HLamZJniVIE"
@@ -20,7 +41,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784219103655-9rq4indg3gaufqv4ftc76pc5hknr7t0c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "784219103655-p2dudbr3g6lq30pnqv6gjqcct6ra8qjl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.eduardoazevedo.investhelper"
+              }
+            }
+          ]
         }
       }
     }
