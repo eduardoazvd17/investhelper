@@ -331,40 +331,50 @@ class SettingsPage extends StatelessWidget {
                       ],
                     ),
                     const Divider(height: 30),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              FittedBox(
-                                child: Text(
-                                  AppLocalizations.of(context)!.subscription,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
+                    InkWell(
+                      onTap: () => Navigator.of(context).pushNamed(
+                        SubscriptionPage.routeName,
+                      ),
+                      borderRadius: BorderRadius.circular(12.5),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  FittedBox(
+                                    child: Text(
+                                      AppLocalizations.of(context)!
+                                          .subscription,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium,
+                                    ),
+                                  ),
+                                  FittedBox(
+                                    child: Text(
+                                      user.data.subscription.getTitle(context),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium
+                                          ?.copyWith(color: Colors.grey),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              FittedBox(
-                                child: Text(
-                                  user.data.subscription.getTitle(context),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium
-                                      ?.copyWith(color: Colors.grey),
-                                ),
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              AppLocalizations.of(context)!.change,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(
-                              SubscriptionPage.routeName,
-                            );
-                          },
-                          child: Text(AppLocalizations.of(context)!.change),
-                        ),
-                      ],
+                      ),
                     ),
                   ],
                 ),
