@@ -100,6 +100,9 @@ abstract class SubscriptionControllerBase with Store {
 
   @action
   Future<void> purchaseSubscription(SubscriptionEnum subscription) async {
+    _appController.disableAuthOverlay = true;
+    _appController.disableBlurOverlay = true;
+
     try {
       final String? productId = _productIds[subscription];
       if (productId == null) {
@@ -119,7 +122,12 @@ abstract class SubscriptionControllerBase with Store {
       await InAppPurchase.instance.buyNonConsumable(
         purchaseParam: purchaseParam,
       );
+
+      _appController.disableAuthOverlay = false;
+      _appController.disableBlurOverlay = false;
     } catch (e) {
+      _appController.disableAuthOverlay = false;
+      _appController.disableBlurOverlay = false;
       rethrow;
     }
   }
