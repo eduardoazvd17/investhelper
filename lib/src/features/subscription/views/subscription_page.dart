@@ -25,7 +25,11 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   @override
   void initState() {
     super.initState();
-    widget.controller.initSubscriptions();
+    widget.controller.isLoading = true;
+    widget.controller.lastSubscriptionCheck = null;
+    widget.controller.verifySubscriptionStatus().then((_) {
+      widget.controller.initSubscriptions();
+    });
   }
 
   Future<void> _handleSubscriptionSelection(
