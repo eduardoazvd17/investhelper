@@ -17,8 +17,8 @@ class SubscriptionController = SubscriptionControllerBase
 abstract class SubscriptionControllerBase with Store {
   final AppController _appController;
   final Map<SubscriptionEnum, String> _productIds = {
-    SubscriptionEnum.monthly: 'investhelper_monthly_subscription',
-    SubscriptionEnum.annual: 'investhelper_annual_subscription',
+    SubscriptionEnum.monthly: 'investhelper_monthly_plan',
+    SubscriptionEnum.annual: 'investhelper_annual_plan',
   };
 
   StreamSubscription<List<PurchaseDetails>>? _subscription;

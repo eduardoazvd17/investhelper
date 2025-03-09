@@ -599,13 +599,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get freeWithAdsSubscription => 'Free (with ads)';
+  String get freeSubscription => 'Free';
 
   @override
-  String get monthlySubscription => 'Monthly';
+  String get monthlySubscription => 'Pro (Monthly)';
 
   @override
-  String get annualSubscription => 'Annual';
+  String get annualSubscription => 'Pro (Annual)';
 
   @override
   String get unlimitedSubscription => 'Pro (unlimited)';
@@ -623,7 +623,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get termsOfUseTitle => 'Terms of use and privacy policy';
 
   @override
-  String get termsOfUseMessage => 'Welcome to InvestHelper!\n\nBy using our application, you agree to the following terms and conditions:\n\n1. Purpose of the Application: InvestHelper is a tool designed to assist in managing your investments. We do not provide investment advice or recommendations. The application is intended for informational and personal record-keeping purposes only.\n\n2. User Responsibility: You are solely responsible for the accuracy and integrity of the data entered into InvestHelper. We are not responsible for any errors or incorrect information provided by the user.\n\n3. Investment Risks: It is important to understand that financial investments are subject to risks. InvestHelper does not guarantee specific financial results and does not offer profitability guarantees. We recommend seeking professional financial advice before making investment decisions.\n\n4. Privacy and Data Protection: By using InvestHelper, we collect and store your name, email address, and password for user authentication. We also collect and store information about your investments, operations, and goals entered within the application. We are committed to protecting your personal information and using this data only for the purposes described in this terms of use and in accordance with our privacy policy.\n\n5. Data Security: We implement appropriate technical and organizational security measures to protect your data against unauthorized access, misuse, or unauthorized disclosure.\n\n6. User Consent: By using InvestHelper, you consent to the collection, use, and storage of your personal information in accordance with the terms of this terms of use and our privacy policy.\n\n7. Data Deletion: You have total freedom to delete your personal data directly from the application, including the option to delete your account. Please contact us if you need assistance or have any questions about the data deletion process.\n\n8. Updates to the Terms of Use and Privacy Policy: We may revise and update these terms of use and our privacy policy periodically. We will notify users of any significant changes and request their consent, when applicable.\n\nBy clicking \"I accept\" or continuing to use the application, you agree to these terms of use and our privacy policy. If you do not agree to these terms, please do not use InvestHelper.\n\nLast updated: April 13, 2024.';
+  String get termsOfUseMessage => 'By using our app, you agree to our terms of use and privacy policy. Access the full clauses below:';
 
   @override
   String get accept => 'I accept';
@@ -662,13 +662,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chooseYourPlan => 'Choose your plan';
 
   @override
-  String get freeSubscriptionFeatures => 'Up to 3 investments\nBasic features\nWith ads';
+  String get freeSubscriptionFeatures => 'Up to 3 investments\nBasic features';
 
   @override
-  String get monthlySubscriptionFeatures => 'Unlimited investments\nAll features\nNo ads\nPriority support';
+  String get monthlySubscriptionFeatures => 'Unlimited investments\nAll features';
 
   @override
-  String get annualSubscriptionFeatures => 'Unlimited investments\nAll features\nNo ads\nPriority support\n2 months free';
+  String get annualSubscriptionFeatures => 'Unlimited investments\nAll features\n2 months free';
 
   @override
   String get storeNotAvailableErrorTitle => 'Store not available';

@@ -599,13 +599,13 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get freeWithAdsSubscription => 'Gratuito (com anúncios)';
+  String get freeSubscription => 'Gratuito';
 
   @override
-  String get monthlySubscription => 'Mensal';
+  String get monthlySubscription => 'Pro (Mensal)';
 
   @override
-  String get annualSubscription => 'Anual';
+  String get annualSubscription => 'Pro (Anual)';
 
   @override
   String get unlimitedSubscription => 'Pro (ilimitado)';
@@ -623,7 +623,7 @@ class AppLocalizationsPt extends AppLocalizations {
   String get termsOfUseTitle => 'Termos de uso e política de privacidade';
 
   @override
-  String get termsOfUseMessage => 'Bem-vindo ao InvestHelper!\n\nAo utilizar nosso aplicativo, você concorda com os seguintes termos e condições:\n\n1. Propósito do Aplicativo: O InvestHelper é uma ferramenta projetada para auxiliar no controle dos seus investimentos. Não fornecemos conselhos ou recomendações de investimento. O aplicativo destina-se apenas a fins informativos e de registro pessoal.\n\n2. Responsabilidade do Usuário: Você é o único responsável pela precisão e integridade dos dados inseridos no InvestHelper. Não nos responsabilizamos por quaisquer erros ou informações incorretas fornecidas pelo usuário.\n\n3. Riscos de Investimento: É importante entender que investimentos financeiros estão sujeitos a riscos. O InvestHelper não garante resultados financeiros específicos e não oferece garantias de rentabilidade. Recomendamos que você busque orientação financeira profissional antes de tomar decisões de investimento.\n\n4. Privacidade e Proteção de Dados: Ao utilizar o InvestHelper, coletamos e armazenamos seu nome, endereço de e-mail e senha para autenticação de usuário. Também coletamos e armazenamos informações sobre seus investimentos, operações e metas inseridas dentro do aplicativo. Comprometemo-nos a proteger suas informações pessoais e a utilizar esses dados apenas para os fins descritos neste termo de uso e em conformidade com nossa política de privacidade.\n\n5. Segurança dos Dados: Implementamos medidas de segurança técnicas e organizacionais adequadas para proteger seus dados contra acesso não autorizado, uso indevido ou divulgação não autorizada.\n\n6. Consentimento do Usuário: Ao utilizar o InvestHelper, você consente com a coleta, uso e armazenamento de suas informações pessoais de acordo com os termos deste termo de uso e nossa política de privacidade.\n\n7. Exclusão de Dados: Você tem total liberdade para apagar seus dados pessoais diretamente pelo aplicativo, incluindo a opção de excluir sua conta. Você pode deletar os dados que desejar, inclusive deletar sua própria conta. Entre em contato conosco se precisar de assistência ou tiver alguma dúvida sobre o processo de exclusão de dados.\n\n8. Atualizações dos Termos de Uso e Política de Privacidade: Podemos revisar e atualizar estes termos de uso e nossa política de privacidade periodicamente. Notificaremos os usuários sobre quaisquer alterações significativas e solicitaremos seu consentimento, quando aplicável.\n\nAo clicar em \"Eu aceito\" ou continuar a utilizar o aplicativo, você concorda com estes termos de uso e nossa política de privacidade. Se você não concorda com estes termos, por favor, não use o InvestHelper.\n\nÚltima atualização: 13 de abril de 2024.';
+  String get termsOfUseMessage => 'Ao utilizar nosso aplicativo, você concorda com os nossos termos de uso e política de privacidade. Acesse as cláusulas completas no link abaixo:';
 
   @override
   String get accept => 'Eu aceito';
@@ -662,13 +662,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get chooseYourPlan => 'Escolha seu plano';
 
   @override
-  String get freeSubscriptionFeatures => 'Até 3 investimentos\nRecursos básicos\nCom anúncios';
+  String get freeSubscriptionFeatures => 'Até 3 investimentos\nAcesso a recursos básicos';
 
   @override
-  String get monthlySubscriptionFeatures => 'Investimentos ilimitados\nTodos os recursos\nSem anúncios\nSuporte prioritário';
+  String get monthlySubscriptionFeatures => 'Investimentos e operações ilimitadas\nAcesso a todos os recursos';
 
   @override
-  String get annualSubscriptionFeatures => 'Investimentos ilimitados\nTodos os recursos\nSem anúncios\nSuporte prioritário\n2 meses grátis';
+  String get annualSubscriptionFeatures => 'Investimentos e operações ilimitadas\nAcesso a todos os recursos\n2 meses grátis';
 
   @override
   String get storeNotAvailableErrorTitle => 'Loja indisponível';

@@ -12,8 +12,7 @@ enum SubscriptionEnum {
 extension SubscriptionEnumExtension on SubscriptionEnum {
   String getTitle(BuildContext context) {
     return switch (this) {
-      SubscriptionEnum.free =>
-        AppLocalizations.of(context)!.freeWithAdsSubscription,
+      SubscriptionEnum.free => AppLocalizations.of(context)!.freeSubscription,
       SubscriptionEnum.monthly =>
         AppLocalizations.of(context)!.monthlySubscription,
       SubscriptionEnum.annual =>
