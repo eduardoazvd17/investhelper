@@ -105,6 +105,9 @@ class _AuthPageState extends State<AuthPage> {
       if (!mounted) return;
       LoadingWidget.hide(context);
       await e.show(context);
+    } catch (_) {
+      if (!mounted) return;
+      LoadingWidget.hide(context);
     }
   }
 
