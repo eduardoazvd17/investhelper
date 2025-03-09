@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../features/investments/controllers/investments_controller.dart';
 import '../enums/language_enum.dart';
@@ -201,5 +202,18 @@ abstract class AppControllerBase with Store {
       this.language = language;
       _service.saveLanguage(language);
     }
+  }
+
+  @action
+  Future<void> openTermsUrl() async {
+    disableAuthOverlay = true;
+    disableBlurOverlay = true;
+    final termsUrl =
+        'https://eduardoazevedo.com/investhelper/termsAndPolicy.html?lang=${language.languageCode}';
+    if (await canLaunchUrlString(termsUrl)) {
+      await launchUrlString(termsUrl);
+    }
+    disableAuthOverlay = false;
+    disableBlurOverlay = false;
   }
 }

@@ -287,6 +287,14 @@ mixin _$AppController on AppControllerBase, Store {
         .run(() => super.changeIsBiometricsEnabled(value, force: force));
   }
 
+  late final _$openTermsUrlAsyncAction =
+      AsyncAction('AppControllerBase.openTermsUrl', context: context);
+
+  @override
+  Future<void> openTermsUrl() {
+    return _$openTermsUrlAsyncAction.run(() => super.openTermsUrl());
+  }
+
   late final _$AppControllerBaseActionController =
       ActionController(name: 'AppControllerBase', context: context);
 

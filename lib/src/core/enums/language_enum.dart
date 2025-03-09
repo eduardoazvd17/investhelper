@@ -8,7 +8,7 @@ enum LanguageEnum {
   portuguese,
 }
 
-extension ThemeEnumExtension on LanguageEnum {
+extension LanguageEnumExtension on LanguageEnum {
   String getTitle(BuildContext context) {
     return switch (this) {
       LanguageEnum.system => AppLocalizations.of(context)!.system,
@@ -47,4 +47,13 @@ extension ThemeEnumExtension on LanguageEnum {
       LanguageEnum.portuguese => Locale('pt', countryCode),
     };
   }
+
+  String get languageCode => switch (this) {
+        LanguageEnum.system =>
+          WidgetsBinding.instance.platformDispatcher.locale.languageCode == 'pt'
+              ? 'pt'
+              : 'en',
+        LanguageEnum.english => 'en',
+        LanguageEnum.portuguese => 'pt',
+      };
 }

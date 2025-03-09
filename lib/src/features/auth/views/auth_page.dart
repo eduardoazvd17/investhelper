@@ -38,7 +38,6 @@ class _AuthPageState extends State<AuthPage> {
   late FocusNode _emailFocus;
   late FocusNode _passwordFocus;
   late FocusNode _passwordConfirmationFocus;
-  bool _hasAcceptedTermsOfUse = false;
 
   @override
   void initState() {
@@ -104,11 +103,6 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Future<void> _makeRegister() async {
-    if (!_hasAcceptedTermsOfUse) {
-      await _showTermsOfUse();
-      if (!_hasAcceptedTermsOfUse || !mounted) return;
-    }
-
     try {
       LoadingWidget.dialog(context);
 
@@ -162,20 +156,6 @@ class _AuthPageState extends State<AuthPage> {
       if (!mounted) return;
       LoadingWidget.hide(context);
       await e.show(context);
-    }
-  }
-
-  Future<void> _showTermsOfUse() async {
-    final bool? result = await DialogWidget.show(
-      context,
-      title: AppLocalizations.of(context)!.termsOfUseTitle,
-      message: AppLocalizations.of(context)!.termsOfUseMessage,
-      actionType: DialogWidgetActionType.acceptOrNotAccept,
-    );
-    if (result != null) {
-      setState(() {
-        _hasAcceptedTermsOfUse = result;
-      });
     }
   }
 
@@ -329,8 +309,6 @@ class _AuthPageState extends State<AuthPage> {
               _passwordTextField,
               const SizedBox(height: 10),
               _passwordConfirmationTextField,
-              const SizedBox(height: 20),
-              _termsOfUseWidget,
               const SizedBox(height: 25),
               ElevatedButton(
                 onPressed: _makeRegister,
@@ -404,6 +382,8 @@ class _AuthPageState extends State<AuthPage> {
               ?.copyWith(color: Colors.grey),
           textAlign: TextAlign.center,
         ),
+        const SizedBox(height: 10),
+        _termsWidget,
       ],
     );
   }
@@ -475,20 +455,16 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
-  Widget get _termsOfUseWidget {
-    return ListTile(
-      onTap: _showTermsOfUse,
-      title: Text(
-        AppLocalizations.of(context)!.termsOfUseTitle,
-        style: TextStyle(
-          decoration:
-              _hasAcceptedTermsOfUse ? TextDecoration.lineThrough : null,
+  Widget get _termsWidget {
+    return InkWell(
+      onTap: widget.controller.openTermsUrl,
+      borderRadius: BorderRadius.circular(8),
+      child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Text(
+          AppLocalizations.of(context)!.termsOfUseTitle,
+          style: TextStyle(color: Theme.of(context).primaryColor),
         ),
-      ),
-      contentPadding: const EdgeInsets.symmetric(horizontal: 7),
-      trailing: Icon(
-        Icons.done,
-        color: _hasAcceptedTermsOfUse ? Colors.green : Colors.grey,
       ),
     );
   }

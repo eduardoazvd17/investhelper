@@ -205,14 +205,7 @@ class SettingsPage extends StatelessWidget {
             return ButtonTileWidget(
               text: AppLocalizations.of(context)!.termsOfUseTitle,
               icon: CupertinoIcons.doc,
-              onTap: () {
-                DialogWidget.show(
-                  context,
-                  title: AppLocalizations.of(context)!.termsOfUseTitle,
-                  message: AppLocalizations.of(context)!.termsOfUseMessage,
-                  actionType: DialogWidgetActionType.close,
-                );
-              },
+              onTap: appController.openTermsUrl,
             );
           },
         ),

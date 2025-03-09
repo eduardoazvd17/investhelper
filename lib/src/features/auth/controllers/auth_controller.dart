@@ -23,6 +23,9 @@ abstract class AuthControllerBase with Store {
   @computed
   UserModel? get user => _appController.user;
 
+  @action
+  Future<void> openTermsUrl() async => await _appController.openTermsUrl();
+
   Future<void> makeLoginWithGoogle() async {
     _appController.disableBlurOverlay = true;
     try {
