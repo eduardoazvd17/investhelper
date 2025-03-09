@@ -325,6 +325,8 @@
   "continueWithGoogle": "Continuar com Google",
   "error": "Erro",
   "chooseYourPlan": "Escolha seu plano",
+  "choosePlanDescription": "Escolha o plano que melhor se adapta às suas necessidades. Você pode mudar ou cancelar a qualquer momento.",
+  "freePlanLimitWarning": "Você atingiu o limite de 3 investimentos no plano gratuito. Você não poderá adicionar novos investimentos ou gerenciar operações para investimentos além deste limite. Faça um upgrade agora para adicionar mais investimentos e acessar todos os recursos!",
   "freeSubscriptionFeatures": "Até 3 investimentos\nAcesso a recursos básicos",
   "monthlySubscriptionFeatures": "Investimentos e operações ilimitadas\nAcesso a todos os recursos",
   "annualSubscriptionFeatures": "Investimentos e operações ilimitadas\nAcesso a todos os recursos\n2 meses grátis",

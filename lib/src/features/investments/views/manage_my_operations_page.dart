@@ -14,6 +14,7 @@ import '../../../core/widgets/loading_widget.dart';
 import '../../../core/widgets/modal_bottom_sheet_widget.dart';
 import '../../../core/widgets/text_field_widget.dart';
 import '../../../l10n/l10n.dart';
+import '../../subscription/views/subscription_page.dart';
 import '../controllers/investments_controller.dart';
 import '../enums/category_enum.dart';
 import '../enums/operation_type_enum.dart';
@@ -190,11 +191,17 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
   }
 
   Future<void> _deleteOperation(OperationModel operationModel) async {
+    final InvestmentModel investmentModel = widget.controller.investments
+        .firstWhere((e) => e.id == operationModel.investmentId);
+
+    if (!widget.controller.canAddMoreInvestments &&
+        widget.controller.investments.indexOf(investmentModel) >= 3) {
+      Navigator.of(context).pushNamed(SubscriptionPage.routeName);
+      return;
+    }
+
     try {
       LoadingWidget.dialog(context);
-
-      final InvestmentModel investmentModel = widget.controller.investments
-          .firstWhere((e) => e.id == operationModel.investmentId);
 
       final String operationName =
           AppLocalizations.of(context)!.operationDescription(
@@ -307,15 +314,24 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
                             (e) => e.id == operation.investmentId,
                           );
 
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 5),
-                            child: OperationTileWidget(
-                              operation: operation,
-                              investment: investment,
-                              onDelete: operation.date
-                                      .isBefore(investment.lastOperationDate!)
-                                  ? null
-                                  : _deleteOperation,
+                          final bool isAboveLimit =
+                              !widget.controller.canAddMoreInvestments &&
+                                  widget.controller.investments
+                                          .indexOf(investment) >=
+                                      3;
+
+                          return Opacity(
+                            opacity: isAboveLimit ? 0.5 : 1.0,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: OperationTileWidget(
+                                operation: operation,
+                                investment: investment,
+                                onDelete: operation.date
+                                        .isBefore(investment.lastOperationDate!)
+                                    ? null
+                                    : _deleteOperation,
+                              ),
                             ),
                           );
                         }).toList(),
@@ -336,33 +352,46 @@ class _ManageMyOperationsPageState extends State<ManageMyOperationsPage> {
         hint: AppLocalizations.of(context)!.investmentHint,
         value: _selectedInvestment.value,
         onChanged: (investment) {
-          if (investment != _selectedInvestment.value) {
-            _selectedInvestment.value = investment;
-            _quantityController.clear();
-            _unitPriceController.clear();
-            _totalPriceController.clear();
+          if (widget.controller.canAddMoreInvestments ||
+              widget.controller.investments.indexOf(investment) < 3) {
+            if (investment != _selectedInvestment.value) {
+              _selectedInvestment.value = investment;
+              _quantityController.clear();
+              _unitPriceController.clear();
+              _totalPriceController.clear();
+            }
+          } else {
+            Navigator.of(context).pushReplacementNamed(
+              SubscriptionPage.routeName,
+            );
           }
         },
         items: widget.controller.investments.map((element) {
+          final bool isAboveLimit = !widget.controller.canAddMoreInvestments &&
+              widget.controller.investments.indexOf(element) >= 3;
+
           return DropdownMenuItem(
             value: element,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FittedBox(
-                  child: Text(element.category.hasQuotas ||
-                          element.category.isCrypto
-                      ? '${element.name} - ${AppLocalizations.of(context)!.positionDisplay(element.category.isCrypto ? element.cryptoPosition.toString() : element.custodialPosition.toString())}'
-                      : '${element.name} - ${AppLocalizations.of(context)!.totalDisplay(AppFormatter.currency(element.amountInvested))}'),
-                ),
-                FittedBox(
-                  child: CategoryIndicatorWidget(
-                    category: element.category,
-                    textColor: Colors.grey,
+            child: Opacity(
+              opacity: isAboveLimit ? 0.5 : 1.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FittedBox(
+                    child: Text(element.category.hasQuotas ||
+                            element.category.isCrypto
+                        ? '${element.name} - ${AppLocalizations.of(context)!.positionDisplay(element.category.isCrypto ? element.cryptoPosition.toString() : element.custodialPosition.toString())}'
+                        : '${element.name} - ${AppLocalizations.of(context)!.totalDisplay(AppFormatter.currency(element.amountInvested))}'),
                   ),
-                ),
-              ],
+                  FittedBox(
+                    child: CategoryIndicatorWidget(
+                      category: element.category,
+                      textColor: Colors.grey,
+                    ),
+                  ),
+                ],
+              ),
             ),
           );
         }).toList(),

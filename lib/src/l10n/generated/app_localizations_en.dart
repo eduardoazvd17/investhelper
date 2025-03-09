@@ -662,6 +662,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chooseYourPlan => 'Choose your plan';
 
   @override
+  String get choosePlanDescription => 'Choose the plan that best suits your needs. You can change or cancel at any time.';
+
+  @override
+  String get freePlanLimitWarning => 'You have reached the limit of 3 investments in the free plan. You won\'t be able to add new investments or manage operations for existing investments beyond this limit. Upgrade now to add more investments and access all features!';
+
+  @override
   String get freeSubscriptionFeatures => 'Up to 3 investments\nBasic features';
 
   @override

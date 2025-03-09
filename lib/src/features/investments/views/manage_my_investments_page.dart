@@ -207,6 +207,12 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   }
 
   Future<void> _editInvestment(InvestmentModel investmentModel) async {
+    if (!widget.controller.canAddMoreInvestments &&
+        widget.controller.investments.indexOf(investmentModel) >= 3) {
+      Navigator.of(context).pushNamed(SubscriptionPage.routeName);
+      return;
+    }
+
     onEditInvestment() async {
       try {
         LoadingWidget.dialog(context);
@@ -254,6 +260,12 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
   }
 
   Future<void> _deleteInvestment(InvestmentModel investmentModel) async {
+    if (!widget.controller.canAddMoreInvestments &&
+        widget.controller.investments.indexOf(investmentModel) >= 3) {
+      Navigator.of(context).pushNamed(SubscriptionPage.routeName);
+      return;
+    }
+
     try {
       LoadingWidget.dialog(context);
 
@@ -311,12 +323,19 @@ class _ManageMyInvestmentsPageState extends State<ManageMyInvestmentsPage> {
                 child: ListView(
                   children: widget.controller.investments.map(
                     (e) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: InvestmentTileWidget(
-                          investment: e,
-                          onEdit: _editInvestment,
-                          onDelete: _deleteInvestment,
+                      final bool isAboveLimit =
+                          !widget.controller.canAddMoreInvestments &&
+                              widget.controller.investments.indexOf(e) >= 3;
+
+                      return Opacity(
+                        opacity: isAboveLimit ? 0.5 : 1.0,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 5),
+                          child: InvestmentTileWidget(
+                            investment: e,
+                            onEdit: _editInvestment,
+                            onDelete: _deleteInvestment,
+                          ),
                         ),
                       );
                     },

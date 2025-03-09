@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:mobx/mobx.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/enums/subscription_enum.dart';
 import '../../../core/exceptions/app_exception.dart';
 import '../../../core/models/user_model.dart';
+import '../../../features/investments/controllers/investments_controller.dart';
 
 part 'subscription_controller.g.dart';
 
@@ -52,6 +54,12 @@ abstract class SubscriptionControllerBase with Store {
       subscriptions.remove(SubscriptionEnum.unlimited);
     }
     return subscriptions;
+  }
+
+  @computed
+  bool get hasReachedFreeLimit {
+    if (user?.data.subscription != SubscriptionEnum.free) return false;
+    return GetIt.I.get<InvestmentsController>().investments.length >= 3;
   }
 
   @action

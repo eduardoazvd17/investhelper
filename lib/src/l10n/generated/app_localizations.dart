@@ -1337,6 +1337,18 @@ abstract class AppLocalizations {
   /// **'Choose your plan'**
   String get chooseYourPlan;
 
+  /// No description provided for @choosePlanDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the plan that best suits your needs. You can change or cancel at any time.'**
+  String get choosePlanDescription;
+
+  /// No description provided for @freePlanLimitWarning.
+  ///
+  /// In en, this message translates to:
+  /// **'You have reached the limit of 3 investments in the free plan. You won\'t be able to add new investments or manage operations for existing investments beyond this limit. Upgrade now to add more investments and access all features!'**
+  String get freePlanLimitWarning;
+
   /// No description provided for @freeSubscriptionFeatures.
   ///
   /// In en, this message translates to:

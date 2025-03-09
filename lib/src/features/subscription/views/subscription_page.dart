@@ -84,62 +84,94 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       ),
       body: SafeArea(
         child: Observer(
-          builder: (_) => _buildBody(),
-        ),
-      ),
-    );
-  }
+          builder: (_) {
+            if (widget.controller.isLoading) {
+              return const Center(child: LoadingWidget());
+            }
 
-  Widget _buildBody() {
-    if (widget.controller.isLoading) {
-      return const Center(child: LoadingWidget());
-    }
+            if (widget.controller.error != null) {
+              return AppExceptionWidget(
+                error: widget.controller.error!.type,
+                onRetryCallback: () => widget.controller.initSubscriptions(),
+              );
+            }
 
-    if (widget.controller.error != null) {
-      return AppExceptionWidget(
-        error: widget.controller.error!.type,
-        onRetryCallback: () => widget.controller.initSubscriptions(),
-      );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            AppLocalizations.of(context)!.chooseYourPlan,
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 24),
-          Expanded(
-            child: ListView.builder(
-              itemCount: widget.controller.availableSubscriptions.length,
-              itemBuilder: (context, index) {
-                final subscription =
-                    widget.controller.availableSubscriptions[index];
-                return _buildSubscriptionCard(subscription);
-              },
-            ),
-          ),
-          if (Platform.isIOS) ...[
-            const SizedBox(height: 16),
-            Text(
-              AppLocalizations.of(context)!.iosSubscriptionDisclaimer,
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Theme.of(context)
-                        .textTheme
-                        .bodySmall
-                        ?.color
-                        ?.withValues(alpha: 0.7),
+            return Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    AppLocalizations.of(context)!.chooseYourPlan,
+                    style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                    textAlign: TextAlign.center,
                   ),
-              textAlign: TextAlign.center,
-            ),
-          ],
-        ],
+                  const SizedBox(height: 8),
+                  Text(
+                    AppLocalizations.of(context)!.choosePlanDescription,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.color
+                              ?.withValues(alpha: 0.7),
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  if (widget.controller.hasReachedFreeLimit) ...[
+                    const SizedBox(height: 16),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        AppLocalizations.of(context)!.freePlanLimitWarning,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontWeight: FontWeight.w500,
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
+                  const SizedBox(height: 24),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount:
+                          widget.controller.availableSubscriptions.length,
+                      itemBuilder: (context, index) {
+                        final subscription =
+                            widget.controller.availableSubscriptions[index];
+                        return _buildSubscriptionCard(subscription);
+                      },
+                    ),
+                  ),
+                  if (Platform.isIOS) ...[
+                    const SizedBox(height: 16),
+                    Text(
+                      AppLocalizations.of(context)!.iosSubscriptionDisclaimer,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodySmall
+                                ?.color
+                                ?.withValues(alpha: 0.7),
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }
