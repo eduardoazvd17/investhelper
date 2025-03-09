@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:mobx/mobx.dart';
-import 'package:get_it/get_it.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/enums/subscription_enum.dart';
@@ -17,9 +16,12 @@ class SubscriptionController = SubscriptionControllerBase
 
 abstract class SubscriptionControllerBase with Store {
   final AppController _appController;
+  final InvestmentsController _investmentsController;
   SubscriptionControllerBase({
     required AppController appController,
-  }) : _appController = appController {
+    required InvestmentsController investmentsController,
+  })  : _appController = appController,
+        _investmentsController = investmentsController {
     reaction(
       (_) => _appController.user,
       (user) => verifySubscriptionStatus(),
@@ -57,10 +59,9 @@ abstract class SubscriptionControllerBase with Store {
   }
 
   @computed
-  bool get hasReachedFreeLimit {
-    if (user?.data.subscription != SubscriptionEnum.free) return false;
-    return GetIt.I.get<InvestmentsController>().investments.length >= 3;
-  }
+  bool get hasReachedFreeLimit =>
+      !_investmentsController.canAddMoreInvestments &&
+      _investmentsController.investments.length >= 3;
 
   @action
   Future<void> initSubscriptions() async {

@@ -56,21 +56,12 @@ Future<AppController> _loadDependencies() async {
       service: AuthService(),
     ),
   );
-  final subscriptionController = GetIt.I.registerSingleton(
+  GetIt.I.registerSingleton(
     SubscriptionController(
       appController: appController,
+      investmentsController: GetIt.I.get<InvestmentsController>(),
     ),
   );
-
-  // Initialize subscriptions if user is logged in
-  if (appController.user != null) {
-    try {
-      await subscriptionController.initSubscriptions();
-    } catch (_) {
-      // Fail silently - will try again later
-    }
-  }
-
   return appController;
 }
 
