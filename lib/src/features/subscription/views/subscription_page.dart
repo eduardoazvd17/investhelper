@@ -36,14 +36,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     if (currentSubscription == subscription) return;
 
     if (subscription == SubscriptionEnum.free) {
-      String message = Platform.isIOS
-          ? AppLocalizations.of(context)!.iosSubscriptionDisclaimer
-          : AppLocalizations.of(context)!.androidSubscriptionDisclaimer;
-
-      await DialogWidget.show(
+      DialogWidget.show(
         context,
         title: AppLocalizations.of(context)!.cancelSubscriptionTitle,
-        message: message,
+        message: Platform.isIOS
+            ? AppLocalizations.of(context)!.iosSubscriptionDisclaimer
+            : AppLocalizations.of(context)!.androidSubscriptionDisclaimer,
         actionType: DialogWidgetActionType.close,
       );
       return;
@@ -52,9 +50,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     try {
       LoadingWidget.dialog(context);
       await widget.controller.purchaseSubscription(subscription);
-
-      if (mounted &&
-          subscription == widget.controller.user?.data.subscription) {
+      if (widget.controller.user?.data.subscription == subscription) {
+        if (!mounted) return;
         await DialogWidget.show(
           context,
           title: AppLocalizations.of(context)!.success,
@@ -69,10 +66,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       }
 
       if (mounted) LoadingWidget.hide(context);
-    } catch (e) {
+    } on AppException catch (e) {
       if (!mounted) return;
       LoadingWidget.hide(context);
-      AppException().show(context);
+      e.show(context);
     }
   }
 

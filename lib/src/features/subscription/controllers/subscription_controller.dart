@@ -140,7 +140,7 @@ abstract class SubscriptionControllerBase with Store {
     } catch (e) {
       _appController.disableAuthOverlay = false;
       _appController.disableBlurOverlay = false;
-      rethrow;
+      throw AppException(AppExceptionType.purchaseError, e.toString());
     }
   }
 
