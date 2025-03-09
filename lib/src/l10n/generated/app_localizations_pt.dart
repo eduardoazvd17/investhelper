@@ -671,6 +671,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get annualSubscriptionFeatures => 'Investimentos e operações ilimitadas\nAcesso a todos os recursos\n2 meses grátis';
 
   @override
+  String get unlimitedSubscriptionFeatures => 'Investimentos e operações ilimitadas\nAcesso a todos os recursos\nAcesso vitalício';
+
+  @override
   String get storeNotAvailableErrorTitle => 'Loja indisponível';
 
   @override
@@ -698,6 +701,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get iosSubscriptionDisclaimer => 'O pagamento será cobrado na sua conta do Apple ID na confirmação da compra. A assinatura é renovada automaticamente, a menos que seja cancelada pelo menos 24 horas antes do final do período atual. Sua conta será cobrada pela renovação dentro de 24 horas antes do final do período atual. Você pode gerenciar e cancelar suas assinaturas indo para as configurações da sua conta na App Store após a compra.';
 
   @override
+  String get androidSubscriptionDisclaimer => 'Para cancelar sua assinatura, acesse a Google Play Store > Conta > Assinaturas e cancele sua assinatura do InvestHelper. Sua assinatura permanecerá ativa até o final do período de cobrança atual.';
+
+  @override
   String get error => 'Erro';
 
   @override
@@ -711,4 +717,12 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get planUpdated => 'Seu plano de assinatura foi atualizado com sucesso.';
+
+  @override
+  String get cancelSubscriptionTitle => 'Cancelar assinatura';
+
+  @override
+  String cancelSubscriptionMessage(String date) {
+    return 'Deseja realmente cancelar sua assinatura e retornar ao plano gratuito?\n\nSua assinatura atual continuará válida até $date.';
+  }
 }

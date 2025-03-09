@@ -327,6 +327,7 @@
     "freeSubscriptionFeatures": "Up to 3 investments\nBasic features",
     "monthlySubscriptionFeatures": "Unlimited investments\nAll features",
     "annualSubscriptionFeatures": "Unlimited investments\nAll features\n2 months free",
+    "unlimitedSubscriptionFeatures": "Unlimited investments\nAll features\nLifetime access",
     "storeNotAvailableErrorTitle": "Store not available",
     "storeNotAvailableErrorMessage": "The app store is not available at the moment. Please try again later.",
     "productNotFoundErrorTitle": "Product not found",
@@ -336,9 +337,19 @@
     "subscriptionLimitReachedTitle": "Subscription limit reached",
     "subscriptionLimitReachedMessage": "You have reached the maximum number of investments for the free plan. Please upgrade to continue adding investments.",
     "iosSubscriptionDisclaimer": "Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.",
+    "androidSubscriptionDisclaimer": "To cancel your subscription, please go to the Google Play Store > Account > Subscriptions and cancel your InvestHelper subscription. Your subscription will remain active until the end of the current billing period.",
     "error": "Error",
     "purchasePendingErrorTitle": "Purchase in progress",
     "purchasePendingErrorMessage": "Your purchase is being processed. Please wait for the confirmation.",
     "success": "Success",
-    "planUpdated": "Your subscription plan has been updated successfully."
+    "planUpdated": "Your subscription plan has been updated successfully.",
+    "cancelSubscriptionTitle": "Cancel subscription",
+    "cancelSubscriptionMessage": "Do you really want to cancel your subscription and return to the free plan?\n\nYour current subscription will remain valid until {date}.",
+    "@cancelSubscriptionMessage": {
+        "placeholders": {
+            "date": {
+                "type": "String"
+            }
+        }
+    }
 }

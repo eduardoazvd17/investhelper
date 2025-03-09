@@ -16,6 +16,46 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
       (_$userComputed ??= Computed<UserModel?>(() => super.user,
               name: 'SubscriptionControllerBase.user'))
           .value;
+  Computed<List<SubscriptionEnum>>? _$availableSubscriptionsComputed;
+
+  @override
+  List<SubscriptionEnum> get availableSubscriptions =>
+      (_$availableSubscriptionsComputed ??= Computed<List<SubscriptionEnum>>(
+              () => super.availableSubscriptions,
+              name: 'SubscriptionControllerBase.availableSubscriptions'))
+          .value;
+
+  late final _$isLoadingAtom =
+      Atom(name: 'SubscriptionControllerBase.isLoading', context: context);
+
+  @override
+  bool get isLoading {
+    _$isLoadingAtom.reportRead();
+    return super.isLoading;
+  }
+
+  @override
+  set isLoading(bool value) {
+    _$isLoadingAtom.reportWrite(value, super.isLoading, () {
+      super.isLoading = value;
+    });
+  }
+
+  late final _$errorAtom =
+      Atom(name: 'SubscriptionControllerBase.error', context: context);
+
+  @override
+  AppException? get error {
+    _$errorAtom.reportRead();
+    return super.error;
+  }
+
+  @override
+  set error(AppException? value) {
+    _$errorAtom.reportWrite(value, super.error, () {
+      super.error = value;
+    });
+  }
 
   late final _$initSubscriptionsAsyncAction = AsyncAction(
       'SubscriptionControllerBase.initSubscriptions',
@@ -29,7 +69,10 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
   @override
   String toString() {
     return '''
-user: ${user}
+isLoading: ${isLoading},
+error: ${error},
+user: ${user},
+availableSubscriptions: ${availableSubscriptions}
     ''';
   }
 }

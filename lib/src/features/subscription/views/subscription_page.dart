@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:intl/intl.dart';
 
 import '../../../core/enums/subscription_enum.dart';
 import '../../../core/exceptions/app_exception.dart';
@@ -22,96 +22,57 @@ class SubscriptionPage extends StatefulWidget {
 }
 
 class _SubscriptionPageState extends State<SubscriptionPage> {
-  final List<SubscriptionEnum> _availableSubscriptions = [
-    SubscriptionEnum.free,
-    SubscriptionEnum.monthly,
-    SubscriptionEnum.annual,
-  ];
-
-  bool _isLoading = true;
-  AppException? _error;
-
   @override
   void initState() {
     super.initState();
-    _initSubscriptions();
-  }
-
-  Future<void> _initSubscriptions() async {
-    try {
-      setState(() {
-        _isLoading = true;
-        _error = null;
-      });
-
-      await widget.controller.initSubscriptions();
-
-      if (!mounted) return;
-      setState(() {
-        _isLoading = false;
-      });
-    } catch (e) {
-      if (!mounted) return;
-      setState(() {
-        _isLoading = false;
-        _error = AppException();
-      });
-    }
+    widget.controller.initSubscriptions();
   }
 
   Future<void> _handleSubscriptionSelection(
     SubscriptionEnum subscription,
   ) async {
+    final userData = widget.controller.user?.data;
+    final currentSubscription = userData?.subscription;
+    if (currentSubscription == subscription) return;
+
     if (subscription == SubscriptionEnum.free) {
-      final currentSubscription = widget.controller.user?.data.subscription;
-      if (currentSubscription == null ||
-          currentSubscription == SubscriptionEnum.free) {
-        return;
-      }
+      String message = Platform.isIOS
+          ? AppLocalizations.of(context)!.iosSubscriptionDisclaimer
+          : AppLocalizations.of(context)!.androidSubscriptionDisclaimer;
 
-      // Show confirmation dialog before canceling
-      final bool? shouldCancel = await DialogWidget.show(
+      await DialogWidget.show(
         context,
-        title: AppLocalizations.of(context)!.endSession,
-        message: AppLocalizations.of(context)!.endSessionMessage,
-        actionType: DialogWidgetActionType.yesOrNo,
+        title: AppLocalizations.of(context)!.cancelSubscriptionTitle,
+        message: message,
+        actionType: DialogWidgetActionType.close,
       );
-
-      if (shouldCancel != true || !mounted) return;
-
-      try {
-        LoadingWidget.dialog(context);
-        await widget.controller.cancelSubscription();
-        if (!mounted) return;
-        LoadingWidget.hide(context);
-        Navigator.of(context).pop();
-      } on AppException catch (e) {
-        if (!mounted) return;
-        LoadingWidget.hide(context);
-        await e.show(context);
-      }
       return;
     }
 
     try {
       LoadingWidget.dialog(context);
       await widget.controller.purchaseSubscription(subscription);
+
+      if (mounted &&
+          subscription == widget.controller.user?.data.subscription) {
+        await DialogWidget.show(
+          context,
+          title: AppLocalizations.of(context)!.success,
+          message: AppLocalizations.of(context)!.planUpdated,
+          actionType: DialogWidgetActionType.close,
+        );
+
+        if (!mounted) return;
+        LoadingWidget.hide(context);
+        Navigator.of(context).pop();
+        return;
+      }
+
+      if (mounted) LoadingWidget.hide(context);
+    } catch (e) {
       if (!mounted) return;
       LoadingWidget.hide(context);
-
-      await DialogWidget.show(
-        context,
-        title: AppLocalizations.of(context)!.success,
-        message: AppLocalizations.of(context)!.planUpdated,
-        actionType: DialogWidgetActionType.close,
-      );
-
-      if (!mounted) return;
-      Navigator.of(context).pop();
-    } on AppException catch (e) {
-      if (!mounted) return;
-      LoadingWidget.hide(context);
-      await e.show(context);
+      AppException().show(context);
     }
   }
 
@@ -122,20 +83,22 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         title: Text(AppLocalizations.of(context)!.subscription),
       ),
       body: SafeArea(
-        child: _buildBody(),
+        child: Observer(
+          builder: (_) => _buildBody(),
+        ),
       ),
     );
   }
 
   Widget _buildBody() {
-    if (_isLoading) {
+    if (widget.controller.isLoading) {
       return const Center(child: LoadingWidget());
     }
 
-    if (_error != null) {
+    if (widget.controller.error != null) {
       return AppExceptionWidget(
-        error: _error!.type,
-        onRetryCallback: _initSubscriptions,
+        error: widget.controller.error!.type,
+        onRetryCallback: () => widget.controller.initSubscriptions(),
       );
     }
 
@@ -154,9 +117,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           const SizedBox(height: 24),
           Expanded(
             child: ListView.builder(
-              itemCount: _availableSubscriptions.length,
+              itemCount: widget.controller.availableSubscriptions.length,
               itemBuilder: (context, index) {
-                final subscription = _availableSubscriptions[index];
+                final subscription =
+                    widget.controller.availableSubscriptions[index];
                 return _buildSubscriptionCard(subscription);
               },
             ),
@@ -170,7 +134,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         .textTheme
                         .bodySmall
                         ?.color
-                        ?.withOpacity(0.7),
+                        ?.withValues(alpha: 0.7),
                   ),
               textAlign: TextAlign.center,
             ),
@@ -184,11 +148,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     final bool isSelected =
         widget.controller.user?.data.subscription == subscription;
     final bool isFree = subscription == SubscriptionEnum.free;
-    final bool hasActiveSubscription =
-        widget.controller.user?.data.subscription != null &&
-            widget.controller.user?.data.subscription != SubscriptionEnum.free;
-    final DateTime? subscriptionEndDate =
-        widget.controller.user?.data.subscriptionEndDate;
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
@@ -225,31 +184,16 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               ),
               const SizedBox(height: 8),
               Text(
-                isFree && hasActiveSubscription
-                    ? AppLocalizations.of(context)!.endSessionMessage
-                    : _getSubscriptionFeatures(subscription),
+                _getSubscriptionFeatures(subscription),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context)
                           .textTheme
                           .bodyMedium
                           ?.color
-                          ?.withOpacity(0.8),
+                          ?.withValues(alpha: 0.8),
                     ),
               ),
-              if (isSelected && !isFree && subscriptionEndDate != null) ...[
-                const SizedBox(height: 8),
-                Text(
-                  'Valid until: ${DateFormat('dd/MM/yyyy').format(subscriptionEndDate)}',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context)
-                            .textTheme
-                            .bodyMedium
-                            ?.color
-                            ?.withOpacity(0.8),
-                      ),
-                ),
-              ],
-              if (!isFree) ...[
+              if (!isFree && subscription != SubscriptionEnum.unlimited) ...[
                 const SizedBox(height: 12),
                 Text(
                   _getSubscriptionPrice(subscription),
@@ -274,7 +218,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         AppLocalizations.of(context)!.monthlySubscriptionFeatures,
       SubscriptionEnum.annual =>
         AppLocalizations.of(context)!.annualSubscriptionFeatures,
-      _ => '',
+      SubscriptionEnum.unlimited =>
+        AppLocalizations.of(context)!.monthlySubscriptionFeatures,
     };
   }
 

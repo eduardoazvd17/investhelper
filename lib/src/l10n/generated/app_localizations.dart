@@ -1355,6 +1355,12 @@ abstract class AppLocalizations {
   /// **'Unlimited investments\nAll features\n2 months free'**
   String get annualSubscriptionFeatures;
 
+  /// No description provided for @unlimitedSubscriptionFeatures.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited investments\nAll features\nLifetime access'**
+  String get unlimitedSubscriptionFeatures;
+
   /// No description provided for @storeNotAvailableErrorTitle.
   ///
   /// In en, this message translates to:
@@ -1409,6 +1415,12 @@ abstract class AppLocalizations {
   /// **'Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.'**
   String get iosSubscriptionDisclaimer;
 
+  /// No description provided for @androidSubscriptionDisclaimer.
+  ///
+  /// In en, this message translates to:
+  /// **'To cancel your subscription, please go to the Google Play Store > Account > Subscriptions and cancel your InvestHelper subscription. Your subscription will remain active until the end of the current billing period.'**
+  String get androidSubscriptionDisclaimer;
+
   /// No description provided for @error.
   ///
   /// In en, this message translates to:
@@ -1438,6 +1450,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your subscription plan has been updated successfully.'**
   String get planUpdated;
+
+  /// No description provided for @cancelSubscriptionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel subscription'**
+  String get cancelSubscriptionTitle;
+
+  /// No description provided for @cancelSubscriptionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you really want to cancel your subscription and return to the free plan?\n\nYour current subscription will remain valid until {date}.'**
+  String cancelSubscriptionMessage(String date);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

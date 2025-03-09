@@ -34,27 +34,18 @@ class UserModel {
 class UserDataModel {
   final DateTime registerDate;
   final SubscriptionEnum subscription;
-  final DateTime? subscriptionStartDate;
-  final DateTime? subscriptionEndDate;
 
   UserDataModel({
     required this.registerDate,
     this.subscription = SubscriptionEnum.free,
-    this.subscriptionStartDate,
-    this.subscriptionEndDate,
   });
 
   UserDataModel copyWith({
     required SubscriptionEnum? subscription,
-    required DateTime? subscriptionStartDate,
-    required DateTime? subscriptionEndDate,
   }) {
     return UserDataModel(
       registerDate: registerDate,
       subscription: subscription ?? this.subscription,
-      subscriptionStartDate:
-          subscriptionStartDate ?? this.subscriptionStartDate,
-      subscriptionEndDate: subscriptionEndDate ?? this.subscriptionEndDate,
     );
   }
 
@@ -62,8 +53,6 @@ class UserDataModel {
     return <String, dynamic>{
       'registerDate': registerDate.millisecondsSinceEpoch,
       'subscription': subscription.index,
-      'subscriptionStartDate': subscriptionStartDate?.millisecondsSinceEpoch,
-      'subscriptionEndDate': subscriptionEndDate?.millisecondsSinceEpoch,
     };
   }
 
@@ -72,18 +61,9 @@ class UserDataModel {
       registerDate: DateTime.fromMillisecondsSinceEpoch(
         int.parse(map['registerDate'].toStringAsFixed(0)),
       ),
-      subscription: SubscriptionEnum
-          .values[int.parse(map['subscription'].toStringAsFixed(0))],
-      subscriptionStartDate: map['subscriptionStartDate'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(
-              int.parse(map['subscriptionStartDate'].toStringAsFixed(0)),
-            )
-          : null,
-      subscriptionEndDate: map['subscriptionEndDate'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(
-              int.parse(map['subscriptionEndDate'].toStringAsFixed(0)),
-            )
-          : null,
+      subscription: SubscriptionEnum.values[int.parse(
+        map['subscription'].toStringAsFixed(0),
+      )],
     );
   }
 

@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 abstract class DateTimeUtils {
+  static String format(DateTime date) {
+    return DateFormat('dd/MM/yyyy').format(date);
+  }
+
   static DateTime getPastMonthFirstDay(DateTime date) {
     return date.month > 1
         ? DateTime(date.year, date.month - 1)

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:mobx/mobx.dart';
@@ -16,89 +15,122 @@ class SubscriptionController = SubscriptionControllerBase
 
 abstract class SubscriptionControllerBase with Store {
   final AppController _appController;
+  SubscriptionControllerBase({
+    required AppController appController,
+  }) : _appController = appController {
+    reaction(
+      (_) => _appController.user,
+      (user) => verifySubscriptionStatus(),
+    );
+    verifySubscriptionStatus();
+  }
+
   final Map<SubscriptionEnum, String> _productIds = {
     SubscriptionEnum.monthly: 'investhelper_monthly_plan',
     SubscriptionEnum.annual: 'investhelper_annual_plan',
   };
 
+  @observable
   StreamSubscription<List<PurchaseDetails>>? _subscription;
-  List<ProductDetails>? _products;
 
-  SubscriptionControllerBase({
-    required AppController appController,
-  }) : _appController = appController {
-    // Verify subscription status periodically
-    Timer.periodic(const Duration(days: 1), (_) {
-      verifySubscriptionStatus();
-    });
-  }
+  @observable
+  List<ProductDetails>? _products;
 
   @computed
   UserModel? get user => _appController.user;
 
-  @action
-  Future<void> initSubscriptions() async {
-    final bool available = await InAppPurchase.instance.isAvailable();
-    if (!available) {
-      throw AppException(AppExceptionType.storeNotAvailable);
+  @observable
+  bool isLoading = false;
+
+  @observable
+  AppException? error;
+
+  @computed
+  List<SubscriptionEnum> get availableSubscriptions {
+    final subscriptions = List<SubscriptionEnum>.from(SubscriptionEnum.values);
+    if (user?.data.subscription != SubscriptionEnum.unlimited) {
+      subscriptions.remove(SubscriptionEnum.unlimited);
     }
-
-    _subscription ??= InAppPurchase.instance.purchaseStream.listen(
-      _handlePurchaseUpdate,
-      onDone: () => _subscription?.cancel(),
-      onError: (error) => throw AppException(
-        AppExceptionType.purchaseError,
-        error.toString(),
-      ),
-    );
-
-    final Set<String> ids = _productIds.values.toSet();
-    final ProductDetailsResponse response =
-        await InAppPurchase.instance.queryProductDetails(ids);
-
-    if (response.error != null) {
-      throw AppException(
-        AppExceptionType.productNotFound,
-        response.error.toString(),
-      );
-    }
-
-    if (response.productDetails.isEmpty) {
-      throw AppException(AppExceptionType.productNotFound);
-    }
-
-    _products = response.productDetails;
-
-    // Verify subscription status on initialization
-    await verifySubscriptionStatus();
+    return subscriptions;
   }
 
-  Future<void> purchaseSubscription(SubscriptionEnum subscription) async {
-    final String? productId = _productIds[subscription];
-    if (productId == null) return;
+  @action
+  Future<void> initSubscriptions() async {
+    error = null;
+    isLoading = true;
 
-    final ProductDetails? product = _products?.firstWhere(
-      (product) => product.id == productId,
-    );
+    try {
+      final bool available = await InAppPurchase.instance.isAvailable();
+      if (!available) {
+        throw AppException(AppExceptionType.storeNotAvailable);
+      }
 
-    if (product == null) {
-      throw AppException(AppExceptionType.productNotFound);
+      _subscription ??= InAppPurchase.instance.purchaseStream.listen(
+        _handlePurchaseUpdate,
+        onDone: () => _subscription?.cancel(),
+        onError: (error) => throw AppException(
+          AppExceptionType.purchaseError,
+          error.toString(),
+        ),
+      );
+
+      final Set<String> ids = _productIds.values.toSet();
+      final ProductDetailsResponse response =
+          await InAppPurchase.instance.queryProductDetails(ids);
+
+      if (response.error != null) {
+        throw AppException(
+          AppExceptionType.productNotFound,
+          response.error.toString(),
+        );
+      }
+
+      if (response.productDetails.isEmpty) {
+        throw AppException(AppExceptionType.productNotFound);
+      }
+
+      _products = response.productDetails;
+    } on AppException catch (e) {
+      error = e;
+    } catch (e) {
+      error = AppException();
     }
+    isLoading = false;
+  }
 
-    final PurchaseParam purchaseParam = PurchaseParam(
-      productDetails: product,
-    );
+  @action
+  Future<void> purchaseSubscription(SubscriptionEnum subscription) async {
+    try {
+      final String? productId = _productIds[subscription];
+      if (productId == null) {
+        throw AppException(AppExceptionType.productNotFound);
+      }
 
-    await InAppPurchase.instance.buyNonConsumable(
-      purchaseParam: purchaseParam,
-    );
+      final ProductDetails? product = _products?.firstWhere(
+        (product) => product.id == productId,
+      );
+      if (product == null) {
+        throw AppException(AppExceptionType.productNotFound);
+      }
+
+      final PurchaseParam purchaseParam = PurchaseParam(
+        productDetails: product,
+      );
+      await InAppPurchase.instance.buyNonConsumable(
+        purchaseParam: purchaseParam,
+      );
+    } catch (e) {
+      rethrow;
+    }
   }
 
   void _handlePurchaseUpdate(List<PurchaseDetails> purchaseDetailsList) {
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
       if (purchaseDetails.status == PurchaseStatus.pending) {
-        throw AppException(AppExceptionType.purchasePending);
+        isLoading = true;
       } else {
+        isLoading = false;
+
         if (purchaseDetails.status == PurchaseStatus.error) {
           throw AppException(
             AppExceptionType.purchaseError,
@@ -124,40 +156,9 @@ abstract class SubscriptionControllerBase with Store {
 
       await _appController.changeUserData(
         _appController.user!.data.copyWith(
-          subscriptionStartDate: DateTime.now(),
           subscription: subscription,
-          subscriptionEndDate: DateTime.now().add(
-            subscription == SubscriptionEnum.monthly
-                ? const Duration(days: 30)
-                : const Duration(days: 365),
-          ),
         ),
       );
-    } on AppException catch (_) {
-      rethrow;
-    }
-  }
-
-  Future<void> cancelSubscription() async {
-    try {
-      final subscription = _appController.user?.data.subscription;
-      if (subscription == null || subscription == SubscriptionEnum.free) return;
-
-      // Mark subscription for cancellation at the end of the current period
-      // This is handled differently on iOS and Android
-      if (Platform.isIOS) {
-        // On iOS, we need to show the user how to cancel in Settings
-        throw AppException(
-          AppExceptionType.purchaseError,
-          'To cancel your subscription, please go to Settings > Apple ID > Subscriptions',
-        );
-      } else {
-        // On Android, we can cancel through the Play Store
-        throw AppException(
-          AppExceptionType.purchaseError,
-          'To cancel your subscription, please go to the Google Play Store > Subscriptions',
-        );
-      }
     } on AppException catch (_) {
       rethrow;
     }
@@ -167,69 +168,51 @@ abstract class SubscriptionControllerBase with Store {
     try {
       if (_appController.user == null) return;
 
-      final currentSubscription = _appController.user!.data.subscription;
-      if (currentSubscription == SubscriptionEnum.free) return;
+      final bool available = await InAppPurchase.instance.isAvailable();
+      if (!available) return;
 
-      final subscriptionEndDate = _appController.user!.data.subscriptionEndDate;
-      if (subscriptionEndDate == null) return;
+      final List<PurchaseDetails> purchases = await _getPurchases();
+      final PurchaseDetails? activeSubscription = purchases
+          .where((purchase) =>
+              purchase.status == PurchaseStatus.purchased ||
+              purchase.status == PurchaseStatus.restored)
+          .firstOrNull;
 
-      // Check if subscription has expired
-      if (DateTime.now().isAfter(subscriptionEndDate)) {
+      if (activeSubscription == null &&
+              user?.data.subscription == SubscriptionEnum.monthly ||
+          user?.data.subscription == SubscriptionEnum.annual) {
         await _appController.changeUserData(
           _appController.user!.data.copyWith(
             subscription: SubscriptionEnum.free,
-            subscriptionStartDate: null,
-            subscriptionEndDate: null,
           ),
         );
         return;
       }
+    } catch (_) {}
+  }
 
-      // Verify purchase status with store
-      final String? productId = _productIds[currentSubscription];
-      if (productId == null) return;
+  Future<List<PurchaseDetails>> _getPurchases() async {
+    final Completer<List<PurchaseDetails>> completer = Completer();
+    late StreamSubscription subscription;
+    subscription = InAppPurchase.instance.purchaseStream.listen(
+      (purchases) {
+        subscription.cancel();
+        completer.complete(purchases);
+      },
+      onError: (error) {
+        subscription.cancel();
+        completer.complete([]);
+      },
+    );
 
-      final bool available = await InAppPurchase.instance.isAvailable();
-      if (!available) return;
-
-      // Get active purchases
-      final Stream<List<PurchaseDetails>> purchaseStream =
-          InAppPurchase.instance.purchaseStream;
-
-      await for (final List<PurchaseDetails> purchases in purchaseStream) {
-        final PurchaseDetails? subscription = purchases
-            .where((purchase) => purchase.productID == productId)
-            .firstOrNull;
-
-        // If subscription not found or was refunded/cancelled, revert to free plan
-        if (subscription == null ||
-            subscription.status == PurchaseStatus.error ||
-            subscription.status == PurchaseStatus.canceled) {
-          await _appController.changeUserData(
-            _appController.user!.data.copyWith(
-              subscription: SubscriptionEnum.free,
-              subscriptionStartDate: null,
-              subscriptionEndDate: null,
-            ),
-          );
-          break;
-        }
-      }
-    } catch (_) {
-      // Fail silently - will try again next time
-    }
+    await InAppPurchase.instance.restorePurchases();
+    return await completer.future;
   }
 
   SubscriptionEnum _getSubscriptionFromProductId(String productId) {
-    return _productIds.entries
-        .firstWhere(
-          (entry) => entry.value == productId,
-          orElse: () => const MapEntry(
-            SubscriptionEnum.free,
-            '',
-          ),
-        )
-        .key;
+    return _productIds.entries.firstWhere((entry) {
+      return entry.value == productId;
+    }, orElse: () => const MapEntry(SubscriptionEnum.free, '')).key;
   }
 
   ProductDetails? getProductForSubscription(SubscriptionEnum subscription) {

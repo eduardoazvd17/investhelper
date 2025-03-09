@@ -17,6 +17,14 @@ mixin _$AuthController on AuthControllerBase, Store {
               name: 'AuthControllerBase.user'))
           .value;
 
+  late final _$openTermsUrlAsyncAction =
+      AsyncAction('AuthControllerBase.openTermsUrl', context: context);
+
+  @override
+  Future<void> openTermsUrl() {
+    return _$openTermsUrlAsyncAction.run(() => super.openTermsUrl());
+  }
+
   @override
   String toString() {
     return '''

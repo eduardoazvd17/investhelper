@@ -671,6 +671,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get annualSubscriptionFeatures => 'Unlimited investments\nAll features\n2 months free';
 
   @override
+  String get unlimitedSubscriptionFeatures => 'Unlimited investments\nAll features\nLifetime access';
+
+  @override
   String get storeNotAvailableErrorTitle => 'Store not available';
 
   @override
@@ -698,6 +701,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get iosSubscriptionDisclaimer => 'Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.';
 
   @override
+  String get androidSubscriptionDisclaimer => 'To cancel your subscription, please go to the Google Play Store > Account > Subscriptions and cancel your InvestHelper subscription. Your subscription will remain active until the end of the current billing period.';
+
+  @override
   String get error => 'Error';
 
   @override
@@ -711,4 +717,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get planUpdated => 'Your subscription plan has been updated successfully.';
+
+  @override
+  String get cancelSubscriptionTitle => 'Cancel subscription';
+
+  @override
+  String cancelSubscriptionMessage(String date) {
+    return 'Do you really want to cancel your subscription and return to the free plan?\n\nYour current subscription will remain valid until $date.';
+  }
 }
