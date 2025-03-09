@@ -170,6 +170,17 @@ class AppService {
     }
   }
 
+  Future<bool> canChangePassword() async {
+    try {
+      final String? result = await _secureStorage.read(
+        key: _auth.currentUser!.uid,
+      );
+      return result != null && result.isNotEmpty;
+    } catch (_) {
+      return false;
+    }
+  }
+
   Future<void> changeUserPassword(
     String currentPassword,
     String newPassword,
@@ -220,6 +231,21 @@ class AppService {
       return userModel;
     } on AppException catch (_) {
       rethrow;
+    } catch (error) {
+      throw AppException(AppExceptionType.connectionError, error.toString());
+    }
+  }
+
+  Future<void> sendRecoveryEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
+    } on AppException catch (_) {
+      rethrow;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "network-request-failed") {
+        throw AppException(AppExceptionType.connectionError);
+      }
+      throw AppException(AppExceptionType.invalidRecoveryEmail);
     } catch (error) {
       throw AppException(AppExceptionType.connectionError, error.toString());
     }

@@ -12,6 +12,7 @@ import '../../../core/widgets/section_widget.dart';
 import '../../../core/widgets/text_field_widget.dart';
 import '../../../l10n/l10n.dart';
 import '../../investments/views/investments_page.dart';
+import '../../../core/widgets/dialog_widget.dart';
 
 class ChangePersonalDataPage extends StatefulWidget {
   static const String routeName = "/changePersonalData";
@@ -153,8 +154,19 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
   }
 
   Future<void> _deleteMyAccount() async {
-    _currentPasswordController.clear();
+    if (!widget.appController.canChangePassword) {
+      widget.appController.sendRecoveryEmail();
+      await DialogWidget.show(
+        context,
+        title: AppLocalizations.of(context)!.attention,
+        message:
+            '${AppLocalizations.of(context)!.needPasswordToDeleteAccount}\n\n${AppLocalizations.of(context)!.checkEmailForPasswordReset}',
+        actionType: DialogWidgetActionType.close,
+      );
+      return;
+    }
 
+    _currentPasswordController.clear();
     await ModalBottomSheetWidget.show(
       context,
       title: AppLocalizations.of(context)!.deleteMyAccountTitle,
@@ -256,32 +268,35 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                           ],
                         ),
                         const Divider(),
-                        SectionWidget(
-                          title: AppLocalizations.of(context)!.password,
-                          actions: [
-                            TextButton.icon(
-                              onPressed: _changeUserPassword,
-                              icon: const Icon(CupertinoIcons.lock),
-                              label: Text(
-                                  AppLocalizations.of(context)!.changePassword),
-                            )
-                                .animate()
-                                .fade(
-                                    duration: const Duration(milliseconds: 400))
-                                .slideX(
-                                  end: 0,
-                                  begin: 1,
-                                  duration: const Duration(milliseconds: 200),
-                                ),
-                          ],
-                          content: [
-                            Text(
-                              '••••••••',
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                          ],
-                        ),
-                        const Divider(),
+                        if (widget.appController.canChangePassword) ...[
+                          SectionWidget(
+                            title: AppLocalizations.of(context)!.password,
+                            actions: [
+                              TextButton.icon(
+                                onPressed: _changeUserPassword,
+                                icon: const Icon(CupertinoIcons.lock),
+                                label: Text(AppLocalizations.of(context)!
+                                    .changePassword),
+                              )
+                                  .animate()
+                                  .fade(
+                                      duration:
+                                          const Duration(milliseconds: 400))
+                                  .slideX(
+                                    end: 0,
+                                    begin: 1,
+                                    duration: const Duration(milliseconds: 200),
+                                  ),
+                            ],
+                            content: [
+                              Text(
+                                '••••••••',
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ],
+                          ),
+                          const Divider(),
+                        ],
                         Padding(
                           padding: const EdgeInsets.only(top: 50),
                           child: SectionWidget(

@@ -731,4 +731,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String cancelSubscriptionMessage(String date) {
     return 'Do you really want to cancel your subscription and return to the free plan?\n\nYour current subscription will remain valid until $date.';
   }
+
+  @override
+  String get attention => 'Attention';
+
+  @override
+  String get needPasswordToDeleteAccount => 'To delete your account, you need to have a password set up.';
+
+  @override
+  String get checkEmailForPasswordReset => 'Please check your email for instructions on how to set up a password, then log in using your email and password instead of Google Sign-In.';
 }

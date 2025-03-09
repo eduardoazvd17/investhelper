@@ -1474,6 +1474,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Do you really want to cancel your subscription and return to the free plan?\n\nYour current subscription will remain valid until {date}.'**
   String cancelSubscriptionMessage(String date);
+
+  /// No description provided for @attention.
+  ///
+  /// In en, this message translates to:
+  /// **'Attention'**
+  String get attention;
+
+  /// No description provided for @needPasswordToDeleteAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'To delete your account, you need to have a password set up.'**
+  String get needPasswordToDeleteAccount;
+
+  /// No description provided for @checkEmailForPasswordReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Please check your email for instructions on how to set up a password, then log in using your email and password instead of Google Sign-In.'**
+  String get checkEmailForPasswordReset;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

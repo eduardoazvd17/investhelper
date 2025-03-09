@@ -353,5 +353,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "attention": "Atenção",
+  "needPasswordToDeleteAccount": "Para excluir sua conta, você precisa ter uma senha configurada.",
+  "checkEmailForPasswordReset": "Por favor, verifique seu e-mail para obter instruções sobre como configurar uma senha e, em seguida, faça login usando seu e-mail e senha em vez do login do Google."
 }

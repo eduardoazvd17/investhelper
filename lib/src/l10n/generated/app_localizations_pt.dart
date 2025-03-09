@@ -731,4 +731,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String cancelSubscriptionMessage(String date) {
     return 'Deseja realmente cancelar sua assinatura e retornar ao plano gratuito?\n\nSua assinatura atual continuará válida até $date.';
   }
+
+  @override
+  String get attention => 'Atenção';
+
+  @override
+  String get needPasswordToDeleteAccount => 'Para excluir sua conta, você precisa ter uma senha configurada.';
+
+  @override
+  String get checkEmailForPasswordReset => 'Por favor, verifique seu e-mail para obter instruções sobre como configurar uma senha e, em seguida, faça login usando seu e-mail e senha em vez do login do Google.';
 }
