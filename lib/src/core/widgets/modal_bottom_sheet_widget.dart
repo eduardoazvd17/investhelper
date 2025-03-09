@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ModalBottomSheetWidget extends StatefulWidget {
@@ -27,9 +26,7 @@ class ModalBottomSheetWidget extends StatefulWidget {
       backgroundColor: Colors.transparent,
       builder: (_) {
         final double paddingTop;
-        if (kIsWeb) {
-          paddingTop = kToolbarHeight;
-        } else if (Platform.isAndroid) {
+        if (Platform.isAndroid) {
           paddingTop = kToolbarHeight + 31.5;
         } else {
           paddingTop = kToolbarHeight + 62.5;

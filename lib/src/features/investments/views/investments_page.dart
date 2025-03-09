@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -53,11 +52,11 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   void initState() {
     _widgetEventHandler = WidgetEventHandler(
       onResumed: () async {
-        if (kIsWeb) return;
         if (appController.isBlurOverlayShowing) {
           Navigator.of(context).pop();
           appController.isBlurOverlayShowing = false;
         }
+
         if (appController.shouldRequestAuth &&
             !appController.isRequestAuthOverlayShowing &&
             !appController.disableAuthOverlay) {
@@ -68,7 +67,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         }
       },
       onInactive: () {
-        if (kIsWeb) return;
         if (!appController.isBlurOverlayShowing &&
             !appController.disableBlurOverlay) {
           appController.isBlurOverlayShowing = true;
@@ -76,7 +74,6 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         }
       },
       onPaused: () {
-        if (kIsWeb) return;
         if (appController.isBiometricsEnabled &&
             !appController.isRequestAuthOverlayShowing &&
             !appController.disableAuthOverlay) {

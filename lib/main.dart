@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
@@ -13,7 +12,6 @@ import 'src/core/enums/theme_enum.dart';
 import 'src/core/services/app_service.dart';
 import 'src/core/utils/app_theme.dart';
 import 'src/core/utils/custom_scroll_behavior.dart';
-import 'src/core/widgets/web_frame_widget.dart';
 import 'src/features/auth/controllers/auth_controller.dart';
 import 'src/features/auth/services/auth_service.dart';
 import 'src/features/auth/views/auth_page.dart';
@@ -79,7 +77,7 @@ class InvestHelperApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (context) {
-        final app = MaterialApp(
+        return MaterialApp(
           title: 'InvestHelper',
           debugShowCheckedModeBanner: false,
           scrollBehavior: CustomScrollBehavior(),
@@ -92,26 +90,8 @@ class InvestHelperApp extends StatelessWidget {
             ),
             child: child ?? const SizedBox(),
           ),
-          theme: kIsWeb
-              ? AppTheme.lightTheme.copyWith(
-                  pageTransitionsTheme: PageTransitionsTheme(
-                    builders: {
-                      for (final platform in TargetPlatform.values)
-                        platform: const FadeUpwardsPageTransitionsBuilder(),
-                    },
-                  ),
-                )
-              : AppTheme.lightTheme,
-          darkTheme: kIsWeb
-              ? AppTheme.darkTheme.copyWith(
-                  pageTransitionsTheme: PageTransitionsTheme(
-                    builders: {
-                      for (final platform in TargetPlatform.values)
-                        platform: const FadeUpwardsPageTransitionsBuilder(),
-                    },
-                  ),
-                )
-              : AppTheme.darkTheme,
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
           themeMode: appController.theme.themeMode,
           locale: appController.language.locale,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -167,13 +147,6 @@ class InvestHelperApp extends StatelessWidget {
             },
           },
         );
-
-        return kIsWeb
-            ? WebFrameWidget(
-                themeMode: appController.theme.themeMode,
-                child: app,
-              )
-            : app;
       },
     );
   }

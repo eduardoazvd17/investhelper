@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:mobx/mobx.dart';
@@ -34,13 +33,6 @@ abstract class AppControllerBase with Store {
 
   @action
   Future<void> biometricsSecurityCheck() async {
-    if (kIsWeb) {
-      canEnableBiometrics = false;
-      isBiometricsEnabled = false;
-      shouldRequestAuth = false;
-      return;
-    }
-
     canEnableBiometrics = await _localAuth.isDeviceSupported() &&
         await _localAuth.canCheckBiometrics;
 
@@ -167,6 +159,7 @@ abstract class AppControllerBase with Store {
 
   @action
   Future<bool> requestAuth([String? message]) async {
+    disableBlurOverlay = true;
     disableAuthOverlay = true;
     late bool result;
     try {
@@ -177,6 +170,7 @@ abstract class AppControllerBase with Store {
       result = false;
     }
     disableAuthOverlay = false;
+    disableBlurOverlay = false;
     return result;
   }
 
