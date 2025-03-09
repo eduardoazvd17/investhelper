@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:mobx/mobx.dart';
@@ -25,7 +26,12 @@ abstract class SubscriptionControllerBase with Store {
 
   SubscriptionControllerBase({
     required AppController appController,
-  }) : _appController = appController;
+  }) : _appController = appController {
+    // Verify subscription status periodically
+    Timer.periodic(const Duration(days: 1), (_) {
+      verifySubscriptionStatus();
+    });
+  }
 
   @computed
   UserModel? get user => _appController.user;
@@ -62,6 +68,9 @@ abstract class SubscriptionControllerBase with Store {
     }
 
     _products = response.productDetails;
+
+    // Verify subscription status on initialization
+    await verifySubscriptionStatus();
   }
 
   Future<void> purchaseSubscription(SubscriptionEnum subscription) async {
@@ -126,6 +135,88 @@ abstract class SubscriptionControllerBase with Store {
       );
     } on AppException catch (_) {
       rethrow;
+    }
+  }
+
+  Future<void> cancelSubscription() async {
+    try {
+      final subscription = _appController.user?.data.subscription;
+      if (subscription == null || subscription == SubscriptionEnum.free) return;
+
+      // Mark subscription for cancellation at the end of the current period
+      // This is handled differently on iOS and Android
+      if (Platform.isIOS) {
+        // On iOS, we need to show the user how to cancel in Settings
+        throw AppException(
+          AppExceptionType.purchaseError,
+          'To cancel your subscription, please go to Settings > Apple ID > Subscriptions',
+        );
+      } else {
+        // On Android, we can cancel through the Play Store
+        throw AppException(
+          AppExceptionType.purchaseError,
+          'To cancel your subscription, please go to the Google Play Store > Subscriptions',
+        );
+      }
+    } on AppException catch (_) {
+      rethrow;
+    }
+  }
+
+  Future<void> verifySubscriptionStatus() async {
+    try {
+      if (_appController.user == null) return;
+
+      final currentSubscription = _appController.user!.data.subscription;
+      if (currentSubscription == SubscriptionEnum.free) return;
+
+      final subscriptionEndDate = _appController.user!.data.subscriptionEndDate;
+      if (subscriptionEndDate == null) return;
+
+      // Check if subscription has expired
+      if (DateTime.now().isAfter(subscriptionEndDate)) {
+        await _appController.changeUserData(
+          _appController.user!.data.copyWith(
+            subscription: SubscriptionEnum.free,
+            subscriptionStartDate: null,
+            subscriptionEndDate: null,
+          ),
+        );
+        return;
+      }
+
+      // Verify purchase status with store
+      final String? productId = _productIds[currentSubscription];
+      if (productId == null) return;
+
+      final bool available = await InAppPurchase.instance.isAvailable();
+      if (!available) return;
+
+      // Get active purchases
+      final Stream<List<PurchaseDetails>> purchaseStream =
+          InAppPurchase.instance.purchaseStream;
+
+      await for (final List<PurchaseDetails> purchases in purchaseStream) {
+        final PurchaseDetails? subscription = purchases
+            .where((purchase) => purchase.productID == productId)
+            .firstOrNull;
+
+        // If subscription not found or was refunded/cancelled, revert to free plan
+        if (subscription == null ||
+            subscription.status == PurchaseStatus.error ||
+            subscription.status == PurchaseStatus.canceled) {
+          await _appController.changeUserData(
+            _appController.user!.data.copyWith(
+              subscription: SubscriptionEnum.free,
+              subscriptionStartDate: null,
+              subscriptionEndDate: null,
+            ),
+          );
+          break;
+        }
+      }
+    } catch (_) {
+      // Fail silently - will try again next time
     }
   }
 

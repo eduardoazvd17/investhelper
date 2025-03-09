@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:intl/intl.dart';
 
 import '../../../core/enums/subscription_enum.dart';
 import '../../../core/exceptions/app_exception.dart';
@@ -62,7 +63,33 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     SubscriptionEnum subscription,
   ) async {
     if (subscription == SubscriptionEnum.free) {
-      Navigator.of(context).pop();
+      final currentSubscription = widget.controller.user?.data.subscription;
+      if (currentSubscription == null ||
+          currentSubscription == SubscriptionEnum.free) {
+        return;
+      }
+
+      // Show confirmation dialog before canceling
+      final bool? shouldCancel = await DialogWidget.show(
+        context,
+        title: AppLocalizations.of(context)!.endSession,
+        message: AppLocalizations.of(context)!.endSessionMessage,
+        actionType: DialogWidgetActionType.yesOrNo,
+      );
+
+      if (shouldCancel != true || !mounted) return;
+
+      try {
+        LoadingWidget.dialog(context);
+        await widget.controller.cancelSubscription();
+        if (!mounted) return;
+        LoadingWidget.hide(context);
+        Navigator.of(context).pop();
+      } on AppException catch (e) {
+        if (!mounted) return;
+        LoadingWidget.hide(context);
+        await e.show(context);
+      }
       return;
     }
 
@@ -156,6 +183,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   Widget _buildSubscriptionCard(SubscriptionEnum subscription) {
     final bool isSelected =
         widget.controller.user?.data.subscription == subscription;
+    final bool isFree = subscription == SubscriptionEnum.free;
+    final bool hasActiveSubscription =
+        widget.controller.user?.data.subscription != null &&
+            widget.controller.user?.data.subscription != SubscriptionEnum.free;
+    final DateTime? subscriptionEndDate =
+        widget.controller.user?.data.subscriptionEndDate;
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
@@ -192,7 +225,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               ),
               const SizedBox(height: 8),
               Text(
-                _getSubscriptionFeatures(subscription),
+                isFree && hasActiveSubscription
+                    ? AppLocalizations.of(context)!.endSessionMessage
+                    : _getSubscriptionFeatures(subscription),
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: Theme.of(context)
                           .textTheme
@@ -201,7 +236,20 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                           ?.withOpacity(0.8),
                     ),
               ),
-              if (subscription != SubscriptionEnum.free) ...[
+              if (isSelected && !isFree && subscriptionEndDate != null) ...[
+                const SizedBox(height: 8),
+                Text(
+                  'Valid until: ${DateFormat('dd/MM/yyyy').format(subscriptionEndDate)}',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.color
+                            ?.withOpacity(0.8),
+                      ),
+                ),
+              ],
+              if (!isFree) ...[
                 const SizedBox(height: 12),
                 Text(
                   _getSubscriptionPrice(subscription),
