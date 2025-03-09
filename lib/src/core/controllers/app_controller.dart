@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../features/investments/controllers/investments_controller.dart';
+import '../../features/subscription/controllers/subscription_controller.dart';
 import '../enums/language_enum.dart';
 import '../enums/theme_enum.dart';
 import '../exceptions/app_exception.dart';
@@ -134,6 +135,13 @@ abstract class AppControllerBase with Store {
     try {
       await _service.sendRecoveryEmail(user!.email);
     } catch (_) {}
+  }
+
+  @action
+  Future<void> verifySubscriptionStatus() async {
+    if (GetIt.I.isRegistered<SubscriptionController>()) {
+      await GetIt.I.get<SubscriptionController>().verifySubscriptionStatus();
+    }
   }
 
   @observable

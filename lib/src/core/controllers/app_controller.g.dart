@@ -61,6 +61,22 @@ mixin _$AppController on AppControllerBase, Store {
     });
   }
 
+  late final _$canChangePasswordAtom =
+      Atom(name: 'AppControllerBase.canChangePassword', context: context);
+
+  @override
+  bool get canChangePassword {
+    _$canChangePasswordAtom.reportRead();
+    return super.canChangePassword;
+  }
+
+  @override
+  set canChangePassword(bool value) {
+    _$canChangePasswordAtom.reportWrite(value, super.canChangePassword, () {
+      super.canChangePassword = value;
+    });
+  }
+
   late final _$canEnableBiometricsAtom =
       Atom(name: 'AppControllerBase.canEnableBiometrics', context: context);
 
@@ -269,6 +285,24 @@ mixin _$AppController on AppControllerBase, Store {
         .run(() => super.deleteMyAccount(currentPassword));
   }
 
+  late final _$sendRecoveryEmailAsyncAction =
+      AsyncAction('AppControllerBase.sendRecoveryEmail', context: context);
+
+  @override
+  Future<void> sendRecoveryEmail() {
+    return _$sendRecoveryEmailAsyncAction.run(() => super.sendRecoveryEmail());
+  }
+
+  late final _$verifySubscriptionStatusAsyncAction = AsyncAction(
+      'AppControllerBase.verifySubscriptionStatus',
+      context: context);
+
+  @override
+  Future<void> verifySubscriptionStatus() {
+    return _$verifySubscriptionStatusAsyncAction
+        .run(() => super.verifySubscriptionStatus());
+  }
+
   late final _$requestAuthAsyncAction =
       AsyncAction('AppControllerBase.requestAuth', context: context);
 
@@ -348,6 +382,7 @@ mixin _$AppController on AppControllerBase, Store {
 appVersion: ${appVersion},
 showWelcomePage: ${showWelcomePage},
 user: ${user},
+canChangePassword: ${canChangePassword},
 canEnableBiometrics: ${canEnableBiometrics},
 isBiometricsEnabled: ${isBiometricsEnabled},
 shouldRequestAuth: ${shouldRequestAuth},

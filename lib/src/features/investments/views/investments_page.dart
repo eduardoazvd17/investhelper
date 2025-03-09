@@ -52,6 +52,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   void initState() {
     _widgetEventHandler = WidgetEventHandler(
       onResumed: () async {
+        appController.verifySubscriptionStatus();
+
         if (appController.isBlurOverlayShowing) {
           Navigator.of(context).pop();
           appController.isBlurOverlayShowing = false;

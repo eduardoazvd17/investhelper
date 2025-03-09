@@ -49,6 +49,9 @@ abstract class SubscriptionControllerBase with Store {
   @observable
   AppException? error;
 
+  @observable
+  DateTime? lastSubscriptionCheck;
+
   @computed
   List<SubscriptionEnum> get availableSubscriptions {
     final subscriptions = List<SubscriptionEnum>.from(SubscriptionEnum.values);
@@ -182,9 +185,16 @@ abstract class SubscriptionControllerBase with Store {
   }
 
   Future<void> verifySubscriptionStatus() async {
-    try {
-      if (_appController.user == null) return;
+    if (_appController.user == null) return;
 
+    final now = DateTime.now();
+    if (lastSubscriptionCheck != null &&
+        now.difference(lastSubscriptionCheck!).inHours < 1) {
+      return;
+    }
+    lastSubscriptionCheck = now;
+
+    try {
       final bool available = await InAppPurchase.instance.isAvailable();
       if (!available) return;
 

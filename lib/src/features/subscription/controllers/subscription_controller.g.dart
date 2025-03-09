@@ -24,6 +24,45 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
               () => super.availableSubscriptions,
               name: 'SubscriptionControllerBase.availableSubscriptions'))
           .value;
+  Computed<bool>? _$hasReachedFreeLimitComputed;
+
+  @override
+  bool get hasReachedFreeLimit => (_$hasReachedFreeLimitComputed ??=
+          Computed<bool>(() => super.hasReachedFreeLimit,
+              name: 'SubscriptionControllerBase.hasReachedFreeLimit'))
+      .value;
+
+  late final _$_subscriptionAtom =
+      Atom(name: 'SubscriptionControllerBase._subscription', context: context);
+
+  @override
+  StreamSubscription<List<PurchaseDetails>>? get _subscription {
+    _$_subscriptionAtom.reportRead();
+    return super._subscription;
+  }
+
+  @override
+  set _subscription(StreamSubscription<List<PurchaseDetails>>? value) {
+    _$_subscriptionAtom.reportWrite(value, super._subscription, () {
+      super._subscription = value;
+    });
+  }
+
+  late final _$_productsAtom =
+      Atom(name: 'SubscriptionControllerBase._products', context: context);
+
+  @override
+  List<ProductDetails>? get _products {
+    _$_productsAtom.reportRead();
+    return super._products;
+  }
+
+  @override
+  set _products(List<ProductDetails>? value) {
+    _$_productsAtom.reportWrite(value, super._products, () {
+      super._products = value;
+    });
+  }
 
   late final _$isLoadingAtom =
       Atom(name: 'SubscriptionControllerBase.isLoading', context: context);
@@ -57,6 +96,24 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
     });
   }
 
+  late final _$lastSubscriptionCheckAtom = Atom(
+      name: 'SubscriptionControllerBase.lastSubscriptionCheck',
+      context: context);
+
+  @override
+  DateTime? get lastSubscriptionCheck {
+    _$lastSubscriptionCheckAtom.reportRead();
+    return super.lastSubscriptionCheck;
+  }
+
+  @override
+  set lastSubscriptionCheck(DateTime? value) {
+    _$lastSubscriptionCheckAtom.reportWrite(value, super.lastSubscriptionCheck,
+        () {
+      super.lastSubscriptionCheck = value;
+    });
+  }
+
   late final _$initSubscriptionsAsyncAction = AsyncAction(
       'SubscriptionControllerBase.initSubscriptions',
       context: context);
@@ -66,13 +123,25 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
     return _$initSubscriptionsAsyncAction.run(() => super.initSubscriptions());
   }
 
+  late final _$purchaseSubscriptionAsyncAction = AsyncAction(
+      'SubscriptionControllerBase.purchaseSubscription',
+      context: context);
+
+  @override
+  Future<void> purchaseSubscription(SubscriptionEnum subscription) {
+    return _$purchaseSubscriptionAsyncAction
+        .run(() => super.purchaseSubscription(subscription));
+  }
+
   @override
   String toString() {
     return '''
 isLoading: ${isLoading},
 error: ${error},
+lastSubscriptionCheck: ${lastSubscriptionCheck},
 user: ${user},
-availableSubscriptions: ${availableSubscriptions}
+availableSubscriptions: ${availableSubscriptions},
+hasReachedFreeLimit: ${hasReachedFreeLimit}
     ''';
   }
 }
