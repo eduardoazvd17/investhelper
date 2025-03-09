@@ -38,6 +38,7 @@ class _AuthPageState extends State<AuthPage> {
   late FocusNode _emailFocus;
   late FocusNode _passwordFocus;
   late FocusNode _passwordConfirmationFocus;
+  bool _hasAcceptedTermsOfUse = false;
 
   @override
   void initState() {
@@ -72,11 +73,16 @@ class _AuthPageState extends State<AuthPage> {
 
   Future<void> _makeLogin(bool withGoogle) async {
     try {
-      LoadingWidget.dialog(context);
-
       if (withGoogle) {
+        if (!_hasAcceptedTermsOfUse) {
+          await _showTermsAndPolicy();
+          if (!_hasAcceptedTermsOfUse && !mounted) return;
+        }
+
+        LoadingWidget.dialog(context);
         await widget.controller.makeLoginWithGoogle();
       } else {
+        LoadingWidget.dialog(context);
         await widget.controller.makeLogin(
           LoginUserModel(
             email: _emailController.text.trim(),
@@ -103,6 +109,11 @@ class _AuthPageState extends State<AuthPage> {
   }
 
   Future<void> _makeRegister() async {
+    if (!_hasAcceptedTermsOfUse) {
+      await _showTermsAndPolicy();
+      if (!_hasAcceptedTermsOfUse && !mounted) return;
+    }
+
     try {
       LoadingWidget.dialog(context);
 
@@ -156,6 +167,35 @@ class _AuthPageState extends State<AuthPage> {
       if (!mounted) return;
       LoadingWidget.hide(context);
       await e.show(context);
+    }
+  }
+
+  Future<void> _showTermsAndPolicy() async {
+    final bool? result = await DialogWidget.show(
+      context,
+      title: AppLocalizations.of(context)!.termsOfUseTitle,
+      message: AppLocalizations.of(context)!.termsOfUseMessage,
+      messageWidget: InkWell(
+        borderRadius: BorderRadius.circular(8),
+        onTap: widget.controller.openTermsUrl,
+        child: Padding(
+          padding: const EdgeInsets.all(5),
+          child: FittedBox(
+            child: Text(
+              AppLocalizations.of(context)!.termsOfUseTitle,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+          ),
+        ),
+      ),
+      actionType: DialogWidgetActionType.acceptOrNotAccept,
+    );
+    if (result != null) {
+      setState(() {
+        _hasAcceptedTermsOfUse = result;
+      });
     }
   }
 
