@@ -117,16 +117,18 @@ abstract class SubscriptionControllerBase with Store {
 
   void stopListeningPurchases() => _streamSubscription?.cancel();
 
+  @action
   ProductDetails? getProductDetails(SubscriptionEnum subscription) {
     return _products?.where((product) {
       return product.id == subscription.productId;
     }).firstOrNull;
   }
 
-  PurchaseDetails? getPurchaseDetails(SubscriptionEnum? subscription) {
-    if (subscription == null) return null;
+  @computed
+  PurchaseDetails? get currentSubscriptionPurchaseDetails {
+    if (user?.data.subscription == null) return null;
     return _purchases?.where((purchase) {
-      return purchase.productID == subscription.productId;
+      return purchase.productID == user?.data.subscription.productId;
     }).firstOrNull;
   }
 
@@ -150,15 +152,14 @@ abstract class SubscriptionControllerBase with Store {
         throw AppException(AppExceptionType.productNotFound);
       }
 
-      final oldPurchaseDetails = getPurchaseDetails(user?.data.subscription);
-      if (oldPurchaseDetails != null && Platform.isAndroid) {
+      if (currentSubscriptionPurchaseDetails != null && Platform.isAndroid) {
         await InAppPurchase.instance.buyNonConsumable(
           purchaseParam: GooglePlayPurchaseParam(
             productDetails: productDetails,
             applicationUserName: user!.id,
             changeSubscriptionParam: ChangeSubscriptionParam(
-              oldPurchaseDetails:
-                  oldPurchaseDetails as GooglePlayPurchaseDetails,
+              oldPurchaseDetails: currentSubscriptionPurchaseDetails
+                  as GooglePlayPurchaseDetails,
             ),
           ),
         );
@@ -253,10 +254,9 @@ abstract class SubscriptionControllerBase with Store {
   Future<void> _purchaseStreamListener(
     List<PurchaseDetails> purchaseDetailsList,
   ) async {
-    _purchases = purchaseDetailsList;
-
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
       if (purchaseDetails.status == PurchaseStatus.purchased) {
+        _purchases = purchaseDetailsList;
         final subscription = SubscriptionEnumExtension.fromProductId(
           purchaseDetails.productID,
         );
@@ -303,8 +303,6 @@ abstract class SubscriptionControllerBase with Store {
         return;
       }
       await launchUrl(url, mode: LaunchMode.externalApplication);
-      await Future.delayed(const Duration(seconds: 1));
-      await restoreSubscription(force: true);
     } catch (_) {}
   }
 }

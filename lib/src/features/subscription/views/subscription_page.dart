@@ -216,18 +216,22 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                         final SubscriptionEnum subscription =
                             widget.controller.availableSubscriptions[index];
 
-                        return SubscriptionWidget(
-                          currentSubscription:
-                              widget.controller.user?.data.subscription,
-                          currentSubscriptionPurchaseDetails:
-                              widget.controller.getPurchaseDetails(
-                            widget.controller.user?.data.subscription,
-                          ),
-                          subscription: subscription,
-                          productDetails: widget.controller.getProductDetails(
-                            subscription,
-                          ),
-                          onTap: _onTapSubscription,
+                        return Observer(
+                          builder: (_) {
+                            return SubscriptionWidget(
+                              currentSubscription:
+                                  widget.controller.user?.data.subscription,
+                              currentSubscriptionPurchaseDetails: widget
+                                  .controller
+                                  .currentSubscriptionPurchaseDetails,
+                              subscription: subscription,
+                              productDetails:
+                                  widget.controller.getProductDetails(
+                                subscription,
+                              ),
+                              onTap: _onTapSubscription,
+                            );
+                          },
                         );
                       },
                     ),

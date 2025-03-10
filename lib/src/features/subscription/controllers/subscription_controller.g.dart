@@ -31,6 +31,16 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
           Computed<bool>(() => super.hasReachedFreeLimit,
               name: 'SubscriptionControllerBase.hasReachedFreeLimit'))
       .value;
+  Computed<PurchaseDetails?>? _$currentSubscriptionPurchaseDetailsComputed;
+
+  @override
+  PurchaseDetails? get currentSubscriptionPurchaseDetails =>
+      (_$currentSubscriptionPurchaseDetailsComputed ??= Computed<
+                  PurchaseDetails?>(
+              () => super.currentSubscriptionPurchaseDetails,
+              name:
+                  'SubscriptionControllerBase.currentSubscriptionPurchaseDetails'))
+          .value;
 
   late final _$_productsAtom =
       Atom(name: 'SubscriptionControllerBase._products', context: context);
@@ -154,6 +164,20 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
             onPurchaseError: onPurchaseError));
   }
 
+  late final _$SubscriptionControllerBaseActionController =
+      ActionController(name: 'SubscriptionControllerBase', context: context);
+
+  @override
+  ProductDetails? getProductDetails(SubscriptionEnum subscription) {
+    final _$actionInfo = _$SubscriptionControllerBaseActionController
+        .startAction(name: 'SubscriptionControllerBase.getProductDetails');
+    try {
+      return super.getProductDetails(subscription);
+    } finally {
+      _$SubscriptionControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
@@ -162,7 +186,8 @@ error: ${error},
 lastSubscriptionCheck: ${lastSubscriptionCheck},
 user: ${user},
 availableSubscriptions: ${availableSubscriptions},
-hasReachedFreeLimit: ${hasReachedFreeLimit}
+hasReachedFreeLimit: ${hasReachedFreeLimit},
+currentSubscriptionPurchaseDetails: ${currentSubscriptionPurchaseDetails}
     ''';
   }
 }
