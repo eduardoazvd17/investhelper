@@ -4,8 +4,6 @@ import 'dart:io';
 import 'package:in_app_purchase/in_app_purchase.dart';
 // ignore: depend_on_referenced_packages
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
-// ignore: depend_on_referenced_packages
-import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:mobx/mobx.dart';
 import 'package:url_launcher/url_launcher.dart';
 
