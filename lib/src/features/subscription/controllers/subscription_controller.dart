@@ -5,6 +5,7 @@ import 'package:in_app_purchase/in_app_purchase.dart';
 // ignore: depend_on_referenced_packages
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:mobx/mobx.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/enums/subscription_enum.dart';
@@ -286,5 +287,21 @@ abstract class SubscriptionControllerBase with Store {
         return;
       }
     }
+  }
+
+  Future<void> openSubscriptionsManager() async {
+    try {
+      final Uri url;
+      if (Platform.isAndroid) {
+        url = Uri.parse('https://play.google.com/store/account/subscriptions');
+      } else if (Platform.isIOS) {
+        url = Uri.parse('itms-apps://apps.apple.com/account/subscriptions');
+      } else {
+        return;
+      }
+      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+        throw AppException(AppExceptionType.generic);
+      }
+    } catch (_) {}
   }
 }

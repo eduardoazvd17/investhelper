@@ -103,7 +103,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     if (currentSubscription == subscription) return;
 
     if (subscription == SubscriptionEnum.free) {
-      DialogWidget.show(
+      await DialogWidget.show(
         context,
         title: AppLocalizations.of(context)!.cancelSubscriptionTitle,
         message: Platform.isIOS
@@ -111,6 +111,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             : AppLocalizations.of(context)!.androidSubscriptionDisclaimer,
         actionType: DialogWidgetActionType.close,
       );
+      await widget.controller.openSubscriptionsManager();
       return;
     }
 
