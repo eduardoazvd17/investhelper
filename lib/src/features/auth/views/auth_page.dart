@@ -76,7 +76,7 @@ class _AuthPageState extends State<AuthPage> {
       if (withGoogle) {
         if (!_hasAcceptedTermsOfUse) {
           await _showTermsAndPolicy();
-          if (!_hasAcceptedTermsOfUse && !mounted) return;
+          if (!_hasAcceptedTermsOfUse || !mounted) return;
         }
 
         LoadingWidget.dialog(context);
@@ -114,7 +114,7 @@ class _AuthPageState extends State<AuthPage> {
   Future<void> _makeRegister() async {
     if (!_hasAcceptedTermsOfUse) {
       await _showTermsAndPolicy();
-      if (!_hasAcceptedTermsOfUse && !mounted) return;
+      if (!_hasAcceptedTermsOfUse || !mounted) return;
     }
 
     try {
@@ -195,11 +195,7 @@ class _AuthPageState extends State<AuthPage> {
       ),
       actionType: DialogWidgetActionType.acceptOrNotAccept,
     );
-    if (result != null) {
-      setState(() {
-        _hasAcceptedTermsOfUse = result;
-      });
-    }
+    setState(() => _hasAcceptedTermsOfUse = result == true);
   }
 
   @override
