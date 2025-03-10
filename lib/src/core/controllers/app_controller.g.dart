@@ -329,6 +329,14 @@ mixin _$AppController on AppControllerBase, Store {
     return _$openTermsUrlAsyncAction.run(() => super.openTermsUrl());
   }
 
+  late final _$openDeveloperUrlAsyncAction =
+      AsyncAction('AppControllerBase.openDeveloperUrl', context: context);
+
+  @override
+  Future<void> openDeveloperUrl() {
+    return _$openDeveloperUrlAsyncAction.run(() => super.openDeveloperUrl());
+  }
+
   late final _$AppControllerBaseActionController =
       ActionController(name: 'AppControllerBase', context: context);
 

@@ -36,15 +36,15 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
       Atom(name: 'SubscriptionControllerBase._subscription', context: context);
 
   @override
-  StreamSubscription<List<PurchaseDetails>>? get _subscription {
+  StreamSubscription<List<PurchaseDetails>>? get _streamSubscription {
     _$_subscriptionAtom.reportRead();
-    return super._subscription;
+    return super._streamSubscription;
   }
 
   @override
-  set _subscription(StreamSubscription<List<PurchaseDetails>>? value) {
-    _$_subscriptionAtom.reportWrite(value, super._subscription, () {
-      super._subscription = value;
+  set _streamSubscription(StreamSubscription<List<PurchaseDetails>>? value) {
+    _$_subscriptionAtom.reportWrite(value, super._streamSubscription, () {
+      super._streamSubscription = value;
     });
   }
 
@@ -128,9 +128,13 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
       context: context);
 
   @override
-  Future<void> purchaseSubscription(SubscriptionEnum subscription) {
-    return _$purchaseSubscriptionAsyncAction
-        .run(() => super.purchaseSubscription(subscription));
+  Future<void> purchaseSubscription(SubscriptionEnum subscription,
+      {required void Function(SubscriptionEnum) onPurchaseSuccess,
+      required void Function(AppException?) onPurchaseError}) {
+    return _$purchaseSubscriptionAsyncAction.run(() => super
+        .purchaseSubscription(subscription,
+            onPurchaseSuccess: onPurchaseSuccess,
+            onPurchaseError: onPurchaseError));
   }
 
   @override

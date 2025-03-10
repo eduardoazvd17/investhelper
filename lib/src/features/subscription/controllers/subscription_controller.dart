@@ -24,33 +24,13 @@ abstract class SubscriptionControllerBase with Store {
         _investmentsController = investmentsController {
     reaction(
       (_) => _appController.user,
-      (user) => verifySubscriptionStatus(),
+      (user) => restoreSubscription(),
     );
-    verifySubscriptionStatus();
+    restoreSubscription();
   }
-
-  final Map<SubscriptionEnum, String> _productIds = {
-    SubscriptionEnum.monthly: 'investhelper_monthly_plan',
-    SubscriptionEnum.annual: 'investhelper_annual_plan',
-  };
-
-  @observable
-  StreamSubscription<List<PurchaseDetails>>? _subscription;
-
-  @observable
-  List<ProductDetails>? _products;
 
   @computed
   UserModel? get user => _appController.user;
-
-  @observable
-  bool isLoading = false;
-
-  @observable
-  AppException? error;
-
-  @observable
-  DateTime? lastSubscriptionCheck;
 
   @computed
   List<SubscriptionEnum> get availableSubscriptions {
@@ -66,29 +46,42 @@ abstract class SubscriptionControllerBase with Store {
       !_investmentsController.canAddMoreInvestments &&
       _investmentsController.investments.length >= 3;
 
+  @observable
+  List<ProductDetails>? _products;
+
+  @observable
+  StreamSubscription<List<PurchaseDetails>>? _streamSubscription;
+
+  @observable
+  bool isLoading = false;
+
+  @observable
+  AppException? error;
+
+  @observable
+  DateTime? lastSubscriptionCheck;
+
+  void Function(SubscriptionEnum)? onPurchaseSuccess;
+
+  void Function(AppException?)? onPurchaseError;
+
   @action
   Future<void> initSubscriptions() async {
-    error = null;
-    isLoading = true;
-
     try {
+      isLoading = true;
+      error = null;
+
       final bool available = await InAppPurchase.instance.isAvailable();
       if (!available) {
         throw AppException(AppExceptionType.storeNotAvailable);
       }
 
-      _subscription ??= InAppPurchase.instance.purchaseStream.listen(
-        _handlePurchaseUpdate,
-        onDone: () => _subscription?.cancel(),
-        onError: (error) => throw AppException(
-          AppExceptionType.purchaseError,
-          error.toString(),
-        ),
-      );
+      _startListeningPurchases();
 
-      final Set<String> ids = _productIds.values.toSet();
       final ProductDetailsResponse response =
-          await InAppPurchase.instance.queryProductDetails(ids);
+          await InAppPurchase.instance.queryProductDetails(
+        SubscriptionEnumExtension.productIds.values.toSet(),
+      );
 
       if (response.error != null) {
         throw AppException(
@@ -110,33 +103,42 @@ abstract class SubscriptionControllerBase with Store {
     isLoading = false;
   }
 
+  void stopListeningPurchases() => _streamSubscription?.cancel();
+
+  ProductDetails? getProductDetails(SubscriptionEnum subscription) {
+    return _products?.where((product) {
+      return product.id == subscription.productId;
+    }).firstOrNull;
+  }
+
   @action
-  Future<void> purchaseSubscription(SubscriptionEnum subscription) async {
-    _appController.disableAuthOverlay = true;
-    _appController.disableBlurOverlay = true;
-
+  Future<void> purchaseSubscription(
+    SubscriptionEnum subscription, {
+    required void Function(SubscriptionEnum) onPurchaseSuccess,
+    required void Function(AppException?) onPurchaseError,
+  }) async {
     try {
-      final String? productId = _productIds[subscription];
-      if (productId == null) {
-        throw AppException(AppExceptionType.productNotFound);
-      }
+      _appController.disableAuthOverlay = true;
+      _appController.disableBlurOverlay = true;
 
-      final ProductDetails? product = _products?.firstWhere(
-        (product) => product.id == productId,
-      );
-      if (product == null) {
-        throw AppException(AppExceptionType.productNotFound);
-      }
+      this.onPurchaseSuccess = onPurchaseSuccess;
+      this.onPurchaseError = onPurchaseError;
 
-      final PurchaseParam purchaseParam = PurchaseParam(
-        productDetails: product,
-      );
+      final ProductDetails? product = _products?.where((product) {
+        return product.id == subscription.productId;
+      }).firstOrNull;
+      if (product == null) throw AppException(AppExceptionType.productNotFound);
+
       await InAppPurchase.instance.buyNonConsumable(
-        purchaseParam: purchaseParam,
+        purchaseParam: PurchaseParam(productDetails: product),
       );
 
       _appController.disableAuthOverlay = false;
       _appController.disableBlurOverlay = false;
+    } on AppException catch (_) {
+      _appController.disableAuthOverlay = false;
+      _appController.disableBlurOverlay = false;
+      rethrow;
     } catch (e) {
       _appController.disableAuthOverlay = false;
       _appController.disableBlurOverlay = false;
@@ -144,114 +146,83 @@ abstract class SubscriptionControllerBase with Store {
     }
   }
 
-  void _handlePurchaseUpdate(List<PurchaseDetails> purchaseDetailsList) {
-    for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
-      if (purchaseDetails.status == PurchaseStatus.pending) {
-        isLoading = true;
-      } else {
-        isLoading = false;
-
-        if (purchaseDetails.status == PurchaseStatus.error) {
-          throw AppException(
-            AppExceptionType.purchaseError,
-            purchaseDetails.error?.toString(),
-          );
-        } else if (purchaseDetails.status == PurchaseStatus.purchased ||
-            purchaseDetails.status == PurchaseStatus.restored) {
-          _verifyPurchase(purchaseDetails);
-        }
-
-        if (purchaseDetails.pendingCompletePurchase) {
-          InAppPurchase.instance.completePurchase(purchaseDetails);
-        }
+  Future<void> restoreSubscription() async {
+    try {
+      if (user == null) return;
+      final now = DateTime.now();
+      if (lastSubscriptionCheck != null &&
+          now.difference(lastSubscriptionCheck!).inHours < 1) {
+        return;
       }
-    }
-  }
+      lastSubscriptionCheck = now;
 
-  Future<void> _verifyPurchase(PurchaseDetails purchaseDetails) async {
-    try {
-      final SubscriptionEnum subscription = _getSubscriptionFromProductId(
-        purchaseDetails.productID,
-      );
-
-      await _appController.changeUserData(
-        _appController.user!.data.copyWith(
-          subscription: subscription,
-        ),
-      );
-    } on AppException catch (_) {
-      rethrow;
-    }
-  }
-
-  Future<void> verifySubscriptionStatus() async {
-    if (_appController.user == null) return;
-
-    final now = DateTime.now();
-    if (lastSubscriptionCheck != null &&
-        now.difference(lastSubscriptionCheck!).inHours < 1) {
-      return;
-    }
-    lastSubscriptionCheck = now;
-
-    try {
       final bool available = await InAppPurchase.instance.isAvailable();
       if (!available) return;
 
-      final List<PurchaseDetails> purchases = await _getPurchases();
-      final PurchaseDetails? activeSubscription = purchases
-          .where((purchase) =>
-              purchase.status == PurchaseStatus.purchased ||
-              purchase.status == PurchaseStatus.restored)
-          .firstOrNull;
+      late StreamSubscription subscription;
+      subscription = InAppPurchase.instance.purchaseStream.listen(
+        (data) {
+          _restorePurchasesStreamListener(data);
+          subscription.cancel();
+        },
+        onDone: () => subscription.cancel(),
+        onError: (_) => subscription.cancel(),
+      );
+    } catch (_) {}
+  }
 
-      if (activeSubscription == null &&
-              user?.data.subscription == SubscriptionEnum.monthly ||
-          user?.data.subscription == SubscriptionEnum.annual) {
+  void _startListeningPurchases() {
+    _streamSubscription?.cancel();
+    _streamSubscription = InAppPurchase.instance.purchaseStream.listen(
+      _purchaseStreamListener,
+      onDone: () => _startListeningPurchases(),
+      onError: (error) => _startListeningPurchases(),
+    );
+  }
+
+  Future<void> _restorePurchasesStreamListener(
+    List<PurchaseDetails> purchaseDetailsList,
+  ) async {
+    final PurchaseDetails? activeSubscription = purchaseDetailsList
+        .where((purchase) =>
+            purchase.status == PurchaseStatus.purchased ||
+            purchase.status == PurchaseStatus.restored)
+        .firstOrNull;
+
+    if (activeSubscription == null) {
+      await _appController.changeUserData(
+        user!.data.copyWith(subscription: SubscriptionEnum.free),
+      );
+    }
+  }
+
+  Future<void> _purchaseStreamListener(
+    List<PurchaseDetails> purchaseDetailsList,
+  ) async {
+    for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
+      if (purchaseDetails.status == PurchaseStatus.purchased) {
+        final subscription = SubscriptionEnumExtension.fromProductId(
+          purchaseDetails.productID,
+        );
         await _appController.changeUserData(
-          _appController.user!.data.copyWith(
-            subscription: SubscriptionEnum.free,
+          user!.data.copyWith(subscription: subscription),
+        );
+        if (purchaseDetails.pendingCompletePurchase) {
+          InAppPurchase.instance.completePurchase(purchaseDetails);
+        }
+        onPurchaseSuccess?.call(subscription);
+        return;
+      }
+
+      if (purchaseDetails.status == PurchaseStatus.error) {
+        onPurchaseError?.call(
+          AppException(
+            AppExceptionType.purchaseError,
+            purchaseDetails.error?.toString(),
           ),
         );
         return;
       }
-    } catch (_) {}
-  }
-
-  Future<List<PurchaseDetails>> _getPurchases() async {
-    final Completer<List<PurchaseDetails>> completer = Completer();
-    late StreamSubscription subscription;
-    subscription = InAppPurchase.instance.purchaseStream.listen(
-      (purchases) {
-        subscription.cancel();
-        completer.complete(purchases);
-      },
-      onError: (error) {
-        subscription.cancel();
-        completer.complete([]);
-      },
-    );
-
-    await InAppPurchase.instance.restorePurchases();
-    return await completer.future;
-  }
-
-  SubscriptionEnum _getSubscriptionFromProductId(String productId) {
-    return _productIds.entries.firstWhere((entry) {
-      return entry.value == productId;
-    }, orElse: () => const MapEntry(SubscriptionEnum.free, '')).key;
-  }
-
-  ProductDetails? getProductForSubscription(SubscriptionEnum subscription) {
-    final String? productId = _productIds[subscription];
-    if (productId == null) return null;
-
-    try {
-      return _products?.firstWhere(
-        (product) => product.id == productId,
-      );
-    } catch (_) {
-      return null;
     }
   }
 }

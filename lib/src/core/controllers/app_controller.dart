@@ -140,7 +140,7 @@ abstract class AppControllerBase with Store {
   @action
   Future<void> verifySubscriptionStatus() async {
     if (GetIt.I.isRegistered<SubscriptionController>()) {
-      await GetIt.I.get<SubscriptionController>().verifySubscriptionStatus();
+      await GetIt.I.get<SubscriptionController>().restoreSubscription();
     }
   }
 

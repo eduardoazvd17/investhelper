@@ -21,4 +21,37 @@ extension SubscriptionEnumExtension on SubscriptionEnum {
         AppLocalizations.of(context)!.unlimitedSubscription,
     };
   }
+
+  String getFeatures(BuildContext context) {
+    return switch (this) {
+      SubscriptionEnum.free =>
+        AppLocalizations.of(context)!.freeSubscriptionFeatures,
+      SubscriptionEnum.monthly =>
+        AppLocalizations.of(context)!.monthlySubscriptionFeatures,
+      SubscriptionEnum.annual =>
+        AppLocalizations.of(context)!.annualSubscriptionFeatures,
+      SubscriptionEnum.unlimited =>
+        AppLocalizations.of(context)!.monthlySubscriptionFeatures,
+    };
+  }
+
+  String get productId {
+    return switch (this) {
+      SubscriptionEnum.free => '',
+      SubscriptionEnum.monthly => 'investhelper_monthly_plan',
+      SubscriptionEnum.annual => 'investhelper_annual_plan',
+      SubscriptionEnum.unlimited => '',
+    };
+  }
+
+  static Map<SubscriptionEnum, String> get productIds => {
+        SubscriptionEnum.monthly: 'investhelper_monthly_plan',
+        SubscriptionEnum.annual: 'investhelper_annual_plan',
+      };
+
+  static SubscriptionEnum fromProductId(String productId) {
+    return productIds.entries.firstWhere((entry) {
+      return entry.value == productId;
+    }, orElse: () => const MapEntry(SubscriptionEnum.free, '')).key;
+  }
 }
