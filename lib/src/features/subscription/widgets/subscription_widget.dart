@@ -1,24 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
+// ignore: depend_on_referenced_packages
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 import '../../../core/enums/subscription_enum.dart';
 
 class SubscriptionWidget extends StatelessWidget {
+  final SubscriptionEnum? currentSubscription;
+  final PurchaseDetails? currentSubscriptionPurchaseDetails;
   final SubscriptionEnum subscription;
   final ProductDetails? productDetails;
-  final bool isSelected;
   final void Function(SubscriptionEnum) onTap;
 
   const SubscriptionWidget({
     super.key,
+    required this.currentSubscription,
+    required this.currentSubscriptionPurchaseDetails,
     required this.subscription,
     required this.productDetails,
-    required this.isSelected,
     required this.onTap,
   });
 
+  bool get isAutoRenewing {
+    if (currentSubscriptionPurchaseDetails is GooglePlayPurchaseDetails) {
+      return (currentSubscriptionPurchaseDetails as GooglePlayPurchaseDetails)
+          .billingClientPurchase
+          .isAutoRenewing;
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final bool isSelected = currentSubscription == subscription;
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
       elevation: isSelected ? 4 : 1,

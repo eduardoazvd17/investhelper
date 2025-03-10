@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:in_app_purchase/in_app_purchase.dart';
+// ignore: depend_on_referenced_packages
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:mobx/mobx.dart';
 
@@ -121,6 +122,13 @@ abstract class SubscriptionControllerBase with Store {
     }).firstOrNull;
   }
 
+  PurchaseDetails? getPurchaseDetails(SubscriptionEnum? subscription) {
+    if (subscription == null) return null;
+    return _purchases?.where((purchase) {
+      return purchase.productID == subscription.productId;
+    }).firstOrNull;
+  }
+
   @action
   Future<void> purchaseSubscription(
     SubscriptionEnum subscription, {
@@ -141,10 +149,7 @@ abstract class SubscriptionControllerBase with Store {
         throw AppException(AppExceptionType.productNotFound);
       }
 
-      final PurchaseDetails? oldPurchaseDetails = _purchases?.where((e) {
-        return e.productID == user?.data.subscription.productId;
-      }).firstOrNull;
-
+      final oldPurchaseDetails = getPurchaseDetails(user?.data.subscription);
       if (oldPurchaseDetails != null && Platform.isAndroid) {
         await InAppPurchase.instance.buyNonConsumable(
           purchaseParam: GooglePlayPurchaseParam(
