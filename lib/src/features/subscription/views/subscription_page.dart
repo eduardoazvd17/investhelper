@@ -24,13 +24,22 @@ class SubscriptionPage extends StatefulWidget {
 class _SubscriptionPageState extends State<SubscriptionPage> {
   @override
   void initState() {
-    super.initState();
     widget.controller.isLoading = true;
     widget.controller.lastSubscriptionCheck = null;
+    super.initState();
+
     widget.controller.restoreSubscription().then((_) {
       widget.controller.initSubscriptions(
         onPurchasePending: _onPurchasePending,
       );
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted &&
+          widget.controller.user?.data.subscription ==
+              SubscriptionEnum.unlimited) {
+        Navigator.of(context).pop();
+      }
     });
   }
 
@@ -56,9 +65,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     });
   }
 
-  Future<void> _handleSubscriptionSelection(
-    SubscriptionEnum subscription,
-  ) async {
+  Future<void> _onTapSubscription(SubscriptionEnum subscription) async {
     final userData = widget.controller.user?.data;
     final currentSubscription = userData?.subscription;
     if (currentSubscription == subscription) return;
@@ -191,7 +198,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                           isSelected:
                               widget.controller.user?.data.subscription ==
                                   subscription,
-                          onTap: _handleSubscriptionSelection,
+                          onTap: _onTapSubscription,
                         );
                       },
                     ),

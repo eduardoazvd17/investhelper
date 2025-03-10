@@ -325,9 +325,12 @@ class SettingsPage extends StatelessWidget {
                     ),
                     const Divider(height: 30),
                     InkWell(
-                      onTap: () => Navigator.of(context).pushNamed(
-                        SubscriptionPage.routeName,
-                      ),
+                      onTap:
+                          user.data.subscription == SubscriptionEnum.unlimited
+                              ? null
+                              : () => Navigator.of(context).pushNamed(
+                                    SubscriptionPage.routeName,
+                                  ),
                       borderRadius: BorderRadius.circular(12.5),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -358,13 +361,16 @@ class SettingsPage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            const SizedBox(width: 10),
-                            Text(
-                              AppLocalizations.of(context)!.change,
-                              style: TextStyle(
-                                color: Theme.of(context).primaryColor,
+                            if (user.data.subscription !=
+                                SubscriptionEnum.unlimited) ...[
+                              const SizedBox(width: 10),
+                              Text(
+                                AppLocalizations.of(context)!.change,
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
-                            ),
+                            ],
                           ],
                         ),
                       ),

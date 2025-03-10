@@ -173,6 +173,8 @@ abstract class SubscriptionControllerBase with Store {
         onDone: () => subscription.cancel(),
         onError: (_) => subscription.cancel(),
       );
+
+      InAppPurchase.instance.restorePurchases();
     } catch (_) {}
   }
 
@@ -188,15 +190,18 @@ abstract class SubscriptionControllerBase with Store {
   Future<void> _restorePurchasesStreamListener(
     List<PurchaseDetails> purchaseDetailsList,
   ) async {
-    final PurchaseDetails? activeSubscription = purchaseDetailsList
-        .where((purchase) =>
-            purchase.status == PurchaseStatus.purchased ||
-            purchase.status == PurchaseStatus.restored)
-        .firstOrNull;
+    final activeProductDetails = purchaseDetailsList.where((purchase) {
+      return purchase.status == PurchaseStatus.purchased ||
+          purchase.status == PurchaseStatus.restored;
+    }).firstOrNull;
 
-    if (activeSubscription == null) {
+    final activeSubscription = SubscriptionEnumExtension.fromProductId(
+      activeProductDetails?.productID ?? '',
+    );
+
+    if (user?.data.subscription != activeSubscription) {
       await _appController.changeUserData(
-        user!.data.copyWith(subscription: SubscriptionEnum.free),
+        user!.data.copyWith(subscription: activeSubscription),
       );
     }
 
