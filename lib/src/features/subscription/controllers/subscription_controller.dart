@@ -184,12 +184,13 @@ abstract class SubscriptionControllerBase with Store {
     }
   }
 
-  Future<void> restoreSubscription() async {
+  Future<void> restoreSubscription({bool force = false}) async {
     try {
       if (user == null) return;
       final now = DateTime.now();
-      if (lastSubscriptionCheck != null &&
-          now.difference(lastSubscriptionCheck!).inHours < 1) {
+      if (!force &&
+          lastSubscriptionCheck != null &&
+          now.difference(lastSubscriptionCheck!).inMinutes < 1) {
         return;
       }
       lastSubscriptionCheck = now;
@@ -252,6 +253,8 @@ abstract class SubscriptionControllerBase with Store {
   Future<void> _purchaseStreamListener(
     List<PurchaseDetails> purchaseDetailsList,
   ) async {
+    _purchases = purchaseDetailsList;
+
     for (final PurchaseDetails purchaseDetails in purchaseDetailsList) {
       if (purchaseDetails.status == PurchaseStatus.purchased) {
         final subscription = SubscriptionEnumExtension.fromProductId(
@@ -300,6 +303,8 @@ abstract class SubscriptionControllerBase with Store {
         return;
       }
       await launchUrl(url, mode: LaunchMode.externalApplication);
+      await Future.delayed(const Duration(seconds: 1));
+      await restoreSubscription(force: true);
     } catch (_) {}
   }
 }

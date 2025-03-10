@@ -728,9 +728,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancelSubscriptionTitle => 'Cancel subscription';
 
   @override
-  String cancelSubscriptionMessage(String date) {
-    return 'Do you really want to cancel your subscription and return to the free plan?\n\nYour current subscription will remain valid until $date.';
-  }
+  String get cancelSubscriptionConfirmation => 'Would you like to be redirected to the subscription management screen to complete the cancellation?';
+
+  @override
+  String get cancelSubscriptionRedirectIOS => 'You will be redirected to the App Store subscription settings to complete the cancellation.';
+
+  @override
+  String get cancelSubscriptionRedirectAndroid => 'You will be redirected to the Google Play Store subscription settings to complete the cancellation.';
 
   @override
   String get attention => 'Attention';
@@ -746,4 +750,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get subscriptionProcessingMessage => 'Your subscription is being processed. This may take a few moments.';
+
+  @override
+  String get subscriptionCanceled => 'You have canceled the renewal of your plan, your subscription will be canceled at the next billing period.';
 }

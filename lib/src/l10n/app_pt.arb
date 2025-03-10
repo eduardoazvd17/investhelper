@@ -346,17 +346,13 @@
   "success": "Sucesso",
   "planUpdated": "Seu plano de assinatura foi atualizado com sucesso.",
   "cancelSubscriptionTitle": "Cancelar assinatura",
-  "cancelSubscriptionMessage": "Deseja realmente cancelar sua assinatura e retornar ao plano gratuito?\n\nSua assinatura atual continuará válida até {date}.",
-  "@cancelSubscriptionMessage": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
+  "cancelSubscriptionConfirmation": "Deseja ser redirecionado para a tela de gerenciamento de assinaturas para concluir o cancelamento?",
+  "cancelSubscriptionRedirectIOS": "Você será redirecionado para as configurações de assinatura da App Store para concluir o cancelamento.",
+  "cancelSubscriptionRedirectAndroid": "Você será redirecionado para as configurações de assinatura da Play Store para concluir o cancelamento.",
   "attention": "Atenção",
   "needPasswordToDeleteAccount": "Para excluir sua conta, você precisa ter uma senha configurada.",
   "checkEmailForPasswordReset": "Por favor, verifique seu e-mail para obter instruções sobre como configurar uma senha e, em seguida, faça login usando seu e-mail e senha em vez do login do Google.",
   "subscriptionProcessingTitle": "Processando assinatura",
-  "subscriptionProcessingMessage": "Sua assinatura está sendo processada. Isso pode levar alguns instantes."
+  "subscriptionProcessingMessage": "Sua assinatura está sendo processada. Isso pode levar alguns instantes.",
+  "subscriptionCanceled": "Você desativou a renovação do seu plano, sua assinatura será cancelada no próximo período de faturamento."
 }

@@ -5,12 +5,14 @@ import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 
 import '../../../core/enums/subscription_enum.dart';
 
+import '../../../l10n/generated/app_localizations.dart';
+
 class SubscriptionWidget extends StatelessWidget {
   final SubscriptionEnum? currentSubscription;
   final PurchaseDetails? currentSubscriptionPurchaseDetails;
   final SubscriptionEnum subscription;
   final ProductDetails? productDetails;
-  final void Function(SubscriptionEnum) onTap;
+  final void Function(SubscriptionEnum, bool) onTap;
 
   const SubscriptionWidget({
     super.key,
@@ -45,7 +47,7 @@ class SubscriptionWidget extends StatelessWidget {
       ),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        onTap: () => onTap(subscription),
+        onTap: () => onTap(subscription, isAutoRenewing),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -86,6 +88,30 @@ class SubscriptionWidget extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
                       ),
+                ),
+              ],
+              if (isAutoRenewing &&
+                  subscription == SubscriptionEnum.free &&
+                  currentSubscription != SubscriptionEnum.free) ...[
+                const SizedBox(height: 12),
+                Text(
+                  AppLocalizations.of(context)!.cancelSubscriptionTitle,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+              if (!isAutoRenewing &&
+                  isSelected &&
+                  subscription != SubscriptionEnum.free) ...[
+                const SizedBox(height: 12),
+                Text(
+                  AppLocalizations.of(context)!.subscriptionCanceled,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.error,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ],

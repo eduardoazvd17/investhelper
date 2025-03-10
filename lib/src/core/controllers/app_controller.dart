@@ -138,9 +138,11 @@ abstract class AppControllerBase with Store {
   }
 
   @action
-  Future<void> verifySubscriptionStatus() async {
+  Future<void> restoreSubscription({bool force = false}) async {
     if (GetIt.I.isRegistered<SubscriptionController>()) {
-      await GetIt.I.get<SubscriptionController>().restoreSubscription();
+      await GetIt.I
+          .get<SubscriptionController>()
+          .restoreSubscription(force: force);
     }
   }
 

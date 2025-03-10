@@ -48,6 +48,22 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
     });
   }
 
+  late final _$_purchasesAtom =
+      Atom(name: 'SubscriptionControllerBase._purchases', context: context);
+
+  @override
+  List<PurchaseDetails>? get _purchases {
+    _$_purchasesAtom.reportRead();
+    return super._purchases;
+  }
+
+  @override
+  set _purchases(List<PurchaseDetails>? value) {
+    _$_purchasesAtom.reportWrite(value, super._purchases, () {
+      super._purchases = value;
+    });
+  }
+
   late final _$_streamSubscriptionAtom = Atom(
       name: 'SubscriptionControllerBase._streamSubscription', context: context);
 

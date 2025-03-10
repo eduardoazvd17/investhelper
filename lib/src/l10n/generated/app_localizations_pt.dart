@@ -728,9 +728,13 @@ class AppLocalizationsPt extends AppLocalizations {
   String get cancelSubscriptionTitle => 'Cancelar assinatura';
 
   @override
-  String cancelSubscriptionMessage(String date) {
-    return 'Deseja realmente cancelar sua assinatura e retornar ao plano gratuito?\n\nSua assinatura atual continuará válida até $date.';
-  }
+  String get cancelSubscriptionConfirmation => 'Deseja ser redirecionado para a tela de gerenciamento de assinaturas para concluir o cancelamento?';
+
+  @override
+  String get cancelSubscriptionRedirectIOS => 'Você será redirecionado para as configurações de assinatura da App Store para concluir o cancelamento.';
+
+  @override
+  String get cancelSubscriptionRedirectAndroid => 'Você será redirecionado para as configurações de assinatura da Play Store para concluir o cancelamento.';
 
   @override
   String get attention => 'Atenção';
@@ -746,4 +750,7 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get subscriptionProcessingMessage => 'Sua assinatura está sendo processada. Isso pode levar alguns instantes.';
+
+  @override
+  String get subscriptionCanceled => 'Você desativou a renovação do seu plano, sua assinatura será cancelada no próximo período de faturamento.';
 }

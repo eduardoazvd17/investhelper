@@ -97,23 +97,35 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     Navigator.of(context).pop();
   }
 
-  Future<void> _onTapSubscription(SubscriptionEnum subscription) async {
+  Future<void> _onTapSubscription(
+    SubscriptionEnum subscription,
+    bool currentIsAutoRenewing,
+  ) async {
     final userData = widget.controller.user?.data;
     final currentSubscription = userData?.subscription;
-    if (currentSubscription == subscription) return;
 
-    if (subscription == SubscriptionEnum.free) {
-      await DialogWidget.show(
+    if (subscription == SubscriptionEnum.free && currentIsAutoRenewing) {
+      final bool? shouldRedirect = await DialogWidget.show(
         context,
         title: AppLocalizations.of(context)!.cancelSubscriptionTitle,
-        message: Platform.isIOS
-            ? AppLocalizations.of(context)!.iosSubscriptionDisclaimer
-            : AppLocalizations.of(context)!.androidSubscriptionDisclaimer,
-        actionType: DialogWidgetActionType.close,
+        message:
+            '${AppLocalizations.of(context)!.cancelSubscriptionConfirmation}\n\n${Platform.isIOS ? AppLocalizations.of(context)!.cancelSubscriptionRedirectIOS : AppLocalizations.of(context)!.cancelSubscriptionRedirectAndroid}',
+        actionType: DialogWidgetActionType.yesOrNo,
       );
-      await widget.controller.openSubscriptionsManager();
+      if (shouldRedirect == true) widget.controller.openSubscriptionsManager();
       return;
     }
+
+    if (subscription != SubscriptionEnum.free &&
+        currentSubscription == subscription &&
+        !currentIsAutoRenewing) {
+      widget.controller.openSubscriptionsManager();
+      return;
+    }
+
+    if (!mounted) return;
+    if (currentSubscription == subscription) return;
+    if (subscription == SubscriptionEnum.free) return;
 
     try {
       LoadingWidget.dialog(context);

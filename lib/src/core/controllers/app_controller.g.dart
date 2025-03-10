@@ -293,14 +293,13 @@ mixin _$AppController on AppControllerBase, Store {
     return _$sendRecoveryEmailAsyncAction.run(() => super.sendRecoveryEmail());
   }
 
-  late final _$verifySubscriptionStatusAsyncAction = AsyncAction(
-      'AppControllerBase.verifySubscriptionStatus',
-      context: context);
+  late final _$restoreSubscriptionAsyncAction =
+      AsyncAction('AppControllerBase.restoreSubscription', context: context);
 
   @override
-  Future<void> verifySubscriptionStatus() {
-    return _$verifySubscriptionStatusAsyncAction
-        .run(() => super.verifySubscriptionStatus());
+  Future<void> restoreSubscription({bool force = false}) {
+    return _$restoreSubscriptionAsyncAction
+        .run(() => super.restoreSubscription(force: force));
   }
 
   late final _$requestAuthAsyncAction =

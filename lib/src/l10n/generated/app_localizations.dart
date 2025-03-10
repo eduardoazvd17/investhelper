@@ -1469,11 +1469,23 @@ abstract class AppLocalizations {
   /// **'Cancel subscription'**
   String get cancelSubscriptionTitle;
 
-  /// No description provided for @cancelSubscriptionMessage.
+  /// No description provided for @cancelSubscriptionConfirmation.
   ///
   /// In en, this message translates to:
-  /// **'Do you really want to cancel your subscription and return to the free plan?\n\nYour current subscription will remain valid until {date}.'**
-  String cancelSubscriptionMessage(String date);
+  /// **'Would you like to be redirected to the subscription management screen to complete the cancellation?'**
+  String get cancelSubscriptionConfirmation;
+
+  /// No description provided for @cancelSubscriptionRedirectIOS.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be redirected to the App Store subscription settings to complete the cancellation.'**
+  String get cancelSubscriptionRedirectIOS;
+
+  /// No description provided for @cancelSubscriptionRedirectAndroid.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be redirected to the Google Play Store subscription settings to complete the cancellation.'**
+  String get cancelSubscriptionRedirectAndroid;
 
   /// No description provided for @attention.
   ///
@@ -1504,6 +1516,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your subscription is being processed. This may take a few moments.'**
   String get subscriptionProcessingMessage;
+
+  /// No description provided for @subscriptionCanceled.
+  ///
+  /// In en, this message translates to:
+  /// **'You have canceled the renewal of your plan, your subscription will be canceled at the next billing period.'**
+  String get subscriptionCanceled;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

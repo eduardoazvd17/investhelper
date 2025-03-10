@@ -52,7 +52,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   void initState() {
     _widgetEventHandler = WidgetEventHandler(
       onResumed: () {
-        appController.verifySubscriptionStatus();
+        appController.restoreSubscription();
 
         // Close blur overlay
         if (appController.isBlurOverlayShowing) {
