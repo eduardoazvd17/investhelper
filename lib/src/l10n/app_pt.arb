@@ -356,5 +356,7 @@
   },
   "attention": "Atenção",
   "needPasswordToDeleteAccount": "Para excluir sua conta, você precisa ter uma senha configurada.",
-  "checkEmailForPasswordReset": "Por favor, verifique seu e-mail para obter instruções sobre como configurar uma senha e, em seguida, faça login usando seu e-mail e senha em vez do login do Google."
+  "checkEmailForPasswordReset": "Por favor, verifique seu e-mail para obter instruções sobre como configurar uma senha e, em seguida, faça login usando seu e-mail e senha em vez do login do Google.",
+  "subscriptionProcessingTitle": "Processando assinatura",
+  "subscriptionProcessingMessage": "Sua assinatura está sendo processada. Isso pode levar alguns instantes."
 }

@@ -740,4 +740,10 @@ class AppLocalizationsPt extends AppLocalizations {
 
   @override
   String get checkEmailForPasswordReset => 'Por favor, verifique seu e-mail para obter instruções sobre como configurar uma senha e, em seguida, faça login usando seu e-mail e senha em vez do login do Google.';
+
+  @override
+  String get subscriptionProcessingTitle => 'Processando assinatura';
+
+  @override
+  String get subscriptionProcessingMessage => 'Sua assinatura está sendo processada. Isso pode levar alguns instantes.';
 }

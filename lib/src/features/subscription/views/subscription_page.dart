@@ -28,7 +28,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     widget.controller.isLoading = true;
     widget.controller.lastSubscriptionCheck = null;
     widget.controller.restoreSubscription().then((_) {
-      widget.controller.initSubscriptions();
+      widget.controller.initSubscriptions(
+        onPurchasePending: _onPurchasePending,
+      );
     });
   }
 
@@ -36,6 +38,22 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   void dispose() {
     widget.controller.stopListeningPurchases();
     super.dispose();
+  }
+
+  void _onPurchasePending() {
+    DialogWidget.show(
+      context,
+      title: AppLocalizations.of(context)!.subscriptionProcessingTitle,
+      message: AppLocalizations.of(context)!.subscriptionProcessingMessage,
+      actionType: DialogWidgetActionType.close,
+    ).then((_) {
+      if (mounted) {
+        Navigator.of(context).popUntil((route) {
+          return route.settings.name == SubscriptionPage.routeName;
+        });
+        Navigator.of(context).pop();
+      }
+    });
   }
 
   Future<void> _handleSubscriptionSelection(
@@ -106,7 +124,9 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             if (widget.controller.error != null) {
               return AppExceptionWidget(
                 error: widget.controller.error!.type,
-                onRetryCallback: () => widget.controller.initSubscriptions(),
+                onRetryCallback: () => widget.controller.initSubscriptions(
+                  onPurchasePending: _onPurchasePending,
+                ),
               );
             }
 

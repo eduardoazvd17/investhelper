@@ -740,4 +740,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get checkEmailForPasswordReset => 'Please check your email for instructions on how to set up a password, then log in using your email and password instead of Google Sign-In.';
+
+  @override
+  String get subscriptionProcessingTitle => 'Processing subscription';
+
+  @override
+  String get subscriptionProcessingMessage => 'Your subscription is being processed. This may take a few moments.';
 }

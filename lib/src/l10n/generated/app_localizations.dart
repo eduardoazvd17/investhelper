@@ -1492,6 +1492,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please check your email for instructions on how to set up a password, then log in using your email and password instead of Google Sign-In.'**
   String get checkEmailForPasswordReset;
+
+  /// No description provided for @subscriptionProcessingTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing subscription'**
+  String get subscriptionProcessingTitle;
+
+  /// No description provided for @subscriptionProcessingMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Your subscription is being processed. This may take a few moments.'**
+  String get subscriptionProcessingMessage;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

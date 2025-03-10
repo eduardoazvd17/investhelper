@@ -356,5 +356,7 @@
     },
     "attention": "Attention",
     "needPasswordToDeleteAccount": "To delete your account, you need to have a password set up.",
-    "checkEmailForPasswordReset": "Please check your email for instructions on how to set up a password, then log in using your email and password instead of Google Sign-In."
+    "checkEmailForPasswordReset": "Please check your email for instructions on how to set up a password, then log in using your email and password instead of Google Sign-In.",
+    "subscriptionProcessingTitle": "Processing subscription",
+    "subscriptionProcessingMessage": "Your subscription is being processed. This may take a few moments."
 }

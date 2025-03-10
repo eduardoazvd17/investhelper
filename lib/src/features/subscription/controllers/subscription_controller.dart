@@ -65,11 +65,16 @@ abstract class SubscriptionControllerBase with Store {
 
   void Function(AppException?)? onPurchaseError;
 
+  void Function()? onPurchasePending;
+
   @action
-  Future<void> initSubscriptions() async {
+  Future<void> initSubscriptions({
+    required void Function() onPurchasePending,
+  }) async {
     try {
       isLoading = true;
       error = null;
+      this.onPurchasePending = onPurchasePending;
 
       final bool available = await InAppPurchase.instance.isAvailable();
       if (!available) {
@@ -194,6 +199,11 @@ abstract class SubscriptionControllerBase with Store {
         user!.data.copyWith(subscription: SubscriptionEnum.free),
       );
     }
+
+    final PurchaseDetails? pendingPurchase = purchaseDetailsList
+        .where((purchase) => purchase.status == PurchaseStatus.pending)
+        .firstOrNull;
+    if (pendingPurchase != null) onPurchasePending?.call();
   }
 
   Future<void> _purchaseStreamListener(
@@ -221,6 +231,16 @@ abstract class SubscriptionControllerBase with Store {
             purchaseDetails.error?.toString(),
           ),
         );
+        return;
+      }
+
+      if (purchaseDetails.status == PurchaseStatus.canceled) {
+        onPurchaseError?.call(null);
+        return;
+      }
+
+      if (purchaseDetails.status == PurchaseStatus.pending) {
+        onPurchasePending?.call();
         return;
       }
     }

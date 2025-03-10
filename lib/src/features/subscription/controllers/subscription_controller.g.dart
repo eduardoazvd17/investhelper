@@ -32,22 +32,6 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
               name: 'SubscriptionControllerBase.hasReachedFreeLimit'))
       .value;
 
-  late final _$_subscriptionAtom =
-      Atom(name: 'SubscriptionControllerBase._subscription', context: context);
-
-  @override
-  StreamSubscription<List<PurchaseDetails>>? get _streamSubscription {
-    _$_subscriptionAtom.reportRead();
-    return super._streamSubscription;
-  }
-
-  @override
-  set _streamSubscription(StreamSubscription<List<PurchaseDetails>>? value) {
-    _$_subscriptionAtom.reportWrite(value, super._streamSubscription, () {
-      super._streamSubscription = value;
-    });
-  }
-
   late final _$_productsAtom =
       Atom(name: 'SubscriptionControllerBase._products', context: context);
 
@@ -61,6 +45,22 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
   set _products(List<ProductDetails>? value) {
     _$_productsAtom.reportWrite(value, super._products, () {
       super._products = value;
+    });
+  }
+
+  late final _$_streamSubscriptionAtom = Atom(
+      name: 'SubscriptionControllerBase._streamSubscription', context: context);
+
+  @override
+  StreamSubscription<List<PurchaseDetails>>? get _streamSubscription {
+    _$_streamSubscriptionAtom.reportRead();
+    return super._streamSubscription;
+  }
+
+  @override
+  set _streamSubscription(StreamSubscription<List<PurchaseDetails>>? value) {
+    _$_streamSubscriptionAtom.reportWrite(value, super._streamSubscription, () {
+      super._streamSubscription = value;
     });
   }
 
@@ -119,8 +119,9 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
       context: context);
 
   @override
-  Future<void> initSubscriptions() {
-    return _$initSubscriptionsAsyncAction.run(() => super.initSubscriptions());
+  Future<void> initSubscriptions({required void Function() onPurchasePending}) {
+    return _$initSubscriptionsAsyncAction.run(
+        () => super.initSubscriptions(onPurchasePending: onPurchasePending));
   }
 
   late final _$purchaseSubscriptionAsyncAction = AsyncAction(
