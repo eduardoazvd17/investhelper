@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:in_app_purchase/in_app_purchase.dart';
+import 'package:in_app_purchase_android/in_app_purchase_android.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../../core/controllers/app_controller.dart';
@@ -48,6 +50,9 @@ abstract class SubscriptionControllerBase with Store {
 
   @observable
   List<ProductDetails>? _products;
+
+  @observable
+  List<PurchaseDetails>? _purchases;
 
   @observable
   StreamSubscription<List<PurchaseDetails>>? _streamSubscription;
@@ -129,17 +134,36 @@ abstract class SubscriptionControllerBase with Store {
       this.onPurchaseSuccess = onPurchaseSuccess;
       this.onPurchaseError = onPurchaseError;
 
-      final ProductDetails? product = _products?.where((product) {
+      final ProductDetails? productDetails = _products?.where((product) {
         return product.id == subscription.productId;
       }).firstOrNull;
-      if (product == null) throw AppException(AppExceptionType.productNotFound);
+      if (productDetails == null) {
+        throw AppException(AppExceptionType.productNotFound);
+      }
 
-      await InAppPurchase.instance.buyNonConsumable(
-        purchaseParam: PurchaseParam(
-          productDetails: product,
-          applicationUserName: user!.id,
-        ),
-      );
+      final PurchaseDetails? oldPurchaseDetails = _purchases?.where((e) {
+        return e.productID == user?.data.subscription.productId;
+      }).firstOrNull;
+
+      if (oldPurchaseDetails != null && Platform.isAndroid) {
+        await InAppPurchase.instance.buyNonConsumable(
+          purchaseParam: GooglePlayPurchaseParam(
+            productDetails: productDetails,
+            applicationUserName: user!.id,
+            changeSubscriptionParam: ChangeSubscriptionParam(
+              oldPurchaseDetails:
+                  oldPurchaseDetails as GooglePlayPurchaseDetails,
+            ),
+          ),
+        );
+      } else {
+        await InAppPurchase.instance.buyNonConsumable(
+          purchaseParam: PurchaseParam(
+            productDetails: productDetails,
+            applicationUserName: user!.id,
+          ),
+        );
+      }
 
       _appController.disableAuthOverlay = false;
       _appController.disableBlurOverlay = false;
@@ -193,6 +217,8 @@ abstract class SubscriptionControllerBase with Store {
   Future<void> _restorePurchasesStreamListener(
     List<PurchaseDetails> purchaseDetailsList,
   ) async {
+    _purchases = purchaseDetailsList;
+
     final activeProductDetails = purchaseDetailsList.where((purchase) {
       return purchase.status == PurchaseStatus.purchased ||
           purchase.status == PurchaseStatus.restored;
