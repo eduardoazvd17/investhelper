@@ -30,7 +30,7 @@ abstract class AppControllerBase with Store {
     user = await _service.getCurrentUser();
     canChangePassword = await _service.canChangePassword();
     await biometricsSecurityCheck();
-    shouldRequestAuth = isBiometricsEnabled;
+    shouldRequestAuth = user != null && isBiometricsEnabled;
   }
 
   @action
