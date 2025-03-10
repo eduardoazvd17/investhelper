@@ -56,7 +56,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         // Check subscription status
         if (_shouldRestoreSubscription) {
           _shouldRestoreSubscription = false;
-          appController.restoreSubscription(force: true);
+          appController.restoreSubscription();
         }
 
         // Close blur overlay

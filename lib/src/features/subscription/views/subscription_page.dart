@@ -24,10 +24,8 @@ class SubscriptionPage extends StatefulWidget {
 class _SubscriptionPageState extends State<SubscriptionPage> {
   @override
   void initState() {
-    widget.controller.isLoading = true;
-    widget.controller.lastSubscriptionCheck = null;
     super.initState();
-
+    widget.controller.isLoading = true;
     widget.controller.restoreSubscription().then((_) {
       widget.controller.initSubscriptions(
         onPurchasePending: _onPurchasePending,
@@ -98,12 +96,13 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
   Future<void> _onTapSubscription(
     SubscriptionEnum subscription,
-    bool currentIsAutoRenewing,
+    bool? currentIsAutoRenewing,
   ) async {
     final userData = widget.controller.user?.data;
     final currentSubscription = userData?.subscription;
 
-    if (subscription == SubscriptionEnum.free && currentIsAutoRenewing) {
+    if (subscription == SubscriptionEnum.free &&
+        currentIsAutoRenewing == true) {
       final bool? shouldRedirect = await DialogWidget.show(
         context,
         title: AppLocalizations.of(context)!.cancelSubscriptionTitle,
@@ -117,7 +116,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
     if (subscription != SubscriptionEnum.free &&
         currentSubscription == subscription &&
-        !currentIsAutoRenewing) {
+        currentIsAutoRenewing == false) {
       widget.controller.openSubscriptionsManager();
       return;
     }

@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:in_app_purchase/in_app_purchase.dart';
 // ignore: depend_on_referenced_packages
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
+// ignore: depend_on_referenced_packages
+import 'package:in_app_purchase_storekit/in_app_purchase_storekit.dart';
 import 'package:mobx/mobx.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -26,10 +28,6 @@ abstract class SubscriptionControllerBase with Store {
     required InvestmentsController investmentsController,
   })  : _appController = appController,
         _investmentsController = investmentsController {
-    reaction(
-      (_) => _appController.user,
-      (user) => restoreSubscription(),
-    );
     restoreSubscription();
   }
 
@@ -64,9 +62,6 @@ abstract class SubscriptionControllerBase with Store {
 
   @observable
   AppException? error;
-
-  @observable
-  DateTime? lastSubscriptionCheck;
 
   void Function(SubscriptionEnum)? onPurchaseSuccess;
 
@@ -187,16 +182,9 @@ abstract class SubscriptionControllerBase with Store {
   }
 
   @action
-  Future<void> restoreSubscription({bool force = false}) async {
+  Future<void> restoreSubscription() async {
     try {
       if (user == null) return;
-      final now = DateTime.now();
-      if (!force &&
-          lastSubscriptionCheck != null &&
-          now.difference(lastSubscriptionCheck!).inMinutes < 1) {
-        return;
-      }
-      lastSubscriptionCheck = now;
 
       final bool available = await InAppPurchase.instance.isAvailable();
       if (!available) return;
@@ -227,8 +215,11 @@ abstract class SubscriptionControllerBase with Store {
   Future<void> _restorePurchasesStreamListener(
     List<PurchaseDetails> purchaseDetailsList,
   ) async {
-    _purchases = purchaseDetailsList;
+    purchaseDetailsList.removeWhere((e) {
+      return !user!.data.purchaseIds.contains(e.purchaseID);
+    });
 
+    _purchases = purchaseDetailsList;
     final activeProductDetails = purchaseDetailsList.where((purchase) {
       return purchase.status == PurchaseStatus.purchased ||
           purchase.status == PurchaseStatus.restored;
@@ -263,7 +254,13 @@ abstract class SubscriptionControllerBase with Store {
           purchaseDetails.productID,
         );
         await _appController.changeUserData(
-          user!.data.copyWith(subscription: subscription),
+          user!.data.copyWith(
+            subscription: subscription,
+            purchaseIds: [
+              purchaseDetails.purchaseID ?? '',
+              ...user!.data.purchaseIds,
+            ],
+          ),
         );
         if (purchaseDetails.pendingCompletePurchase) {
           await InAppPurchase.instance.completePurchase(purchaseDetails);

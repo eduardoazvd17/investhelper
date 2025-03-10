@@ -297,9 +297,9 @@ mixin _$AppController on AppControllerBase, Store {
       AsyncAction('AppControllerBase.restoreSubscription', context: context);
 
   @override
-  Future<void> restoreSubscription({bool force = false}) {
+  Future<void> restoreSubscription() {
     return _$restoreSubscriptionAsyncAction
-        .run(() => super.restoreSubscription(force: force));
+        .run(() => super.restoreSubscription());
   }
 
   late final _$requestAuthAsyncAction =

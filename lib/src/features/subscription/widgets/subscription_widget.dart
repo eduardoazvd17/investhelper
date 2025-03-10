@@ -12,7 +12,7 @@ class SubscriptionWidget extends StatelessWidget {
   final PurchaseDetails? currentSubscriptionPurchaseDetails;
   final SubscriptionEnum subscription;
   final ProductDetails? productDetails;
-  final void Function(SubscriptionEnum, bool) onTap;
+  final void Function(SubscriptionEnum, bool?) onTap;
 
   const SubscriptionWidget({
     super.key,
@@ -23,13 +23,13 @@ class SubscriptionWidget extends StatelessWidget {
     required this.onTap,
   });
 
-  bool get isAutoRenewing {
+  bool? get isAutoRenewing {
     if (currentSubscriptionPurchaseDetails is GooglePlayPurchaseDetails) {
       return (currentSubscriptionPurchaseDetails as GooglePlayPurchaseDetails)
           .billingClientPurchase
           .isAutoRenewing;
     }
-    return false;
+    return null;
   }
 
   @override
@@ -90,7 +90,7 @@ class SubscriptionWidget extends StatelessWidget {
                       ),
                 ),
               ],
-              if (isAutoRenewing &&
+              if (isAutoRenewing == true &&
                   subscription == SubscriptionEnum.free &&
                   currentSubscription != SubscriptionEnum.free) ...[
                 const SizedBox(height: 12),
@@ -102,7 +102,7 @@ class SubscriptionWidget extends StatelessWidget {
                   ),
                 ),
               ],
-              if (!isAutoRenewing &&
+              if (isAutoRenewing == false &&
                   isSelected &&
                   subscription != SubscriptionEnum.free) ...[
                 const SizedBox(height: 12),

@@ -110,6 +110,7 @@ abstract class AppControllerBase with Store {
     this.user = user;
     _service.canChangePassword().then((value) => canChangePassword = value);
     GetIt.I.get<InvestmentsController>().loadUserData();
+    restoreSubscription();
   }
 
   @action
@@ -117,7 +118,7 @@ abstract class AppControllerBase with Store {
     await _service.logout();
     await changeIsBiometricsEnabled(false, force: true);
     user = null;
-    _service.canChangePassword().then((value) => canChangePassword = value);
+    canChangePassword = false;
     GetIt.I.get<InvestmentsController>().loadUserData();
   }
 
@@ -138,11 +139,9 @@ abstract class AppControllerBase with Store {
   }
 
   @action
-  Future<void> restoreSubscription({bool force = false}) async {
+  Future<void> restoreSubscription() async {
     if (GetIt.I.isRegistered<SubscriptionController>()) {
-      await GetIt.I
-          .get<SubscriptionController>()
-          .restoreSubscription(force: force);
+      await GetIt.I.get<SubscriptionController>().restoreSubscription();
     }
   }
 

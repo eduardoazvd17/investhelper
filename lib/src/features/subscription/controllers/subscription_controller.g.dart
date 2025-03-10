@@ -122,24 +122,6 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
     });
   }
 
-  late final _$lastSubscriptionCheckAtom = Atom(
-      name: 'SubscriptionControllerBase.lastSubscriptionCheck',
-      context: context);
-
-  @override
-  DateTime? get lastSubscriptionCheck {
-    _$lastSubscriptionCheckAtom.reportRead();
-    return super.lastSubscriptionCheck;
-  }
-
-  @override
-  set lastSubscriptionCheck(DateTime? value) {
-    _$lastSubscriptionCheckAtom.reportWrite(value, super.lastSubscriptionCheck,
-        () {
-      super.lastSubscriptionCheck = value;
-    });
-  }
-
   late final _$initSubscriptionsAsyncAction = AsyncAction(
       'SubscriptionControllerBase.initSubscriptions',
       context: context);
@@ -169,9 +151,9 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
       context: context);
 
   @override
-  Future<void> restoreSubscription({bool force = false}) {
+  Future<void> restoreSubscription() {
     return _$restoreSubscriptionAsyncAction
-        .run(() => super.restoreSubscription(force: force));
+        .run(() => super.restoreSubscription());
   }
 
   late final _$openSubscriptionsManagerAsyncAction = AsyncAction(
@@ -214,7 +196,6 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
     return '''
 isLoading: ${isLoading},
 error: ${error},
-lastSubscriptionCheck: ${lastSubscriptionCheck},
 user: ${user},
 availableSubscriptions: ${availableSubscriptions},
 hasReachedFreeLimit: ${hasReachedFreeLimit},

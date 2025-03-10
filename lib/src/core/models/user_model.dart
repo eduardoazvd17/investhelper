@@ -34,24 +34,28 @@ class UserModel extends Equatable {
 
   @override
   List<Object?> get props =>
-      [id, name, email, data.registerDate, data.subscription];
+      [id, name, email, data.registerDate, data.subscription, data.purchaseIds];
 }
 
 class UserDataModel {
   final DateTime registerDate;
   final SubscriptionEnum subscription;
+  final List<String> purchaseIds;
 
   UserDataModel({
     required this.registerDate,
     this.subscription = SubscriptionEnum.free,
+    this.purchaseIds = const [],
   });
 
   UserDataModel copyWith({
-    required SubscriptionEnum? subscription,
+    SubscriptionEnum? subscription,
+    List<String>? purchaseIds,
   }) {
     return UserDataModel(
       registerDate: registerDate,
       subscription: subscription ?? this.subscription,
+      purchaseIds: purchaseIds ?? this.purchaseIds,
     );
   }
 
@@ -59,6 +63,7 @@ class UserDataModel {
     return <String, dynamic>{
       'registerDate': registerDate.millisecondsSinceEpoch,
       'subscription': subscription.index,
+      'purchaseIds': purchaseIds,
     };
   }
 
@@ -70,6 +75,7 @@ class UserDataModel {
       subscription: SubscriptionEnum.values[int.parse(
         map['subscription'].toStringAsFixed(0),
       )],
+      purchaseIds: List<String>.from(map['purchaseIds'] ?? []),
     );
   }
 
