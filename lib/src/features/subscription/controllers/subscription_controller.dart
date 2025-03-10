@@ -115,6 +115,7 @@ abstract class SubscriptionControllerBase with Store {
     isLoading = false;
   }
 
+  @action
   void stopListeningPurchases() => _streamSubscription?.cancel();
 
   @action
@@ -185,6 +186,7 @@ abstract class SubscriptionControllerBase with Store {
     }
   }
 
+  @action
   Future<void> restoreSubscription({bool force = false}) async {
     try {
       if (user == null) return;
@@ -292,6 +294,7 @@ abstract class SubscriptionControllerBase with Store {
     }
   }
 
+  @action
   Future<void> openSubscriptionsManager() async {
     try {
       final Uri url;
