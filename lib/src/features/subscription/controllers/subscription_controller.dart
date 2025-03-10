@@ -299,9 +299,7 @@ abstract class SubscriptionControllerBase with Store {
       } else {
         return;
       }
-      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-        throw AppException(AppExceptionType.generic);
-      }
+      await launchUrl(url, mode: LaunchMode.externalApplication);
     } catch (_) {}
   }
 }
