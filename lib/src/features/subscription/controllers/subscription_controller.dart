@@ -203,6 +203,9 @@ abstract class SubscriptionControllerBase with Store {
     );
 
     if (user?.data.subscription != activeSubscription) {
+      if (activeProductDetails?.pendingCompletePurchase == true) {
+        await InAppPurchase.instance.completePurchase(activeProductDetails!);
+      }
       await _appController.changeUserData(
         user!.data.copyWith(subscription: activeSubscription),
       );
@@ -226,7 +229,7 @@ abstract class SubscriptionControllerBase with Store {
           user!.data.copyWith(subscription: subscription),
         );
         if (purchaseDetails.pendingCompletePurchase) {
-          InAppPurchase.instance.completePurchase(purchaseDetails);
+          await InAppPurchase.instance.completePurchase(purchaseDetails);
         }
         onPurchaseSuccess?.call(subscription);
         return;
