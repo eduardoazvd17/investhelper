@@ -44,6 +44,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   late final WidgetEventHandler _widgetEventHandler;
   late final ScrollController _overviewScrollController;
   late final ScrollController _detailsScrollController;
+  bool _shouldRestoreSubscription = false;
 
   InvestmentsController get controller => widget.controller;
   AppController get appController => controller.appController;
@@ -52,7 +53,11 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   void initState() {
     _widgetEventHandler = WidgetEventHandler(
       onResumed: () {
-        appController.restoreSubscription();
+        // Check subscription status
+        if (_shouldRestoreSubscription) {
+          _shouldRestoreSubscription = false;
+          appController.restoreSubscription(force: true);
+        }
 
         // Close blur overlay
         if (appController.isBlurOverlayShowing) {
@@ -79,6 +84,8 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         }
       },
       onPaused: () {
+        _shouldRestoreSubscription = true;
+
         // Request auth overlay
         if (appController.isBiometricsEnabled &&
             !appController.isRequestAuthOverlayShowing &&
