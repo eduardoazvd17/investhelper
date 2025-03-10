@@ -65,7 +65,6 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       Navigator.of(context).popUntil((route) {
         return route.settings.name == SubscriptionPage.routeName;
       });
-      Navigator.of(context).pop();
     }
   }
 
