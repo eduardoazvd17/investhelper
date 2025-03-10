@@ -28,8 +28,9 @@ abstract class AppControllerBase with Store {
     language = await _service.loadLanguage();
     appVersion = await _service.getAppVersion();
     user = await _service.getCurrentUser();
-    _service.canChangePassword().then((value) => canChangePassword = value);
+    canChangePassword = await _service.canChangePassword();
     await biometricsSecurityCheck();
+    shouldRequestAuth = isBiometricsEnabled;
   }
 
   @action
@@ -45,7 +46,6 @@ abstract class AppControllerBase with Store {
 
     isBiometricsEnabled =
         canEnableBiometrics && await _service.loadIsBiometricsEnabled();
-    shouldRequestAuth = isBiometricsEnabled;
   }
 
   @observable

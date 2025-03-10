@@ -51,24 +51,27 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
   @override
   void initState() {
     _widgetEventHandler = WidgetEventHandler(
-      onResumed: () async {
+      onResumed: () {
         appController.verifySubscriptionStatus();
 
+        // Close blur overlay
         if (appController.isBlurOverlayShowing) {
           Navigator.of(context).pop();
           appController.isBlurOverlayShowing = false;
         }
 
+        // Auth overlay
         if (appController.shouldRequestAuth &&
-            !appController.isRequestAuthOverlayShowing &&
-            !appController.disableAuthOverlay) {
+            !appController.isRequestAuthOverlayShowing) {
           appController.shouldRequestAuth = false;
           appController.isRequestAuthOverlayShowing = true;
-          await AuthOverlay.show(context);
-          appController.isRequestAuthOverlayShowing = false;
+          AuthOverlay.show(context).then((_) {
+            appController.isRequestAuthOverlayShowing = false;
+          });
         }
       },
       onInactive: () {
+        // Blur overlay
         if (!appController.isBlurOverlayShowing &&
             !appController.disableBlurOverlay) {
           appController.isBlurOverlayShowing = true;
@@ -76,6 +79,7 @@ class _InvestmentsPageState extends State<InvestmentsPage> {
         }
       },
       onPaused: () {
+        // Request auth overlay
         if (appController.isBiometricsEnabled &&
             !appController.isRequestAuthOverlayShowing &&
             !appController.disableAuthOverlay) {
