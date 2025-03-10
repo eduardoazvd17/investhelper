@@ -135,7 +135,10 @@ abstract class SubscriptionControllerBase with Store {
       if (product == null) throw AppException(AppExceptionType.productNotFound);
 
       await InAppPurchase.instance.buyNonConsumable(
-        purchaseParam: PurchaseParam(productDetails: product),
+        purchaseParam: PurchaseParam(
+          productDetails: product,
+          applicationUserName: user!.id,
+        ),
       );
 
       _appController.disableAuthOverlay = false;

@@ -49,20 +49,52 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     super.dispose();
   }
 
-  void _onPurchasePending() {
-    DialogWidget.show(
+  Future<void> _onPurchaseSuccess(SubscriptionEnum subscription) async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (widget.controller.user?.data.subscription == subscription) {
+      if (!mounted) return;
+      await DialogWidget.show(
+        context,
+        title: AppLocalizations.of(context)!.success,
+        message: AppLocalizations.of(context)!.planUpdated,
+        actionType: DialogWidgetActionType.close,
+      );
+
+      if (!mounted) return;
+      Navigator.of(context).popUntil((route) {
+        return route.settings.name == SubscriptionPage.routeName;
+      });
+      Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> _onPurchaseError(AppException? error) async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (!mounted) return;
+    Navigator.of(context).popUntil((route) {
+      return route.settings.name == SubscriptionPage.routeName;
+    });
+    error?.show(context);
+  }
+
+  Future<void> _onPurchasePending() async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (!mounted) return;
+    await DialogWidget.show(
       context,
       title: AppLocalizations.of(context)!.subscriptionProcessingTitle,
       message: AppLocalizations.of(context)!.subscriptionProcessingMessage,
       actionType: DialogWidgetActionType.close,
-    ).then((_) {
-      if (mounted) {
-        Navigator.of(context).popUntil((route) {
-          return route.settings.name == SubscriptionPage.routeName;
-        });
-        Navigator.of(context).pop();
-      }
+    );
+
+    if (!mounted) return;
+    Navigator.of(context).popUntil((route) {
+      return route.settings.name == SubscriptionPage.routeName;
     });
+    Navigator.of(context).pop();
   }
 
   Future<void> _onTapSubscription(SubscriptionEnum subscription) async {
@@ -86,27 +118,8 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
       LoadingWidget.dialog(context);
       await widget.controller.purchaseSubscription(
         subscription,
-        onPurchaseSuccess: (SubscriptionEnum subscription) {
-          if (mounted &&
-              widget.controller.user?.data.subscription == subscription) {
-            DialogWidget.show(
-              context,
-              title: AppLocalizations.of(context)!.success,
-              message: AppLocalizations.of(context)!.planUpdated,
-              actionType: DialogWidgetActionType.close,
-            ).then((_) {
-              if (!mounted) return;
-              LoadingWidget.hide(context);
-              Navigator.of(context).pop();
-              return;
-            });
-          }
-        },
-        onPurchaseError: (AppException? error) {
-          if (!mounted) return;
-          LoadingWidget.hide(context);
-          error?.show(context);
-        },
+        onPurchaseSuccess: _onPurchaseSuccess,
+        onPurchaseError: _onPurchaseError,
       );
     } on AppException catch (e) {
       if (!mounted) return;
