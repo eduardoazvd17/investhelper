@@ -164,8 +164,39 @@ mixin _$SubscriptionController on SubscriptionControllerBase, Store {
             onPurchaseError: onPurchaseError));
   }
 
+  late final _$restoreSubscriptionAsyncAction = AsyncAction(
+      'SubscriptionControllerBase.restoreSubscription',
+      context: context);
+
+  @override
+  Future<void> restoreSubscription({bool force = false}) {
+    return _$restoreSubscriptionAsyncAction
+        .run(() => super.restoreSubscription(force: force));
+  }
+
+  late final _$openSubscriptionsManagerAsyncAction = AsyncAction(
+      'SubscriptionControllerBase.openSubscriptionsManager',
+      context: context);
+
+  @override
+  Future<void> openSubscriptionsManager() {
+    return _$openSubscriptionsManagerAsyncAction
+        .run(() => super.openSubscriptionsManager());
+  }
+
   late final _$SubscriptionControllerBaseActionController =
       ActionController(name: 'SubscriptionControllerBase', context: context);
+
+  @override
+  void stopListeningPurchases() {
+    final _$actionInfo = _$SubscriptionControllerBaseActionController
+        .startAction(name: 'SubscriptionControllerBase.stopListeningPurchases');
+    try {
+      return super.stopListeningPurchases();
+    } finally {
+      _$SubscriptionControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   ProductDetails? getProductDetails(SubscriptionEnum subscription) {
