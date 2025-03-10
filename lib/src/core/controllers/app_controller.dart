@@ -232,4 +232,16 @@ abstract class AppControllerBase with Store {
     disableAuthOverlay = false;
     disableBlurOverlay = false;
   }
+
+  @action
+  Future<void> openDeveloperUrl() async {
+    disableAuthOverlay = true;
+    disableBlurOverlay = true;
+    final developerUrl = 'https://eduardoazevedo.com';
+    if (await canLaunchUrlString(developerUrl)) {
+      await launchUrlString(developerUrl);
+    }
+    disableAuthOverlay = false;
+    disableBlurOverlay = false;
+  }
 }

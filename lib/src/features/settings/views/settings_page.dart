@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'package:url_launcher/url_launcher.dart';
-
 import '../../../core/controllers/app_controller.dart';
 import '../../../core/enums/language_enum.dart';
 import '../../../core/enums/subscription_enum.dart';
@@ -220,12 +218,7 @@ class SettingsPage extends StatelessWidget {
                 Text(AppLocalizations.of(context)!.aboutAppText),
                 const SizedBox(height: 10),
                 ListTile(
-                  onTap: () async {
-                    final Uri url = Uri.parse('https://eduardoazevedo.com');
-                    if (await canLaunchUrl(url)) {
-                      await launchUrl(url);
-                    }
-                  },
+                  onTap: appController.openDeveloperUrl,
                   isThreeLine: true,
                   contentPadding: EdgeInsets.zero,
                   title: Text(
