@@ -43,12 +43,18 @@ class _AuthPageState extends State<AuthPage> {
   @override
   void initState() {
     _currentPageState = AuthPageState.login;
-    _nameController = TextEditingController();
-    _emailController = TextEditingController(
-      text: kDebugMode ? 'testing@investhelper.com' : null,
+    _nameController = TextEditingController(
+      text: kDebugMode ? 'Testing Account' : null,
     );
-    _passwordController = TextEditingController();
-    _passwordConfirmationController = TextEditingController();
+    _emailController = TextEditingController(
+      text: kDebugMode ? 'test@gmail.com' : null,
+    );
+    _passwordController = TextEditingController(
+      text: kDebugMode ? 'Test.123' : null,
+    );
+    _passwordConfirmationController = TextEditingController(
+      text: kDebugMode ? 'Test.123' : null,
+    );
     _nameFocus = FocusNode();
     _emailFocus = FocusNode();
     _passwordFocus = FocusNode();
