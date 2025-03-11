@@ -72,6 +72,9 @@ abstract class SubscriptionControllerBase with Store {
     required void Function() onPurchasePending,
   }) async {
     try {
+      if (user == null) return;
+      if (user!.data.subscription == SubscriptionEnum.unlimited) return;
+
       isLoading = true;
       error = null;
       this.onPurchasePending = onPurchasePending;
@@ -132,6 +135,9 @@ abstract class SubscriptionControllerBase with Store {
     required void Function(SubscriptionEnum) onPurchaseSuccess,
     required void Function(AppException?) onPurchaseError,
   }) async {
+    if (user == null) return;
+    if (user!.data.subscription == SubscriptionEnum.unlimited) return;
+
     try {
       _appController.disableAuthOverlay = true;
       _appController.disableBlurOverlay = true;
@@ -183,6 +189,7 @@ abstract class SubscriptionControllerBase with Store {
   Future<void> restoreSubscription() async {
     try {
       if (user == null) return;
+      if (user!.data.subscription == SubscriptionEnum.unlimited) return;
 
       final bool available = await InAppPurchase.instance.isAvailable();
       if (!available) return;
