@@ -119,6 +119,7 @@
   "invalidRecoveryEmailErrorMessage": "Não existe uma conta associada a este endereço de e-mail.",
   "recoveryEmailSentTitle": "E-mail de recuperação enviado",
   "recoveryEmailSentMessage": "Se existir uma conta cadastrada com esse endereço e-mail, você receberá um link para redefinir sua senha.\n\nApós redefinir, faça login normalmente utilizando a sua nova senha.",
+  "recoveryEmailSentMessage2": "Se não receber o e-mail de recuperação, verifique sua caixa de spam ou tente novamente mais tarde.",
   "connectionErrorTitle": "Erro de conexão",
   "connectionErrorMessage": "Ocorreu um problema de conexão com o servidor, verifique sua conexão e tente novamente.",
   "endSessionMessage": "Deseja realmente sair da sua conta?",

@@ -28,7 +28,6 @@ abstract class AppControllerBase with Store {
     language = await _service.loadLanguage();
     appVersion = await _service.getAppVersion();
     user = await _service.getCurrentUser();
-    canChangePassword = await _service.canChangePassword();
     await biometricsSecurityCheck();
     shouldRequestAuth = user != null && isBiometricsEnabled;
   }
@@ -62,9 +61,6 @@ abstract class AppControllerBase with Store {
 
   @observable
   UserModel? user;
-
-  @observable
-  bool canChangePassword = false;
 
   @action
   Future<void> changeUserName(String name) async {
@@ -108,7 +104,6 @@ abstract class AppControllerBase with Store {
   @action
   void login(UserModel user) {
     this.user = user;
-    _service.canChangePassword().then((value) => canChangePassword = value);
     GetIt.I.get<InvestmentsController>().loadUserData();
     restoreSubscription();
   }
@@ -118,7 +113,6 @@ abstract class AppControllerBase with Store {
     await _service.logout();
     await changeIsBiometricsEnabled(false, force: true);
     user = null;
-    canChangePassword = false;
     GetIt.I.get<InvestmentsController>().loadUserData();
   }
 
@@ -127,7 +121,6 @@ abstract class AppControllerBase with Store {
     await _service.deleteMyAccount(currentPassword);
     await changeIsBiometricsEnabled(false, force: true);
     user = null;
-    _service.canChangePassword().then((value) => canChangePassword = value);
     GetIt.I.get<InvestmentsController>().loadUserData();
   }
 

@@ -293,6 +293,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recoveryEmailSentMessage => 'If there is an account registered with this email address, you will receive a link to reset your password.\n\nAfter resetting, log in normally using your new password.';
 
   @override
+  String get recoveryEmailSentMessage2 => 'If you do not receive the recovery email, check your spam folder or try again later.';
+
+  @override
   String get connectionErrorTitle => 'Connection error';
 
   @override

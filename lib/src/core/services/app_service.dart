@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
@@ -14,7 +13,6 @@ import '../models/user_model.dart';
 class AppService {
   FirebaseAuth get _auth => FirebaseAuth.instance;
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;
-  FlutterSecureStorage get _secureStorage => const FlutterSecureStorage();
 
   Future<String> getAppID() async {
     final prefs = await SharedPreferences.getInstance();
@@ -85,10 +83,6 @@ class AppService {
           email: _auth.currentUser!.email!,
           data: await AuthService().getUserData(_auth.currentUser!.uid),
         );
-      } else if (await _secureStorage.containsKey(key: 'userId')) {
-        final userId = await _secureStorage.read(key: 'userId');
-        if (userId != null) await _secureStorage.delete(key: userId);
-        await _secureStorage.delete(key: 'userId');
       }
     } catch (_) {}
     return null;
@@ -96,27 +90,15 @@ class AppService {
 
   Future<void> logout() async {
     try {
-      final String userId = _auth.currentUser!.uid;
       await _auth.signOut();
-      await _secureStorage.delete(key: 'userId');
-      await _secureStorage.delete(key: userId);
     } catch (_) {}
   }
 
   Future<void> deleteMyAccount(String currentPassword) async {
     try {
-      final String userId = _auth.currentUser!.uid;
-      final String password = (await _secureStorage.read(key: userId))!;
-      if (currentPassword != password) {
-        throw AppException(AppExceptionType.incorrectPassword);
-      }
+      await reauthenticateUser(currentPassword);
 
-      await _auth.currentUser?.reauthenticateWithCredential(
-        EmailAuthProvider.credential(
-          email: _auth.currentUser!.email!,
-          password: password,
-        ),
-      );
+      final String userId = _auth.currentUser!.uid;
       final WriteBatch batch = _firestore.batch();
 
       final goals = await _firestore
@@ -146,8 +128,6 @@ class AppService {
 
       await batch.commit();
       await _auth.currentUser!.delete();
-      await _secureStorage.delete(key: 'userId');
-      await _secureStorage.delete(key: userId);
     } on AppException catch (_) {
       rethrow;
     } catch (error) {
@@ -170,30 +150,12 @@ class AppService {
     }
   }
 
-  Future<bool> canChangePassword() async {
-    try {
-      final String? result = await _secureStorage.read(
-        key: _auth.currentUser!.uid,
-      );
-      return result != null && result.isNotEmpty;
-    } catch (_) {
-      return false;
-    }
-  }
-
   Future<void> changeUserPassword(
     String currentPassword,
     String newPassword,
     String newPasswordConfirmation,
   ) async {
     try {
-      final String password =
-          (await _secureStorage.read(key: _auth.currentUser!.uid))!;
-
-      if (currentPassword != password) {
-        throw AppException(AppExceptionType.incorrectPassword);
-      }
-
       if (newPassword.length < 8) {
         throw AppException(AppExceptionType.invalidPassword);
       }
@@ -202,18 +164,8 @@ class AppService {
         throw AppException(AppExceptionType.passwordsDontMatch);
       }
 
-      await _auth.currentUser?.reauthenticateWithCredential(
-        EmailAuthProvider.credential(
-          email: _auth.currentUser!.email!,
-          password: password,
-        ),
-      );
+      await reauthenticateUser(currentPassword);
       await _auth.currentUser!.updatePassword(newPassword);
-
-      await _secureStorage.write(
-        key: _auth.currentUser!.uid,
-        value: newPassword,
-      );
     } on AppException catch (_) {
       rethrow;
     } catch (error) {
@@ -248,6 +200,19 @@ class AppService {
       throw AppException(AppExceptionType.invalidRecoveryEmail);
     } catch (error) {
       throw AppException(AppExceptionType.connectionError, error.toString());
+    }
+  }
+
+  Future<void> reauthenticateUser(String currentPassword) async {
+    try {
+      await _auth.currentUser?.reauthenticateWithCredential(
+        EmailAuthProvider.credential(
+          email: _auth.currentUser!.email!,
+          password: currentPassword,
+        ),
+      );
+    } catch (e) {
+      throw AppException(AppExceptionType.incorrectPassword, e.toString());
     }
   }
 }

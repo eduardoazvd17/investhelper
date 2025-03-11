@@ -293,6 +293,9 @@ class AppLocalizationsPt extends AppLocalizations {
   String get recoveryEmailSentMessage => 'Se existir uma conta cadastrada com esse endereço e-mail, você receberá um link para redefinir sua senha.\n\nApós redefinir, faça login normalmente utilizando a sua nova senha.';
 
   @override
+  String get recoveryEmailSentMessage2 => 'Se não receber o e-mail de recuperação, verifique sua caixa de spam ou tente novamente mais tarde.';
+
+  @override
   String get connectionErrorTitle => 'Erro de conexão';
 
   @override

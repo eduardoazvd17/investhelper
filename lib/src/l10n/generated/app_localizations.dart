@@ -647,6 +647,12 @@ abstract class AppLocalizations {
   /// **'If there is an account registered with this email address, you will receive a link to reset your password.\n\nAfter resetting, log in normally using your new password.'**
   String get recoveryEmailSentMessage;
 
+  /// No description provided for @recoveryEmailSentMessage2.
+  ///
+  /// In en, this message translates to:
+  /// **'If you do not receive the recovery email, check your spam folder or try again later.'**
+  String get recoveryEmailSentMessage2;
+
   /// No description provided for @connectionErrorTitle.
   ///
   /// In en, this message translates to:

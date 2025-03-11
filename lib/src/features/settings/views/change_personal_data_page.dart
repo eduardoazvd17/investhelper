@@ -41,7 +41,6 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
     _currentPasswordFocus = FocusNode();
     _newPasswordFocus = FocusNode();
     _newPasswordConfirmationFocus = FocusNode();
-
     super.initState();
   }
 
@@ -145,7 +144,13 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
       ],
       children: [
         _currentPasswordTextField,
-        const SizedBox(height: 10),
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            onPressed: _sendRecoveryEmail,
+            child: Text(AppLocalizations.of(context)!.forgotMyPassword),
+          ),
+        ),
         _newPasswordTextField,
         const SizedBox(height: 10),
         _newPasswordConfirmationTextField,
@@ -154,18 +159,6 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
   }
 
   Future<void> _deleteMyAccount() async {
-    if (!widget.appController.canChangePassword) {
-      widget.appController.sendRecoveryEmail();
-      await DialogWidget.show(
-        context,
-        title: AppLocalizations.of(context)!.attention,
-        message:
-            '${AppLocalizations.of(context)!.needPasswordToDeleteAccount}\n\n${AppLocalizations.of(context)!.checkEmailForPasswordReset}',
-        actionType: DialogWidgetActionType.close,
-      );
-      return;
-    }
-
     _currentPasswordController.clear();
     await ModalBottomSheetWidget.show(
       context,
@@ -208,8 +201,35 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
         const SizedBox(height: 10),
         const Divider(),
         _currentPasswordTextField,
+        Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            onPressed: _sendRecoveryEmail,
+            child: Text(AppLocalizations.of(context)!.forgotMyPassword),
+          ),
+        ),
       ],
     );
+  }
+
+  Future<void> _sendRecoveryEmail() async {
+    try {
+      LoadingWidget.dialog(context);
+      await widget.appController.sendRecoveryEmail();
+      if (!mounted) return;
+      LoadingWidget.hide(context);
+
+      await DialogWidget.show(
+        context,
+        title: AppLocalizations.of(context)!.recoveryEmailSentTitle,
+        message: AppLocalizations.of(context)!.recoveryEmailSentMessage2,
+        actionType: DialogWidgetActionType.close,
+      );
+    } on AppException catch (e) {
+      if (!mounted) return;
+      LoadingWidget.hide(context);
+      await e.show(context);
+    }
   }
 
   @override
@@ -268,35 +288,32 @@ class _ChangePersonalDataPageState extends State<ChangePersonalDataPage> {
                           ],
                         ),
                         const Divider(),
-                        if (widget.appController.canChangePassword) ...[
-                          SectionWidget(
-                            title: AppLocalizations.of(context)!.password,
-                            actions: [
-                              TextButton.icon(
-                                onPressed: _changeUserPassword,
-                                icon: const Icon(CupertinoIcons.lock),
-                                label: Text(AppLocalizations.of(context)!
-                                    .changePassword),
-                              )
-                                  .animate()
-                                  .fade(
-                                      duration:
-                                          const Duration(milliseconds: 400))
-                                  .slideX(
-                                    end: 0,
-                                    begin: 1,
-                                    duration: const Duration(milliseconds: 200),
-                                  ),
-                            ],
-                            content: [
-                              Text(
-                                '••••••••',
-                                style: Theme.of(context).textTheme.titleMedium,
-                              ),
-                            ],
-                          ),
-                          const Divider(),
-                        ],
+                        SectionWidget(
+                          title: AppLocalizations.of(context)!.password,
+                          actions: [
+                            TextButton.icon(
+                              onPressed: _changeUserPassword,
+                              icon: const Icon(CupertinoIcons.lock),
+                              label: Text(
+                                  AppLocalizations.of(context)!.changePassword),
+                            )
+                                .animate()
+                                .fade(
+                                    duration: const Duration(milliseconds: 400))
+                                .slideX(
+                                  end: 0,
+                                  begin: 1,
+                                  duration: const Duration(milliseconds: 200),
+                                ),
+                          ],
+                          content: [
+                            Text(
+                              '••••••••',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                          ],
+                        ),
+                        const Divider(),
                         Padding(
                           padding: const EdgeInsets.only(top: 50),
                           child: SectionWidget(

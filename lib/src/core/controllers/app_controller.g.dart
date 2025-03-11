@@ -61,22 +61,6 @@ mixin _$AppController on AppControllerBase, Store {
     });
   }
 
-  late final _$canChangePasswordAtom =
-      Atom(name: 'AppControllerBase.canChangePassword', context: context);
-
-  @override
-  bool get canChangePassword {
-    _$canChangePasswordAtom.reportRead();
-    return super.canChangePassword;
-  }
-
-  @override
-  set canChangePassword(bool value) {
-    _$canChangePasswordAtom.reportWrite(value, super.canChangePassword, () {
-      super.canChangePassword = value;
-    });
-  }
-
   late final _$canEnableBiometricsAtom =
       Atom(name: 'AppControllerBase.canEnableBiometrics', context: context);
 
@@ -389,7 +373,6 @@ mixin _$AppController on AppControllerBase, Store {
 appVersion: ${appVersion},
 showWelcomePage: ${showWelcomePage},
 user: ${user},
-canChangePassword: ${canChangePassword},
 canEnableBiometrics: ${canEnableBiometrics},
 isBiometricsEnabled: ${isBiometricsEnabled},
 shouldRequestAuth: ${shouldRequestAuth},

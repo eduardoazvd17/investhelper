@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../core/exceptions/app_exception.dart';
@@ -11,7 +10,6 @@ import '../models/register_user_model.dart';
 class AuthService {
   FirebaseAuth get _auth => FirebaseAuth.instance;
   FirebaseFirestore get _firestore => FirebaseFirestore.instance;
-  FlutterSecureStorage get _secureStorage => const FlutterSecureStorage();
 
   Future<UserModel> makeLoginWithGoogle() async {
     try {
@@ -24,14 +22,6 @@ class AuthService {
         idToken: googleAuth.idToken,
       );
       await _auth.signInWithCredential(credential);
-
-      try {
-        await _secureStorage.write(
-          key: 'userId',
-          value: _auth.currentUser!.uid,
-        );
-        await _secureStorage.delete(key: _auth.currentUser!.uid);
-      } catch (_) {}
 
       return UserModel(
         id: _auth.currentUser!.uid,
@@ -66,17 +56,6 @@ class AuthService {
         email: loginModel.email,
         password: loginModel.password,
       );
-
-      try {
-        await _secureStorage.write(
-          key: 'userId',
-          value: _auth.currentUser!.uid,
-        );
-        await _secureStorage.write(
-          key: _auth.currentUser!.uid,
-          value: loginModel.password,
-        );
-      } catch (_) {}
 
       return UserModel(
         id: _auth.currentUser!.uid,
@@ -119,17 +98,6 @@ class AuthService {
         password: registerModel.password,
       );
       await userCredential.user!.updateDisplayName(registerModel.name);
-
-      try {
-        await _secureStorage.write(
-          key: 'userId',
-          value: _auth.currentUser!.uid,
-        );
-        await _secureStorage.write(
-          key: _auth.currentUser!.uid,
-          value: registerModel.password,
-        );
-      } catch (_) {}
 
       return UserModel(
         id: _auth.currentUser!.uid,
