@@ -219,7 +219,7 @@ abstract class AppControllerBase with Store {
     disableAuthOverlay = true;
     disableBlurOverlay = true;
     final termsUrl =
-        'https://eduardoazevedo.com/investhelper/termsAndPolicy.html?lang=${language.languageCode}';
+        'https://eduardoazevedo.com/investhelper/termsAndPolicy?lang=${language.languageCode}';
     if (await canLaunchUrlString(termsUrl)) {
       await launchUrlString(termsUrl);
     }
