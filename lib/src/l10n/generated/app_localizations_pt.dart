@@ -12,19 +12,23 @@ class AppLocalizationsPt extends AppLocalizations {
   String get appName => 'InvestHelper';
 
   @override
-  String get aboutAppText => 'O InvestHelper é um aplicativo projetado para facilitar o gerenciamento dos seus investimentos. Com ele, você pode acompanhar seus investimentos, gerenciar suas transações e definir metas e lembretes para alcançar seus objetivos de investimento.';
+  String get aboutAppText =>
+      'O InvestHelper é um aplicativo projetado para facilitar o gerenciamento dos seus investimentos. Com ele, você pode acompanhar seus investimentos, gerenciar suas transações e definir metas e lembretes para alcançar seus objetivos de investimento.';
 
   @override
   String get developedBy => 'Desenvolvido por';
 
   @override
-  String get welcomeText1 => 'Seja bem-vindo ao seu novo aliado para conquistar seus objetivos financeiros! Comece a trilhar o caminho para uma jornada de investimentos bem-sucedida com nosso aplicativo.';
+  String get welcomeText1 =>
+      'Seja bem-vindo ao seu novo aliado para conquistar seus objetivos financeiros! Comece a trilhar o caminho para uma jornada de investimentos bem-sucedida com nosso aplicativo.';
 
   @override
-  String get welcomeText2 => 'Nosso aplicativo está aqui para simplificar sua vida financeira, permitindo que você acompanhe suas transações com facilidade e gere relatórios precisos e detalhados quando precisar.';
+  String get welcomeText2 =>
+      'Nosso aplicativo está aqui para simplificar sua vida financeira, permitindo que você acompanhe suas transações com facilidade e gere relatórios precisos e detalhados quando precisar.';
 
   @override
-  String get welcomeText3 => 'Economize tempo e elimine o estresse na hora de gerenciar seus investimentos. Com nosso aplicativo intuitivo, você pode realizar tarefas em minutos que costumavam levar horas, liberando tempo valioso para aproveitar outras atividades da vida.';
+  String get welcomeText3 =>
+      'Economize tempo e elimine o estresse na hora de gerenciar seus investimentos. Com nosso aplicativo intuitivo, você pode realizar tarefas em minutos que costumavam levar horas, liberando tempo valioso para aproveitar outras atividades da vida.';
 
   @override
   String get back => 'Voltar';
@@ -39,19 +43,22 @@ class AppLocalizationsPt extends AppLocalizations {
   String get authPageLoginTitle => 'Entre com sua conta';
 
   @override
-  String get authPageLoginSubtitle => 'Preencha os campos abaixo para iniciar a sessão';
+  String get authPageLoginSubtitle =>
+      'Preencha os campos abaixo para iniciar a sessão';
 
   @override
   String get authPageRegisterTitle => 'Crie sua conta';
 
   @override
-  String get authPageRegisterSubtitle => 'Preencha os campos abaixo para cadastrar-se no nosso app';
+  String get authPageRegisterSubtitle =>
+      'Preencha os campos abaixo para cadastrar-se no nosso app';
 
   @override
   String get authPageRecoveryTitle => 'Redefinição de senha';
 
   @override
-  String get authPageRecoverySubtitle => 'Insira seu e-mail abaixo que lhe enviaremos um link para a redefinição de senha.';
+  String get authPageRecoverySubtitle =>
+      'Insira seu e-mail abaixo que lhe enviaremos um link para a redefinição de senha.';
 
   @override
   String get name => 'Nome';
@@ -75,7 +82,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get passwordConfirmation => 'Confirmação de senha';
 
   @override
-  String get passwordConfirmationHint => 'Repita a senha digitada anteriormente...';
+  String get passwordConfirmationHint =>
+      'Repita a senha digitada anteriormente...';
 
   @override
   String get makeLogin => 'Iniciar sessão';
@@ -197,7 +205,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get enableBiometrics => 'Habilitar Biometria';
 
   @override
-  String get enableBiometricsHint => 'Proteja seus dados utilizando sua biometria para acessar o app.';
+  String get enableBiometricsHint =>
+      'Proteja seus dados utilizando sua biometria para acessar o app.';
 
   @override
   String get personalization => 'Personalização';
@@ -236,31 +245,36 @@ class AppLocalizationsPt extends AppLocalizations {
   String get genericErrorTitle => 'Erro inesperado';
 
   @override
-  String get genericErrorMessage => 'Ocorreu um erro de comunicação, tente novamente em alguns segundos.';
+  String get genericErrorMessage =>
+      'Ocorreu um erro de comunicação, tente novamente em alguns segundos.';
 
   @override
   String get emptyFieldsErrorTitle => 'Um ou mais campos vazios';
 
   @override
-  String get emptyFieldsErrorMessage => 'Alguma informação necessária está pendente, verifique o formulário e tente novamente.';
+  String get emptyFieldsErrorMessage =>
+      'Alguma informação necessária está pendente, verifique o formulário e tente novamente.';
 
   @override
   String get incorrectUserOrPasswordErrorTitle => 'Usuário não encontrado';
 
   @override
-  String get incorrectUserOrPasswordErrorMessage => 'O e-mail e/ou senha inseridos podem estar incorretos.';
+  String get incorrectUserOrPasswordErrorMessage =>
+      'O e-mail e/ou senha inseridos podem estar incorretos.';
 
   @override
   String get incorrectPasswordErrorTitle => 'Senha incorreta';
 
   @override
-  String get incorrectPasswordErrorMessage => 'A senha atual inserida está incorreta.';
+  String get incorrectPasswordErrorMessage =>
+      'A senha atual inserida está incorreta.';
 
   @override
   String get userAlreadyExistsErrorTitle => 'Usuário já cadastrado';
 
   @override
-  String get userAlreadyExistsErrorMessage => 'Já existe uma conta associada a este endereço de e-mail.';
+  String get userAlreadyExistsErrorMessage =>
+      'Já existe uma conta associada a este endereço de e-mail.';
 
   @override
   String get invalidEmailErrorTitle => 'E-mail inválido';
@@ -272,34 +286,40 @@ class AppLocalizationsPt extends AppLocalizations {
   String get invalidPasswordErrorTitle => 'Senha inválida';
 
   @override
-  String get invalidPasswordErrorMessage => 'A sua senha não pode conter menos de 8 caracteres.';
+  String get invalidPasswordErrorMessage =>
+      'A sua senha não pode conter menos de 8 caracteres.';
 
   @override
   String get passwordsDontMatchErrorTitle => 'Confirmação de senha inválida';
 
   @override
-  String get passwordsDontMatchErrorMessage => 'A confirmação de senha deve ser extamente igual a sua senha.';
+  String get passwordsDontMatchErrorMessage =>
+      'A confirmação de senha deve ser extamente igual a sua senha.';
 
   @override
   String get invalidRecoveryEmailErrorTitle => 'E-mail inválido';
 
   @override
-  String get invalidRecoveryEmailErrorMessage => 'Não existe uma conta associada a este endereço de e-mail.';
+  String get invalidRecoveryEmailErrorMessage =>
+      'Não existe uma conta associada a este endereço de e-mail.';
 
   @override
   String get recoveryEmailSentTitle => 'E-mail de recuperação enviado';
 
   @override
-  String get recoveryEmailSentMessage => 'Se existir uma conta cadastrada com esse endereço e-mail, você receberá um link para redefinir sua senha.\n\nApós redefinir, faça login normalmente utilizando a sua nova senha.';
+  String get recoveryEmailSentMessage =>
+      'Se existir uma conta cadastrada com esse endereço e-mail, você receberá um link para redefinir sua senha.\n\nApós redefinir, faça login normalmente utilizando a sua nova senha.';
 
   @override
-  String get recoveryEmailSentMessage2 => 'Se não receber o e-mail de recuperação, verifique sua caixa de spam ou tente novamente mais tarde.';
+  String get recoveryEmailSentMessage2 =>
+      'Se não receber o e-mail de recuperação, verifique sua caixa de spam ou tente novamente mais tarde.';
 
   @override
   String get connectionErrorTitle => 'Erro de conexão';
 
   @override
-  String get connectionErrorMessage => 'Ocorreu um problema de conexão com o servidor, verifique sua conexão e tente novamente.';
+  String get connectionErrorMessage =>
+      'Ocorreu um problema de conexão com o servidor, verifique sua conexão e tente novamente.';
 
   @override
   String get endSessionMessage => 'Deseja realmente sair da sua conta?';
@@ -311,16 +331,20 @@ class AppLocalizationsPt extends AppLocalizations {
   String get no => 'Não';
 
   @override
-  String get emptyDiversityGraphText => 'Adicione seus investimentos e operações para exibir o gráfico de diversidade.';
+  String get emptyDiversityGraphText =>
+      'Adicione seus investimentos e operações para exibir o gráfico de diversidade.';
 
   @override
-  String get emptyMyGoalsText => 'Não há metas definidas. Adicione metas ou lembretes e eles aparecerão aqui.';
+  String get emptyMyGoalsText =>
+      'Não há metas definidas. Adicione metas ou lembretes e eles aparecerão aqui.';
 
   @override
-  String get emptyInvestmentsText => 'Nenhum investimento adicionado. Adicione seus investimentos para começar a usar o app.';
+  String get emptyInvestmentsText =>
+      'Nenhum investimento adicionado. Adicione seus investimentos para começar a usar o app.';
 
   @override
-  String get cantEnableBiometrics => 'Para habilitar a proteção biométrica do aplicativo, por favor, ative a biometria em seu dispositivo.';
+  String get cantEnableBiometrics =>
+      'Para habilitar a proteção biométrica do aplicativo, por favor, ative a biometria em seu dispositivo.';
 
   @override
   String get authRequired => 'Autenticação Necessária';
@@ -367,10 +391,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get exportInvestmentReport => 'Exportar relatório de investimentos';
 
   @override
-  String get emptyManageMyGoalsListing => 'Você ainda não possui metas adicionadas, utilize o botão flutuante para adicionar novas metas.';
+  String get emptyManageMyGoalsListing =>
+      'Você ainda não possui metas adicionadas, utilize o botão flutuante para adicionar novas metas.';
 
   @override
-  String get emptyManageMyInvestmentsListing => 'Você ainda não possui investimentos adicionados, utilize o botão flutuante para adicionar seus investimentos.';
+  String get emptyManageMyInvestmentsListing =>
+      'Você ainda não possui investimentos adicionados, utilize o botão flutuante para adicionar seus investimentos.';
 
   @override
   String get addNewGoal => 'Adicionar nova meta';
@@ -379,7 +405,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get description => 'Descrição';
 
   @override
-  String get goalDescriptionHint => 'Utilize esse campo para descrever sua meta ou deixar uma anotação...';
+  String get goalDescriptionHint =>
+      'Utilize esse campo para descrever sua meta ou deixar uma anotação...';
 
   @override
   String get send => 'Enviar';
@@ -414,10 +441,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get selectCategory => 'Selecione a categoria...';
 
   @override
-  String get addInvestmentsValuesAdvise => 'As informações abaixo são opcionais. Preencha apenas se não desejar inserir manualmente suas operações anteriores.\n\nAtenção: Utilize dados do seu banco/corretora de investimentos. Esse valores serão utilizados junto com suas operações futuras para atualizar seus dados.';
+  String get addInvestmentsValuesAdvise =>
+      'As informações abaixo são opcionais. Preencha apenas se não desejar inserir manualmente suas operações anteriores.\n\nAtenção: Utilize dados do seu banco/corretora de investimentos. Esse valores serão utilizados junto com suas operações futuras para atualizar seus dados.';
 
   @override
-  String get addInvestmentsValuesAdvise2 => 'Ao inserir esses dados, você só conseguirá adicionar operações mais recentes, as operações devem ser adicionadas em ordem cronológica.';
+  String get addInvestmentsValuesAdvise2 =>
+      'Ao inserir esses dados, você só conseguirá adicionar operações mais recentes, as operações devem ser adicionadas em ordem cronológica.';
 
   @override
   String get startCustodialPosition => 'Posição inicial';
@@ -448,7 +477,8 @@ class AppLocalizationsPt extends AppLocalizations {
   }
 
   @override
-  String get emptyThisMonthOperations => 'Nenhuma operação realizada este mês, suas operações recentes aparecerão aqui. Para visualizar todas as operações, acesse suas operações clicando no botão abaixo.';
+  String get emptyThisMonthOperations =>
+      'Nenhuma operação realizada este mês, suas operações recentes aparecerão aqui. Para visualizar todas as operações, acesse suas operações clicando no botão abaixo.';
 
   @override
   String get accessMyOperations => 'Acessar minhas operações';
@@ -457,7 +487,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get myOperations => 'Minhas operações';
 
   @override
-  String get emptyManageMyOperationsText => 'Nenhuma operação encontrada. Verifique os filtros selecionados ou caso ainda não possua operações, adicione utilizando o botão flutuante abaixo.';
+  String get emptyManageMyOperationsText =>
+      'Nenhuma operação encontrada. Verifique os filtros selecionados ou caso ainda não possua operações, adicione utilizando o botão flutuante abaixo.';
 
   @override
   String get addNewOperation => 'Adicionar nova operação';
@@ -502,7 +533,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get sale => 'Venda';
 
   @override
-  String operationDescription(String operation, String value, String investment) {
+  String operationDescription(
+      String operation, String value, String investment) {
     return 'Operação de $operation no valor de $value do investimento $investment';
   }
 
@@ -528,7 +560,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get dontHaveInvestmentsTitle => 'Nenhum investimento adicionado';
 
   @override
-  String get dontHaveInvestmentsMessage => 'Você ainda não possui investimentos adicionados.\n\nAdicione seus investimentos para começar a inserir as operações.';
+  String get dontHaveInvestmentsMessage =>
+      'Você ainda não possui investimentos adicionados.\n\nAdicione seus investimentos para começar a inserir as operações.';
 
   @override
   String get goToMyInvestments => 'Ir para meus investimentos';
@@ -537,10 +570,12 @@ class AppLocalizationsPt extends AppLocalizations {
   String get invalidValueErrorTitle => 'Valor inválido';
 
   @override
-  String get invalidValueErrorMessage => 'Verifique os valores inseridos no formulário, os valores devem ser sempre maiores que 0.';
+  String get invalidValueErrorMessage =>
+      'Verifique os valores inseridos no formulário, os valores devem ser sempre maiores que 0.';
 
   @override
-  String get operationsCronologicalOrderAdvise => 'Atenção: As operações são inseridas em ordem cronológica. Portanto ao adicionar uma operação em uma determinada data, você só poderá adicionar operações a partir dessa ultima data da operação inserida.\n\nO mesmo funciona para remover uma operação porém em ordem decrescente, deve-se remover da mais recente para a mais antiga.\n\nEssa é uma medida de segurança para garantir que o cálculo esteja 100% preciso.';
+  String get operationsCronologicalOrderAdvise =>
+      'Atenção: As operações são inseridas em ordem cronológica. Portanto ao adicionar uma operação em uma determinada data, você só poderá adicionar operações a partir dessa ultima data da operação inserida.\n\nO mesmo funciona para remover uma operação porém em ordem decrescente, deve-se remover da mais recente para a mais antiga.\n\nEssa é uma medida de segurança para garantir que o cálculo esteja 100% preciso.';
 
   @override
   String averagePriceVariationDisplay(String value) {
@@ -620,13 +655,15 @@ class AppLocalizationsPt extends AppLocalizations {
   String get functionNotImplementedTitle => 'Em breve';
 
   @override
-  String get functionNotImplementedMessage => 'Esta funcionalidade ainda não foi implementada.\n\nAguarde as próximas versões.';
+  String get functionNotImplementedMessage =>
+      'Esta funcionalidade ainda não foi implementada.\n\nAguarde as próximas versões.';
 
   @override
   String get termsOfUseTitle => 'Termos de uso e política de privacidade';
 
   @override
-  String get termsOfUseMessage => 'Ao utilizar nosso aplicativo, você concorda com os nossos termos de uso e política de privacidade. Acesse as cláusulas completas no link abaixo:';
+  String get termsOfUseMessage =>
+      'Ao utilizar nosso aplicativo, você concorda com os nossos termos de uso e política de privacidade. Acesse as cláusulas completas no link abaixo:';
 
   @override
   String get accept => 'Eu aceito';
@@ -638,7 +675,8 @@ class AppLocalizationsPt extends AppLocalizations {
   String get deleteMyAccountTitle => 'Apagar minha conta e dados';
 
   @override
-  String get deleteMyAccountMessage => 'Ao apagar sua conta, caso você possua uma assinatura ela será automaticamente cancelada e além disso, todos os seus dados inseridos no app serão apagados permanentemente junto com sua conta. Isso inclui investimentos, operações, metas...\n\nDeseja realmente apagar sua conta permanentemente?\n\nEsta ação não poderá ser desfeita.';
+  String get deleteMyAccountMessage =>
+      'Ao apagar sua conta, caso você possua uma assinatura ela será automaticamente cancelada e além disso, todos os seus dados inseridos no app serão apagados permanentemente junto com sua conta. Isso inclui investimentos, operações, metas...\n\nDeseja realmente apagar sua conta permanentemente?\n\nEsta ação não poderá ser desfeita.';
 
   @override
   String get changePassword => 'Alterar senha';
@@ -665,52 +703,64 @@ class AppLocalizationsPt extends AppLocalizations {
   String get chooseYourPlan => 'Escolha seu plano';
 
   @override
-  String get choosePlanDescription => 'Escolha o plano que melhor se adapta às suas necessidades. Você pode mudar ou cancelar a qualquer momento.';
+  String get choosePlanDescription =>
+      'Escolha o plano que melhor se adapta às suas necessidades. Você pode mudar ou cancelar a qualquer momento.';
 
   @override
-  String get freePlanLimitWarning => 'Você atingiu o limite de 3 investimentos no plano gratuito. Você não poderá adicionar novos investimentos ou gerenciar operações para investimentos além deste limite. Faça um upgrade agora para adicionar mais investimentos e acessar todos os recursos!';
+  String get freePlanLimitWarning =>
+      'Você atingiu o limite de 3 investimentos no plano gratuito. Você não poderá adicionar novos investimentos ou gerenciar operações para investimentos além deste limite. Faça um upgrade agora para adicionar mais investimentos e acessar todos os recursos!';
 
   @override
-  String get freeSubscriptionFeatures => 'Até 3 investimentos\nAcesso a recursos básicos';
+  String get freeSubscriptionFeatures =>
+      'Até 3 investimentos\nAcesso a recursos básicos';
 
   @override
-  String get monthlySubscriptionFeatures => 'Investimentos e operações ilimitadas\nAcesso a todos os recursos';
+  String get monthlySubscriptionFeatures =>
+      'Investimentos e operações ilimitadas\nAcesso a todos os recursos';
 
   @override
-  String get annualSubscriptionFeatures => 'Investimentos e operações ilimitadas\nAcesso a todos os recursos\n2 meses grátis';
+  String get annualSubscriptionFeatures =>
+      'Investimentos e operações ilimitadas\nAcesso a todos os recursos\n2 meses grátis';
 
   @override
-  String get unlimitedSubscriptionFeatures => 'Investimentos e operações ilimitadas\nAcesso a todos os recursos\nAcesso vitalício';
+  String get unlimitedSubscriptionFeatures =>
+      'Investimentos e operações ilimitadas\nAcesso a todos os recursos\nAcesso vitalício';
 
   @override
   String get storeNotAvailableErrorTitle => 'Loja indisponível';
 
   @override
-  String get storeNotAvailableErrorMessage => 'A loja de aplicativos está indisponível no momento. Por favor, tente novamente mais tarde.';
+  String get storeNotAvailableErrorMessage =>
+      'A loja de aplicativos está indisponível no momento. Por favor, tente novamente mais tarde.';
 
   @override
   String get productNotFoundErrorTitle => 'Produto não encontrado';
 
   @override
-  String get productNotFoundErrorMessage => 'O produto da assinatura não foi encontrado. Por favor, tente novamente mais tarde.';
+  String get productNotFoundErrorMessage =>
+      'O produto da assinatura não foi encontrado. Por favor, tente novamente mais tarde.';
 
   @override
   String get purchaseErrorTitle => 'Erro na compra';
 
   @override
-  String get purchaseErrorMessage => 'Ocorreu um erro ao processar sua compra. Por favor, tente novamente mais tarde.';
+  String get purchaseErrorMessage =>
+      'Ocorreu um erro ao processar sua compra. Por favor, tente novamente mais tarde.';
 
   @override
   String get subscriptionLimitReachedTitle => 'Limite de assinatura atingido';
 
   @override
-  String get subscriptionLimitReachedMessage => 'Você atingiu o número máximo de investimentos para o plano gratuito. Por favor, faça um upgrade para continuar adicionando investimentos.';
+  String get subscriptionLimitReachedMessage =>
+      'Você atingiu o número máximo de investimentos para o plano gratuito. Por favor, faça um upgrade para continuar adicionando investimentos.';
 
   @override
-  String get iosSubscriptionDisclaimer => 'O pagamento será cobrado na sua conta do Apple ID na confirmação da compra. A assinatura é renovada automaticamente, a menos que seja cancelada pelo menos 24 horas antes do final do período atual. Sua conta será cobrada pela renovação dentro de 24 horas antes do final do período atual. Você pode gerenciar e cancelar suas assinaturas indo para as configurações da sua conta na App Store após a compra.';
+  String get iosSubscriptionDisclaimer =>
+      'O pagamento será cobrado na sua conta do Apple ID na confirmação da compra. A assinatura é renovada automaticamente, a menos que seja cancelada pelo menos 24 horas antes do final do período atual. Sua conta será cobrada pela renovação dentro de 24 horas antes do final do período atual. Você pode gerenciar e cancelar suas assinaturas indo para as configurações da sua conta na App Store após a compra.';
 
   @override
-  String get androidSubscriptionDisclaimer => 'Para cancelar sua assinatura, acesse a Google Play Store > Conta > Assinaturas e cancele sua assinatura do InvestHelper. Sua assinatura permanecerá ativa até o final do período de cobrança atual.';
+  String get androidSubscriptionDisclaimer =>
+      'Para cancelar sua assinatura, acesse a Google Play Store > Conta > Assinaturas e cancele sua assinatura do InvestHelper. Sua assinatura permanecerá ativa até o final do período de cobrança atual.';
 
   @override
   String get error => 'Erro';
@@ -719,41 +769,50 @@ class AppLocalizationsPt extends AppLocalizations {
   String get purchasePendingErrorTitle => 'Compra em andamento';
 
   @override
-  String get purchasePendingErrorMessage => 'Sua compra está sendo processada. Por favor, aguarde a confirmação.';
+  String get purchasePendingErrorMessage =>
+      'Sua compra está sendo processada. Por favor, aguarde a confirmação.';
 
   @override
   String get success => 'Sucesso';
 
   @override
-  String get planUpdated => 'Seu plano de assinatura foi atualizado com sucesso.';
+  String get planUpdated =>
+      'Seu plano de assinatura foi atualizado com sucesso.';
 
   @override
   String get cancelSubscriptionTitle => 'Cancelar assinatura';
 
   @override
-  String get cancelSubscriptionConfirmation => 'Deseja ser redirecionado para a tela de gerenciamento de assinaturas para concluir o cancelamento?';
+  String get cancelSubscriptionConfirmation =>
+      'Deseja ser redirecionado para a tela de gerenciamento de assinaturas para concluir o cancelamento?';
 
   @override
-  String get cancelSubscriptionRedirectIOS => 'Você será redirecionado para as configurações de assinatura da App Store para concluir o cancelamento.';
+  String get cancelSubscriptionRedirectIOS =>
+      'Você será redirecionado para as configurações de assinatura da App Store para concluir o cancelamento.';
 
   @override
-  String get cancelSubscriptionRedirectAndroid => 'Você será redirecionado para as configurações de assinatura da Play Store para concluir o cancelamento.';
+  String get cancelSubscriptionRedirectAndroid =>
+      'Você será redirecionado para as configurações de assinatura da Play Store para concluir o cancelamento.';
 
   @override
   String get attention => 'Atenção';
 
   @override
-  String get needPasswordToDeleteAccount => 'Para excluir sua conta, você precisa ter uma senha configurada.';
+  String get needPasswordToDeleteAccount =>
+      'Para excluir sua conta, você precisa ter uma senha configurada.';
 
   @override
-  String get checkEmailForPasswordReset => 'Por favor, verifique seu e-mail para obter instruções sobre como configurar uma senha e, em seguida, faça login usando seu e-mail e senha em vez do login do Google.';
+  String get checkEmailForPasswordReset =>
+      'Por favor, verifique seu e-mail para obter instruções sobre como configurar uma senha e, em seguida, faça login usando seu e-mail e senha em vez do login do Google.';
 
   @override
   String get subscriptionProcessingTitle => 'Processando assinatura';
 
   @override
-  String get subscriptionProcessingMessage => 'Sua assinatura está sendo processada. Isso pode levar alguns instantes.';
+  String get subscriptionProcessingMessage =>
+      'Sua assinatura está sendo processada. Isso pode levar alguns instantes.';
 
   @override
-  String get subscriptionCanceled => 'Você desativou a renovação do seu plano, sua assinatura será cancelada no próximo período de faturamento.';
+  String get subscriptionCanceled =>
+      'Você desativou a renovação do seu plano, sua assinatura será cancelada no próximo período de faturamento.';
 }

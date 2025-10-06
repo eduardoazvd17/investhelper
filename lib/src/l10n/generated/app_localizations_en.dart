@@ -12,19 +12,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'InvestHelper';
 
   @override
-  String get aboutAppText => 'InvestHelper is an application designed to make managing your investments easier. With it, you can track your investments, manage your transactions, and set goals and reminders to achieve your investment objectives.';
+  String get aboutAppText =>
+      'InvestHelper is an application designed to make managing your investments easier. With it, you can track your investments, manage your transactions, and set goals and reminders to achieve your investment objectives.';
 
   @override
   String get developedBy => 'Developed by';
 
   @override
-  String get welcomeText1 => 'Welcome to your new ally in achieving your financial goals! Start on the path to a successful investment journey with our app.';
+  String get welcomeText1 =>
+      'Welcome to your new ally in achieving your financial goals! Start on the path to a successful investment journey with our app.';
 
   @override
-  String get welcomeText2 => 'Our app is here to simplify your financial life, allowing you to track your transactions with ease and generate accurate, detailed reports when you need them.';
+  String get welcomeText2 =>
+      'Our app is here to simplify your financial life, allowing you to track your transactions with ease and generate accurate, detailed reports when you need them.';
 
   @override
-  String get welcomeText3 => 'Save time and eliminate stress when managing your investments. With our intuitive app, you can accomplish tasks in minutes that used to take hours, freeing up valuable time to enjoy other life activities.';
+  String get welcomeText3 =>
+      'Save time and eliminate stress when managing your investments. With our intuitive app, you can accomplish tasks in minutes that used to take hours, freeing up valuable time to enjoy other life activities.';
 
   @override
   String get back => 'Back';
@@ -45,13 +49,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authPageRegisterTitle => 'Create your account';
 
   @override
-  String get authPageRegisterSubtitle => 'Fill in the fields below to register on our app';
+  String get authPageRegisterSubtitle =>
+      'Fill in the fields below to register on our app';
 
   @override
   String get authPageRecoveryTitle => 'Password Reset';
 
   @override
-  String get authPageRecoverySubtitle => 'Enter your email below and we will send you a link to reset your password.';
+  String get authPageRecoverySubtitle =>
+      'Enter your email below and we will send you a link to reset your password.';
 
   @override
   String get name => 'Name';
@@ -75,7 +81,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get passwordConfirmation => 'Password confirmation';
 
   @override
-  String get passwordConfirmationHint => 'Repeat the previously entered password...';
+  String get passwordConfirmationHint =>
+      'Repeat the previously entered password...';
 
   @override
   String get makeLogin => 'Login';
@@ -197,7 +204,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get enableBiometrics => 'Enable Biometrics';
 
   @override
-  String get enableBiometricsHint => 'Protect your data using your biometrics to access the app.';
+  String get enableBiometricsHint =>
+      'Protect your data using your biometrics to access the app.';
 
   @override
   String get personalization => 'Personalization';
@@ -236,31 +244,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get genericErrorTitle => 'Unexpected error';
 
   @override
-  String get genericErrorMessage => 'A communication error occurred, please try again in a few seconds.';
+  String get genericErrorMessage =>
+      'A communication error occurred, please try again in a few seconds.';
 
   @override
   String get emptyFieldsErrorTitle => 'One or more empty fields';
 
   @override
-  String get emptyFieldsErrorMessage => 'Some required information is pending, please check the form and try again.';
+  String get emptyFieldsErrorMessage =>
+      'Some required information is pending, please check the form and try again.';
 
   @override
   String get incorrectUserOrPasswordErrorTitle => 'User not found';
 
   @override
-  String get incorrectUserOrPasswordErrorMessage => 'The email and/or password entered may be incorrect.';
+  String get incorrectUserOrPasswordErrorMessage =>
+      'The email and/or password entered may be incorrect.';
 
   @override
   String get incorrectPasswordErrorTitle => 'Incorrect password';
 
   @override
-  String get incorrectPasswordErrorMessage => 'The current password entered is incorrect.';
+  String get incorrectPasswordErrorMessage =>
+      'The current password entered is incorrect.';
 
   @override
   String get userAlreadyExistsErrorTitle => 'User already registered';
 
   @override
-  String get userAlreadyExistsErrorMessage => 'An account associated with this email address already exists.';
+  String get userAlreadyExistsErrorMessage =>
+      'An account associated with this email address already exists.';
 
   @override
   String get invalidEmailErrorTitle => 'Invalid Email';
@@ -272,37 +285,44 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invalidPasswordErrorTitle => 'Invalid password';
 
   @override
-  String get invalidPasswordErrorMessage => 'Your password cannot contain less than 8 characters.';
+  String get invalidPasswordErrorMessage =>
+      'Your password cannot contain less than 8 characters.';
 
   @override
   String get passwordsDontMatchErrorTitle => 'Invalid password confirmation';
 
   @override
-  String get passwordsDontMatchErrorMessage => 'Password confirmation must be exactly the same as your password.';
+  String get passwordsDontMatchErrorMessage =>
+      'Password confirmation must be exactly the same as your password.';
 
   @override
   String get invalidRecoveryEmailErrorTitle => 'Invalid Email';
 
   @override
-  String get invalidRecoveryEmailErrorMessage => 'There is no account associated with this email address.';
+  String get invalidRecoveryEmailErrorMessage =>
+      'There is no account associated with this email address.';
 
   @override
   String get recoveryEmailSentTitle => 'Recovery email sent';
 
   @override
-  String get recoveryEmailSentMessage => 'If there is an account registered with this email address, you will receive a link to reset your password.\n\nAfter resetting, log in normally using your new password.';
+  String get recoveryEmailSentMessage =>
+      'If there is an account registered with this email address, you will receive a link to reset your password.\n\nAfter resetting, log in normally using your new password.';
 
   @override
-  String get recoveryEmailSentMessage2 => 'If you do not receive the recovery email, check your spam folder or try again later.';
+  String get recoveryEmailSentMessage2 =>
+      'If you do not receive the recovery email, check your spam folder or try again later.';
 
   @override
   String get connectionErrorTitle => 'Connection error';
 
   @override
-  String get connectionErrorMessage => 'There was a problem connecting to the server, please check your connection and try again.';
+  String get connectionErrorMessage =>
+      'There was a problem connecting to the server, please check your connection and try again.';
 
   @override
-  String get endSessionMessage => 'Do you really want to log out of your account?';
+  String get endSessionMessage =>
+      'Do you really want to log out of your account?';
 
   @override
   String get yes => 'Yes';
@@ -311,16 +331,20 @@ class AppLocalizationsEn extends AppLocalizations {
   String get no => 'No';
 
   @override
-  String get emptyDiversityGraphText => 'Add your investments and operations to display the diversity graph.';
+  String get emptyDiversityGraphText =>
+      'Add your investments and operations to display the diversity graph.';
 
   @override
-  String get emptyMyGoalsText => 'There are no goals set. Add goals or reminders and they will appear here.';
+  String get emptyMyGoalsText =>
+      'There are no goals set. Add goals or reminders and they will appear here.';
 
   @override
-  String get emptyInvestmentsText => 'No investments added. Add your investments to start using the app.';
+  String get emptyInvestmentsText =>
+      'No investments added. Add your investments to start using the app.';
 
   @override
-  String get cantEnableBiometrics => 'To enable the app\'s biometric protection, please activate biometrics on your device.';
+  String get cantEnableBiometrics =>
+      'To enable the app\'s biometric protection, please activate biometrics on your device.';
 
   @override
   String get authRequired => 'Authentication Required';
@@ -367,10 +391,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get exportInvestmentReport => 'Export investment report';
 
   @override
-  String get emptyManageMyGoalsListing => 'You have no goals added yet, use the floating button to add new goals.';
+  String get emptyManageMyGoalsListing =>
+      'You have no goals added yet, use the floating button to add new goals.';
 
   @override
-  String get emptyManageMyInvestmentsListing => 'You don\'t have investments added yet, use the floating button to add your investments.';
+  String get emptyManageMyInvestmentsListing =>
+      'You don\'t have investments added yet, use the floating button to add your investments.';
 
   @override
   String get addNewGoal => 'Add new goal';
@@ -379,7 +405,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get description => 'Description';
 
   @override
-  String get goalDescriptionHint => 'Use this field to describe your goal or leave a note...';
+  String get goalDescriptionHint =>
+      'Use this field to describe your goal or leave a note...';
 
   @override
   String get send => 'Send';
@@ -414,10 +441,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectCategory => 'Select category...';
 
   @override
-  String get addInvestmentsValuesAdvise => 'The information below is optional. Only fill in if you do not wish to manually enter your previous operations.\n\nAttention: Use data from your bank/investment brokerage. These values will be used along with your future operations to update your data.';
+  String get addInvestmentsValuesAdvise =>
+      'The information below is optional. Only fill in if you do not wish to manually enter your previous operations.\n\nAttention: Use data from your bank/investment brokerage. These values will be used along with your future operations to update your data.';
 
   @override
-  String get addInvestmentsValuesAdvise2 => 'When entering this data, you can only add more recent operations, the operations must be added in chronological order.';
+  String get addInvestmentsValuesAdvise2 =>
+      'When entering this data, you can only add more recent operations, the operations must be added in chronological order.';
 
   @override
   String get startCustodialPosition => 'Start position';
@@ -448,7 +477,8 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get emptyThisMonthOperations => 'No operations performed this month, your recent operations will appear here. To view all operations, access your operations by clicking the button below.';
+  String get emptyThisMonthOperations =>
+      'No operations performed this month, your recent operations will appear here. To view all operations, access your operations by clicking the button below.';
 
   @override
   String get accessMyOperations => 'Access my operations';
@@ -457,7 +487,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get myOperations => 'My operations';
 
   @override
-  String get emptyManageMyOperationsText => 'No operations found. Check the selected filters or if you still don\'t have operations, add them using the floating button below.';
+  String get emptyManageMyOperationsText =>
+      'No operations found. Check the selected filters or if you still don\'t have operations, add them using the floating button below.';
 
   @override
   String get addNewOperation => 'Add new operation';
@@ -502,7 +533,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sale => 'Sale';
 
   @override
-  String operationDescription(String operation, String value, String investment) {
+  String operationDescription(
+      String operation, String value, String investment) {
     return 'Operation of $operation worth $value of investment $investment';
   }
 
@@ -528,7 +560,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dontHaveInvestmentsTitle => 'No investments added';
 
   @override
-  String get dontHaveInvestmentsMessage => 'You do not have added investments yet.\n\nAdd your investments to start entering operations.';
+  String get dontHaveInvestmentsMessage =>
+      'You do not have added investments yet.\n\nAdd your investments to start entering operations.';
 
   @override
   String get goToMyInvestments => 'Go to my investments';
@@ -537,10 +570,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invalidValueErrorTitle => 'Invalid value';
 
   @override
-  String get invalidValueErrorMessage => 'Check the values entered in the form, the values must always be greater than 0.';
+  String get invalidValueErrorMessage =>
+      'Check the values entered in the form, the values must always be greater than 0.';
 
   @override
-  String get operationsCronologicalOrderAdvise => 'Attention: Operations are inserted in chronological order. Therefore, when adding an operation on a certain date, you will only be able to add operations from that last date of the inserted operation.\n\nThe same works to remove an operation but in descending order , it must be removed from the most recent to the oldest.\n\nThis is a security measure to ensure that the calculation is 100% accurate.';
+  String get operationsCronologicalOrderAdvise =>
+      'Attention: Operations are inserted in chronological order. Therefore, when adding an operation on a certain date, you will only be able to add operations from that last date of the inserted operation.\n\nThe same works to remove an operation but in descending order , it must be removed from the most recent to the oldest.\n\nThis is a security measure to ensure that the calculation is 100% accurate.';
 
   @override
   String averagePriceVariationDisplay(String value) {
@@ -620,13 +655,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get functionNotImplementedTitle => 'Coming soon';
 
   @override
-  String get functionNotImplementedMessage => 'This functionality has not yet been implemented.\n\nPlease wait for the next versions.';
+  String get functionNotImplementedMessage =>
+      'This functionality has not yet been implemented.\n\nPlease wait for the next versions.';
 
   @override
   String get termsOfUseTitle => 'Terms of use and privacy policy';
 
   @override
-  String get termsOfUseMessage => 'By using our app, you agree to our terms of use and privacy policy. Access the full clauses below:';
+  String get termsOfUseMessage =>
+      'By using our app, you agree to our terms of use and privacy policy. Access the full clauses below:';
 
   @override
   String get accept => 'I accept';
@@ -638,7 +675,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get deleteMyAccountTitle => 'Delete my account and data';
 
   @override
-  String get deleteMyAccountMessage => 'When you delete your account, if you have a subscription it will be automatically canceled and in addition, all your data entered into the app will be permanently deleted along with your account. This includes investments, operations, goals...\n \nDo you really want to delete your account permanently?\n\nThis action cannot be undone.';
+  String get deleteMyAccountMessage =>
+      'When you delete your account, if you have a subscription it will be automatically canceled and in addition, all your data entered into the app will be permanently deleted along with your account. This includes investments, operations, goals...\n \nDo you really want to delete your account permanently?\n\nThis action cannot be undone.';
 
   @override
   String get changePassword => 'Change password';
@@ -665,52 +703,63 @@ class AppLocalizationsEn extends AppLocalizations {
   String get chooseYourPlan => 'Choose your plan';
 
   @override
-  String get choosePlanDescription => 'Choose the plan that best suits your needs. You can change or cancel at any time.';
+  String get choosePlanDescription =>
+      'Choose the plan that best suits your needs. You can change or cancel at any time.';
 
   @override
-  String get freePlanLimitWarning => 'You have reached the limit of 3 investments in the free plan. You won\'t be able to add new investments or manage operations for existing investments beyond this limit. Upgrade now to add more investments and access all features!';
+  String get freePlanLimitWarning =>
+      'You have reached the limit of 3 investments in the free plan. You won\'t be able to add new investments or manage operations for existing investments beyond this limit. Upgrade now to add more investments and access all features!';
 
   @override
   String get freeSubscriptionFeatures => 'Up to 3 investments\nBasic features';
 
   @override
-  String get monthlySubscriptionFeatures => 'Unlimited investments\nAll features';
+  String get monthlySubscriptionFeatures =>
+      'Unlimited investments\nAll features';
 
   @override
-  String get annualSubscriptionFeatures => 'Unlimited investments\nAll features\n2 months free';
+  String get annualSubscriptionFeatures =>
+      'Unlimited investments\nAll features\n2 months free';
 
   @override
-  String get unlimitedSubscriptionFeatures => 'Unlimited investments\nAll features\nLifetime access';
+  String get unlimitedSubscriptionFeatures =>
+      'Unlimited investments\nAll features\nLifetime access';
 
   @override
   String get storeNotAvailableErrorTitle => 'Store not available';
 
   @override
-  String get storeNotAvailableErrorMessage => 'The app store is not available at the moment. Please try again later.';
+  String get storeNotAvailableErrorMessage =>
+      'The app store is not available at the moment. Please try again later.';
 
   @override
   String get productNotFoundErrorTitle => 'Product not found';
 
   @override
-  String get productNotFoundErrorMessage => 'The subscription product was not found. Please try again later.';
+  String get productNotFoundErrorMessage =>
+      'The subscription product was not found. Please try again later.';
 
   @override
   String get purchaseErrorTitle => 'Purchase error';
 
   @override
-  String get purchaseErrorMessage => 'An error occurred while processing your purchase. Please try again later.';
+  String get purchaseErrorMessage =>
+      'An error occurred while processing your purchase. Please try again later.';
 
   @override
   String get subscriptionLimitReachedTitle => 'Subscription limit reached';
 
   @override
-  String get subscriptionLimitReachedMessage => 'You have reached the maximum number of investments for the free plan. Please upgrade to continue adding investments.';
+  String get subscriptionLimitReachedMessage =>
+      'You have reached the maximum number of investments for the free plan. Please upgrade to continue adding investments.';
 
   @override
-  String get iosSubscriptionDisclaimer => 'Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.';
+  String get iosSubscriptionDisclaimer =>
+      'Payment will be charged to your Apple ID account at the confirmation of purchase. Subscription automatically renews unless it is canceled at least 24 hours before the end of the current period. Your account will be charged for renewal within 24 hours prior to the end of the current period. You can manage and cancel your subscriptions by going to your account settings on the App Store after purchase.';
 
   @override
-  String get androidSubscriptionDisclaimer => 'To cancel your subscription, please go to the Google Play Store > Account > Subscriptions and cancel your InvestHelper subscription. Your subscription will remain active until the end of the current billing period.';
+  String get androidSubscriptionDisclaimer =>
+      'To cancel your subscription, please go to the Google Play Store > Account > Subscriptions and cancel your InvestHelper subscription. Your subscription will remain active until the end of the current billing period.';
 
   @override
   String get error => 'Error';
@@ -719,41 +768,50 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasePendingErrorTitle => 'Purchase in progress';
 
   @override
-  String get purchasePendingErrorMessage => 'Your purchase is being processed. Please wait for the confirmation.';
+  String get purchasePendingErrorMessage =>
+      'Your purchase is being processed. Please wait for the confirmation.';
 
   @override
   String get success => 'Success';
 
   @override
-  String get planUpdated => 'Your subscription plan has been updated successfully.';
+  String get planUpdated =>
+      'Your subscription plan has been updated successfully.';
 
   @override
   String get cancelSubscriptionTitle => 'Cancel subscription';
 
   @override
-  String get cancelSubscriptionConfirmation => 'Would you like to be redirected to the subscription management screen to complete the cancellation?';
+  String get cancelSubscriptionConfirmation =>
+      'Would you like to be redirected to the subscription management screen to complete the cancellation?';
 
   @override
-  String get cancelSubscriptionRedirectIOS => 'You will be redirected to the App Store subscription settings to complete the cancellation.';
+  String get cancelSubscriptionRedirectIOS =>
+      'You will be redirected to the App Store subscription settings to complete the cancellation.';
 
   @override
-  String get cancelSubscriptionRedirectAndroid => 'You will be redirected to the Google Play Store subscription settings to complete the cancellation.';
+  String get cancelSubscriptionRedirectAndroid =>
+      'You will be redirected to the Google Play Store subscription settings to complete the cancellation.';
 
   @override
   String get attention => 'Attention';
 
   @override
-  String get needPasswordToDeleteAccount => 'To delete your account, you need to have a password set up.';
+  String get needPasswordToDeleteAccount =>
+      'To delete your account, you need to have a password set up.';
 
   @override
-  String get checkEmailForPasswordReset => 'Please check your email for instructions on how to set up a password, then log in using your email and password instead of Google Sign-In.';
+  String get checkEmailForPasswordReset =>
+      'Please check your email for instructions on how to set up a password, then log in using your email and password instead of Google Sign-In.';
 
   @override
   String get subscriptionProcessingTitle => 'Processing subscription';
 
   @override
-  String get subscriptionProcessingMessage => 'Your subscription is being processed. This may take a few moments.';
+  String get subscriptionProcessingMessage =>
+      'Your subscription is being processed. This may take a few moments.';
 
   @override
-  String get subscriptionCanceled => 'You have canceled the renewal of your plan, your subscription will be canceled at the next billing period.';
+  String get subscriptionCanceled =>
+      'You have canceled the renewal of your plan, your subscription will be canceled at the next billing period.';
 }

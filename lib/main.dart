@@ -8,10 +8,12 @@ import 'package:get_it/get_it.dart';
 import 'firebase_options.dart';
 import 'src/core/controllers/app_controller.dart';
 import 'src/core/enums/language_enum.dart';
+import 'src/core/enums/subscription_enum.dart';
 import 'src/core/enums/theme_enum.dart';
 import 'src/core/services/app_service.dart';
 import 'src/core/utils/app_theme.dart';
 import 'src/core/utils/custom_scroll_behavior.dart';
+import 'src/core/widgets/banner_ad_widget.dart';
 import 'src/features/auth/controllers/auth_controller.dart';
 import 'src/features/auth/services/auth_service.dart';
 import 'src/features/auth/views/auth_page.dart';
@@ -88,7 +90,18 @@ class InvestHelperApp extends StatelessWidget {
                     maxScaleFactor: 1.2,
                   ),
             ),
-            child: child ?? const SizedBox(),
+            child: Column(
+              children: [
+                Expanded(child: child ?? const SizedBox()),
+                Observer(builder: (_) {
+                  if (appController.user?.data.subscription ==
+                      SubscriptionEnum.free) {
+                    return BannerAdWidget();
+                  }
+                  return const SizedBox();
+                }),
+              ],
+            ),
           ),
           theme: AppTheme.lightTheme,
           darkTheme: AppTheme.darkTheme,

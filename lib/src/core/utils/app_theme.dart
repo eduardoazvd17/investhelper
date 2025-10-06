@@ -51,13 +51,13 @@ class AppTheme {
             ),
           ),
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: kSecondaryLightBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
         ),
-        dialogTheme: DialogTheme(
+        dialogTheme: DialogThemeData(
           backgroundColor: kSecondaryLightBackgroundColor,
           actionsPadding: const EdgeInsets.only(
             bottom: 25,
@@ -137,13 +137,13 @@ class AppTheme {
             ),
           ),
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: kSecondaryDarkBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(_kBorderRadius),
           ),
         ),
-        dialogTheme: DialogTheme(
+        dialogTheme: DialogThemeData(
           backgroundColor: kSecondaryDarkBackgroundColor,
           actionsPadding: const EdgeInsets.only(
             bottom: 25,

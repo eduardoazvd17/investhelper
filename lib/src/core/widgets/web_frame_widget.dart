@@ -16,7 +16,7 @@ class WebFrameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.ltr, // ou TextDirection.rtl se necessário
+      textDirection: TextDirection.ltr,
       child: Scaffold(
         backgroundColor: switch (themeMode) {
           null ||

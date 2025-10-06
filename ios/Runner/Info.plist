@@ -49,5 +49,7 @@
 		<string>Authenticate and protect your data using TouchID or FaceID.</string>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<key>GADApplicationIdentifier</key>
+		<string>ca-app-pub-9028469861092121~1436696247</string>
 	</dict>
 </plist>
