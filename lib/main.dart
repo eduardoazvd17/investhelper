@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'firebase_options.dart';
 import 'src/core/controllers/app_controller.dart';
@@ -34,6 +35,7 @@ import 'src/l10n/l10n.dart';
 Future<void> main() async {
   runApp(const SplashScreen());
   WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
   final AppController appController = await _loadDependencies();
   runApp(InvestHelperApp(appController: appController));
 }
