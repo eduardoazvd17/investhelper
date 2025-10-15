@@ -35,7 +35,7 @@ import 'src/l10n/l10n.dart';
 Future<void> main() async {
   runApp(const SplashScreen());
   WidgetsFlutterBinding.ensureInitialized();
-  MobileAds.instance.initialize();
+  await MobileAds.instance.initialize();
   final AppController appController = await _loadDependencies();
   runApp(InvestHelperApp(appController: appController));
 }
